@@ -7,9 +7,10 @@ include_once 'include/admin-main.php';
 $stitcher_query = "SELECT DISTINCT stitcher_name FROM kits_issue"; 
 $stitcher_result = mysqli_query($con, $stitcher_query);
 
-// Get Challan No from session
-$challan_no = $_SESSION['challan_no'];
-
+// Check if 'challan_no' is set in session
+if (isset($_SESSION['challan_no'])) {
+    $challan_no = $_SESSION['challan_no'];
+}
 
 // Initialize $result variable
 $result = null;
