@@ -160,7 +160,7 @@ if (isset($_POST['submit_products'])) {
             $total = mysqli_real_escape_string($con, $product['total']);
 
             // Insert product into the database
-            $insert_query = "INSERT INTO football_issue (challan_no, invoice_no, buyer_name, destination, product_name, product_base, product_color, issue_quantity) 
+            $insert_query = "INSERT INTO football_issue (challan_no, invoice_number, buyer_name, destination, product_name, product_base, product_color, issue_quantity) 
                             VALUES ('$challan_no', '$invoice_number', '$buyer_name', '$destination' , '$product_name', '$product_base', '$product_color', '$quantity')";
             $insert_result = mysqli_query($con, $insert_query);
 
@@ -238,7 +238,7 @@ if (isset($_POST['submit_products'])) {
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="buyer_name">Invoice Number:</label>
-                                        <input type="text" class="form-control" id="invoice_number" name="invoice_number" value="<?php echo $invoice_number; ?>" placeholder="Enter Invoice Number" required>
+                                        <input type="text" class="form-control" id="invoice_number" name="invoice_number" value="<?php echo $invoice_number; ?>" placeholder="Enter Invoice Number" >
                                     </div>
                                 </div>
                             </div>
@@ -246,7 +246,7 @@ if (isset($_POST['submit_products'])) {
                             <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="buyer_name">Buyer Name:</label>
-                                        <input type="text" class="form-control" id="buyer_name" name="buyer_name" value="<?php echo $buyer_name; ?>" placeholder="Enter Labour Name" required >
+                                        <input type="text" class="form-control" id="buyer_name" name="buyer_name" value="<?php echo $buyer_name; ?>" placeholder="Enter Labour Name" >
                                     </div>
                                 </div>
                                 <div class="col-md-6">
