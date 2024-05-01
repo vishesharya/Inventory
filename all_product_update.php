@@ -215,7 +215,7 @@ document.querySelectorAll('.delete-row').forEach(function(element) {
 
 function deleteRow(id) {
     var xhr = new XMLHttpRequest();
-    xhr.open('POST', 'delete_row_product.php', true);
+    xhr.open('POST', 'delete_product_row.php', true);
     xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
     xhr.onreadystatechange = function() {
         if (xhr.readyState == 4 && xhr.status == 200) {
