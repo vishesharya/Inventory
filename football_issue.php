@@ -67,47 +67,60 @@ if (isset($_POST['add_product'])) {
         $product_color = mysqli_real_escape_string($con, $_POST['product_color']);
         $quantity = mysqli_real_escape_string($con, $_POST['quantity']);
 
-        // Fetch remaining_quantity from products table
-        $remaining_quantity_query = "SELECT remaining_quantity FROM products WHERE product_name = '$product_name' AND product_base = '$product_base' AND product_color = '$product_color'";
-        $remaining_quantity_result = mysqli_query($con, $remaining_quantity_query);
-        $row = mysqli_fetch_assoc($remaining_quantity_result);
+        // Check stock availability
+        $stock_query = "SELECT remaining_quantity FROM products WHERE product_name = '$product_name' AND product_base = '$product_base' AND product_color = '$product_color'";
+        $stock_result = mysqli_query($con, $stock_query);
+        $row = mysqli_fetch_assoc($stock_result);
         $remaining_quantity = $row['remaining_quantity'];
 
-        // Calculate total
-        
-        // Update remaining_quantity in products table
-        $updated_remaining_quantity = $remaining_quantity - $quantity;
-        
-        // Check if updated remaining quantity is negative (out of stock)
-        if ($updated_remaining_quantity < 0) {
-            $errors[] = "Selected product is out of stock.";
+        if ($quantity > $remaining_quantity) {
+            $errors[] = "Requested quantity exceeds available stock for $product_name, $product_base, $product_color. Available quantity: $remaining_quantity";
         } else {
-            // Update remaining_quantity in products table
-            $update_remaining_quantity_query = "UPDATE products SET remaining_quantity = $updated_remaining_quantity WHERE product_name = '$product_name' AND product_base = '$product_base' AND product_color = '$product_color'";
-            mysqli_query($con, $update_remaining_quantity_query);
-            
-            // Insert data into temporary session storage
-            $temp_product = array(
-                'challan_no' => $challan_no,
-                'invoice_number' => $invoice_number,
-                'buyer_name' => $buyer_name,
-                'destination' => $destination,
-                'product_name' => $product_name,
-           
-            'product_base' => $product_base,
-            'product_color' => $product_color,
-            'issue_quantity' => $quantity,
-            'total' => $total );
-        $_SESSION['temp_products'][] = $temp_product;
+            // Reduce the remaining_quantity in the database
+            $updated_remaining_quantity = $remaining_quantity - $quantity;
+            $update_stock_query = "UPDATE products SET remaining_quantity = $updated_remaining_quantity WHERE product_name = '$product_name' AND product_base = '$product_base' AND product_color = '$product_color'";
+            $update_stock_result = mysqli_query($con, $update_stock_query);
+
+            if ($update_stock_result) {
+                // Stock updated successfully, proceed to add product to session
+                // Check if the product already exists in the session
+                $product_exists = false;
+                foreach ($_SESSION['temp_products'] as $key => $product) {
+                    if ($product['product_name'] === $product_name && $product['product_base'] === $product_base && $product['product_color'] === $product_color) {
+                        // Product already exists, update its quantity
+                        $_SESSION['temp_products'][$key]['issue_quantity'] += $quantity;
+                        $product_exists = true;
+                        break;
+                    }
+                }
+
+                if (!$product_exists) {
+                    // Product does not exist, add it to the session
+                    $temp_product = array(
+                        'challan_no' => $challan_no,
+                        'invoice_number' => $invoice_number,
+                        'buyer_name' => $buyer_name,
+                        'destination' => $destination,
+                        'product_name' => $product_name,
+                        'product_base' => $product_base,
+                        'product_color' => $product_color,
+                        'issue_quantity' => $quantity
+                    );
+                    $_SESSION['temp_products'][] = $temp_product;
+                }
+            } else {
+                // Error updating stock
+                $errors[] = "Failed to update stock quantity for $product_name, $product_base, $product_color.";
+            }
         }
     }
 }
+
 
 // Check if delete button is clicked
 if (isset($_POST['delete_product'])) {
     // Get the index of the product to be deleted
     $delete_index = $_POST['delete_index'];
-    $total = $remaining_quantity - $quantity;
 
     // Get the product details to update remaining_quantity in products table
     $deleted_product = $_SESSION['temp_products'][$delete_index];
@@ -115,8 +128,6 @@ if (isset($_POST['delete_product'])) {
     $product_base = mysqli_real_escape_string($con, $deleted_product['product_base']);
     $product_color = mysqli_real_escape_string($con, $deleted_product['product_color']);
     $deleted_quantity = mysqli_real_escape_string($con, $deleted_product['issue_quantity']);
-    
-    $deleted_total = mysqli_real_escape_string($con, $deleted_product['total']);
 
     // Fetch remaining_quantity from products table
     $remaining_quantity_query = "SELECT remaining_quantity FROM products WHERE product_name = '$product_name' AND product_base = '$product_base' AND product_color = '$product_color'";
@@ -131,15 +142,17 @@ if (isset($_POST['delete_product'])) {
     $update_remaining_quantity_query = "UPDATE products SET remaining_quantity = $updated_remaining_quantity WHERE product_name = '$product_name' AND product_base = '$product_base' AND product_color = '$product_color'";
     mysqli_query($con, $update_remaining_quantity_query);
 
-    // Update the total in the session data
-    $_SESSION['temp_products'][$delete_index]['total'] += $deleted_total;
-
     // Remove the product from the session
     unset($_SESSION['temp_products'][$delete_index]);
 
     // Reset array keys to maintain consecutive numbering
     $_SESSION['temp_products'] = array_values($_SESSION['temp_products']);
+
+    // Redirect to prevent form resubmission
+    header("Location: {$_SERVER['REQUEST_URI']}");
+    exit();
 }
+
 
 // Store added products in the database when "Submit" button is clicked
 if (isset($_POST['submit_products'])) {
