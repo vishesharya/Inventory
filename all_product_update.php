@@ -100,7 +100,7 @@ $result = mysqli_query($con, "SELECT kp.id, kp.product_name, kp.product_base, kp
                     <div class="breadcrumb-line">
                         <ul class="breadcrumb">
                             <li><a href="dashboard.php"><i class="icon-home2 position-left"></i> Home</a></li>
-                            <li class="active"><a href="inventory.php" class="btn bg-indigo-300"  >Kits Inventory Data</a></li>
+                            <li class="active"><a href="inventory.php" class="btn bg-indigo-300"  >Update Products</a></li>
                             
                         </ul>
                     </div>
@@ -116,14 +116,12 @@ $result = mysqli_query($con, "SELECT kp.id, kp.product_name, kp.product_base, kp
                     <div class="panel panel-flat" style="overflow: auto;">
                     
                         <div class="panel-heading">
-                            <h5 class="panel-title">Kits Product List</h5>
+                            <h5 class="panel-title">All Product List</h5>
                             
                             <div class="heading-elements">
                         
                                 <ul class="icons-list">
-                                    <li><a  href="print_kits_product_list.php" >
-					     	<button  class="btn btn-success ">Print </button>  
-				        	</a>    </li>
+                                   
                                     <li><a data-action="collapse"></a></li>
                                     <li><a data-action="reload"></a></li>
                                     <li><a data-action="close"></a></li>
