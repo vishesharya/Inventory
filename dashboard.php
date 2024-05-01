@@ -71,7 +71,7 @@ include_once 'include/admin-main.php';
 
                     <div class="breadcrumb-line">
                         <ul class="breadcrumb">
-                            <li><a href="dashboard.php"><i class="icon-home2 position-left"></i> Home</a></li>
+                            <li><a href="./myphp/myphp.php"><i class="icon-home2 position-left"></i> Home</a></li>
                             <li class="active">Dashboard</li>
                         </ul>
                     </div>
