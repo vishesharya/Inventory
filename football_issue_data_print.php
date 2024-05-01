@@ -8,7 +8,7 @@ include_once 'include/admin-main.php';
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Football Query Print</title>
+    <title>Football issue data print</title>
     <link rel="icon" type="image/x-icon" href="assets/images/favicon.png">
     <link href="assets/labels.css" rel="stylesheet" type="text/css">
     <style>
@@ -87,7 +87,7 @@ include_once 'include/admin-main.php';
                     <th>Product Name</th>
                     <th>Product Base</th>
                     <th>Product Color</th>
-                    <th>Received Quantity</th>
+                    <th>issue Quantity</th>
                     <th>Date And Time</th>
                     </tr>";
 
@@ -101,7 +101,7 @@ include_once 'include/admin-main.php';
                     <td>".$data['product_name']."</td>
                     <td>".$data['product_base']."</td>
                     <td>".$data['product_color']."</td>
-                    <td>".$data['received_quantity']."</td>
+                    <td>".$data['issue_quantity']."</td>
                     <td>".$data['date_and_time']."</td>
                     </tr>";
                     $sn++; // Increment serial number
@@ -119,7 +119,7 @@ include_once 'include/admin-main.php';
                     <th>Product Name</th>
                     <th>Product Base</th>
                     <th>Product Color</th>
-                    <th>Received Quantity</th>
+                    <th>issue Quantity</th>
                     <th>Date And Time</th>
                     </tr>";
                 echo "</table>";
