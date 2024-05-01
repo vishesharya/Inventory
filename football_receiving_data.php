@@ -251,7 +251,7 @@ if (isset($_POST['view_entries'])) {
                     });
                 }
             };
-            xhttp.open("GET", "football_receving_print.php?stitcher=" + selectedStitcher + "&from_date=" + fromDate + "&to_date=" + toDate, true);
+            xhttp.open("GET", "football_receiving_print.php?stitcher=" + selectedStitcher + "&from_date=" + fromDate + "&to_date=" + toDate, true);
             xhttp.send();
         }
 
