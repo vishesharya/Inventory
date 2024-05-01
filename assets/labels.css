@@ -1,0 +1,53 @@
+ body {
+    width: 21.0cm;
+    height: 30.0cm;
+    margin: 1.0cm;
+    }
+ 
+.label{
+    width: 6.3cm;
+    height:2.9cm;
+    margin: 0.3cm;
+    float: left;
+    text-align: initial;
+    overflow: hidden;
+    outline: 2px dotted;
+    font-size: 8px;
+    margin-top: 22px;
+    font-weight: 300;
+
+}
+      
+    .page-break  {
+        clear: left;
+        display:block;
+        page-break-after:always;
+        }
+        input[type="button"] {
+    background-color: #000000;
+    border: none;
+    color: white;
+    padding: 6px 24px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 12px;
+    /* position: fixed; */
+    float: right;
+    margin-top: -64px;
+    margin-right: 17px;
+}
+
+h4 {
+    text-align: -webkit-center;
+}
+
+p {
+/*  font-size: 16px;
+    line-height: 8.5px;*/
+        font-size: 20px;
+    line-height: 5px;
+    margin-top: 52px;
+    margin-left: 20px;
+}
+
