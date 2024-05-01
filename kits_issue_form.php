@@ -60,7 +60,7 @@ $errors = array();
 
 if (isset($_POST['add_product'])) {
     // Validate input
-    if (empty($_POST['product_name']) || empty($_POST['product_base']) || empty($_POST['product_color']) || empty($_POST['quantity']) || empty($_POST['select_bladder']) || empty($_POST['bladder_quantity']) || empty($_POST['select_thread']) || empty($_POST['thread_quantity'])) {
+    if (empty($_POST['product_name']) || empty($_POST['product_base']) || empty($_POST['product_color']) || empty($_POST['quantity']) || empty($_POST['select_bladder']) || empty($_POST['bladder_quantity']) || empty($_POST['select_thread'])) {
         $errors[] = "Please fill in all fields.";
     } else {
         // Sanitize input
