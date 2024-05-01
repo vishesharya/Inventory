@@ -1,6 +1,7 @@
 <?php
 session_start();
-include_once 'include/connection.php';
+error_reporting(0);
+include('include/connection.php');
 include_once 'include/admin-main.php';
 
 // Fetch stitcher names from the database
@@ -18,8 +19,15 @@ if (isset($_POST['view_entries'])) {
     // Get selected stitcher
     $stitcher_name = isset($_POST['stitcher_name']) ? mysqli_real_escape_string($con, $_POST['stitcher_name']) : '';
 
-    // Retrieve entries from database based on selected stitcher
-    if (!empty($stitcher_name)) {
+    // Get selected challan number
+    $selected_challan = isset($_POST['challan_no']) ? mysqli_real_escape_string($con, $_POST['challan_no']) : '';
+
+    // Retrieve entries from database based on selected stitcher and/or challan number
+    if (!empty($selected_challan)) {
+        // Fetch entries for the selected challan number
+        $query = "SELECT * FROM football_received WHERE challan_no = '$selected_challan'";
+        $result = mysqli_query($con, $query);
+    } elseif (!empty($stitcher_name)) {
         if (!empty($_POST['from_date']) && !empty($_POST['to_date'])) {
             // Get selected date range
             $start_date = mysqli_real_escape_string($con, $_POST['from_date']);
@@ -243,7 +251,7 @@ if (isset($_POST['view_entries'])) {
                     });
                 }
             };
-            xhttp.open("GET", "football_receiving_print.php?stitcher=" + selectedStitcher + "&from_date=" + fromDate + "&to_date=" + toDate, true);
+            xhttp.open("GET", "football_receving_print.php?stitcher=" + selectedStitcher + "&from_date=" + fromDate + "&to_date=" + toDate, true);
             xhttp.send();
         }
 

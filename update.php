@@ -15,6 +15,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $query = "UPDATE kits_product SET $field = '$value' WHERE id = $id";
         $result = mysqli_query($con, $query);
 
+        // Update database
+        $query = "UPDATE products SET $field = '$value' WHERE id = $id";
+        $result = mysqli_query($con, $query);
+
         // Check if update was successful
         if (!$result) {
             echo "Error updating record: " . mysqli_error($con);

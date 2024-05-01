@@ -108,6 +108,13 @@ include_once 'include/admin-main.php';
                                         </div>
                                     </div>
                                  </a>
+                                 <a href="./all_product_update.php" style='color:white'>
+                                    <div class="col-lg-4">
+                                        <div class="panel bg-teal-400">
+                                            <p style="margin: 10px; font-size: large;">Update Products</p>
+                                        </div>
+                                    </div>
+                                 </a>
                                
                                
                                
