@@ -109,7 +109,7 @@ include_once 'include/admin-main.php';
                                         </div>
                                     </div>
                                 </a>
-                                 <a href="#" style='color:white'>
+                                 <a href="./football_issue_data.php" style='color:white'>
                                     <div class="col-lg-4">
                                         <div class="panel bg-teal-400">
                                             <p style="margin: 10px; font-size: large;">Football Issue Data</p>
