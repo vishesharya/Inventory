@@ -8,7 +8,7 @@ function generateChallanNo($prefix) {
     // Check if the counter for football_issue exists in the session
     if (!isset($_SESSION['challan_counter'])) {
         // If not, initialize it to 1
-        $_SESSION['challan_counter'] = 3;
+        $_SESSION['challan_counter'] = 10;
     } else {
         // Otherwise, increment the counter by 1
         $_SESSION['challan_counter']++;
