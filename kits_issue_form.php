@@ -5,23 +5,19 @@ include_once 'include/admin-main.php';
 
 function generateChallanNo($prefix) {
     global $con;
-    // Fetch the latest ID from the database
-    $query = "SELECT MAX(id) as max_id FROM kits_issue";
-    $result = mysqli_query($con, $query);
-    $row = mysqli_fetch_assoc($result);
-    $latest_id = $row['max_id'];
-
-    // If no records found, set the initial ID to 1
-    if ($latest_id === null) {
-        $next_id = 1;
+    // Check if the counter for football_issue exists in the session
+    if (!isset($_SESSION['challan_counter'])) {
+        // If not, initialize it to 1
+        $_SESSION['challan_counter'] = 9;
     } else {
-        // Increment the latest ID by 1
-        $next_id = $latest_id + 1;
+        // Otherwise, increment the counter by 1
+        $_SESSION['challan_counter']++;
     }
 
-    // Generate the Challan Number
-    return $prefix . '-KI-' . $next_id;
+    // Generate the Challan Number using the counter
+    return $prefix . '-KI-' . $_SESSION['challan_counter'];
 }
+
 
 // Default value for Stitcher Name
 $stitcher_name = isset($_POST['stitcher_name']) ? $_POST['stitcher_name'] : "";
