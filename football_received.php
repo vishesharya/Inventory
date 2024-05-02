@@ -70,7 +70,6 @@ if (isset($_POST['product_base'])) {
 }
 
 
-
 if (isset($_POST['add_product'])) {
     // Validate input
     if (empty($_POST['product_name']) || empty($_POST['product_base']) || empty($_POST['product_color'])) {
@@ -84,7 +83,7 @@ if (isset($_POST['add_product'])) {
         $stitcher_iind_company_iind = mysqli_real_escape_string($con, $_POST['stitcher_iind_company_iind']);
         $stitcher_iind_company_ist = mysqli_real_escape_string($con, $_POST['stitcher_iind_company_ist']);
         $stitcher_ist_company_iind = mysqli_real_escape_string($con, $_POST['stitcher_ist_company_iind']);
-        
+
         
         $is_duplicate = false;
         foreach ($_SESSION['temp_products'] as $temp_product) {
@@ -123,72 +122,63 @@ if (isset($_POST['add_product'])) {
         if ($_POST['stitcher_ist_company_iind'] === '' && isset($_POST['stitcher_ist_company_iind'])) {
             $stitcher_ist_company_iind = 0;
         }
-        
-        // Recalculate total
-        $total = $stitcher_ist_company_ist + $stitcher_iind_company_iind + $stitcher_iind_company_ist + $stitcher_ist_company_iind;
-        // Calculate updated issue quantity
 
-        $updated_issue_quantity = 0; // Initialize
 
+        // Fetch existing issue quantity
         $issue_quantity_query = "SELECT issue_quantity FROM kits_job_work WHERE challan_no_issue = '$selected_challan' AND stitcher_name = '$stitcher_name' AND product_name = '$product_name' AND product_base = '$product_base'";
         $issue_quantity_result = mysqli_query($con, $issue_quantity_query);
-
         if ($issue_quantity_result && mysqli_num_rows($issue_quantity_result) > 0) {
             $issue_quantity_row = mysqli_fetch_assoc($issue_quantity_result);
             $existing_issue_quantity = $issue_quantity_row['issue_quantity'];
-            $updated_issue_quantity = max(0, $existing_issue_quantity - $total); // Ensure issue quantity doesn't go negative
-        }
 
-        
-        
-        $update_issue_quantity_query = "UPDATE kits_job_work SET issue_quantity = '$updated_issue_quantity' WHERE challan_no_issue = '$selected_challan' AND stitcher_name = '$stitcher_name' AND product_name = '$product_name' AND product_base = '$product_base'";
-        $update_issue_quantity_result = mysqli_query($con, $update_issue_quantity_query);
-        
-        // Check if issue quantity became 0 and update status accordingly
-        if ($updated_issue_quantity == 0) {
-            $update_status_query = "UPDATE kits_job_work SET status = 1 WHERE challan_no_issue = '$selected_challan' AND stitcher_name = '$stitcher_name' AND product_name = '$product_name' AND product_base = '$product_base'";
-            $update_status_result = mysqli_query($con, $update_status_query);
-            
+            // Check if total exceeds existing issue quantity
+            if ($total > $existing_issue_quantity) {
+                $errors[] = "The entered quantity exceeds the balance quantity.";
+            } else {
+                // Update issue quantity in the database
+                $updated_issue_quantity = max(0, $existing_issue_quantity - $total); // Ensure issue quantity doesn't go negative
+                $update_issue_quantity_query = "UPDATE kits_job_work SET issue_quantity = '$updated_issue_quantity' WHERE challan_no_issue = '$selected_challan' AND stitcher_name = '$stitcher_name' AND product_name = '$product_name' AND product_base = '$product_base'";
+                $update_issue_quantity_result = mysqli_query($con, $update_issue_quantity_query);
 
+                if ($update_issue_quantity_result) {
+                    // Check if issue quantity became 0 and update status accordingly
+                    if ($updated_issue_quantity == 0) {
+                        $update_status_query = "UPDATE kits_job_work SET status = 1 WHERE challan_no_issue = '$selected_challan' AND stitcher_name = '$stitcher_name' AND product_name = '$product_name' AND product_base = '$product_base'";
+                        $update_status_result = mysqli_query($con, $update_status_query);
 
+                        if (!$update_status_result) {
+                            $errors[] = "Failed to update status in the database.";
+                        }
+                    }
 
-            if (!$update_status_result) {
-                $errors[] = "Failed to update status in the database.";
-            }
-        }
-        
-        if (!$update_issue_quantity_result) {
-            $errors[] = "Failed to update issue quantity in the database.";
-        }
-        // Update issue quantity in the database
+                    // Insert data into temporary session storage
+                    $temp_product = array(
+                        'stitcher_name' => $stitcher_name,
+                        'challan_no_issue' => $selected_challan,
+                        'product_name' => $product_name,
+                        'product_base' => $product_base,
+                        'product_color' => $product_color,
+                        'stitcher_ist_company_ist' => $stitcher_ist_company_ist,
+                        'stitcher_iind_company_iind' => $stitcher_iind_company_iind,
+                        'stitcher_iind_company_ist' => $stitcher_iind_company_ist,
+                        'stitcher_ist_company_iind' => $stitcher_ist_company_iind,
+                        'total' => $total
+                    );
 
-        
-        
-        
-        // Insert data into temporary session storage
-        $temp_product = array(
-            'stitcher_name' => $stitcher_name,
-            'challan_no_issue' => $selected_challan,
-            'product_name' => $product_name,
-            'product_base' => $product_base,
-            'product_color' => $product_color,
-            'stitcher_ist_company_ist' => $stitcher_ist_company_ist,
-            'stitcher_iind_company_iind' => $stitcher_iind_company_iind,
-            'stitcher_iind_company_ist' => $stitcher_iind_company_ist,
-            'stitcher_ist_company_iind' => $stitcher_ist_company_iind,
-            'total' => $total
-        );
-        // Calculate total
+                    $_SESSION['temp_products'][] = $temp_product;
 
-            $_SESSION['temp_products'][] = $temp_product;
+                    // Redirect to the same page to reset form fields
+                    header('Location: ' . $_SERVER['PHP_SELF']);
+                    exit();
+                } else {
+                    $errors[] = "Failed to update issue quantity in the database.";
+                 }
+             }
+         }
+     }
+  }
 
-            // Redirect to the same page to reset form fields
-            header('Location: ' . $_SERVER['PHP_SELF']);
-            exit();
-        }
-    }
 }
-
      
 
     if (isset($_POST['delete_product'])) {
