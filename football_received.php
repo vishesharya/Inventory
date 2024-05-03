@@ -524,7 +524,7 @@ if (isset($_POST['submit_form'])) {
                                     <?php if (isset($_SESSION['temp_products'])) : ?>
                                         <?php foreach ($_SESSION['temp_products'] as $key => $product) : ?>
                                             <tr>
-                                                <td><?php echo generateChallanNo('KSI'); ?></td>
+                                                <td><?php echo $product['challan_no']; ?></td>
                                                 <td><?php echo $product['stitcher_name']; ?></td>
                                                 <td><?php echo $product['challan_no_issue']; ?></td>
                                                 
