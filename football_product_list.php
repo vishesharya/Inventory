@@ -128,7 +128,8 @@ $result = mysqli_query($con, "SELECT id, product_name, product_base, product_col
                                     <th>Product Base</th>
                                     <th>Product Color</th>
                                     <th>Product Closing Balance</th>
-                                   
+                                    <th>Ist Price (Per Piece)</th>
+                                    <th>IInd Price (Per Piece)</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -142,7 +143,8 @@ $result = mysqli_query($con, "SELECT id, product_name, product_base, product_col
                                     <td><?php echo ucfirst($data['product_base']); ?></td>
                                     <td><?php echo ucfirst($data['product_color']); ?></td>
                                     <td contenteditable="true" data-field="remaining_quantity" data-id="<?php echo $data['id']; ?>"><?php echo $data['remaining_quantity']; ?></td>
-
+                                    <td contenteditable="true" data-field="per_pice_price" data-id="<?php echo $data['id']; ?>"><?php echo $data['per_pice_price']; ?></td>
+                                    <td contenteditable="true" data-field="2nd_price" data-id="<?php echo $data['id']; ?>"><?php echo $data['2nd_price']; ?></td>
                                 </tr>
                                 <?php 
                                 $sn++; 
