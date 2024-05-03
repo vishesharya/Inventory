@@ -156,6 +156,7 @@ if (isset($_POST['add_product'])) {
 
                     // Insert data into temporary session storage
                     $temp_product = array(
+                        'challan_no' => $challan_no,
                         'stitcher_name' => $stitcher_name,
                         'challan_no_issue' => $selected_challan,
                         'product_name' => $product_name,
