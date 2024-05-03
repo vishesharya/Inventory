@@ -3,41 +3,44 @@ session_start();
 include_once 'include/connection.php';
 include_once 'include/admin-main.php';
 
-function generateChallanNo($prefix) {
-    global $con;
-    // Fetch the latest ID from the database
-    $query = "SELECT MAX(id) as max_id FROM football_received";
-    $result = mysqli_query($con, $query);
+// Function to fetch current number from the database
+function getCurrentNumber($con) {
+    $result = mysqli_query($con, "SELECT football_received_temp FROM challan_temp LIMIT 1");
     $row = mysqli_fetch_assoc($result);
-    $latest_id = $row['max_id'];
-
-    // If no records found, set the initial ID to 1
-    if ($latest_id === null) {
-        $next_id = 1;
-    } else {
-        // Increment the latest ID by 1
-        $next_id = $latest_id + 1;
-    }
-
-    // Generate the Challan Number
-    return $prefix . '-FR-' . $next_id;
+    return $row['football_received_temp'];
 }
 
-// Check if 'challan_no' is set in the session, if not generate a new one
-if (isset($_SESSION['challan_no'])) {
-    $challan_no = $_SESSION['challan_no'];
-} else {
-    $challan_no = generateChallanNo('KSI');
-    $_SESSION['challan_no'] = $challan_no;
+// Function to update the current number in the database
+function updateCurrentNumber($con, $newNumber) {
+    mysqli_query($con, "UPDATE challan_temp SET football_received_temp = $newNumber");
 }
 
+// Function to generate the code prefix
+function generateCodePrefix($number) {
+    return "KSI-FR-" . $number;
+}
+
+// Function to generate the Challan number
+function generateChallanNumber($con) {
+    $currentNumber = getCurrentNumber($con);
+    $codePrefix = generateCodePrefix($currentNumber);
+    // Increment current number for the next time
+    updateCurrentNumber($con, $currentNumber + 1);
+    return $codePrefix;
+}
+
+
+function viewChallanNumber($con) {
+    $currentNumber = getCurrentNumber($con);
+    $codePrefix = generateCodePrefix($currentNumber);
+    return $codePrefix;
+}
+
+$challan_no = viewChallanNumber($con); 
 
 // Fetch stitcher names from the database
 $stitcher_query = "SELECT DISTINCT stitcher_name FROM stitcher";
 $stitcher_result = mysqli_query($con, $stitcher_query);
-
-// Get Challan No from session
-$challan_no = $_SESSION['challan_no'];
 
 // Fetch associated challan numbers for selected stitcher
 if (isset($_POST['stitcher_name'])) {
@@ -302,9 +305,9 @@ if (isset($_POST['submit_form'])) {
         
         // If no errors, update the Challan Number and clear session storage
         if (empty($errors)) {
-            // Update Challan Number
-            $_SESSION['challan_no'] = generateChallanNo('KSI');
-            
+           // Update Challan Number
+           $challan_no = generateChallanNumber($con);
+           
             // Clear session storage after insertion
             unset($_SESSION['temp_products']);
 
