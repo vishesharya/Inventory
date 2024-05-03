@@ -10,7 +10,7 @@ if (isset($_GET['product_name']) && isset($_GET['product_base'])) {
 
     $colors = array();
     while ($row = mysqli_fetch_assoc($product_color_result)) {
-        $colors[] = $row['kits_job_work'];
+        $colors[] = $row['product_color'];
     }
 
     echo json_encode($colors);
