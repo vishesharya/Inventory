@@ -34,7 +34,7 @@ function updateCurrentNumber($con, $newNumber) {
 
 // Function to generate the code prefix
 function generateCodePrefix($number) {
-    return "KSI-KI-" . $number;
+    return "KSI-KR-" . $number;
 }
 
 // Function to generate the Challan number
