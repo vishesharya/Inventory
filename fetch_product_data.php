@@ -1,6 +1,8 @@
 <?php
 session_start();
 include_once 'include/connection.php';
+include_once 'include/admin-main.php';
+
 
 // Check if stitcher and challan number are set
 if (isset($_GET['stitcher']) && isset($_GET['challan'])) {
