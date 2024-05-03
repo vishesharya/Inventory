@@ -15,7 +15,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $value = mysqli_real_escape_string($con, $value);
 
         // Update database
-        $query = "UPDATE products SET $field = '$value' WHERE id = $id";
+        $query = "UPDATE kits_product SET $field = '$value' WHERE id = $id";
         $result = mysqli_query($con, $query);
 
         if (!$result) {
@@ -25,7 +25,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }
 
 // Fetch data alphabetically
-$result = mysqli_query($con, "SELECT id, product_name, product_base, product_color, remaining_quantity FROM products ORDER BY product_name ASC");
+$result = mysqli_query($con, "SELECT id, product_name, product_base, product_color, remaining_quantity, per_pice_price,2nd_price FROM kits_product ORDER BY product_name ASC");
 
 ?>
 
@@ -35,7 +35,7 @@ $result = mysqli_query($con, "SELECT id, product_name, product_base, product_col
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title><?php include('include/title.php');?> Football Contact Query</title>
+    <title><?php include('include/title.php');?></title>
     <link rel="icon" type="image/x-icon" href="assets/images/favicon.png">
 
     <!-- Global stylesheets -->
@@ -93,7 +93,7 @@ $result = mysqli_query($con, "SELECT id, product_name, product_base, product_col
                     <div class="breadcrumb-line">
                         <ul class="breadcrumb">
                             <li><a href="dashboard.php"><i class="icon-home2 position-left"></i> Home</a></li>
-                            <li class="active"><a href="inventory.phpp" class="btn bg-indigo-300"  >Football Inventory Data</a></li>
+                            <li class="active"><a href="inventory.phpp" class="btn bg-indigo-300"  >Kits Inventory Data</a></li>
                         </ul>
                     </div>
                 </div>
@@ -105,7 +105,7 @@ $result = mysqli_query($con, "SELECT id, product_name, product_base, product_col
 
                 <!-- Table of football contact query -->
                
-                <div class="panel panel-flat" style="overflow: auto;">
+                    <div class="panel panel-flat" style="overflow: auto;">
                         <div class="panel-heading">
                             <h5 class="panel-title">Kits Product List</h5>
                             <div class="heading-elements">
@@ -128,7 +128,8 @@ $result = mysqli_query($con, "SELECT id, product_name, product_base, product_col
                                     <th>Product Base</th>
                                     <th>Product Color</th>
                                     <th>Product Closing Balance</th>
-                                   
+                                    <th>Ist Price (Per Piece)</th>
+                                    <th>IInd Price (Per Piece)</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -142,7 +143,8 @@ $result = mysqli_query($con, "SELECT id, product_name, product_base, product_col
                                     <td><?php echo ucfirst($data['product_base']); ?></td>
                                     <td><?php echo ucfirst($data['product_color']); ?></td>
                                     <td contenteditable="true" data-field="remaining_quantity" data-id="<?php echo $data['id']; ?>"><?php echo $data['remaining_quantity']; ?></td>
-
+                                    <td contenteditable="true" data-field="per_pice_price" data-id="<?php echo $data['id']; ?>"><?php echo $data['per_pice_price']; ?></td>
+                                    <td contenteditable="true" data-field="2nd_price" data-id="<?php echo $data['id']; ?>"><?php echo $data['2nd_price']; ?></td>
                                 </tr>
                                 <?php 
                                 $sn++; 
@@ -182,7 +184,7 @@ $result = mysqli_query($con, "SELECT id, product_name, product_base, product_col
 
     function updateDatabase(id, field, value) {
         var xhr = new XMLHttpRequest();
-        xhr.open('POST', 'update_for_football.php', true);
+        xhr.open('POST', 'update_for_kits.php', true);
         xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
         xhr.onreadystatechange = function() {
             if (xhr.readyState == 4 && xhr.status == 200) {
