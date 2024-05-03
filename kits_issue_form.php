@@ -3,32 +3,44 @@ session_start();
 include_once 'include/connection.php';
 include_once 'include/admin-main.php';
 
-function generateChallanNo($prefix) {
-    global $con;
-    // Check if the counter for football_issue exists in the session
-    if (!isset($_SESSION['challan_counter'])) {
-        // If not, initialize it to 1
-        $_SESSION['challan_counter'] = 10;
-    } else {
-        // Otherwise, increment the counter by 1
-        $_SESSION['challan_counter']++;
-    }
-
-    // Generate the Challan Number using the counter
-    return $prefix . '-KI-' . $_SESSION['challan_counter'];
+// Function to fetch current number from the database
+function getCurrentNumber($con) {
+    $result = mysqli_query($con, "SELECT kits_issue_temp FROM challan_temp LIMIT 1");
+    $row = mysqli_fetch_assoc($result);
+    return $row['kits_issue_temp'];
 }
 
+// Function to update the current number in the database
+function updateCurrentNumber($con, $newNumber) {
+    mysqli_query($con, "UPDATE challan_temp SET kits_issue_temp = $newNumber");
+}
+
+// Function to generate the code prefix
+function generateCodePrefix($number) {
+    return "KSI-KI-" . $number;
+}
+
+// Function to generate the Challan number
+function generateChallanNumber($con) {
+    $currentNumber = getCurrentNumber($con);
+    $codePrefix = generateCodePrefix($currentNumber);
+    // Increment current number for the next time
+    updateCurrentNumber($con, $currentNumber + 1);
+    return $codePrefix;
+}
+
+
+function viewChallanNumber($con) {
+    $currentNumber = getCurrentNumber($con);
+    $codePrefix = generateCodePrefix($currentNumber);
+    return $codePrefix;
+}
 
 // Default value for Stitcher Name
 $stitcher_name = isset($_POST['stitcher_name']) ? $_POST['stitcher_name'] : "";
 
-// Generate Challan No if not set
-if (!isset($_SESSION['challan_no'])) {
-    $_SESSION['challan_no'] = generateChallanNo('KSI');
-}
+$challan_no = viewChallanNumber($con); 
 
-// Get Challan No from session
-$challan_no = $_SESSION['challan_no'];
 
 // Logic to fetch product names from the database
 $product_query = "SELECT DISTINCT product_name FROM kits_product ORDER BY product_name ASC";
@@ -239,7 +251,7 @@ if (isset($_POST['submit_products'])) {
         // If no errors, update the Challan Number and clear session storage
         if (empty($errors)) {
             // Update Challan Number
-            $_SESSION['challan_no'] = generateChallanNo('KSI');
+            $challan_no = generateChallanNumber($con);
             
             // Clear session storage after insertion
             unset($_SESSION['temp_products']);
