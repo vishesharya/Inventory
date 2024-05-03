@@ -35,7 +35,7 @@ $result = mysqli_query($con, "SELECT id, product_name, product_base, product_col
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title><?php include('include/title.php');?> Football Contact Query</title>
+    <title><?php include('include/title.php');?></title>
     <link rel="icon" type="image/x-icon" href="assets/images/favicon.png">
 
     <!-- Global stylesheets -->
