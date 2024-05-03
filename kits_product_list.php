@@ -184,7 +184,7 @@ $result = mysqli_query($con, "SELECT id, product_name, product_base, product_col
 
     function updateDatabase(id, field, value) {
         var xhr = new XMLHttpRequest();
-        xhr.open('POST', 'update.php', true);
+        xhr.open('POST', 'update_for_kits.php', true);
         xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
         xhr.onreadystatechange = function() {
             if (xhr.readyState == 4 && xhr.status == 200) {
