@@ -143,8 +143,7 @@ $result = mysqli_query($con, "SELECT id, product_name, product_base, product_col
                                     <th>Product Base</th>
                                     <th>Product Color</th>
                                     <th>Product Closing Balance</th>
-                                    <th>Ist Price (Per Piece)</th>
-                                    <th>IInd Price (Per Piece)</th>
+                              
                                 </tr>
                             </thead>
                             <tbody>
