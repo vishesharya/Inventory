@@ -36,10 +36,12 @@ function viewChallanNumber($con) {
     return $codePrefix;
 }
 
+$challan_no = viewChallanNumber($con); 
+
 // Default value for Stitcher Name
 $stitcher_name = isset($_POST['stitcher_name']) ? $_POST['stitcher_name'] : "";
 
-$challan_no = viewChallanNumber($con); 
+
 
 
 // Logic to fetch product names from the database
