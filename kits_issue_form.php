@@ -324,7 +324,7 @@ if (isset($_POST['submit_products'])) {
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="challan_no">Challan No:</label>
-                                        <input type="text" class="form-control" id="challan_no" name="challan_no" value="<?php echo $challan_no; ?> readonly">
+                                        <input type="text" class="form-control" id="challan_no" name="challan_no" value="<?php echo $challan_no; ?>" readonly>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
