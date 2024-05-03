@@ -658,7 +658,7 @@ if (isset($_POST['submit_form'])) {
                 });
             }
         };
-        xhr.open('GET', 'football_product_color.php?product_name=' + productName + '&product_base=' + productBase, true);
+        xhr.open('GET', 'product_job_work_color.php?product_name=' + productName + '&product_base=' + productBase, true);
         xhr.send();
     }
 
