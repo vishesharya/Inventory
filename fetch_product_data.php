@@ -34,6 +34,9 @@ if (isset($_GET['stitcher']) && isset($_GET['challan'])) {
                 'product_base' => $row['product_base'],
                 'product_color' => $row['product_color']
             );
+        } elseif ($uniqueProducts[$productKey]['product_color'] != $row['product_color']) {
+            // If the same product combination already exists but with a different color, update the color to "mixed"
+            $uniqueProducts[$productKey]['product_color'] = "mixed";
         }
     }
 
