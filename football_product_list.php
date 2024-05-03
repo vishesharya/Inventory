@@ -15,7 +15,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $value = mysqli_real_escape_string($con, $value);
 
         // Update database
-        $query = "UPDATE kits_product SET $field = '$value' WHERE id = $id";
+        $query = "UPDATE products SET $field = '$value' WHERE id = $id";
         $result = mysqli_query($con, $query);
 
         if (!$result) {
@@ -25,7 +25,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }
 
 // Fetch data alphabetically
-$result = mysqli_query($con, "SELECT id, product_name, product_base, product_color, remaining_quantity, per_pice_price,2nd_price FROM kits_product ORDER BY product_name ASC");
+$result = mysqli_query($con, "SELECT id, product_name, product_base, product_color, remaining_quantity FROM products ORDER BY product_name ASC");
 
 ?>
 
