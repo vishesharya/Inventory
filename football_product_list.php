@@ -59,7 +59,22 @@ $result = mysqli_query($con, "SELECT id, product_name, product_base, product_col
     <script type="text/javascript" src="assets/js/plugins/forms/selects/select2.min.js"></script>
     <script type="text/javascript" src="assets/js/core/app.js"></script>
     <script type="text/javascript" src="assets/js/pages/datatables_sorting.js"></script>
+
+
     <!-- /theme JS files -->
+
+    <style>
+             /* Hide the column with per_pice_price data */
+        td[data-field="per_pice_price"] {
+         display: none;
+         }
+
+        /* Hide the column with 2nd_price data */
+       td[data-field="2nd_price"] {
+        display: none;
+        }
+
+    </style>
 
 </head>
 
