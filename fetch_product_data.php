@@ -24,7 +24,7 @@ if (isset($_GET['stitcher']) && isset($_GET['challan'])) {
     // Fetch data and store unique product combinations
     while ($row = mysqli_fetch_assoc($result)) {
         // Construct a unique key for the product combination
-        $productKey = $row['product_name'] . '_' . $row['product_base'];
+        $productKey = $row['product_name'] . '_' . $row['product_base'] . '_' . $row['product_color'];
 
         // Check if the product combination already exists
         if (!isset($uniqueProducts[$productKey])) {
@@ -52,12 +52,13 @@ if (isset($_GET['stitcher']) && isset($_GET['challan'])) {
     // Filter out duplicate product names and bases
     $uniqueProductNames = array_unique($productNames);
     $uniqueProductBases = array_unique($productBases);
+    $uniqueProductColors = array_unique($productColors);
 
     // Prepare JSON response
     $response = array(
         'productNames' => $uniqueProductNames,
         'productBases' => $uniqueProductBases,
-        'productColors' => $productColors // Assuming colors remain unchanged
+        'productColors' => $uniqueProductColors // Show only unique colors
     );
 
     // Send JSON response
