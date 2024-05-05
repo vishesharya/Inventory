@@ -13,7 +13,7 @@ if (isset($_GET['stitcher']) && isset($_GET['challan'])) {
     $uniqueProducts = array();
 
     // Fetch distinct product names, product bases, and product colors based on selected stitcher, challan number, and status = 0
-    $query = "SELECT product_name, product_base, product_color 
+    $query = "SELECT DISTINCT product_name, product_base, product_color 
               FROM kits_job_work 
               WHERE stitcher_name = '$selectedStitcher' 
               AND challan_no_issue = '$selectedChallan' 
