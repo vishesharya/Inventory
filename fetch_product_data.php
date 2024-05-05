@@ -3,21 +3,20 @@ session_start();
 include_once 'include/connection.php';
 include_once 'include/admin-main.php';
 
-
 // Check if stitcher and challan number are set
 if (isset($_GET['stitcher']) && isset($_GET['challan'])) {
     // Get the selected stitcher and challan number
     $selectedStitcher = mysqli_real_escape_string($con, $_GET['stitcher']);
     $selectedChallan = mysqli_real_escape_string($con, $_GET['challan']);
 
-    // Initialize an array to store unique product combinations
+    // Initialize arrays to store unique product combinations
     $uniqueProducts = array();
 
     // Fetch distinct product names, product bases, and product colors based on selected stitcher, challan number, and status = 0
     $query = "SELECT product_name, product_base, product_color 
               FROM kits_job_work 
               WHERE stitcher_name = '$selectedStitcher' 
-              AND challan_no_issue= '$selectedChallan' 
+              AND challan_no_issue = '$selectedChallan' 
               AND status = 0";
 
     $result = mysqli_query($con, $query);
