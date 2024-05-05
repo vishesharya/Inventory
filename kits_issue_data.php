@@ -20,33 +20,41 @@ if (isset($_POST['view_entries'])) {
     // Get selected stitcher
     $stitcher_name = isset($_POST['stitcher_name']) ? mysqli_real_escape_string($con, $_POST['stitcher_name']) : '';
 
-  // Retrieve entries from database based on selected stitcher and challan number
-if (!empty($stitcher_name)) {
-    $conditions = "SELECT date_and_time FROM kits_issue  WHERE stitcher_name = '$stitcher_name'";
+    // Initialize conditions
+    $conditions = "";
+
+    // Add stitcher condition
+    if (!empty($stitcher_name)) {
+        $conditions .= " WHERE stitcher_name = '$stitcher_name'";
+    }
+
+    // Add date range condition
     if (!empty($_POST['from_date']) && !empty($_POST['to_date'])) {
         // Get selected date range
         $start_date = mysqli_real_escape_string($con, $_POST['from_date']);
         $end_date = mysqli_real_escape_string($con, $_POST['to_date']);
-        // Add date range condition
-        $conditions .= " AND date_and_time BETWEEN '$start_date' AND '$end_date'";
+
+        // Add AND or WHERE depending on whether previous conditions exist
+        $conditions .= ($conditions == "") ? " WHERE" : " AND";
+        $conditions .= " date_and_time BETWEEN '$start_date' AND '$end_date'";
     }
+
+    // Add challan number condition
     if (!empty($_POST['challan_no'])) {
         // Get selected challan number
         $challan_no = mysqli_real_escape_string($con, $_POST['challan_no']);
-        // Add challan number condition
-        $conditions .= " AND challan_no = '$challan_no'";
+        
+        // Add AND or WHERE depending on whether previous conditions exist
+        $conditions .= ($conditions == "") ? " WHERE" : " AND";
+        $conditions .= " challan_no = '$challan_no'";
     }
+
     // Construct the final query
     $query = "SELECT * FROM kits_issue $conditions";
     $result = mysqli_query($con, $query);
-} else {
-    // If no stitcher is selected and no other filters are applied, fetch all entries from the database
-    $query = "SELECT * FROM kits_issue";
-    $result = mysqli_query($con, $query);
-}
-
 }
 ?>
+
 
 
 <!DOCTYPE html>
