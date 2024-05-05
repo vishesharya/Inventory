@@ -4,7 +4,7 @@ include_once 'include/connection.php';
 include_once 'include/admin-main.php';
 
 // Fetch stitcher names from the database
-$stitcher_query = "SELECT DISTINCT stitcher_name FROM kits_issue"; 
+$stitcher_query = "SELECT DISTINCT stitcher_name FROM kits_issue ORDER BY stitcher_name ASC"; 
 $stitcher_result = mysqli_query($con, $stitcher_query);
 
 // Check if 'challan_no' is set in session
