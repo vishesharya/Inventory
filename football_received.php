@@ -63,7 +63,7 @@ if (isset($_POST['challan_no_issue']) && isset($_POST['stitcher_name']) && isset
     $selected_stitcher = mysqli_real_escape_string($con, $_POST['stitcher_name']);
     $selected_product = mysqli_real_escape_string($con, $_POST['product_name']);
 
-    $product_base_query = "SELECT DISTINCT product_base FROM kits_job_work WHERE stitcher_name = '$selected_stitcher' AND challan_no_issue = '$selected_challan' AND product_name = '$selected_product'";
+    $product_base_query = "SELECT product_base FROM kits_job_work WHERE stitcher_name = '$selected_stitcher' AND challan_no_issue = '$selected_challan' AND product_name = '$selected_product'";
     $product_base_result = mysqli_query($con, $product_base_query);
 
     if (!$product_base_result) {
