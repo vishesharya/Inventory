@@ -24,7 +24,7 @@ if (isset($_GET['stitcher']) && isset($_GET['challan'])) {
     // Fetch data and store unique product combinations
     while ($row = mysqli_fetch_assoc($result)) {
         // Construct a unique key for the product combination
-        $productKey = $row['product_name'] . '_' . $row['product_base'] . '_' . $row['product_color'];
+        $productKey = $row['product_name'] . '_' || $row['product_base'] . '_' || $row['product_color'];
 
         // Check if the product combination already exists
         if (!isset($uniqueProducts[$productKey])) {
