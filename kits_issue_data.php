@@ -22,7 +22,7 @@ if (isset($_POST['view_entries'])) {
 
   // Retrieve entries from database based on selected stitcher and challan number
 if (!empty($stitcher_name)) {
-    $conditions = "WHERE stitcher_name = '$stitcher_name'";
+    $conditions = "SELECT stitcher_name = '$stitcher_name' FROM Kits_job_work ";
     if (!empty($_POST['from_date']) && !empty($_POST['to_date'])) {
         // Get selected date range
         $start_date = mysqli_real_escape_string($con, $_POST['from_date']);
