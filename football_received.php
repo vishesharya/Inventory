@@ -52,50 +52,25 @@ if (isset($_POST['stitcher_name'])) {
 // Fetch product names based on selected stitcher and challan number
 if (isset($_POST['challan_no_issue'])) {
     $selected_challan = mysqli_real_escape_string($con, $_POST['challan_no_issue']);
-    $product_query = "SELECT DISTINCT product_name FROM kits_job_work WHERE stitcher_name = '$selected_stitcher' AND challan_no_issue = '$selected_challan'";
+    $product_query = "SELECT product_name FROM kits_job_work WHERE stitcher_name = '$selected_stitcher' AND challan_no_issue = '$selected_challan'";
     $product_result = mysqli_query($con, $product_query);
 }
 
 
+
 // Fetch product bases based on selected stitcher, challan number, and product name
-if (isset($_POST['challan_no_issue']) && isset($_POST['stitcher_name']) && isset($_POST['product_name'])) {
-    $selected_challan = mysqli_real_escape_string($con, $_POST['challan_no_issue']);
-    $selected_stitcher = mysqli_real_escape_string($con, $_POST['stitcher_name']);
+if (isset($_POST['product_name'])) {
     $selected_product = mysqli_real_escape_string($con, $_POST['product_name']);
-<<<<<<< HEAD
-
-    $product_base_query = "SELECT product_base FROM kits_job_work WHERE stitcher_name = '$selected_stitcher' AND challan_no_issue = '$selected_challan' AND product_name = '$selected_product'";
-=======
     $product_base_query = "SELECT DISTINCT product_base FROM kits_job_work WHERE stitcher_name = '$selected_stitcher' AND challan_no_issue = '$selected_challan' AND product_name = '$selected_product'";
->>>>>>> parent of 89e32cf (Update football_received.php)
     $product_base_result = mysqli_query($con, $product_base_query);
-
-    if (!$product_base_result) {
-        // Handle query execution error
-        $errors[] = "Error fetching product bases: " . mysqli_error($con);
-    }
 }
 
 // Fetch product colors based on selected stitcher, challan number, product name, and product base
-if (isset($_POST['challan_no_issue']) && isset($_POST['stitcher_name']) && isset($_POST['product_name']) && isset($_POST['product_base'])) {
-    $selected_challan = mysqli_real_escape_string($con, $_POST['challan_no_issue']);
-    $selected_stitcher = mysqli_real_escape_string($con, $_POST['stitcher_name']);
-    $selected_product = mysqli_real_escape_string($con, $_POST['product_name']);
+if (isset($_POST['product_base'])) {
     $selected_product_base = mysqli_real_escape_string($con, $_POST['product_base']);
-<<<<<<< HEAD
-
     $product_color_query = "SELECT product_color FROM kits_job_work WHERE stitcher_name = '$selected_stitcher' AND challan_no_issue = '$selected_challan' AND product_name = '$selected_product' AND product_base = '$selected_product_base'";
-=======
-    $product_color_query = "SELECT DISTINCT product_color FROM kits_job_work WHERE stitcher_name = '$selected_stitcher' AND challan_no_issue = '$selected_challan' AND product_name = '$selected_product' AND product_base = '$selected_product_base'";
->>>>>>> parent of 89e32cf (Update football_received.php)
     $product_color_result = mysqli_query($con, $product_color_query);
-
-    if (!$product_color_result) {
-        // Handle query execution error
-        $errors[] = "Error fetching product colors: " . mysqli_error($con);
-    }
 }
-
 
 
 if (isset($_POST['add_product'])) {
