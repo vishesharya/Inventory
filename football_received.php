@@ -39,7 +39,7 @@ function viewChallanNumber($con) {
 $challan_no = viewChallanNumber($con); 
 
 // Fetch stitcher names from the database
-$stitcher_query = "SELECT stitcher_name FROM stitcher";
+$stitcher_query = "SELECT DISTINCT stitcher_name FROM stitcher";
 $stitcher_result = mysqli_query($con, $stitcher_query);
 
 // Fetch associated challan numbers for selected stitcher
@@ -61,12 +61,12 @@ if (isset($_POST['challan_no_issue'])) {
 // Fetch product bases based on selected stitcher, challan number, and product name
 if (isset($_POST['product_name'])) {
     $selected_product = mysqli_real_escape_string($con, $_POST['product_name']);
-    $product_base_query = "SELECT product_base FROM kits_job_work WHERE stitcher_name = '$selected_stitcher' AND challan_no_issue = '$selected_challan' AND product_name = '$selected_product'";
+    $product_base_query = "SELECT DISTINCT product_base FROM kits_job_work WHERE stitcher_name = '$selected_stitcher' AND challan_no_issue = '$selected_challan' AND product_name = '$selected_product'";
     $product_base_result = mysqli_query($con, $product_base_query);
 }
 
-// Fetch product colors based on selected stitcher, challan number, product name, and product base
-if (isset($_POST['product_base'])) {
+  // Fetch product colors based on selected stitcher, challan number, product name, and product base
+  if (isset($_POST['product_base'])) {
     $selected_product_base = mysqli_real_escape_string($con, $_POST['product_base']);
     $product_color_query = "SELECT product_color FROM kits_job_work WHERE stitcher_name = '$selected_stitcher' AND challan_no_issue = '$selected_challan' AND product_name = '$selected_product' AND product_base = '$selected_product_base'";
     $product_color_result = mysqli_query($con, $product_color_query);
