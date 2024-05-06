@@ -25,10 +25,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }
 
 // Fetch data alphabetically
-$result = mysqli_query($con, "SELECT id, product_name, product_base, product_color, 	remaining_big_panel, remaining_plain_panel,remaining_small_panel FROM sheets_product ORDER BY product_name ASC");
+$result = mysqli_query($con, "SELECT id, product_name, product_base, product_color, remaining_big_panel, remaining_small_panel, remaining_plain_panel FROM sheets_product ORDER BY product_name ASC");
 
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -59,7 +58,22 @@ $result = mysqli_query($con, "SELECT id, product_name, product_base, product_col
     <script type="text/javascript" src="assets/js/plugins/forms/selects/select2.min.js"></script>
     <script type="text/javascript" src="assets/js/core/app.js"></script>
     <script type="text/javascript" src="assets/js/pages/datatables_sorting.js"></script>
+
+
     <!-- /theme JS files -->
+
+    <style>
+             /* Hide the column with per_pice_price data */
+        td[data-field="per_pice_price"] {
+         display: none;
+         }
+
+        /* Hide the column with 2nd_price data */
+       td[data-field="2nd_price"] {
+        display: none;
+        }
+
+    </style>
 
 </head>
 
@@ -74,9 +88,6 @@ $result = mysqli_query($con, "SELECT id, product_name, product_base, product_col
 
         <!-- Page content -->
         <div class="page-content">
-
-            <!-- Main sidebar -->
-         
 
             <!-- Main content -->
             <div class="content-wrapper">
@@ -93,108 +104,95 @@ $result = mysqli_query($con, "SELECT id, product_name, product_base, product_col
                     <div class="breadcrumb-line">
                         <ul class="breadcrumb">
                             <li><a href="dashboard.php"><i class="icon-home2 position-left"></i> Home</a></li>
-                            <li class="active"><a href="inventory.phpp" class="btn bg-indigo-300"  >Sheets Inventory Data</a></li>
+                            <li class="active"><a href="inventory.phpp" class="btn bg-indigo-300"  >Kits Inventory Data</a></li>
                         </ul>
                     </div>
                 </div>
                 <!-- /page header -->
 
-               
-             
-                <!-- /Print form -->
-
                 <!-- Table of football contact query -->
-               
-                    <div class="panel panel-flat" style="overflow: auto;">
-                        <div class="panel-heading">
-                            <h5 class="panel-title">Sheets Product List</h5>
-                            <div class="heading-elements">
-                                <ul class="icons-list">
-                                    <li><a  href="sheets_product_list_print.php" >
-					     	<button  class="btn btn-success ">Print </button>  
-				        	</a>    </li>
-                                    <li><a data-action="collapse"></a></li>
-                                    <li><a data-action="reload"></a></li>
-                                    <li><a data-action="close"></a></li>
-                                </ul>
-                            </div>
+                <div class="panel panel-flat" style="overflow: auto;">
+                    <div class="panel-heading">
+                        <h5 class="panel-title">Kits Product List</h5>
+                        <div class="heading-elements">
+                            <ul class="icons-list">
+                                <li><a  href="print_football_product_list.php" >
+				     	<button  class="btn btn-success ">Print </button>  
+			        	</a>    </li>
+                                <li><a data-action="collapse"></a></li>
+                                <li><a data-action="reload"></a></li>
+                                <li><a data-action="close"></a></li>
+                            </ul>
                         </div>
-
-                        <table class="table datatable-multi-sorting">
-                            <thead>
-                                <tr>
-                                    <th>Sn.</th>
-                                    <th>Product Name</th>
-                                    <th>Product Base</th>
-                                    <th>Product Color</th>
-                                    <th>Big Panel Stock</th>
-                                    <th>Plain Panel Stock</th>
-                                    <th>Small Panel Stock</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php 
-                                $sn=1;
-                                while($data=mysqli_fetch_array($result)) {
-                                ?>
-                                <tr>
-                                    <td><?php echo $sn; ?>.</td>
-                                    <td><?php echo $data['product_name']; ?></td>
-                                    <td><?php echo ucfirst($data['product_base']); ?></td>
-                                    <td><?php echo ucfirst($data['product_color']); ?></td>
-                                    <td contenteditable="true" data-field="quantity1" data-id="<?php echo $data['id']; ?>"><?php echo $data['remaining_big_panel']; ?></td>
-                                    <td contenteditable="true" data-field="quantity2" data-id="<?php echo $data['id']; ?>"><?php echo $data['remaining_plain_panel']; ?></td>
-                                    <td contenteditable="true" data-field="quantity3" data-id="<?php echo $data['id']; ?>"><?php echo $data['remaining_small_panel']; ?></td>
-                                </tr>
-                                <?php 
-                                $sn++; 
-                                }  
-                                ?>
-                            </tbody>
-                        </table>
                     </div>
+
+                    <table class="table datatable-multi-sorting">
+                        <thead>
+                            <tr>
+                                <th>Sn.</th>
+                                <th>Product Name</th>
+                                <th>Product Base</th>
+                                <th>Product Color</th>
+                                <th>Big Panel Stock</th>
+                                <th>Plain Panel Stock</th>
+                                <th>Small Panel Stock</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php 
+                            $sn=1;
+                            while($data=mysqli_fetch_array($result)) {
+                            ?>
+                            <tr>
+                                <td><?php echo $sn; ?>.</td>
+                                <td><?php echo $data['product_name']; ?></td>
+                                <td><?php echo ucfirst($data['product_base']); ?></td>
+                                <td><?php echo ucfirst($data['product_color']); ?></td>
+                                <td contenteditable="true" data-field="remaining_big_panel" data-id="<?php echo $data['id']; ?>"><?php echo $data['remaining_big_panel']; ?></td>
+                                <td contenteditable="true" data-field="remaining_small_panel" data-id="<?php echo $data['id']; ?>"><?php echo $data['remaining_small_panel']; ?></td>
+                                <td contenteditable="true" data-field="remaining_plain_panel" data-id="<?php echo $data['id']; ?>"><?php echo $data['remaining_plain_panel']; ?></td>
+                            </tr>
+                            <?php 
+                            $sn++; 
+                            }  
+                            ?>
+                        </tbody>
+                    </table>
                 </div>
                 <!-- /Table of football contact query -->
-
-               
-
             </div>
             <!-- /main content -->
-
         </div>
         <!-- /page content -->
-
     </div>
     <!-- /page container -->
 
- 
     <!-- Delete/Edit validation -->
-<script>
-document.querySelectorAll('[contenteditable="true"]').forEach(function(element) {
-    element.addEventListener('keydown', function(event) {
-        if (event.key === 'Enter') {
-            event.preventDefault();
-            this.blur();
-            var id = this.getAttribute('data-id');
-            var field = this.getAttribute('data-field');
-            var value = this.innerText;
-            updateDatabase(id, field, value);
-        }
+    <script>
+    document.querySelectorAll('[contenteditable="true"]').forEach(function(element) {
+        element.addEventListener('keydown', function(event) {
+            if (event.key === 'Enter') {
+                event.preventDefault();
+                this.blur();
+                var id = this.getAttribute('data-id');
+                var field = this.getAttribute('data-field');
+                var value = this.innerText;
+                updateDatabase(id, field, value);
+            }
+        });
     });
-});
 
-function updateDatabase(id, field, value) {
-    var xhr = new XMLHttpRequest();
-    xhr.open('POST', 'sheets_product_stock_update.php', true);
-    xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-    xhr.onreadystatechange = function() {
-        if (xhr.readyState == 4 && xhr.status == 200) {
-            console.log(xhr.responseText);
-        }
-    };
-    xhr.send('id=' + id + '&field=' + field + '&value=' + value);
-}
-</script>
-
+    function updateDatabase(id, field, value) {
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', 'sheets_product_stock_update.php', true);
+        xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                console.log(xhr.responseText);
+            }
+        };
+        xhr.send('id=' + id + '&field=' + field + '&value=' + value);
+    }
+    </script>
 </body>
 </html>
