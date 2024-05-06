@@ -86,6 +86,13 @@ include_once 'include/admin-main.php';
                         <div class="col-lg-8">
                             <!-- Quick stats boxes -->
                             <div class="row">
+                            <a href="kits_inventory.php" style='color:white'>
+                                    <div class="col-lg-4">
+                                        <div class="panel bg-teal-400">
+                                            <p style="margin: 10px; font-size: large;">Sheets Inventory</p>
+                                        </div>
+                                    </div>
+                                </a>
                                  <a href="kits_inventory.php" style='color:white'>
                                     <div class="col-lg-4">
                                         <div class="panel bg-teal-400">
