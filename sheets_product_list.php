@@ -25,7 +25,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }
 
 // Fetch data alphabetically
-$result = mysqli_query($con, "SELECT id, product_name, product_base, product_color, quantity1, quantity2,quantity3 FROM sheets_product ORDER BY product_name ASC");
+$result = mysqli_query($con, "SELECT id, product_name, product_base, product_color, quantity1, quantity2, quantity3 FROM sheets_product ORDER BY product_name ASC");
 
 ?>
 
@@ -75,9 +75,6 @@ $result = mysqli_query($con, "SELECT id, product_name, product_base, product_col
         <!-- Page content -->
         <div class="page-content">
 
-            <!-- Main sidebar -->
-         
-
             <!-- Main content -->
             <div class="content-wrapper">
 
@@ -87,7 +84,6 @@ $result = mysqli_query($con, "SELECT id, product_name, product_base, product_col
                         <div class="page-title">
                             <h4><i class="icon-arrow-left52 position-left"></i> <a href="inventory.php" class="text-semibold">Click Here - Go Back</a></h4>
                         </div>
-
                     </div>
 
                     <div class="breadcrumb-line">
@@ -99,64 +95,56 @@ $result = mysqli_query($con, "SELECT id, product_name, product_base, product_col
                 </div>
                 <!-- /page header -->
 
-               
-             
-                <!-- /Print form -->
-
-                <!-- Table of football contact query -->
-               
-                    <div class="panel panel-flat" style="overflow: auto;">
-                        <div class="panel-heading">
-                            <h5 class="panel-title">Sheets Product List</h5>
-                            <div class="heading-elements">
-                                <ul class="icons-list">
-                                    <li><a  href="sheets_product_list_print.php" >
-					     	<button  class="btn btn-success ">Print </button>  
-				        	</a>    </li>
-                                    <li><a data-action="collapse"></a></li>
-                                    <li><a data-action="reload"></a></li>
-                                    <li><a data-action="close"></a></li>
-                                </ul>
-                            </div>
+                <!-- Table of sheets product list -->
+                <div class="panel panel-flat" style="overflow: auto;">
+                    <div class="panel-heading">
+                        <h5 class="panel-title">Sheets Product List</h5>
+                        <div class="heading-elements">
+                            <ul class="icons-list">
+                                <li><a  href="sheets_product_list_print.php" >
+                                    <button  class="btn btn-success ">Print </button>  
+                                </a></li>
+                                <li><a data-action="collapse"></a></li>
+                                <li><a data-action="reload"></a></li>
+                                <li><a data-action="close"></a></li>
+                            </ul>
                         </div>
-
-                        <table class="table datatable-multi-sorting">
-                            <thead>
-                                <tr>
-                                    <th>Sn.</th>
-                                    <th>Product Name</th>
-                                    <th>Product Base</th>
-                                    <th>Product Color</th>
-                                    <th>Big Panel Stock</th>
-                                    <th>Plain Panel Stock</th>
-                                    <th>Small Panel Stock</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php 
-                                $sn=1;
-                                while($data=mysqli_fetch_array($result)) {
-                                ?>
-                                <tr>
-                                    <td><?php echo $sn; ?>.</td>
-                                    <td><?php echo $data['product_name']; ?></td>
-                                    <td><?php echo ucfirst($data['product_base']); ?></td>
-                                    <td><?php echo ucfirst($data['product_color']); ?></td>
-                                    <td contenteditable="true" data-field="quantity1" data-id="<?php echo $data['id']; ?>"><?php echo $data['quantity1']; ?></td>
-                                    <td contenteditable="true" data-field="quantity2" data-id="<?php echo $data['id']; ?>"><?php echo $data['quantity2']; ?></td>
-                                    <td contenteditable="true" data-field="quantity3" data-id="<?php echo $data['id']; ?>"><?php echo $data['quantity3']; ?></td>
-                                </tr>
-                                <?php 
-                                $sn++; 
-                                }  
-                                ?>
-                            </tbody>
-                        </table>
                     </div>
-                </div>
-                <!-- /Table of football contact query -->
 
-               
+                    <table class="table datatable-multi-sorting">
+                        <thead>
+                            <tr>
+                                <th>Sn.</th>
+                                <th>Product Name</th>
+                                <th>Product Base</th>
+                                <th>Product Color</th>
+                                <th>Big Panel Stock</th>
+                                <th>Plain Panel Stock</th>
+                                <th>Small Panel Stock</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php 
+                            $sn=1;
+                            while($data=mysqli_fetch_array($result)) {
+                            ?>
+                            <tr>
+                                <td><?php echo $sn; ?>.</td>
+                                <td><?php echo $data['product_name']; ?></td>
+                                <td><?php echo ucfirst($data['product_base']); ?></td>
+                                <td><?php echo ucfirst($data['product_color']); ?></td>
+                                <td contenteditable="true" data-field="quantity1" data-id="<?php echo $data['id']; ?>"><?php echo $data['quantity1']; ?></td>
+                                <td contenteditable="true" data-field="quantity2" data-id="<?php echo $data['id']; ?>"><?php echo $data['quantity2']; ?></td>
+                                <td contenteditable="true" data-field="quantity3" data-id="<?php echo $data['id']; ?>"><?php echo $data['quantity3']; ?></td>
+                            </tr>
+                            <?php 
+                            $sn++; 
+                            }  
+                            ?>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- /Table of sheets product list -->
 
             </div>
             <!-- /main content -->
