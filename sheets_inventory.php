@@ -105,21 +105,21 @@ include_once 'include/admin-main.php';
                                    <a href="kits_receive_data.php" style='color:white'>
                                     <div class="col-lg-4">
                                         <div class="panel bg-teal-400">
-                                            <p style="margin: 10px; font-size: large;">Kits Receive Data</p>
+                                            <p style="margin: 10px; font-size: large;">Sheets Receive Data</p>
                                         </div>
                                     </div>
                                 </a>
                                  <a href="kits_issue_data.php" style='color:white'>
                                     <div class="col-lg-4">
                                         <div class="panel bg-teal-400">
-                                            <p style="margin: 10px; font-size: large;">Kits Issue Data</p>
+                                            <p style="margin: 10px; font-size: large;">Sheets Issue Data</p>
                                         </div>
                                     </div>
                                 </a>
                                    <a href="kits_job_work.php" style='color:white'>
                                     <div class="col-lg-4">
                                         <div class="panel bg-teal-400">
-                                            <p style="margin: 10px; font-size: large;">Kits Job Work</p>
+                                            <p style="margin: 10px; font-size: large;">Sheets Job Work</p>
                                         </div>
                                     </div>
                                 </a>
