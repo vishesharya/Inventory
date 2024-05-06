@@ -7,14 +7,14 @@ include_once 'include/admin-main.php';
 $labour_name = isset($_POST['labour_name']) ? $_POST['labour_name'] : "";
 $small_sheet_color = isset($_POST['small_sheet_color']) ? $_POST['small_sheet_color'] : "";
 // Logic to fetch product names from the database
-$product_query = "SELECT DISTINCT product_name FROM sheets_product";
+$product_query = "SELECT DISTINCT product_name FROM sheets_product ORDER BY product_name ASC";
 $product_result = mysqli_query($con, $product_query);
 
 // Logic to fetch product bases and colors based on selected product
 $selected_product = isset($_POST['product_name']) ? $_POST['product_name'] : null;
 if ($selected_product) {
-    $product_base_query = "SELECT DISTINCT product_base FROM sheets_product WHERE product_name = '$selected_product'";
-    $product_color_query = "SELECT DISTINCT product_color FROM sheets_product WHERE product_name = '$selected_product'";
+    $product_base_query = "SELECT DISTINCT product_base FROM sheets_product WHERE product_name = '$selected_product' ORDER BY product_base ASC";
+    $product_color_query = "SELECT DISTINCT product_color FROM sheets_product WHERE product_name = '$selected_product' ORDER BY product_color ASC";
     $product_base_result = mysqli_query($con, $product_base_query);
     $product_color_result = mysqli_query($con, $product_color_query);
 }
