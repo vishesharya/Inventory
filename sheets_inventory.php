@@ -124,7 +124,7 @@ include_once 'include/admin-main.php';
                                     </div>
                                 </a>
                                
-                                 <a href="kits_product_list.php" style='color:white'>
+                                 <a href="./sheets_product_list.php" style='color:white'>
                                     <div class="col-lg-4">
                                         <div class="panel bg-teal-400">
                                             <p style="margin: 10px; font-size: large;">Inventory Status</p>
