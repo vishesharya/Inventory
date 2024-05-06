@@ -245,8 +245,8 @@ if (isset($_POST['submit_products'])) {
         
 
             // Insert product into the database
-            $insert_query = "INSERT INTO kits_received (challan_no, labour_name, product_name, product_base, product_color, received_quantity, total) 
-                            VALUES ('$challan_no', '$labour_name', '$product_name', '$product_base', '$product_color', '$quantity', '$total')";
+            $insert_query = "INSERT INTO sheets_received (challan_no, product_name, product_base, product_color, quantity1, quantity2, quantity3, small_panel_color) 
+                            VALUES ('$challan_no', '$product_name', '$product_base', '$product_color', '$quantity1' , '$quantity2', '$quantity3', '$small_sheet_color')";
             $insert_result = mysqli_query($con, $insert_query);
 
             if (!$insert_result) {
