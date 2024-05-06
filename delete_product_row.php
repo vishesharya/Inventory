@@ -18,6 +18,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $query_products = "DELETE FROM products WHERE id = $id";
         $result_products = mysqli_query($con, $query_products);
 
+        // Delete from products table
+        $query_products = "DELETE FROM sheets_product WHERE id = $id";
+        $result_products = mysqli_query($con, $query_products);
+
+
         if ($result_kits_product && $result_products) {
             echo "Row deleted successfully.";
         } else {

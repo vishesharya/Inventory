@@ -4,6 +4,7 @@ include_once 'include/connection.php';
 include_once 'include/admin-main.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Check if the necessary POST data is set
     if (isset($_POST['id']) && isset($_POST['field']) && isset($_POST['value'])) {
         $id = $_POST['id'];
         $field = $_POST['field'];
@@ -21,8 +22,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Update database for products table
         $query_products = "UPDATE products SET $field = '$value' WHERE id = $id";
         $result_products = mysqli_query($con, $query_products);
+        
+        // Update database for sheets_product table
+        $query_sheets_product = "UPDATE sheets_product SET $field = '$value' WHERE id = $id";
+        $result_sheets_product = mysqli_query($con, $query_sheets_product);
 
-        if (!$result_kits_product || !$result_products) {
+        if (!$result_kits_product || !$result_products || !$result_sheets_product) {
             echo "Error updating record: " . mysqli_error($con);
         }
     }
@@ -30,9 +35,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 // Fetch common fields from kits_product and products tables
 $result = mysqli_query($con, "SELECT kp.id, kp.product_name, kp.product_base, kp.product_color, 
-                                    p.product_name AS product_name_product, p.product_base AS product_base_product, p.product_color AS product_color_product 
+                                    p.product_name AS product_name_product, p.product_base AS product_base_product, p.product_color AS product_color_product,
+                                    sp.product_name AS product_name_sheets, sp.product_base AS product_base_sheets, sp.product_color AS product_color_sheets
                              FROM kits_product kp 
                              JOIN products p ON kp.id = p.id 
+                             JOIN sheets_product sp ON kp.id = sp.id
                              ORDER BY kp.product_name ASC");
 
 ?>
@@ -100,7 +107,7 @@ $result = mysqli_query($con, "SELECT kp.id, kp.product_name, kp.product_base, kp
                     <div class="breadcrumb-line">
                         <ul class="breadcrumb">
                             <li><a href="dashboard.php"><i class="icon-home2 position-left"></i> Home</a></li>
-                            <li class="active"><a href="inventory.php" class="btn bg-indigo-300"  >Update Products</a></li>
+                            <li class="active"><a href="inventory.php" class="btn bg-indigo-300"  >Kits Inventory Data</a></li>
                             
                         </ul>
                     </div>
@@ -116,12 +123,14 @@ $result = mysqli_query($con, "SELECT kp.id, kp.product_name, kp.product_base, kp
                     <div class="panel panel-flat" style="overflow: auto;">
                     
                         <div class="panel-heading">
-                            <h5 class="panel-title">All Product List</h5>
+                            <h5 class="panel-title">Kits Product List</h5>
                             
                             <div class="heading-elements">
                         
                                 <ul class="icons-list">
-                                   
+                                    <li><a  href="print_kits_product_list.php" >
+					     	<button  class="btn btn-success ">Print </button>  
+				        	</a>    </li>
                                     <li><a data-action="collapse"></a></li>
                                     <li><a data-action="reload"></a></li>
                                     <li><a data-action="close"></a></li>
@@ -177,7 +186,38 @@ $result = mysqli_query($con, "SELECT kp.id, kp.product_name, kp.product_base, kp
     <!-- /page container -->
 
     <!-- Delete/Edit validation -->
-    <script>
+   
+    
+<!-- Delete/Edit validation -->
+<script>
+    // Function to handle update operation via AJAX
+    function updateDatabase(id, field, value) {
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', 'update.php', true);
+        xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                console.log(xhr.responseText);
+            }
+        };
+        xhr.send('id=' + id + '&field=' + field + '&value=' + value);
+    }
+
+    // Function to handle delete operation via AJAX
+    function deleteRow(id) {
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', 'delete_product_row.php', true);
+        xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                console.log(xhr.responseText);
+                // Reload the page or update the table if necessary
+            }
+        };
+        xhr.send('id=' + id);
+    }
+
+    // Event listener for update operation
     document.querySelectorAll('[contenteditable="true"]').forEach(function(element) {
         element.addEventListener('keydown', function(event) {
             if (event.key === 'Enter') {
@@ -191,41 +231,17 @@ $result = mysqli_query($con, "SELECT kp.id, kp.product_name, kp.product_base, kp
         });
     });
 
-    function updateDatabase(id, field, value) {
-        var xhr = new XMLHttpRequest();
-        xhr.open('POST', 'update.php', true);
-        xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-        xhr.onreadystatechange = function() {
-            if (xhr.readyState == 4 && xhr.status == 200) {
-                console.log(xhr.responseText);
+    // Event listener for delete operation
+    document.querySelectorAll('.delete-row').forEach(function(element) {
+        element.addEventListener('click', function() {
+            var id = this.getAttribute('data-id');
+            if(confirm('Are you sure you want to delete this Product?')) {
+                deleteRow(id);
             }
-        };
-        xhr.send('id=' + id + '&field=' + field + '&value=' + value);
-    }
-    </script>
-    <script>
-document.querySelectorAll('.delete-row').forEach(function(element) {
-    element.addEventListener('click', function() {
-        var id = this.getAttribute('data-id');
-        if(confirm('Are you sure you want to delete this Product?')) {
-            deleteRow(id);
-        }
+        });
     });
-});
-
-function deleteRow(id) {
-    var xhr = new XMLHttpRequest();
-    xhr.open('POST', 'delete_product_row.php', true);
-    xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-    xhr.onreadystatechange = function() {
-        if (xhr.readyState == 4 && xhr.status == 200) {
-            console.log(xhr.responseText);
-            // Reload the page or update the table if necessary
-        }
-    };
-    xhr.send('id=' + id);
-}
 </script>
+
 
 </body>
 </html>
