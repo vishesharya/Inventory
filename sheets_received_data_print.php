@@ -58,7 +58,7 @@ include_once 'include/admin-main.php';
             $sn = 1;
 
             // Initialize SQL query
-            $q = "SELECT `challan_no`, `labour_name`, `product_name`, `product_base`, `product_color`, `quantity1`,  `quantity2`, `small_panel_color`, `quantity3`,`date_and_time` FROM sheets_received";
+            $q = "SELECT `id`, `challan_no`, `product_name`, `product_base`, `quantity1`, `quantity2`, `small_panel_color`, `quantity3`, `date_and_time` FROM sheets_received";
 
             // Check if the submit button is clicked and from_date and to_date are specified
             if(isset($_POST['submit']) && !empty($_POST['from_date']) && !empty($_POST['to_date'])) {
@@ -80,23 +80,23 @@ include_once 'include/admin-main.php';
             if(mysqli_num_rows($show) > 0) {
                 echo "<table class='detail-table'> <!-- Add class for the table -->
                     <tr>
-                    <th>Sn.</th>
-                    <th>Challan No.</th>  
-                           
+                    <th>Sr.</th>
+                    <th>Challan No.</th>
                     <th>Product Name</th>
                     <th>Product Base</th>
                     <th>Product Color</th>
-                    <th>Big Panel</th>
-                    <th>Plain Panel</th>
-                    <th>Small Panel</th>
-                    <th>Date/Time</th>
+                    <th>Big Panel Quantity</th>
+                    <th>Plain Panel Quantity</th>
+                    <th>Small Panel Color</th>
+                    <th>Small Panel Quantity</th>
+                    <th>Date And Time</th>
                     </tr>";
 
                 // Fetch and display data
                 while($data = mysqli_fetch_array($show)) {
                     echo "<tr>
+                    <td>".$data['id']."</td>
                     <td>".$data['challan_no']."</td>
-                
                     <td>".$data['product_name']."</td>
                     <td>".$data['product_base']."</td>
                     <td>".$data['product_color']."</td>
@@ -113,18 +113,18 @@ include_once 'include/admin-main.php';
             } else {
                 // If no data found, display only the table headers
                 echo "<table class='detail-table'> <!-- Add class for the table -->
-                    <tr>
-                    <th>Sn.</th>
-                    <th>Challan No.</th>  
-                                           
-                    <th>Product Name</th>
-                    <th>Product Base</th>
-                    <th>Product Color</th>
-                    <th>Big Panel</th>
-                    <th>Plain Panel</th>
-                    <th>Small Panel</th>
-                    <th>Date/Time</th>
-                    </tr>";
+                <tr>
+                <th>Sr.</th>
+                <th>Challan No.</th>
+                <th>Product Name</th>
+                <th>Product Base</th>
+                <th>Product Color</th>
+                <th>Big Panel Quantity</th>
+                <th>Plain Panel Quantity</th>
+                <th>Small Panel Color</th>
+                <th>Small Panel Quantity</th>
+                <th>Date And Time</th>
+                </tr>";
                 echo "</table>";
                 echo "<p>No data found</p>";
             }
