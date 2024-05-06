@@ -116,10 +116,10 @@ include_once 'include/admin-main.php';
                                         </div>
                                     </div>
                                 </a>
-                                   <a href="kits_job_work.php" style='color:white'>
+                                   <a href="#" style='color:white'>
                                     <div class="col-lg-4">
                                         <div class="panel bg-teal-400">
-                                            <p style="margin: 10px; font-size: large;">Sheets Job Work</p>
+                                            <p style="margin: 10px; font-size: large;">Color Sheets</p>
                                         </div>
                                     </div>
                                 </a>
