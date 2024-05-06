@@ -86,66 +86,55 @@ include_once 'include/admin-main.php';
                         <div class="col-lg-8">
                             <!-- Quick stats boxes -->
                             <div class="row">
-                            <a href="sheets_inventory.php" style='color:white'>
+                                
+                                   <a href="kits_receive_form.php" style='color:white'>
                                     <div class="col-lg-4">
                                         <div class="panel bg-teal-400">
-                                            <p style="margin: 10px; font-size: large;">Sheets Inventory</p>
+                                            <p style="margin: 10px; font-size: large;">Receive Form</p>
                                         </div>
                                     </div>
                                 </a>
-                                 <a href="kits_inventory.php" style='color:white'>
+                                <a href="kits_issue_form.php" style='color:white'>
                                     <div class="col-lg-4">
                                         <div class="panel bg-teal-400">
-                                            <p style="margin: 10px; font-size: large;">Kits Inventory</p>
-                                        </div>
-                                    </div>
-                                </a>
-                                <a href="football_inventory.php" style='color:white'>
-                                    <div class="col-lg-4">
-                                        <div class="panel bg-teal-400">
-                                            <p style="margin: 10px; font-size: large;">Football Inventory</p>
-                                        </div>
-                                    </div>
-                                </a>
-                                 <a href="update_bladder_balance.php" style='color:white'>
-                                    <div class="col-lg-4">
-                                        <div class="panel bg-teal-400">
-                                            <p style="margin: 10px; font-size: large;">Bladder Balance</p>
-                                        </div>
-                                    </div>
-                                </a>
-                                <a href="update_thread_balance.php" style='color:white'>
-                                    <div class="col-lg-4">
-                                        <div class="panel bg-teal-400">
-                                            <p style="margin: 10px; font-size: large;">Thread Balance</p>
-                                        </div>
-                                    </div>
-                                </a>
-                               
-                                  <a href="add_stitcher.php" style='color:white'>
-                                    <div class="col-lg-4">
-                                        <div class="panel bg-teal-400">
-                                            <p style="margin: 10px; font-size: large;">Add/Delete Stitcher</p>
+                                            <p style="margin: 10px; font-size: large;">Issue Form</p>
                                         </div>
                                     </div>
                                 </a>
                                 
-                                <a href="add_inventory_products.php" style='color:white'>
+                                   <a href="kits_receive_data.php" style='color:white'>
                                     <div class="col-lg-4">
                                         <div class="panel bg-teal-400">
-                                            <p style="margin: 10px; font-size: large;">Add Inventory</p>
+                                            <p style="margin: 10px; font-size: large;">Kits Receive Data</p>
                                         </div>
                                     </div>
                                 </a>
-                                 
-                              
-                                <a href="delete_inventory_products.php" style='color:white'>
+                                 <a href="kits_issue_data.php" style='color:white'>
                                     <div class="col-lg-4">
-                                        <div class="panel bg-pink-400">
-                                            <p style="margin: 10px; font-size: large;">Delete Inventory</p>
+                                        <div class="panel bg-teal-400">
+                                            <p style="margin: 10px; font-size: large;">Kits Issue Data</p>
                                         </div>
                                     </div>
                                 </a>
+                                   <a href="kits_job_work.php" style='color:white'>
+                                    <div class="col-lg-4">
+                                        <div class="panel bg-teal-400">
+                                            <p style="margin: 10px; font-size: large;">Kits Job Work</p>
+                                        </div>
+                                    </div>
+                                </a>
+                               
+                                 <a href="kits_product_list.php" style='color:white'>
+                                    <div class="col-lg-4">
+                                        <div class="panel bg-teal-400">
+                                            <p style="margin: 10px; font-size: large;">Inventory Status</p>
+                                        </div>
+                                    </div>
+                                </a>
+                                
+                            
+                            
+                                
                             </div>
                         </div>
                     </div>
