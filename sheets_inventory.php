@@ -102,14 +102,14 @@ include_once 'include/admin-main.php';
                                     </div>
                                 </a>
                                 
-                                   <a href="kits_receive_data.php" style='color:white'>
+                                   <a href="./sheets_received_data.php" style='color:white'>
                                     <div class="col-lg-4">
                                         <div class="panel bg-teal-400">
                                             <p style="margin: 10px; font-size: large;">Sheets Receive Data</p>
                                         </div>
                                     </div>
                                 </a>
-                                 <a href="kits_issue_data.php" style='color:white'>
+                                 <a href="./sheets_issue_data.php" style='color:white'>
                                     <div class="col-lg-4">
                                         <div class="panel bg-teal-400">
                                             <p style="margin: 10px; font-size: large;">Sheets Issue Data</p>
