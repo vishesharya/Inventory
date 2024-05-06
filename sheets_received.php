@@ -76,7 +76,7 @@ if (isset($_POST['add_product'])) {
         $product_name = mysqli_real_escape_string($con, $_POST['product_name']);
         $product_base = mysqli_real_escape_string($con, $_POST['product_base']);
         $product_color = mysqli_real_escape_string($con, $_POST['product_color']);
-        $small_sheet_color = mysqli_real_escape_string($con, $_POST['small_sheet_color']);
+   
         $quantity1 = mysqli_real_escape_string($con, $_POST['quantity1']);
         $quantity2 = mysqli_real_escape_string($con, $_POST['quantity2']);
         $quantity3 = mysqli_real_escape_string($con, $_POST['quantity3']);
