@@ -25,7 +25,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }
 
 // Fetch data alphabetically
-$result = mysqli_query($con, "SELECT id, product_name, product_base, product_color, quantity1, quantity2,quantity3 FROM sheets_product ORDER BY product_name ASC");
+$result = mysqli_query($con, "SELECT id, product_name, product_base, product_color, 	remaining_big_panel, remaining_plain_panel,remaining_small_panel FROM sheets_product ORDER BY product_name ASC");
 
 ?>
 
@@ -142,9 +142,9 @@ $result = mysqli_query($con, "SELECT id, product_name, product_base, product_col
                                     <td><?php echo $data['product_name']; ?></td>
                                     <td><?php echo ucfirst($data['product_base']); ?></td>
                                     <td><?php echo ucfirst($data['product_color']); ?></td>
-                                    <td contenteditable="true" data-field="quantity1" data-id="<?php echo $data['id']; ?>"><?php echo $data['quantity1']; ?></td>
-                                    <td contenteditable="true" data-field="quantity2" data-id="<?php echo $data['id']; ?>"><?php echo $data['quantity2']; ?></td>
-                                    <td contenteditable="true" data-field="quantity3" data-id="<?php echo $data['id']; ?>"><?php echo $data['quantity3']; ?></td>
+                                    <td contenteditable="true" data-field="quantity1" data-id="<?php echo $data['id']; ?>"><?php echo $data['remaining_big_panel']; ?></td>
+                                    <td contenteditable="true" data-field="quantity2" data-id="<?php echo $data['id']; ?>"><?php echo $data['remaining_plain_panel']; ?></td>
+                                    <td contenteditable="true" data-field="quantity3" data-id="<?php echo $data['id']; ?>"><?php echo $data['remaining_small_panel']; ?></td>
                                 </tr>
                                 <?php 
                                 $sn++; 
