@@ -5,7 +5,7 @@ include_once 'include/admin-main.php';
 
 // Default value for Labour Name
 $labour_name = isset($_POST['labour_name']) ? $_POST['labour_name'] : "";
-
+$small_sheet_color = isset($_POST['small_sheet_color']) ? $_POST['small_sheet_color'] : "";
 // Logic to fetch product names from the database
 $product_query = "SELECT DISTINCT product_name FROM sheets_product";
 $product_result = mysqli_query($con, $product_query);
