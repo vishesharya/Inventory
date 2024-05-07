@@ -150,6 +150,7 @@ if (isset($_POST['add_product'])) {
             // Insert data into temporary session storage
             $temp_product = array(
                 'challan_no' => $challan_no,
+                'labour_name' => $labour_name,
                 'small_sheet_color' => $small_sheet_color,
                 'product_name' => $product_name,
                 'product_base' => $product_base,
@@ -249,7 +250,7 @@ if (isset($_POST['submit_products'])) {
     } else {
         foreach ($temp_products as $product) {
             $challan_no = mysqli_real_escape_string($con, $product['challan_no']);
-            
+            $labour_name = mysqli_real_escape_string($con, $product['labour_name']);
             $small_sheet_color = mysqli_real_escape_string($con, $product['small_sheet_color']);
             $product_name = mysqli_real_escape_string($con, $product['product_name']);
             $product_base = mysqli_real_escape_string($con, $product['product_base']);
@@ -336,7 +337,12 @@ if (isset($_POST['submit_products'])) {
                                     </div>
                                 </div>
                                
-                           
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="labour_name">Labour Name:</label>
+                                        <input type="text" class="form-control" id="labour_name" name="labour_name" value="<?php echo $labour_name; ?>" placeholder="Enter Labour Name">
+                                    </div>
+                                </div>
                        
                                 <div class="col-md-6">
                                     <div class="form-group">
