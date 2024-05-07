@@ -125,6 +125,13 @@ include_once 'include/admin-main.php';
                                         </div>
                                     </div>
                                 </a>
+                                <a href="sheets_color_panel_inventory.php" style='color:white'>
+                                    <div class="col-lg-4">
+                                        <div class="panel bg-teal-400">
+                                            <p style="margin: 10px; font-size: large;">Color Pannel Inventory Status</p>
+                                        </div>
+                                    </div>
+                                </a>
                                 
                                 <a href="./sheets_panel_color.php" style='color:white'>
                                     <div class="col-lg-4">
