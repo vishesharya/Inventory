@@ -159,7 +159,7 @@ if (isset($_POST['delete_product'])) {
     $small_sheet_color = isset($deleted_product['small_sheet_color']) ? mysqli_real_escape_string($con, $deleted_product['small_sheet_color']) : '';
     $product_name = mysqli_real_escape_string($con, $deleted_product['product_name']);
     $product_base = mysqli_real_escape_string($con, $deleted_product['product_base']);
-    $small_sheet_color = mysqli_real_escape_string($con, $_POST['small_sheet_color']);
+  
     $product_color= mysqli_real_escape_string($con, $deleted_product['product_color']);
     $deleted_quantity1 = mysqli_real_escape_string($con, $deleted_product['quantity1']);
     $deleted_quantity2 = mysqli_real_escape_string($con, $deleted_product['quantity2']);
