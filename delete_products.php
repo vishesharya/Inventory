@@ -20,6 +20,10 @@ if (isset($_POST['delete_product'])) {
     $deleteKitsProductQuery = "DELETE FROM kits_product WHERE product_name = '$product_name' AND product_base = '$product_base' AND product_color = '$product_color'";
     mysqli_query($con, $deleteKitsProductQuery);
 
+     // Delete from kits_product table
+     $deleteSheetsProductQuery = "DELETE FROM sheets_product WHERE product_name = '$product_name' AND product_base = '$product_base' AND product_color = '$product_color'";
+     mysqli_query($con, $deleteSheetsProductQuery);
+
     // Check if deletion was successful
     if (mysqli_affected_rows($con) > 0) {
         $deleteProductMsg = "<p style='color: green;font-size: medium;text-align: center;'>Product deleted successfully</p>";
@@ -84,7 +88,7 @@ if (isset($_POST['delete_product'])) {
                                     <option value="">Select Product Color</option>
                                     <?php
                                     // Fetch product colors alphabetically from the database
-                                    $productColorQuery = mysqli_query($con, "SELECT DISTINCT product_color FROM kits_product ORDER BY product_color ASC");
+                                    $productColorQuery = mysqli_query($con, "SELECT DISTINCT product_color FROM sheets_product ORDER BY product_color ASC");
                                     while ($row = mysqli_fetch_assoc($productColorQuery)) {
                                         echo "<option value='" . $row['product_color'] . "'>" . $row['product_color'] . "</option>";
                                     }
