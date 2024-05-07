@@ -58,7 +58,7 @@ include_once 'include/admin-main.php';
             $sn = 1;
 
             // Initialize SQL query
-            $q = "SELECT 'product_name', 'product_base', 'product_color', 'remaining_big_panel', 'remaining_small_panel', 'remaining_plain_panel' FROM sheets_product ORDER BY product_name ASC";
+            $q = "SELECT  `product_name`, `product_base`, `product_color`, `remaining_big_panel`, `remaining_small_panel`, `remaining_plain_panel` FROM sheets_product ORDER BY product_name ASC";
 
      
 
