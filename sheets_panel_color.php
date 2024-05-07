@@ -2,6 +2,8 @@
 session_start();
 include_once 'include/connection.php';
 
+$addColorMsg = '';
+
 if (isset($_POST['add_color'])) {
     $product_name = $_POST['product_name'];
     $small_sheet_color = isset($_POST['small_sheet_color']) ? $_POST['small_sheet_color'] : "";
@@ -11,19 +13,21 @@ if (isset($_POST['add_color'])) {
     $result = mysqli_query($con, $checkColorQuery);
 
     if (mysqli_num_rows($result) > 0) {
-        // Color already exists, show message for 3 seconds
-        echo "<script>setTimeout(function(){ alert('Color already added!'); }, 3000);</script>";
+        // Color already exists
+        $addColorMsg = "Color already added!";
     } else {
         // Insert into sheets_small_stock table
         $insertPanelColorQuery = "INSERT INTO sheets_small_stock (product_name, small_sheet_color) VALUES ('$product_name', '$small_sheet_color')";
         if(mysqli_query($con, $insertPanelColorQuery)) {
-            // Color added successfully, show message for 3 seconds
-            echo "<script>setTimeout(function(){ alert('Color added successfully.'); }, 1);</script>";
+            // Color added successfully
+            $addColorMsg = "Color added successfully.";
         } else {
-            // Error adding color, show message for 3 seconds
-            echo "<script>setTimeout(function(){ alert('Error: Unable to add color.'); }, 1);</script>";
+            // Error adding color
+            $addColorMsg = "Error: Unable to add color.";
         }
     }
+    // Display the message for 3 seconds
+    echo "<script>setTimeout(function(){ document.getElementById('message').style.display = 'none'; }, 3000);</script>";
 }
 ?>
 
@@ -46,6 +50,11 @@ if (isset($_POST['add_color'])) {
                         <h2>Add Panel Color</h2>
                     </div>
                     <div class="card-body">
+                        <?php if (!empty($addColorMsg)) : ?>
+                            <div id="message" class="alert alert-info" role="alert">
+                                <?php echo $addColorMsg; ?>
+                            </div>
+                        <?php endif; ?>
                         <form action="" method="post">
                             <div class="form-group">
                                 <label for="product_name_delete">Select Product Name</label>
