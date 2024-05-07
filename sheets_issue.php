@@ -312,7 +312,7 @@ if (isset($_POST['submit_products'])) {
 <body>
     <div class="container mt-5">
         <div class="row justify-content-center">
-            <div class="col-lg-10">
+            <div class="col-lg-8">
                 <div class="card">
                     <div class="card-body">
                         <h1 class="h4 text-center mb-4">Sheets Issue</h1>
@@ -333,18 +333,18 @@ if (isset($_POST['submit_products'])) {
                                 </div>
                                
                                 <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="labour_name">Labour Name:</label>
-                                        <select class="form-select" id="labour_name" name="labour_name">
-                                            <option value="" selected disabled>Select Labour</option>
-                                            <?php while ($row = mysqli_fetch_assoc($labour_result)) : ?>
-                                                <option value="<?php echo $row['labour_name']; ?>"><?php echo $row['labour_name']; ?></option>
+                                <div class="form-group">
+                                    <label for="labour_name">Labour Name:</label>
+                                    <select class="form-select" id="labour_name" name="labour_name">
+                                        <option value="" selected disabled>Select Labour</option>
+                                        <?php while ($row = mysqli_fetch_assoc($labour_result)) : ?>
+                                            <option value="<?php echo $row['labour_name']; ?>"><?php echo $row['labour_name']; ?></option>
                                             <?php endwhile; ?>
                                         </select>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="row">
+                                </div>
+                       
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="product_name">Select Product:</label>
@@ -361,46 +361,61 @@ if (isset($_POST['submit_products'])) {
                                         <label for="product_base">Product Base:</label>
                                         <select class="form-select" id="product_base" name="product_base">
                                             <option value="" selected disabled>Select Product Base</option>
+                                            <?php if ($selected_product) : ?>
+                                                <?php while ($row = mysqli_fetch_assoc($product_base_result)) : ?>
+                                                    <option value="<?php echo $row['product_base']; ?>"><?php echo $row['product_base']; ?></option>
+                                                <?php endwhile; ?>
+                                            <?php endif; ?>
                                         </select>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="product_color">Product Color:</label>
                                         <select class="form-select" id="product_color" name="product_color">
                                             <option value="" selected disabled>Select Product Color</option>
+                                            <?php if ($selected_product) : ?>
+                                                <?php while ($row = mysqli_fetch_assoc($product_color_result)) : ?>
+                                                    <option value="<?php echo $row['product_color']; ?>"><?php echo $row['product_color']; ?></option>
+                                                <?php endwhile; ?>
+                                            <?php endif; ?>
                                         </select>
                                     </div>
+                            </div>
+                            <div class="row">
+                                
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="quantity1">Big Panel:</label>
+                                        <label for="quantity">Big Panel:</label>
                                         <input type="number" class="form-control" id="quantity1" name="quantity1" placeholder="Enter Quantity">
                                     </div>
                                 </div>
-                            </div>
-                            <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="quantity2">Plain Panel:</label>
+                                        <label for="quantity">Plain Panel:</label>
                                         <input type="number" class="form-control" id="quantity2" name="quantity2" placeholder="Enter Quantity">
                                     </div>
                                 </div>
+                                
+                                
+                            
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="small_sheet_color">Small Panel Color:</label>
                                         <select class="form-select" id="small_sheet_color" name="small_sheet_color">
                                             <option value="" selected disabled>Select Panel Color</option>
+                                            <?php if ($selected_product) : ?>
+                                                <?php while ($row = mysqli_fetch_assoc($product_small_result)) : ?>
+                                                    <option value="<?php echo $row['small_sheet_color']; ?>"><?php echo $row['small_sheet_color']; ?></option>
+                                                <?php endwhile; ?>
+                                            <?php endif; ?>
                                         </select>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="quantity3">Small Panel:</label>
+                                        <label for="quantity">Small Panel:</label>
                                         <input type="number" class="form-control" id="quantity3" name="quantity3" placeholder="Enter Quantity">
                                     </div>
                                 </div>
@@ -424,7 +439,7 @@ if (isset($_POST['submit_products'])) {
                                             <th>Product Color</th>
                                             <th>Big Panel</th>
                                             <th>Plain Panel</th>
-                                            <th>Small Panel Color</th>
+                                            <th>Small Panel Color </th>
                                             <th>Small Panel</th>
                                             <th>Action</th>
                                         </tr>
@@ -442,6 +457,7 @@ if (isset($_POST['submit_products'])) {
                                                     <td><?php echo $product['quantity2']; ?></td>
                                                     <td><?php echo $product['small_sheet_color']; ?></td>
                                                     <td><?php echo $product['quantity3']; ?></td>
+                                                   
                                                     <td>
                                                         <form method="post" action="">
                                                             <input type="hidden" name="delete_index" value="<?php echo $key; ?>">
@@ -491,7 +507,8 @@ if (isset($_POST['submit_products'])) {
     // Event listeners for product name and product base change
     document.getElementById('product_name').addEventListener('change', updateProductColors);
     document.getElementById('product_base').addEventListener('change', updateProductColors);
-    </script>
+</script>
 
 </body>
+
 </html>
