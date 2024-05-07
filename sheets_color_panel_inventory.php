@@ -176,7 +176,6 @@ $result = mysqli_query($con, "SELECT id, product_name, small_sheet_color, small_
         xhr.onreadystatechange = function() {
             if (xhr.readyState == 4 && xhr.status == 200) {
                 console.log(xhr.responseText);
-                // You can add additional handling here if needed
             }
         };
         xhr.send('id=' + id + '&field=' + field + '&value=' + value);

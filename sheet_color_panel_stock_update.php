@@ -1,6 +1,7 @@
 <?php
 session_start();
 include_once 'include/connection.php';
+include_once 'include/admin-main.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (isset($_POST['id']) && isset($_POST['field']) && isset($_POST['value'])) {
@@ -14,7 +15,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $value = mysqli_real_escape_string($con, $value);
 
         // Update database
-        $query = "UPDATE sheets_product SET $field = '$value' WHERE id = $id";
+        $query = "UPDATE sheets_small_stock SET $field = '$value' WHERE id = $id";
         $result = mysqli_query($con, $query);
 
         if (!$result) {
@@ -22,6 +23,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         } else {
             echo "Record updated successfully";
         }
+    } else {
+        echo "Invalid request";
     }
+} else {
+    echo "Invalid request method";
 }
 ?>
