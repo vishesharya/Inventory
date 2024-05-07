@@ -9,8 +9,7 @@ $deletelabourMsg = '';
 // Add labour Form Handling
 if (isset($_POST['add_labour'])) {
     $labour_name = $_POST['labour_name'];
-    $labour_contact = $_POST['labour_contact'];
-
+   
     // Check if the labour already exists
     $checkQuery = mysqli_query($con, "SELECT * FROM labour WHERE labour_name = '$labour_name'");
     $rowCount = mysqli_num_rows($checkQuery);
@@ -101,10 +100,7 @@ if (isset($_POST['delete_labour'])) {
                                 <label for="labour_name">Enter labour Name</label>
                                 <input type="text" name="labour_name" id="labour_name" class="form-control" required>
                             </div>
-                            <div class="form-group">
-                                <label for="labour_contact">Enter Contact Number</label>
-                                <input type="text" name="labour_contact" id="labour_contact" class="form-control" required>
-                            </div>
+                           
                             <button type="submit" class="btn btn-primary" name="add_labour">Add labour</button>
                         </form>
                     </div>
