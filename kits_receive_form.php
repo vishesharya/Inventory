@@ -227,8 +227,13 @@ if (isset($_POST['submit_products'])) {
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="labour_name">Labour Name:</label>
-                                        <input type="text" class="form-control" id="labour_name" name="labour_name" value="<?php echo $labour_name; ?>" placeholder="Enter Labour Name">
+                                      <label for="labour_name">Labour Name:</label>
+                                         <select class="form-select" id="labour_name" name="labour_name">
+                                            <option value="" selected disabled>Select Labour</option>
+                                            <?php while ($row = mysqli_fetch_assoc($labour_result)) : ?>
+                                            <option value="<?php echo $row['labour_name']; ?>"><?php echo $row['labour_name']; ?></option>
+                                            <?php endwhile; ?>
+                                        </select>
                                     </div>
                                 </div>
                             </div>
