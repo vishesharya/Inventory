@@ -116,13 +116,7 @@ include_once 'include/admin-main.php';
                                         </div>
                                     </div>
                                 </a>
-                                   <a href="./sheets_panel_color.php" style='color:white'>
-                                    <div class="col-lg-4">
-                                        <div class="panel bg-teal-400">
-                                            <p style="margin: 10px; font-size: large;">Color Panel Add/Delete</p>
-                                        </div>
-                                    </div>
-                                </a>
+                                 
                                
                                  <a href="./sheets_product_list.php" style='color:white'>
                                     <div class="col-lg-4">
@@ -132,6 +126,13 @@ include_once 'include/admin-main.php';
                                     </div>
                                 </a>
                                 
+                                <a href="./sheets_panel_color.php" style='color:white'>
+                                    <div class="col-lg-4">
+                                        <div class="panel bg-teal-400">
+                                            <p style="margin: 10px; font-size: large;">Color Panel Add/Delete</p>
+                                        </div>
+                                    </div>
+                                </a>
                             
                             
                                 
