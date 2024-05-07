@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Web App by Vishesh Arya</title>
+    <title>Khanna Sports Ind Pvt. Ltd.</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -26,6 +26,7 @@
         p {
             text-align: center;
             color: #666;
+            margin-bottom: 20px;
         }
         .contact-details {
             text-align: center;
@@ -38,12 +39,19 @@
         .contact-details p span {
             font-weight: bold;
         }
+        a {
+            color: #007bff; /* Link color */
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Web App by Vishesh Arya</h1>
-        <p>Welcome to our web app!</p>
+        <h1>Khanna Sports Ind Pvt. Ltd.</h1>
+        <p>Welcome to Khanna Sports Ind Pvt. Ltd. official website. For purchases, please visit <a href="https://khannasports.in" target="_blank">khannasports.in</a>.</p>
         
         <div class="contact-details">
             <p>Contact Details:</p>
