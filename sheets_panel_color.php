@@ -55,7 +55,10 @@ if (isset($_POST['delete_product'])) {
                                     ?>
                                 </select>
                             </div>
-                           
+                            <div class="form-group">
+                                <label for="small_sheet_color">Enter Panel Color</label>
+                                <input type="text" name="small_sheet_color" id="small_sheet_color" class="form-control" required>
+                            </div>
                             <button type="submit" class="btn btn-primary" name="delete_product">Add Color</button>
                         </form>
                     </div>
