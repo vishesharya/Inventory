@@ -74,6 +74,7 @@ if (isset($_POST['delete_color'])) {
                             </div>
                         <?php endif; ?>
                         <form action="" method="post">
+                            <!-- Add Color Form -->
                             <div class="form-group">
                                 <label for="product_name">Select Product Name</label>
                                 <select name="product_name" id="product_name" class="form-control" required>
@@ -93,13 +94,28 @@ if (isset($_POST['delete_color'])) {
                             </div>
                             <button type="submit" class="btn btn-primary" name="add_color">Add Color</button>
                         </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h2>Delete Panel Color</h2>
+                    </div>
+                    <div class="card-body">
                         <?php if (!empty($deleteColorMsg)) : ?>
-                            <div id="delete_message" class="alert alert-info mt-3" role="alert">
+                            <div id="delete_message" class="alert alert-info" role="alert">
                                 <?php echo $deleteColorMsg; ?>
                             </div>
                         <?php endif; ?>
                         <form action="" method="post">
-                            <div class="form-group mt-3">
+                            <!-- Delete Color Form -->
+                            <div class="form-group">
                                 <label for="product_name_delete">Select Product Name</label>
                                 <select name="product_name_delete" id="product_name_delete" class="form-control" required>
                                     <option value="">Select Product Name</option>
@@ -112,17 +128,10 @@ if (isset($_POST['delete_color'])) {
                                     ?>
                                 </select>
                             </div>
-                            <div class="form-group mt-3">
-                                <label for="small_sheet_color_delete">Select Product Name</label>
+                            <div class="form-group">
+                                <label for="small_sheet_color_delete">Select Panel Color</label>
                                 <select name="small_sheet_color_delete" id="small_sheet_color_delete" class="form-control" required>
-                                    <option value="">Select Product Name</option>
-                                    <?php
-                                    // Fetch product names alphabetically from the database
-                                    $productQuery = mysqli_query($con, "SELECT DISTINCT small_sheet_color FROM sheets_small_stock ORDER BY small_sheet_color ASC");
-                                    while ($row = mysqli_fetch_assoc($productQuery)) {
-                                        echo "<option value='" . $row['small_sheet_color'] . "'>" . $row['small_sheet_color'] . "</option>";
-                                    }
-                                    ?>
+                                    <option value="">Select Panel Color</option>
                                 </select>
                             </div>
                             <button type="submit" class="btn btn-danger" name="delete_color">Delete Color</button>
@@ -132,36 +141,36 @@ if (isset($_POST['delete_color'])) {
             </div>
         </div>
     </div>
+
+    <script>
+        // JavaScript code for updating small sheet colors based on selected product name for deletion
+        function updateDeleteProductColors() {
+            var productNameDelete = document.getElementById('product_name_delete').value;
+
+            // Make an AJAX request to fetch small sheet colors based on selected product name
+            var xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function() {
+                if (this.readyState === 4 && this.status === 200) {
+                    var colors = JSON.parse(this.responseText);
+                    var smallSheetColorSelect = document.getElementById('small_sheet_color_delete');
+                    // Clear existing options
+                    smallSheetColorSelect.innerHTML = '<option value="" selected disabled>Select Panel Color</option>';
+                    // Add fetched colors as options
+                    colors.forEach(function(color) {
+                        var option = document.createElement('option');
+                        option.value = color;
+                        option.text = color;
+                        smallSheetColorSelect.appendChild(option);
+                    });
+                }
+            };
+            xhr.open('GET', 'fetch_panel_color.php?product_name=' + encodeURIComponent(productNameDelete), true);
+            xhr.send();
+        }
+
+        // Event listener for product name change in delete section
+        document.getElementById('product_name_delete').addEventListener('change', updateDeleteProductColors);
+    </script>
 </body>
-<script>
-    // Function to update small sheet colors based on selected product name for deletion
-    function updateDeleteProductColors() {
-        var productNameDelete = document.getElementById('product_name_delete').value;
-
-        // Make an AJAX request to fetch small sheet colors based on selected product name
-        var xhr = new XMLHttpRequest();
-        xhr.onreadystatechange = function() {
-            if (this.readyState === 4 && this.status === 200) {
-                var colors = JSON.parse(this.responseText);
-                var smallSheetColorSelect = document.getElementById('small_sheet_color_delete');
-                // Clear existing options
-                smallSheetColorSelect.innerHTML = '<option value="" selected disabled>Select Small Sheet Color</option>';
-                // Add fetched colors as options
-                colors.forEach(function(color) {
-                    var option = document.createElement('option');
-                    option.value = color;
-                    option.text = color;
-                    smallSheetColorSelect.appendChild(option);
-                });
-            }
-        };
-        xhr.open('GET', 'fetch_panel_color.php?product_name=' + encodeURIComponent(productNameDelete), true);
-        xhr.send();
-    }
-
-    // Event listener for product name change in delete section
-    document.getElementById('product_name_delete').addEventListener('change', updateDeleteProductColors);
-</script>
-
 
 </html>
