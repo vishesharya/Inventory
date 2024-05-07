@@ -176,9 +176,9 @@ if (isset($_POST['delete_product'])) {
     $small_sheet_color = isset($deleted_product['small_sheet_color']) ? mysqli_real_escape_string($con, $deleted_product['small_sheet_color']) : '';
 
     $product_color= mysqli_real_escape_string($con, $deleted_product['product_color']);
-    $quantity1 = mysqli_real_escape_string($con, $_POST['quantity1']);
-    $quantity2 = mysqli_real_escape_string($con, $_POST['quantity2']);
-    $quantity3 = mysqli_real_escape_string($con, $_POST['quantity3']);
+    $deleted_quantity1 = mysqli_real_escape_string($con, $deleted_product['quantity1']);
+    $deleted_quantity2 = mysqli_real_escape_string($con, $deleted_product['quantity2']);
+    $deleted_quantity3 = mysqli_real_escape_string($con, $deleted_product['quantity3']);
    
 
 
@@ -217,7 +217,7 @@ if (isset($_POST['delete_product'])) {
            $errors[] = "Requested quantity exceeds available stock for $product_name, $product_base, $product_color.";
        }else{
            // Update remaining_small_panel in sheets_product table
-           $updated_remaining_small_panel = $remaining_small_panel + (int)$quantity3;
+           $updated_remaining_small_panel = $remaining_small_panel + (int) $deleted_quantity3;
            $update_remaining_small_panel_query = "UPDATE sheets_product SET remaining_small_panel = $updated_remaining_small_panel WHERE product_name = '$product_name' AND product_base = '$product_base' AND product_color = '$product_color'";
            mysqli_query($con, $update_remaining_small_panel_query); }
         } else {
@@ -230,7 +230,7 @@ if (isset($_POST['delete_product'])) {
            $errors[] = "Requested quantity exceeds available stock for $product_name, $product_base, $product_color.";
        }else{
        // Update remaining_small_panel in sheets_product table
-       $updated_remaining_small_panel = $remaining_small_panel + (int)$quantity3;
+       $updated_remaining_small_panel = $remaining_small_panel + (int) $deleted_quantity3;
        $update_remaining_small_panel_query = "UPDATE sheets_small_stock SET small_sheet_balance = $updated_remaining_small_panel WHERE product_name = '$product_name'";
        mysqli_query($con, $update_remaining_small_panel_query);}
 
