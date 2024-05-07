@@ -2,20 +2,19 @@
 session_start();
 include_once 'include/connection.php';
 
-$addProductMsg = '';
+$addColorMsg = '';
 
-
-
-// Delete Product Form Handling
-if (isset($_POST['delete_product'])) {
+if (isset($_POST['add_color'])) {
     $product_name = $_POST['product_name'];
-    $product_base = $_POST['small_sheet_color'];
-  
+    $small_sheet_color = isset($_POST['small_sheet_color']) ? $_POST['small_sheet_color'] : "";
 
-    // Delete from products table
+    // Insert into sheets_small_stock table
     $insertPanelColorQuery = "INSERT INTO sheets_small_stock (product_name, small_sheet_color) VALUES ('$product_name', '$small_sheet_color')";
-    mysqli_query($con, $deletePanelColorQuery);
-
+    if(mysqli_query($con, $insertPanelColorQuery)) {
+        $addColorMsg = "Color added successfully.";
+    } else {
+        $addColorMsg = "Error: Unable to add color.";
+    }
 }
 ?>
 
@@ -30,8 +29,6 @@ if (isset($_POST['delete_product'])) {
 </head>
 
 <body>
-   
-
     <div class="container mt-5">
         <div class="row justify-content-center">
             <div class="col-md-6">
@@ -40,7 +37,7 @@ if (isset($_POST['delete_product'])) {
                         <h2>Add Panel Color</h2>
                     </div>
                     <div class="card-body">
-                        <?php echo $addProductMsg; ?>
+                        <?php echo $addColorMsg; ?>
                         <form action="" method="post">
                             <div class="form-group">
                                 <label for="product_name_delete">Select Product Name</label>
@@ -59,7 +56,7 @@ if (isset($_POST['delete_product'])) {
                                 <label for="small_sheet_color">Enter Panel Color</label>
                                 <input type="text" name="small_sheet_color" id="small_sheet_color" class="form-control" required>
                             </div>
-                            <button type="submit" class="btn btn-primary" name="delete_product">Add Color</button>
+                            <button type="submit" class="btn btn-primary" name="add_color">Add Color</button>
                         </form>
                     </div>
                 </div>
