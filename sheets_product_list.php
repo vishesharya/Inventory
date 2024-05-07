@@ -116,7 +116,7 @@ $result = mysqli_query($con, "SELECT id, product_name, product_base, product_col
                         <h5 class="panel-title">Kits Product List</h5>
                         <div class="heading-elements">
                             <ul class="icons-list">
-                                <li><a  href="print_football_product_list.php" >
+                                <li><a  href="sheets_product_list_print.php" >
 				     	<button  class="btn btn-success ">Print </button>  
 			        	</a>    </li>
                                 <li><a data-action="collapse"></a></li>
