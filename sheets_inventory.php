@@ -133,15 +133,21 @@ include_once 'include/admin-main.php';
                                     </div>
                                 </a>
                                 
-                                <a href="./sheets_panel_color.php" style='color:white'>
+                              
+                                <a href="sheets_panel_color.php" style='color:white'>
                                     <div class="col-lg-4">
-                                        <div class="panel bg-teal-400">
+                                        <div class="panel bg-pink-400">
                                             <p style="margin: 10px; font-size: large;">Color Panel Add/Delete</p>
                                         </div>
                                     </div>
                                 </a>
-                            
-                            
+                                <a href="./add_labour.php" style='color:white'>
+                                    <div class="col-lg-4">
+                                        <div class="panel bg-pink-400">
+                                            <p style="margin: 10px; font-size: large;">add/Delete Labour</p>
+                                        </div>
+                                    </div>
+                                </a>
                                 
                             </div>
                         </div>
