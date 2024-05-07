@@ -18,7 +18,7 @@ if (isset($_POST['add_labour'])) {
         $addlabourMsg = "<p id='addlabourMsg' style='color: red;font-size: medium;text-align: center;'>Labour already exists</p>";
     } else {
         // Insert into labour table
-        $insertlabourQuery = "INSERT INTO labour (labour_name, labour_contact) VALUES ('$labour_name', '$labour_contact')";
+        $insertlabourQuery = "INSERT INTO labour (labour_name) VALUES ('$labour_name')";
         if (mysqli_query($con, $insertlabourQuery)) {
             $addlabourMsg = "<p id='addlabourMsg' style='color: green;font-size: medium;text-align: center;'>labour added successfully</p>";
         } else {
@@ -40,7 +40,7 @@ if (isset($_POST['edit_labour'])) {
         $updatelabourMsg = "<p id='updatelabourMsg' style='color: red;font-size: medium;text-align: center;'>labour name already exists</p>";
     } else {
         // Update labour name and contact
-        $updatelabourQuery = "UPDATE labour SET labour_name='$new_labour_name', labour_contact='$new_labour_contact' WHERE id=$labour_id";
+        $updatelabourQuery = "UPDATE labour SET labour_name='$new_labour_name' WHERE id=$labour_id";
         if (mysqli_query($con, $updatelabourQuery)) {
             $updatelabourMsg = "<p id='updatelabourMsg' style='color: green;font-size: medium;text-align: center;'>labour updated successfully</p>";
         } else {
