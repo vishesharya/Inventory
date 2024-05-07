@@ -165,7 +165,7 @@ if (isset($_POST['delete_color'])) {
             }
         };
         // Send GET request to fetch_panel_color.php with selected product name as parameter
-        xhr.open('GET', 'fetch_panel_color.php?product_name=' + encodeURIComponent(productNameDelete), true);
+        xhr.open('GET', 'fatch_panel_color.php?product_name=' + encodeURIComponent(productNameDelete), true);
         xhr.send();
     }
 
