@@ -75,7 +75,7 @@ if (isset($_POST['delete_product'])) {
                     <div class="card-body">
                         <?php echo $deleteProductMsg; ?>
                         <form action="" method="post">
-                        <div class="col-md-6">
+                    
                                     <div class="form-group">
                                         <label for="product_name">Select Product:</label>
                                         <select class="form-select" id="product_name" name="product_name" onchange="this.form.submit()">
@@ -85,8 +85,8 @@ if (isset($_POST['delete_product'])) {
                                             <?php endwhile; ?>
                                         </select>
                                     </div>
-                                </div>
-                                <div class="col-md-6">
+                              
+                                
                                     <div class="form-group">
                                         <label for="product_base">Product Base:</label>
                                         <select class="form-select" id="product_base" name="product_base">
@@ -98,8 +98,8 @@ if (isset($_POST['delete_product'])) {
                                             <?php endif; ?>
                                         </select>
                                     </div>
-                                </div>
-                                <div class="col-md-6">
+                                
+                            
                                     <div class="form-group">
                                         <label for="product_color">Product Color:</label>
                                         <select class="form-select" id="product_color" name="product_color">
@@ -111,7 +111,7 @@ if (isset($_POST['delete_product'])) {
                                             <?php endif; ?>
                                         </select>
                                     </div>
-                            </div>
+                          
                             <button type="submit" class="btn btn-danger" name="delete_product">Delete Product</button>
                         </form>
                     </div>
