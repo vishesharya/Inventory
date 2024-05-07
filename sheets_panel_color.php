@@ -105,25 +105,22 @@ if (isset($_POST['delete_color'])) {
                                     <option value="">Select Product Name</option>
                                     <?php
                                     // Fetch product names alphabetically from the database
-                                    $productQuery = mysqli_query($con, "SELECT DISTINCT product_name FROM sheets_product ORDER BY product_name ASC");
+                                    $productQuery = mysqli_query($con, "SELECT DISTINCT product_name FROM sheets_small_stock ORDER BY product_name ASC");
                                     while ($row = mysqli_fetch_assoc($productQuery)) {
                                         echo "<option value='" . $row['product_name'] . "'>" . $row['product_name'] . "</option>";
                                     }
                                     ?>
                                 </select>
                             </div>
-                            <div class="form-group">
-                                <label for="small_sheet_color_delete">Select Panel Color to Delete</label>
-                                <select name="small_sheet_color_delete" id="small_sheet_color_delete" class="form-control" required>
-                                    <option value="">Select Panel Color</option>
+                            <div class="form-group mt-3">
+                                <label for="product_name_delete">Select Product Name</label>
+                                <select name="product_name_delete" id="product_name_delete" class="form-control" required>
+                                    <option value="">Select Product Name</option>
                                     <?php
-                                    // Fetch panel colors for selected product from the database
-                                    if(isset($_POST['product_name_delete'])) {
-                                        $selected_product_name = $_POST['product_name_delete'];
-                                        $colorQuery = mysqli_query($con, "SELECT small_sheet_color FROM sheets_small_stock WHERE product_name = '$selected_product_name'");
-                                        while ($row = mysqli_fetch_assoc($colorQuery)) {
-                                            echo "<option value='" . $row['small_sheet_color'] . "'>" . $row['small_sheet_color'] . "</option>";
-                                        }
+                                    // Fetch product names alphabetically from the database
+                                    $productQuery = mysqli_query($con, "SELECT DISTINCT small_sheet_color FROM sheets_small_stock ORDER BY small_sheet_color ASC");
+                                    while ($row = mysqli_fetch_assoc($productQuery)) {
+                                        echo "<option value='" . $row['product_name'] . "'>" . $row['product_name'] . "</option>";
                                     }
                                     ?>
                                 </select>
