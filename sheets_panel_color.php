@@ -143,34 +143,36 @@ if (isset($_POST['delete_color'])) {
     </div>
 
     <script>
-        // JavaScript code for updating small sheet colors based on selected product name for deletion
-        function updateDeleteProductColors() {
-            var productNameDelete = document.getElementById('product_name_delete').value;
+    // Function to update product colors based on selected product name for deletion
+    function updateDeleteProductColors() {
+        var productNameDelete = document.getElementById('product_name_delete').value;
 
-            // Make an AJAX request to fetch small sheet colors based on selected product name
-            var xhr = new XMLHttpRequest();
-            xhr.onreadystatechange = function() {
-                if (this.readyState === 4 && this.status === 200) {
-                    var colors = JSON.parse(this.responseText);
-                    var smallSheetColorSelect = document.getElementById('small_sheet_color_delete');
-                    // Clear existing options
-                    smallSheetColorSelect.innerHTML = '<option value="" selected disabled>Select Panel Color</option>';
-                    // Add fetched colors as options
-                    colors.forEach(function(color) {
-                        var option = document.createElement('option');
-                        option.value = color;
-                        option.text = color;
-                        smallSheetColorSelect.appendChild(option);
-                    });
-                }
-            };
-            xhr.open('GET', 'fetch_panel_color.php?product_name=' + encodeURIComponent(productNameDelete), true);
-            xhr.send();
-        }
+        // Make an AJAX request to fetch product colors based on selected product name
+        var xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function() {
+            if (this.readyState === 4 && this.status === 200) {
+                var colors = JSON.parse(this.responseText);
+                var productColorSelect = document.getElementById('product_color_delete');
+                // Clear existing options
+                productColorSelect.innerHTML = '<option value="" selected disabled>Select Product Color</option>';
+                // Add fetched colors as options
+                colors.forEach(function(color) {
+                    var option = document.createElement('option');
+                    option.value = color;
+                    option.text = color;
+                    productColorSelect.appendChild(option);
+                });
+            }
+        };
+        // Send GET request to fetch_panel_color.php with selected product name as parameter
+        xhr.open('GET', 'fetch_panel_color.php?product_name=' + encodeURIComponent(productNameDelete), true);
+        xhr.send();
+    }
 
-        // Event listener for product name change in delete section
-        document.getElementById('product_name_delete').addEventListener('change', updateDeleteProductColors);
-    </script>
+    // Event listener for product name change in delete section
+    document.getElementById('product_name_delete').addEventListener('change', updateDeleteProductColors);
+</script>
+
 </body>
 
 </html>
