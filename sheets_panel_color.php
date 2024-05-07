@@ -156,7 +156,7 @@ if (isset($_POST['delete_color'])) {
                 });
             }
         };
-        xhr.open('GET', 'kits_issue_product_color.php?product_name=' + productName, true);
+        xhr.open('GET', 'fatch_panel_color.php?product_name=' + productName, true);
         xhr.send();
     }
 
