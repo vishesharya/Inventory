@@ -2,18 +2,27 @@
 session_start();
 include_once 'include/connection.php';
 
-$addColorMsg = '';
-
 if (isset($_POST['add_color'])) {
     $product_name = $_POST['product_name'];
     $small_sheet_color = isset($_POST['small_sheet_color']) ? $_POST['small_sheet_color'] : "";
 
-    // Insert into sheets_small_stock table
-    $insertPanelColorQuery = "INSERT INTO sheets_small_stock (product_name, small_sheet_color) VALUES ('$product_name', '$small_sheet_color')";
-    if(mysqli_query($con, $insertPanelColorQuery)) {
-        $addColorMsg = "Color added successfully.";
+    // Check if the color already exists
+    $checkColorQuery = "SELECT * FROM sheets_small_stock WHERE product_name = '$product_name' AND small_sheet_color = '$small_sheet_color'";
+    $result = mysqli_query($con, $checkColorQuery);
+
+    if (mysqli_num_rows($result) > 0) {
+        // Color already exists, show message for 3 seconds
+        echo "<script>setTimeout(function(){ alert('Color already added!'); }, 3000);</script>";
     } else {
-        $addColorMsg = "Error: Unable to add color.";
+        // Insert into sheets_small_stock table
+        $insertPanelColorQuery = "INSERT INTO sheets_small_stock (product_name, small_sheet_color) VALUES ('$product_name', '$small_sheet_color')";
+        if(mysqli_query($con, $insertPanelColorQuery)) {
+            // Color added successfully, show message for 3 seconds
+            echo "<script>setTimeout(function(){ alert('Color added successfully.'); }, 3000);</script>";
+        } else {
+            // Error adding color, show message for 3 seconds
+            echo "<script>setTimeout(function(){ alert('Error: Unable to add color.'); }, 3000);</script>";
+        }
     }
 }
 ?>
@@ -37,7 +46,6 @@ if (isset($_POST['add_color'])) {
                         <h2>Add Panel Color</h2>
                     </div>
                     <div class="card-body">
-                        <?php echo $addColorMsg; ?>
                         <form action="" method="post">
                             <div class="form-group">
                                 <label for="product_name_delete">Select Product Name</label>
