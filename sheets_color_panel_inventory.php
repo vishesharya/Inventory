@@ -121,8 +121,8 @@ $result = mysqli_query($con, "SELECT id, product_name, small_sheet_color, small_
                                 <th>Sn.</th>
                                 <th>Product Name</th>
                                
-                             
-                                <th>Big Panel Stock</th>
+                                <th>Sheets Color Panel</th>
+                                <th>Color Panel Stock</th>
                                
                             </tr>
                         </thead>
