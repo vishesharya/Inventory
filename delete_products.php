@@ -62,7 +62,7 @@ if (isset($_POST['delete_product'])) {
                                     <option value="">Select Product Name</option>
                                     <?php
                                     // Fetch product names alphabetically from the database
-                                    $productQuery = mysqli_query($con, "SELECT DISTINCT product_name FROM products ORDER BY product_name ASC");
+                                    $productQuery = mysqli_query($con, "SELECT DISTINCT product_name FROM sheets_product ORDER BY product_name ASC");
                                     while ($row = mysqli_fetch_assoc($productQuery)) {
                                         echo "<option value='" . $row['product_name'] . "'>" . $row['product_name'] . "</option>";
                                     }
@@ -75,7 +75,7 @@ if (isset($_POST['delete_product'])) {
                                     <option value="">Select Product Base Color</option>
                                     <?php
                                     // Fetch product base colors alphabetically from the database
-                                    $productBaseQuery = mysqli_query($con, "SELECT DISTINCT product_base FROM kits_product ORDER BY product_base ASC");
+                                    $productBaseQuery = mysqli_query($con, "SELECT DISTINCT product_base FROM sheets_product ORDER BY product_base ASC");
                                     while ($row = mysqli_fetch_assoc($productBaseQuery)) {
                                         echo "<option value='" . $row['product_base'] . "'>" . $row['product_base'] . "</option>";
                                     }
