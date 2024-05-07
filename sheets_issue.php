@@ -213,26 +213,22 @@ if (isset($_POST['delete_product'])) {
         $remaining_small_panel_result = mysqli_query($con, $remaining_small_panel_query);
         $row = mysqli_fetch_assoc($remaining_small_panel_result);
         $remaining_small_panel = $row['remaining_small_panel'];
-        if ($quantity3 > $remaining_small_panel) {
-           $errors[] = "Requested quantity exceeds available stock for $product_name, $product_base, $product_color.";
-       }else{
-           // Update remaining_small_panel in sheets_product table
-           $updated_remaining_small_panel = $remaining_small_panel + (int) $deleted_quantity3;
-           $update_remaining_small_panel_query = "UPDATE sheets_product SET remaining_small_panel = $updated_remaining_small_panel WHERE product_name = '$product_name' AND product_base = '$product_base' AND product_color = '$product_color'";
-           mysqli_query($con, $update_remaining_small_panel_query); }
+        
+        $updated_remaining_small_panel = $remaining_small_panel + (int) $deleted_quantity3;
+        $update_remaining_small_panel_query = "UPDATE sheets_product SET remaining_small_panel = $updated_remaining_small_panel WHERE product_name = '$product_name' AND product_base = '$product_base' AND product_color = '$product_color'";
+        mysqli_query($con, $update_remaining_small_panel_query); 
+
         } else {
            
         $remaining_small_panel_query = "SELECT small_sheet_balance FROM sheets_small_stock WHERE product_name = '$product_name'";
         $remaining_small_panel_result = mysqli_query($con, $remaining_small_panel_query);
         $row = mysqli_fetch_assoc($remaining_small_panel_result);
         $remaining_small_panel = $row['small_sheet_balance'];
-        if ($quantity3 > $remaining_small_panel) {
-           $errors[] = "Requested quantity exceeds available stock for $product_name, $product_base, $product_color.";
-       }else{
+       
        // Update remaining_small_panel in sheets_product table
        $updated_remaining_small_panel = $remaining_small_panel + (int) $deleted_quantity3;
        $update_remaining_small_panel_query = "UPDATE sheets_small_stock SET small_sheet_balance = $updated_remaining_small_panel WHERE product_name = '$product_name'";
-       mysqli_query($con, $update_remaining_small_panel_query);}
+       mysqli_query($con, $update_remaining_small_panel_query);
 
      }
 
