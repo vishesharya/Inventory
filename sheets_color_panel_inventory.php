@@ -120,7 +120,7 @@ $result = mysqli_query($con, "SELECT id, product_name, small_sheet_color, small_
                             <tr>
                                 <th>Sn.</th>
                                 <th>Product Name</th>
-                                <th>Panel Color</th>
+                               
                              
                                 <th>Big Panel Stock</th>
                                
@@ -134,7 +134,7 @@ $result = mysqli_query($con, "SELECT id, product_name, small_sheet_color, small_
                             <tr>
                                 <td><?php echo $sn; ?>.</td>
                                 <td><?php echo $data['product_name']; ?></td>
-                           
+                                <td><?php echo ucfirst($data['small_sheet_color']); ?></td>
                                
                                 <td contenteditable="true" data-field="small_sheet_balance" data-id="<?php echo $data['id']; ?>"><?php echo $data['small_sheet_balance']; ?></td>
                                
