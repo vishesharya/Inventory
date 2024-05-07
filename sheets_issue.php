@@ -430,6 +430,7 @@ if (isset($_POST['submit_products'])) {
                                     <thead>
                                         <tr>
                                             <th>Challan No</th>
+                                            <th>Labour Name</th>
                                             <th>Product Name</th>
                                             <th>Product Base</th>
                                             <th>Product Color</th>
@@ -445,7 +446,7 @@ if (isset($_POST['submit_products'])) {
                                             <?php foreach ($_SESSION['temp_products'] as $key => $product) : ?>
                                                 <tr>
                                                     <td><?php echo $product['challan_no']; ?></td>
-                                            
+                                                    <td><?php echo $product['labour_name']; ?></td>
                                                     <td><?php echo $product['product_name']; ?></td>
                                                     <td><?php echo $product['product_base']; ?></td>
                                                     <td><?php echo $product['product_color']; ?></td>
