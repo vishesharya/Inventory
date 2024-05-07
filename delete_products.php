@@ -59,60 +59,91 @@ if (isset($_POST['delete_product'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Product Management</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+
+        .card {
+            border: none;
+            box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-header {
+            background-color: #007bff;
+            color: #fff;
+            border-radius: 5px 5px 0 0;
+        }
+
+        .card-body {
+            padding: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .btn-danger {
+            background-color: #dc3545;
+            border-color: #dc3545;
+        }
+
+        .btn-danger:hover {
+            background-color: #c82333;
+            border-color: #bd2130;
+        }
+    </style>
 </head>
 
 <body>
-   
 
     <div class="container mt-5">
         <div class="row justify-content-center">
             <div class="col-md-6">
                 <div class="card">
-                    <div class="card-header">
+                    <div class="card-header text-center">
                         <h2>Delete Product</h2>
                     </div>
                     <div class="card-body">
                         <?php echo $deleteProductMsg; ?>
                         <form action="" method="post">
-                    
-                                    <div class="form-group">
-                                        <label for="product_name">Select Product:</label>
-                                        <select class="form-select" id="product_name" name="product_name" onchange="this.form.submit()">
-                                            <option value="" selected disabled>Select Product</option>
-                                            <?php while ($row = mysqli_fetch_assoc($product_result)) : ?>
-                                                <option value="<?php echo $row['product_name']; ?>" <?php echo $selected_product == $row['product_name'] ? 'selected' : ''; ?>><?php echo $row['product_name']; ?></option>
-                                            <?php endwhile; ?>
-                                        </select>
-                                    </div>
-                              
-                                
-                                    <div class="form-group">
-                                        <label for="product_base">Product Base:</label>
-                                        <select class="form-select" id="product_base" name="product_base">
-                                            <option value="" selected disabled>Select Product Base</option>
-                                            <?php if ($selected_product) : ?>
-                                                <?php while ($row = mysqli_fetch_assoc($product_base_result)) : ?>
-                                                    <option value="<?php echo $row['product_base']; ?>"><?php echo $row['product_base']; ?></option>
-                                                <?php endwhile; ?>
-                                            <?php endif; ?>
-                                        </select>
-                                    </div>
-                                
-                            
-                                    <div class="form-group">
-                                        <label for="product_color">Product Color:</label>
-                                        <select class="form-select" id="product_color" name="product_color">
-                                            <option value="" selected disabled>Select Product Color</option>
-                                            <?php if ($selected_product) : ?>
-                                                <?php while ($row = mysqli_fetch_assoc($product_color_result)) : ?>
-                                                    <option value="<?php echo $row['product_color']; ?>"><?php echo $row['product_color']; ?></option>
-                                                <?php endwhile; ?>
-                                            <?php endif; ?>
-                                        </select>
-                                    </div>
-                          
-                            <button type="submit" class="btn btn-danger" name="delete_product">Delete Product</button>
+
+                            <div class="form-group">
+                                <label for="product_name">Select Product:</label>
+                                <select class="form-control" id="product_name" name="product_name" onchange="this.form.submit()">
+                                    <option value="" selected disabled>Select Product</option>
+                                    <?php while ($row = mysqli_fetch_assoc($product_result)) : ?>
+                                        <option value="<?php echo $row['product_name']; ?>" <?php echo $selected_product == $row['product_name'] ? 'selected' : ''; ?>><?php echo $row['product_name']; ?></option>
+                                    <?php endwhile; ?>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="product_base">Product Base:</label>
+                                <select class="form-control" id="product_base" name="product_base">
+                                    <option value="" selected disabled>Select Product Base</option>
+                                    <?php if ($selected_product) : ?>
+                                        <?php while ($row = mysqli_fetch_assoc($product_base_result)) : ?>
+                                            <option value="<?php echo $row['product_base']; ?>"><?php echo $row['product_base']; ?></option>
+                                        <?php endwhile; ?>
+                                    <?php endif; ?>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="product_color">Product Color:</label>
+                                <select class="form-control" id="product_color" name="product_color">
+                                    <option value="" selected disabled>Select Product Color</option>
+                                    <?php if ($selected_product) : ?>
+                                        <?php while ($row = mysqli_fetch_assoc($product_color_result)) : ?>
+                                            <option value="<?php echo $row['product_color']; ?>"><?php echo $row['product_color']; ?></option>
+                                        <?php endwhile; ?>
+                                    <?php endif; ?>
+                                </select>
+                            </div>
+
+                            <button type="submit" class="btn btn-danger btn-block" name="delete_product">Delete Product</button>
                         </form>
                     </div>
                 </div>
@@ -151,4 +182,5 @@ if (isset($_POST['delete_product'])) {
     document.getElementById('product_name').addEventListener('change', updateProductColors);
     document.getElementById('product_base').addEventListener('change', updateProductColors);
 </script>
+
 </html>
