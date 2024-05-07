@@ -4,11 +4,14 @@ include_once 'include/connection.php';
 include_once 'include/admin-main.php';
 
 // Default value for Labour Name
-$labour_name = isset($_POST['labour_name']) ? $_POST['labour_name'] : "";
+
 $small_sheet_color = isset($_POST['small_sheet_color']) ? $_POST['small_sheet_color'] : "";
 // Logic to fetch product names from the database
 $product_query = "SELECT DISTINCT product_name FROM sheets_product ORDER BY product_name ASC";
 $product_result = mysqli_query($con, $product_query);
+
+$labour_query = "SELECT DISTINCT labour_name FROM labour ORDER BY labour_name ASC";
+$labour_result = mysqli_query($con, $labour_query);
 
 // Logic to fetch product bases and colors based on selected product
 $selected_product = isset($_POST['product_name']) ? $_POST['product_name'] : null;
@@ -331,8 +334,13 @@ if (isset($_POST['submit_products'])) {
                                
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="labour_name">Labour Name:</label>
-                                        <input type="text" class="form-control" id="labour_name" name="labour_name" value="<?php echo $labour_name; ?>" placeholder="Enter Labour Name">
+                                        <label for="labour_name">Labour Name</label>
+                                        <select class="form-select" id="labour_name" name="labour_name" onchange="this.form.submit()">
+                                            <option value="" selected disabled>Select Labour</option>
+                                            <?php while ($row = mysqli_fetch_assoc($labour_result)) : ?>
+                                                <option value="<?php echo $row['labour_name']; ?>" <?php echo $selected_labour == $row['labour_name'] ? 'selected' : ''; ?>><?php echo $row['product_name']; ?></option>
+                                            <?php endwhile; ?>
+                                        </select>
                                     </div>
                                 </div>
                        
