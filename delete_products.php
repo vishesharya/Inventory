@@ -5,6 +5,25 @@ include_once 'include/connection.php';
 $addProductMsg = '';
 $deleteProductMsg = '';
 
+$product_query = "SELECT DISTINCT product_name FROM sheets_product ORDER BY product_name ASC";
+$product_result = mysqli_query($con, $product_query);
+
+// Logic to fetch product bases and colors based on selected product
+$selected_product = isset($_POST['product_name']) ? $_POST['product_name'] : null;
+if ($selected_product) {
+    $product_base_query = "SELECT DISTINCT product_base FROM sheets_product WHERE product_name = '$selected_product' ORDER BY product_base ASC";
+    $product_color_query = "SELECT DISTINCT product_color FROM sheets_product WHERE product_name = '$selected_product' ORDER BY product_color ASC";
+    $product_base_result = mysqli_query($con, $product_base_query);
+    $product_color_result = mysqli_query($con, $product_color_query);
+}
+
+// Logic to fetch product bases and colors based on selected product
+$selected_product = isset($_POST['product_name']) ? $_POST['product_name'] : null;
+if ($selected_product) {
+    $product_small_query = "SELECT DISTINCT small_sheet_color FROM sheets_small_stock WHERE product_name = '$selected_product'";
+    $product_small_result = mysqli_query($con, $product_small_query);
+ 
+}
 
 // Delete Product Form Handling
 if (isset($_POST['delete_product'])) {
@@ -56,44 +75,42 @@ if (isset($_POST['delete_product'])) {
                     <div class="card-body">
                         <?php echo $deleteProductMsg; ?>
                         <form action="" method="post">
-                            <div class="form-group">
-                                <label for="product_name_delete">Select Product Name</label>
-                                <select name="product_name" id="product_name_delete" class="form-control" required>
-                                    <option value="">Select Product Name</option>
-                                    <?php
-                                    // Fetch product names alphabetically from the database
-                                    $productQuery = mysqli_query($con, "SELECT DISTINCT product_name FROM sheets_product ORDER BY product_name ASC");
-                                    while ($row = mysqli_fetch_assoc($productQuery)) {
-                                        echo "<option value='" . $row['product_name'] . "'>" . $row['product_name'] . "</option>";
-                                    }
-                                    ?>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="product_base_delete">Select Product Base Color</label>
-                                <select name="product_base" id="product_base_delete" class="form-control" required>
-                                    <option value="">Select Product Base Color</option>
-                                    <?php
-                                    // Fetch product base colors alphabetically from the database
-                                    $productBaseQuery = mysqli_query($con, "SELECT DISTINCT product_base FROM sheets_product ORDER BY product_base ASC");
-                                    while ($row = mysqli_fetch_assoc($productBaseQuery)) {
-                                        echo "<option value='" . $row['product_base'] . "'>" . $row['product_base'] . "</option>";
-                                    }
-                                    ?>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="product_color_delete">Select Product Color</label>
-                                <select name="product_color" id="product_color_delete" class="form-control" required>
-                                    <option value="">Select Product Color</option>
-                                    <?php
-                                    // Fetch product colors alphabetically from the database
-                                    $productColorQuery = mysqli_query($con, "SELECT DISTINCT product_color FROM sheets_product ORDER BY product_color ASC");
-                                    while ($row = mysqli_fetch_assoc($productColorQuery)) {
-                                        echo "<option value='" . $row['product_color'] . "'>" . $row['product_color'] . "</option>";
-                                    }
-                                    ?>
-                                </select>
+                        <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="product_name">Select Product:</label>
+                                        <select class="form-select" id="product_name" name="product_name" onchange="this.form.submit()">
+                                            <option value="" selected disabled>Select Product</option>
+                                            <?php while ($row = mysqli_fetch_assoc($product_result)) : ?>
+                                                <option value="<?php echo $row['product_name']; ?>" <?php echo $selected_product == $row['product_name'] ? 'selected' : ''; ?>><?php echo $row['product_name']; ?></option>
+                                            <?php endwhile; ?>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="product_base">Product Base:</label>
+                                        <select class="form-select" id="product_base" name="product_base">
+                                            <option value="" selected disabled>Select Product Base</option>
+                                            <?php if ($selected_product) : ?>
+                                                <?php while ($row = mysqli_fetch_assoc($product_base_result)) : ?>
+                                                    <option value="<?php echo $row['product_base']; ?>"><?php echo $row['product_base']; ?></option>
+                                                <?php endwhile; ?>
+                                            <?php endif; ?>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="product_color">Product Color:</label>
+                                        <select class="form-select" id="product_color" name="product_color">
+                                            <option value="" selected disabled>Select Product Color</option>
+                                            <?php if ($selected_product) : ?>
+                                                <?php while ($row = mysqli_fetch_assoc($product_color_result)) : ?>
+                                                    <option value="<?php echo $row['product_color']; ?>"><?php echo $row['product_color']; ?></option>
+                                                <?php endwhile; ?>
+                                            <?php endif; ?>
+                                        </select>
+                                    </div>
                             </div>
                             <button type="submit" class="btn btn-danger" name="delete_product">Delete Product</button>
                         </form>
