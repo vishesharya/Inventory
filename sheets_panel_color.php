@@ -155,13 +155,13 @@ if (isset($_POST['delete_color'])) {
                 });
             }
         };
-        xhr.open('GET', 'fetch_panel_color.php?product_name=' + productNameDelete, true);
+        xhr.open('GET', 'fetch_panel_color.php?product_name=' + encodeURIComponent(productNameDelete), true);
         xhr.send();
     }
 
     // Event listener for product name change in delete section
     document.getElementById('product_name_delete').addEventListener('change', updateDeleteProductColors);
-
 </script>
+
 
 </html>

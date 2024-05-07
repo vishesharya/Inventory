@@ -7,8 +7,19 @@ if (isset($_GET['product_name'])) {
     $product_name = $_GET['product_name'];
 
     // Query to fetch small sheet colors based on the selected product name
-    $query = "SELECT DISTINCT small_sheet_color FROM sheets_small_stock WHERE product_name = '$product_name' ORDER BY small_sheet_color ASC";
-    $result = mysqli_query($con, $query);
+    $query = "SELECT DISTINCT small_sheet_color FROM sheets_small_stock WHERE product_name = ? ORDER BY small_sheet_color ASC";
+
+    // Prepare the statement
+    $stmt = mysqli_prepare($con, $query);
+
+    // Bind the product name parameter
+    mysqli_stmt_bind_param($stmt, "s", $product_name);
+
+    // Execute the statement
+    mysqli_stmt_execute($stmt);
+
+    // Get result
+    $result = mysqli_stmt_get_result($stmt);
 
     // Array to store small sheet colors
     $colors = array();
@@ -17,6 +28,9 @@ if (isset($_GET['product_name'])) {
     while ($row = mysqli_fetch_assoc($result)) {
         $colors[] = $row['small_sheet_color'];
     }
+
+    // Close statement
+    mysqli_stmt_close($stmt);
 
     // Close database connection
     mysqli_close($con);
