@@ -23,27 +23,36 @@ if (isset($_POST['view_entries'])) {
     $selected_challan = isset($_POST['challan_no']) ? mysqli_real_escape_string($con, $_POST['challan_no']) : '';
 
     // Retrieve entries from database based on selected stitcher and/or challan number
-    if (!empty($selected_challan)) {
-        // Fetch entries for the selected challan number
-        $query = "SELECT * FROM football_received WHERE challan_no = '$selected_challan'";
-        $result = mysqli_query($con, $query);
-    } elseif (!empty($stitcher_name)) {
-        if (!empty($_POST['from_date']) && !empty($_POST['to_date'])) {
-            // Get selected date range
-            $start_date = mysqli_real_escape_string($con, $_POST['from_date']);
-            $end_date = mysqli_real_escape_string($con, $_POST['to_date']);
-            // Fetch entries within the selected date range for the selected stitcher
-            $query = "SELECT * FROM football_received WHERE stitcher_name = '$stitcher_name' AND date_and_time BETWEEN '$start_date' AND '$end_date'";
-        } else {
-            // Fetch all entries for the selected stitcher without considering date range
-            $query = "SELECT * FROM football_received WHERE stitcher_name = '$stitcher_name'";
-        }
-        $result = mysqli_query($con, $query);
+    // Retrieve entries from database based on selected stitcher and/or challan number and/or date range
+if (!empty($selected_challan)) {
+    // Fetch entries for the selected challan number
+    $query = "SELECT * FROM football_received WHERE challan_no = '$selected_challan'";
+    $result = mysqli_query($con, $query);
+} elseif (!empty($stitcher_name)) {
+    if (!empty($_POST['from_date']) && !empty($_POST['to_date'])) {
+        // Get selected date range
+        $start_date = mysqli_real_escape_string($con, $_POST['from_date']);
+        $end_date = mysqli_real_escape_string($con, $_POST['to_date']);
+        // Fetch entries within the selected date range for the selected stitcher
+        $query = "SELECT * FROM football_received WHERE stitcher_name = '$stitcher_name' AND date_and_time BETWEEN '$start_date' AND '$end_date'";
     } else {
-        // If no stitcher is selected and no other filters are applied, fetch all entries from the database
-        $query = "SELECT * FROM football_received";
-        $result = mysqli_query($con, $query);
+        // Fetch all entries for the selected stitcher without considering date range
+        $query = "SELECT * FROM football_received WHERE stitcher_name = '$stitcher_name'";
     }
+    $result = mysqli_query($con, $query);
+} elseif (!empty($_POST['from_date']) && !empty($_POST['to_date'])) {
+    // Get selected date range
+    $start_date = mysqli_real_escape_string($con, $_POST['from_date']);
+    $end_date = mysqli_real_escape_string($con, $_POST['to_date']);
+    // Fetch entries within the selected date range
+    $query = "SELECT * FROM football_received WHERE date_and_time BETWEEN '$start_date' AND '$end_date'";
+    $result = mysqli_query($con, $query);
+} else {
+    // If no stitcher is selected and no other filters are applied, fetch all entries from the database
+    $query = "SELECT * FROM football_received";
+    $result = mysqli_query($con, $query);
+}
+
 }
 ?>
 
