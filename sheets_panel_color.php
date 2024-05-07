@@ -152,7 +152,7 @@ if (isset($_POST['delete_color'])) {
         xhr.onreadystatechange = function() {
             if (this.readyState === 4 && this.status === 200) {
                 var colors = JSON.parse(this.responseText);
-                var productColorSelect = document.getElementById('product_color_delete');
+                var productColorSelect = document.getElementById('small_sheet_color_delete');
                 // Clear existing options
                 productColorSelect.innerHTML = '<option value="" selected disabled>Select Product Color</option>';
                 // Add fetched colors as options
