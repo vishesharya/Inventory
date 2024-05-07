@@ -13,7 +13,7 @@ if (isset($_POST['delete_product'])) {
   
 
     // Delete from products table
-    $insertPanelColorQuery = "INSERT INTO stitcher (product_name, small_sheet_color) VALUES ('$stitcher_name', '$small_sheet_color')";
+    $insertPanelColorQuery = "INSERT INTO sheets_small_stock (product_name, small_sheet_color) VALUES ('$product_name', '$small_sheet_color')";
     mysqli_query($con, $deletePanelColorQuery);
 
 }
