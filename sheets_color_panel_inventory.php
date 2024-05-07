@@ -171,11 +171,12 @@ $result = mysqli_query($con, "SELECT id, product_name, small_sheet_color, small_
 
     function updateDatabase(id, field, value) {
         var xhr = new XMLHttpRequest();
-        xhr.open('POST', 'sheets_product_stock_update.php', true);
+        xhr.open('POST', 'sheet_color_panel_stock_update.php', true);
         xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
         xhr.onreadystatechange = function() {
             if (xhr.readyState == 4 && xhr.status == 200) {
                 console.log(xhr.responseText);
+                // You can add additional handling here if needed
             }
         };
         xhr.send('id=' + id + '&field=' + field + '&value=' + value);
