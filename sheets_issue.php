@@ -331,7 +331,7 @@ if (isset($_POST['submit_products'])) {
                                         <input type="text" class="form-control" id="challan_no" name="challan_no" value="<?php echo $challan_no; ?>" readonly>
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                            
                                 <div class="form-group">
                                     <label for="labour_name">Labour Name:</label>
                                     <select class="form-select" id="labour_name" name="labour_name">
@@ -342,7 +342,7 @@ if (isset($_POST['submit_products'])) {
                                         </select>
                                     </div>
                                 </div>
-                             </div>
+                             
                                 
                                 
                                 <div class="col-md-6">
