@@ -18,10 +18,10 @@ if (isset($_POST['add_color'])) {
         $insertPanelColorQuery = "INSERT INTO sheets_small_stock (product_name, small_sheet_color) VALUES ('$product_name', '$small_sheet_color')";
         if(mysqli_query($con, $insertPanelColorQuery)) {
             // Color added successfully, show message for 3 seconds
-            echo "<script>setTimeout(function(){ alert('Color added successfully.'); }, 3000);</script>";
+            echo "<script>setTimeout(function(){ alert('Color added successfully.'); }, 1);</script>";
         } else {
             // Error adding color, show message for 3 seconds
-            echo "<script>setTimeout(function(){ alert('Error: Unable to add color.'); }, 3000);</script>";
+            echo "<script>setTimeout(function(){ alert('Error: Unable to add color.'); }, 1);</script>";
         }
     }
 }
