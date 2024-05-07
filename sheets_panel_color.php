@@ -134,34 +134,34 @@ if (isset($_POST['delete_color'])) {
     </div>
 </body>
 <script>
-    // Function to update product colors based on selected product name and base
-    function updateProductColors() {
-        var productName = document.getElementById('product_name').value;
- 
+    // Function to update small sheet colors based on selected product name for deletion
+    function updateDeleteProductColors() {
+        var productNameDelete = document.getElementById('product_name_delete').value;
 
-        // Make an AJAX request to fetch product colors based on product name and base
+        // Make an AJAX request to fetch small sheet colors based on selected product name
         var xhr = new XMLHttpRequest();
         xhr.onreadystatechange = function() {
             if (this.readyState === 4 && this.status === 200) {
                 var colors = JSON.parse(this.responseText);
-                var productColorSelect = document.getElementById('small_sheet_color');
+                var smallSheetColorSelect = document.getElementById('small_sheet_color_delete');
                 // Clear existing options
-                productColorSelect.innerHTML = '<option value="" selected disabled>Select Product Color</option>';
+                smallSheetColorSelect.innerHTML = '<option value="" selected disabled>Select Small Sheet Color</option>';
                 // Add fetched colors as options
                 colors.forEach(function(color) {
                     var option = document.createElement('option');
                     option.value = color;
                     option.text = color;
-                    productColorSelect.appendChild(option);
+                    smallSheetColorSelect.appendChild(option);
                 });
             }
         };
-        xhr.open('GET', 'fatch_panel_color.php?product_name=' + productName, true);
+        xhr.open('GET', 'fetch_panel_color.php?product_name=' + productNameDelete, true);
         xhr.send();
     }
 
-    // Event listeners for product name and product base change
-    document.getElementById('product_name').addEventListener('change', updateProductColors);
+    // Event listener for product name change in delete section
+    document.getElementById('product_name_delete').addEventListener('change', updateDeleteProductColors);
 
 </script>
+
 </html>
