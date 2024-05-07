@@ -113,14 +113,14 @@ if (isset($_POST['delete_color'])) {
                                 </select>
                             </div>
                             <div class="form-group mt-3">
-                                <label for="product_name_delete">Select Product Name</label>
-                                <select name="product_name_delete" id="product_name_delete" class="form-control" required>
+                                <label for="small_sheet_color_delete">Select Product Name</label>
+                                <select name="small_sheet_color_delete" id="small_sheet_color_delete" class="form-control" required>
                                     <option value="">Select Product Name</option>
                                     <?php
                                     // Fetch product names alphabetically from the database
                                     $productQuery = mysqli_query($con, "SELECT DISTINCT small_sheet_color FROM sheets_small_stock ORDER BY small_sheet_color ASC");
                                     while ($row = mysqli_fetch_assoc($productQuery)) {
-                                        echo "<option value='" . $row['product_name'] . "'>" . $row['product_name'] . "</option>";
+                                        echo "<option value='" . $row['small_sheet_color'] . "'>" . $row['small_sheet_color'] . "</option>";
                                     }
                                     ?>
                                 </select>
