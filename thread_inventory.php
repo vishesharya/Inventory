@@ -132,9 +132,9 @@ $result = mysqli_query($con, "SELECT id, thread_name, thread_price, thread_remai
                             <tr>
                                 <td><?php echo $sn; ?>.</td>
                                 <td><?php echo $data['thread_name']; ?></td>
-                                <td><?php echo ucfirst($data['thread_remaining_quantity']); ?></td>
-                               
-                                <td contenteditable="true" data-field="thread_price" data-id="<?php echo $data['id']; ?>"><?php echo $data['small_sheet_balance']; ?></td>
+                              
+                                <td contenteditable="true" data-field="thread_remaining_quantity" data-id="<?php echo $data['id']; ?>"><?php echo $data['thread_remaining_quantity']; ?></td>
+                                <td contenteditable="true" data-field="thread_price" data-id="<?php echo $data['id']; ?>"><?php echo $data['thread_price']; ?></td>
                                
                             </tr>
                             <?php 
