@@ -298,9 +298,7 @@ if (isset($_POST['submit_products'])) {
                                 <button type="submit" class="btn btn-primary me-2" name="add_product">Add</button>
                                 <button type="submit" class="btn btn-success" name="submit_products">Submit</button>
                             </div>
-                            <div>
-                                      <a  href="./kits_received_slip_print.php" >Print Issue  Slip </a>
-                            </div>
+                           
                             </div>
                         </form>
                         <hr>
