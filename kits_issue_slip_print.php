@@ -155,9 +155,49 @@ $stitcher_contact = $stitcher_contact_row['stitcher_contact'];
             <div class="middle-signature">Guard Signature</div>
             <div class="issuer-signature">Issuer Signature</div>
         </div>
-        <div class="print-btn">
-            <button onclick="window.print()" class="btn btn-primary">Print</button>
-        </div>
-    </div>
+     <!-- JavaScript code for fetching challan numbers based on selected stitcher and date range -->
+ 
+
+<script>
+        function fetchChallanNumbers(selectedStitcher, fromDate, toDate) {
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    var challanSelect = document.getElementById("select_challan");
+                    var challanNumbers = JSON.parse(this.responseText);
+                    challanSelect.innerHTML = "<option value='' selected disabled>Select Issue Challan No</option>";
+                    challanNumbers.forEach(function(challan) {
+                        var option = document.createElement("option");
+                        option.value = challan;
+                        option.text = challan;
+                        challanSelect.appendChild(option);
+                    });
+                }
+            };
+            xhttp.open("GET", "fatch_challan_no_for_kits_issue.php?stitcher=" + selectedStitcher + "&from_date=" + fromDate + "&to_date=" + toDate, true);
+            xhttp.send();
+        }
+
+        function handleDateRangeChange() {
+            var selectedStitcher = document.getElementById("select_stitcher").value;
+            var fromDate = document.getElementById("from_date").value;
+            var toDate = document.getElementById("to_date").value;
+            if (selectedStitcher && fromDate && toDate) {
+                fetchChallanNumbers(selectedStitcher, fromDate, toDate);
+            }
+        }
+
+        document.getElementById("from_date").addEventListener("change", handleDateRangeChange);
+        document.getElementById("to_date").addEventListener("change", handleDateRangeChange);
+
+        document.getElementById("select_stitcher").addEventListener("change", function() {
+            handleDateRangeChange();
+        });
+    </script>
 </body>
 </html>
+
+
+
+
+
