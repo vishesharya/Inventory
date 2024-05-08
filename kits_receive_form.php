@@ -205,7 +205,7 @@ if (isset($_POST['submit_products'])) {
         }
     </style>
 </head>
-<body>
+<body> 
     <div class="container mt-5">
         <div class="row justify-content-center">
             <div class="col-lg-8">

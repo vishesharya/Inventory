@@ -143,7 +143,7 @@ if (isset($_POST['add_product'])) {
             'quantity1' => $quantity1,
             'quantity2' => $quantity2,
             'quantity3' => $quantity3,
-            
+            'date_and_time' => isset($_POST['date_and_time']) ? $_POST['date_and_time'] : date('Y-m-d H:i:s')
         );
         $_SESSION['temp_products'][] = $temp_product;
     }
@@ -235,7 +235,7 @@ if (isset($_POST['submit_products'])) {
             $quantity1 = mysqli_real_escape_string($con, $product['quantity1']);
             $quantity2 = mysqli_real_escape_string($con, $product['quantity2']);
             $quantity3 = mysqli_real_escape_string($con, $product['quantity3']);
-        
+            $date_and_time = mysqli_real_escape_string($con, $product['date_and_time']);
 
             // Insert product into the database
             $insert_query = "INSERT INTO sheets_received (challan_no, product_name, product_base, product_color, quantity1, quantity2, quantity3, small_panel_color) 
@@ -388,6 +388,12 @@ if (isset($_POST['submit_products'])) {
                                     <div class="form-group">
                                         <label for="quantity">Small Panel:</label>
                                         <input type="number" class="form-control" id="quantity3" name="quantity3" placeholder="Enter Quantity">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="date_and_time">Date and Time:</label>
+                                        <input type="datetime-local" class="form-control" id="date_and_time" name="date_and_time">
                                     </div>
                                 </div>
                             </div>
