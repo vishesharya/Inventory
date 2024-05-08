@@ -108,7 +108,7 @@ $labour_name = $labour_row['labour_name'];
                 <div>
                 <p><br/><br/>Challan No : <?php echo $entry['challan_no']; ?></p>
                 <p>Date : <?php echo date("d-m-Y"); ?></p>
-                </div>
+                </div>https://khannasports.co.in/kits_receive_slip_all_data.php
                
                 
             </div>

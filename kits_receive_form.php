@@ -1,4 +1,4 @@
-<?php
+<f?php
 session_start();
 include_once 'include/connection.php';
 include_once 'include/admin-main.php';
@@ -203,6 +203,12 @@ if (isset($_POST['submit_products'])) {
         .table {
             margin-top: 2rem;
         }
+        #printbtn{
+            display:flex;
+            justify-content:space-between;
+            align-items: flex-end;
+            
+        }
     </style>
 </head>
 <body>
@@ -293,10 +299,14 @@ if (isset($_POST['submit_products'])) {
                                     </div>
                                 </div>
                             </div>
-                            
+                            <div id="printbtn" class="btn-group"></div>
                             <div class="btn-group">
                                 <button type="submit" class="btn btn-primary me-2" name="add_product">Add</button>
                                 <button type="submit" class="btn btn-success" name="submit_products">Submit</button>
+                            </div>
+                            <div>
+                                      <a  href="https://khannasports.co.in/kits_issue_slip_print.php" >Print Issue  Slip </a>
+                            </div>
                             </div>
                         </form>
                         <hr>
