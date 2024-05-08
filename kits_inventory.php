@@ -141,20 +141,21 @@ include_once 'include/admin-main.php';
                                         </div>
                                     </div>
                                 </a>
-                                <a href="kits_product_list.php" style='color:white'>
+                                <a href="thread_inventory.php" style='color:white'>
                                     <div class="col-lg-4">
                                         <div class="panel bg-teal-400">
                                             <p style="margin: 10px; font-size: large;">Thread Inventory Status</p>
                                         </div>
                                     </div>
                                 </a>
-                                 <a href="thread_inventory.php" style='color:white'>
+                                <a href="kits_product_list.php" style='color:white'>
                                     <div class="col-lg-4">
                                         <div class="panel bg-teal-400">
-                                            <p style="margin: 10px; font-size: large;">Inventory Status</p>
+                                            <p style="margin: 10px; font-size: large;">Kits Inventory Status</p>
                                         </div>
                                     </div>
                                 </a>
+                                 
                                 
                             
                             
