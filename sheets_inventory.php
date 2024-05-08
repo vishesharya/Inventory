@@ -117,7 +117,13 @@ include_once 'include/admin-main.php';
                                     </div>
                                 </a>
                                  
-                               
+                                <a href="sheets_issue_all_slip.php" style='color:white'>
+                                    <div class="col-lg-4">
+                                        <div class="panel bg-teal-400">
+                                            <p style="margin: 10px; font-size: large;">Sheets Issue Slip</p>
+                                        </div>
+                                    </div>
+                                </a>
                                  <a href="./sheets_product_list.php" style='color:white'>
                                     <div class="col-lg-4">
                                         <div class="panel bg-teal-400">
