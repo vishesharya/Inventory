@@ -165,7 +165,10 @@ if (isset($_POST['add_product'])) {
                         'stitcher_iind_company_iind' => $stitcher_iind_company_iind,
                         'stitcher_iind_company_ist' => $stitcher_iind_company_ist,
                         'stitcher_ist_company_iind' => $stitcher_ist_company_iind,
-                        'total' => $total
+                        'total' => $total,
+                        'date_and_time' => isset($_POST['date_and_time']) ? $_POST['date_and_time'] : date('Y-m-d H:i:s')
+                        
+                        
                     );
 
                     $_SESSION['temp_products'][] = $temp_product;
@@ -250,6 +253,7 @@ if (isset($_POST['submit_form'])) {
             $stitcher_iind_company_ist = mysqli_real_escape_string($con, $product['stitcher_iind_company_ist']);
             $stitcher_ist_company_ist = mysqli_real_escape_string($con, $product['stitcher_ist_company_ist']);
             $stitcher_ist_company_iind = mysqli_real_escape_string($con, $product['stitcher_ist_company_iind']);
+            $date_and_time = mysqli_real_escape_string($con, $product['date_and_time']);
 
             // Insert product into the database
             $insert_query = "INSERT INTO football_received ( challan_no, stitcher_name, product_name, product_base, product_color, S_Ist_C_Ist, S_IInd_C_IInd, S_IInd_C_Ist, S_Ist_C_IInd, total) 
@@ -473,6 +477,13 @@ if (isset($_POST['submit_form'])) {
                                     <div class="form-group">
                                         <label for="stitcher_iind_company_iind">Stitcher IInd Company IInd:</label>
                                         <input type="number" class="form-control" id="stitcher_iind_company_iind" name="stitcher_iind_company_iind" >
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="date_and_time">Date and Time:</label>
+                                        <input type="datetime-local" class="form-control" id="date_and_time" name="date_and_time">
                                     </div>
                                 </div>
                                
