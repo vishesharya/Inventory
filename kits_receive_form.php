@@ -3,8 +3,8 @@ session_start();
 include_once 'include/connection.php';
 include_once 'include/admin-main.php';
 
-// Default value for Labour Name
-$labour_name = isset($_POST['labour_name']) ? $_POST['labour_name'] : "";
+$labour_query = "SELECT DISTINCT labour_name FROM labour ORDER BY labour_name ASC";
+$labour_result = mysqli_query($con, $labour_query);
 
 
 // Logic to fetch product names from the database
@@ -91,7 +91,9 @@ if (isset($_POST['add_product'])) {
             'product_base' => $product_base,
             'product_color' => $product_color,
             'received_quantity' => $quantity,
-            'total' => $total
+            'total' => $total,
+            'date_and_time' => isset($_POST['date_and_time']) ? $_POST['date_and_time'] : date('Y-m-d H:i:s')// Default to current date and time if not provided
+    
         );
         $_SESSION['temp_products'][] = $temp_product;
     }
@@ -148,7 +150,7 @@ if (isset($_POST['submit_products'])) {
             $product_color = mysqli_real_escape_string($con, $product['product_color']);
             $quantity = mysqli_real_escape_string($con, $product['received_quantity']);
             $total = mysqli_real_escape_string($con, $product['total']);
-
+            $date_and_time = mysqli_real_escape_string($con, $product['date_and_time']);
             // Insert product into the database
             $insert_query = "INSERT INTO kits_received (challan_no, labour_name, product_name, product_base, product_color, received_quantity, total) 
                             VALUES ('$challan_no', '$labour_name', '$product_name', '$product_base', '$product_color', '$quantity', '$total')";
@@ -218,26 +220,13 @@ if (isset($_POST['submit_products'])) {
                             </div>
                         <?php endif; ?>
                         <form method="post" action="">
-                            <div class="row">
-                                <div class="col-md-6">
+                        <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="challan_no">Challan No:</label>
                                         <input type="text" class="form-control" id="challan_no" name="challan_no" value="<?php echo $challan_no; ?>" readonly>
                                     </div>
                                 </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                      <label for="labour_name">Labour Name:</label>
-                                         <select class="form-select" id="labour_name" name="labour_name">
-                                            <option value="" selected disabled>Select Labour</option>
-                                            <?php while ($row = mysqli_fetch_assoc($labour_result)) : ?>
-                                            <option value="<?php echo $row['labour_name']; ?>"><?php echo $row['labour_name']; ?></option>
-                                            <?php endwhile; ?>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
+                        <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="product_name">Select Product:</label>
@@ -284,6 +273,27 @@ if (isset($_POST['submit_products'])) {
                                     </div>
                                 </div>
                             </div>
+                            <div class="row">
+                            
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                      <label for="labour_name">Labour Name:</label>
+                                         <select class="form-select" id="labour_name" name="labour_name">
+                                            <option value="" selected disabled>Select Labour</option>
+                                            <?php while ($row = mysqli_fetch_assoc($labour_result)) : ?>
+                                            <option value="<?php echo $row['labour_name']; ?>"><?php echo $row['labour_name']; ?></option>
+                                            <?php endwhile; ?>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="date_and_time">Date and Time:</label>
+                                        <input type="datetime-local" class="form-control" id="date_and_time" name="date_and_time">
+                                    </div>
+                                </div>
+                            </div>
+                            
                             <div class="btn-group">
                                 <button type="submit" class="btn btn-primary me-2" name="add_product">Add</button>
                                 <button type="submit" class="btn btn-success" name="submit_products">Submit</button>
