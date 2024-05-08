@@ -18,6 +18,12 @@ $result = null;
 if (isset($_POST['view_entries'])) {
     // Get selected stitcher
     $stitcher_name = isset($_POST['stitcher_name']) ? mysqli_real_escape_string($con, $_POST['stitcher_name']) : '';
+    if (!empty($stitcher_name)) {
+        $stitcher_contact_query = "SELECT stitcher_contact FROM stitcher WHERE stitcher_name = '$stitcher_name' LIMIT 1";
+        $stitcher_contact_result = mysqli_query($con, $stitcher_contact_query);
+        $stitcher_contact_row = mysqli_fetch_assoc($stitcher_contact_result);
+        $stitcher_contact = $stitcher_contact_row['stitcher_contact'];
+    }
 
     // Get selected challan number
     $selected_challan = isset($_POST['challan_no']) ? mysqli_real_escape_string($con, $_POST['challan_no']) : '';
