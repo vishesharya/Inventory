@@ -319,11 +319,13 @@ if (isset($_POST['submit_products'])) {
                                 <?php endforeach; ?>
                             </div>
                         <?php endif; ?>
-                        <form method="post" action=""> 
-                                   <div class="form-group">
+                        <form method="post" action="">
+                        <div class="col-md-6">
+                                    <div class="form-group">
                                         <label for="challan_no">Challan No:</label>
                                         <input type="text" class="form-control" id="challan_no" name="challan_no" value="<?php echo $challan_no; ?>" readonly>
                                     </div>
+                                </div>
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
@@ -410,25 +412,22 @@ if (isset($_POST['submit_products'])) {
                                 </div>
                             </div>
                             <div class="row">
+                               
                                 <div class="col-md-6">
-                                    
-                                    <div class="col-md-6">
                                 <div class="form-group">
-                                  <label for="select_stitcher">Select Stitcher:</label>
-                                  <select class="form-select" id="select_stitcher" name="stitcher_name">
-                                   <option value="" selected disabled>Select Stitcher</option>
-                                    <?php 
+                                <label for="select_stitcher">Select Stitcher:</label>
+                                <select class="form-select" id="select_stitcher" name="stitcher_name">
+                                <option value="" selected disabled>Select Stitcher</option>
+                                  <?php 
                                   // Fetch stitcher names from the database
-                                   $stitcher_query = "SELECT stitcher_name FROM stitcher";
-                                      $stitcher_result = mysqli_query($con, $stitcher_query);
-                                      while ($row = mysqli_fetch_assoc($stitcher_result)) : ?>
-                                      <option value="<?php echo $row['stitcher_name']; ?>"><?php echo $row['stitcher_name']; ?></option>
-                                      <?php endwhile; ?>
-                                  </select>
+                                  $stitcher_query = "SELECT stitcher_name FROM stitcher";
+                                  $stitcher_result = mysqli_query($con, $stitcher_query);
+                                  while ($row = mysqli_fetch_assoc($stitcher_result)) : ?>
+                                   <option value="<?php echo $row['stitcher_name']; ?>"><?php echo $row['stitcher_name']; ?></option>
+                                   <?php endwhile; ?>
+                                </select>
                                 </div>
                                 </div>
-                                </div>
-                                
                             </div>
                             <div id="printbtn" class="btn-group">
                                 <div>
