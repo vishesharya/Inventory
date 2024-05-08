@@ -118,7 +118,7 @@ $stitcher_contact = $stitcher_contact_row['stitcher_contact'];
                 </div>
                 <div>
                 <p><br/><br/>Challan No : <?php echo $entry['challan_no']; ?></p>
-                <p>Date: <?php echo date('Y-m-d', strtotime($date_and_time)); ?></p>
+                <p>Date: <?php echo date('d-m-Y', strtotime($date_and_time)); ?></p>
                 </div>
                
                 
