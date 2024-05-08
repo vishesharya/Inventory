@@ -40,7 +40,7 @@ $challan_no = viewChallanNumber($con);
 
 // Default value for Stitcher Name
 $stitcher_name = isset($_POST['stitcher_name']) ? $_POST['stitcher_name'] : "";
-
+$thread_name = isset($_POST['thread_name']) ? $_POST['thread_name'] : "";
 
 
 
