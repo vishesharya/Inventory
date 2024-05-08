@@ -447,7 +447,7 @@ if (isset($_POST['submit_products'])) {
                                 </table>
                             </div>
                         </div>
-                    </div>
+                    </div> 
                 </div>
             </div>
         </div>
