@@ -203,12 +203,6 @@ if (isset($_POST['submit_products'])) {
         .table {
             margin-top: 2rem;
         }
-        #printbtn{
-            display:flex;
-            justify-content:space-between;
-            align-items: flex-end;
-            
-        }
     </style>
 </head>
 <body>
@@ -305,7 +299,7 @@ if (isset($_POST['submit_products'])) {
                                 <button type="submit" class="btn btn-success" name="submit_products">Submit</button>
                             </div>
                             <div>
-                                      <a  href="https://khannasports.co.in/kits_issue_slip_print.php" >Print Issue  Slip </a>
+                                      <a  href="./kits_received_slip_print.php" >Print Issue  Slip </a>
                             </div>
                             </div>
                         </form>
