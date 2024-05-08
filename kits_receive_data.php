@@ -110,7 +110,7 @@ if (isset($_POST['view_entries'])) {
 <body>
     <?php include('include/nav.php'); ?>
     <div class="container-fluid mt-5">
-    <h1 class="h4 text-center mb-4">KITS RECEIVE DATA </h1> 
+    <h1 class="h4 text-center mb-4">KITS RECEIVE DETAILS </h1> 
         <div id="form" class="row justify-content-center">
     <!-- Changed container to container-fluid -->
             <div class="col-lg-8">
