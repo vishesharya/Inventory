@@ -112,7 +112,7 @@ $stitcher_contact = $stitcher_contact_row['stitcher_contact'];
                 </div>
                 <div>
                 <p><br/><br/>Challan No : <?php echo $entry['challan_no']; ?></p>
-                <p>Date : <?php echo date("d-m-Y"); ?></p>
+                <p>Date : <?php echo date('d/m/Y', strtotime($product['date_and_time'])); ?></p>
                 </div>
                
                 
@@ -149,7 +149,7 @@ $stitcher_contact = $stitcher_contact_row['stitcher_contact'];
                     </tbody>
                 </table>
             </div>
-        </div>
+        </div> 
         <div class="footer">
             <div class="receiver-signature">Receiver Signature</div>
             <div class="middle-signature">Guard Signature</div>
