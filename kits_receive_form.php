@@ -1,4 +1,4 @@
-<f?php
+<?php
 session_start();
 include_once 'include/connection.php';
 include_once 'include/admin-main.php';
@@ -293,12 +293,10 @@ if (isset($_POST['submit_products'])) {
                                     </div>
                                 </div>
                             </div>
-                            <div id="printbtn" class="btn-group"></div>
+                            
                             <div class="btn-group">
                                 <button type="submit" class="btn btn-primary me-2" name="add_product">Add</button>
                                 <button type="submit" class="btn btn-success" name="submit_products">Submit</button>
-                            </div>
-                           
                             </div>
                         </form>
                         <hr>
