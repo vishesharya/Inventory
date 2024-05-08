@@ -23,6 +23,12 @@ $stitcher_result = mysqli_query($con, $stitcher_query);
 $stitcher_row = mysqli_fetch_assoc($stitcher_result);
 $stitcher_name = $stitcher_row['stitcher_name'];
 
+// Fetch the date and time 
+$date_and_time_query = "SELECT date_and_time FROM football_received WHERE challan_no = '$challan_no' LIMIT 1";
+$date_and_time_result = mysqli_query($con, $date_and_time_query);
+$date_and_time_row = mysqli_fetch_assoc($date_and_time_result);
+$date_and_time = $date_and_time_row['date_and_time'];
+
 // Fetch the stitcher contact for the invoice
 $stitcher_contact_query = "SELECT stitcher_contact FROM stitcher WHERE stitcher_name = '$stitcher_name' LIMIT 1";
 $stitcher_contact_result = mysqli_query($con, $stitcher_contact_query);
@@ -112,8 +118,8 @@ $stitcher_contact = $stitcher_contact_row['stitcher_contact'];
                 </div>
                 <div>
                 <p><br/><br/>Challan No : <?php echo $entry['challan_no']; ?></p>
-                <p>Date : <?php echo date("d-m-Y"); ?></p>
-                </div>
+                <p>Date: <?php echo date('d-m-Y', strtotime($date_and_time)); ?></p>
+                </div> 
                
                 
             </div>
