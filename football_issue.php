@@ -115,7 +115,8 @@ if (isset($_POST['add_product'])) {
                         'product_name' => $product_name,
                         'product_base' => $product_base,
                         'product_color' => $product_color,
-                        'issue_quantity' => $quantity
+                        'issue_quantity' => $quantity,
+                        'date_and_time' => isset($_POST['date_and_time']) ? $_POST['date_and_time'] : date('Y-m-d H:i:s')
                     );
                     $_SESSION['temp_products'][] = $temp_product;
                 }
@@ -182,6 +183,7 @@ if (isset($_POST['submit_products'])) {
             $product_color = mysqli_real_escape_string($con, $product['product_color']);
             $quantity = mysqli_real_escape_string($con, $product['issue_quantity']);
             $total = mysqli_real_escape_string($con, $product['total']);
+            $date_and_time = mysqli_real_escape_string($con, $product['date_and_time']);
 
             // Insert product into the database
             $insert_query = "INSERT INTO football_issue (challan_no, invoice_number, buyer_name, destination, product_name, product_base, product_color, issue_quantity) 
@@ -325,6 +327,12 @@ if (isset($_POST['submit_products'])) {
                                         <label for="quantity">Issue Quantity:</label>
                                         <input type="number" class="form-control" id="quantity" name="quantity" placeholder="Enter Quantity">
                                     </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="date_and_time">Date and Time:</label>
+                                        <input type="datetime-local" class="form-control" id="date_and_time" name="date_and_time">
+                                    </div> 
                                 </div>
                             </div>
                             <div class="btn-group">

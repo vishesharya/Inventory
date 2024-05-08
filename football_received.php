@@ -484,7 +484,7 @@ if (isset($_POST['submit_form'])) {
                                     <div class="form-group">
                                         <label for="date_and_time">Date and Time:</label>
                                         <input type="datetime-local" class="form-control" id="date_and_time" name="date_and_time">
-                                    </div>
+                                    </div> 
                                 </div>
                                
                                
