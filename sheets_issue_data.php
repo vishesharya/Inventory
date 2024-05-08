@@ -3,196 +3,281 @@ session_start();
 include_once 'include/connection.php';
 include_once 'include/admin-main.php';
 
+// Fetch labour names from the database
+$labour_query = "SELECT DISTINCT labour_name FROM sheets_issue ORDER BY labour_name ASC"; 
+$labour_result = mysqli_query($con, $labour_query);
+$challan_no = isset($_POST['challan_no']) ? $_POST['challan_no'] : "";
+
+
+// Check if 'challan_no' is set in session
+if (isset($_SESSION['challan_no'])) {
+    $challan_no = $_SESSION['challan_no'];
+}
+
+// Initialize $result variable
+$result = null;
+
+// Check if 'View' button is clicked
+if (isset($_POST['view_entries'])) {
+    // Get selected labour
+    $labour_name = isset($_POST['labour_name']) ? mysqli_real_escape_string($con, $_POST['labour_name']) : '';
+   
+   
+    // Initialize conditions
+    $conditions = "";
+
+    // Add labour condition
+    if (!empty($labour_name)) {
+        $conditions .= " WHERE labour_name = '$labour_name'";
+    }
+
+    // Add date range condition
+    if (!empty($_POST['from_date']) && !empty($_POST['to_date'])) {
+        // Get selected date range
+        $start_date = mysqli_real_escape_string($con, $_POST['from_date']);
+        $end_date = mysqli_real_escape_string($con, $_POST['to_date']);
+
+        // Add AND or WHERE depending on whether previous conditions exist
+        $conditions .= ($conditions == "") ? " WHERE" : " AND";
+        $conditions .= " date_and_time BETWEEN '$start_date' AND '$end_date'";
+    }
+
+    // Add challan number condition
+    if (!empty($_POST['challan_no'])) {
+        // Get selected challan number
+        $challan_no = mysqli_real_escape_string($con, $_POST['challan_no']);
+        
+        // Add AND or WHERE depending on whether previous conditions exist
+        $conditions .= ($conditions == "") ? " WHERE" : " AND";
+        $conditions .= " challan_no = '$challan_no'";
+    }
+
+    // Construct the final query
+    $query = "SELECT * FROM sheets_issue $conditions";
+    $result = mysqli_query($con, $query);
+}
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title><?php include('include/title.php');?> Kits Receive Data</title>
-    <link rel="icon" type="image/x-icon" href="assets/images/favicon.png">
-
-    <!-- Global stylesheets -->
-    <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet" type="text/css">
-    <link href="assets/css/icons/icomoon/styles.css" rel="stylesheet" type="text/css">
-    <link href="assets/css/bootstrap.css" rel="stylesheet" type="text/css">
-    <link href="assets/css/core.css" rel="stylesheet" type="text/css">
-    <link href="assets/css/components.css" rel="stylesheet" type="text/css">
-    <link href="assets/css/colors.css" rel="stylesheet" type="text/css">
-    <!-- /global stylesheets -->
-
-    <!-- Core JS files -->
-    <script type="text/javascript" src="assets/js/plugins/loaders/pace.min.js"></script>
-    <script type="text/javascript" src="assets/js/core/libraries/jquery.min.js"></script>
-    <script type="text/javascript" src="assets/js/core/libraries/bootstrap.min.js"></script>
-    <script type="text/javascript" src="assets/js/plugins/loaders/blockui.min.js"></script>
-    <!-- /core JS files -->
-
-    <!-- Theme JS files -->
-    <script type="text/javascript" src="assets/js/plugins/tables/datatables/datatables.min.js"></script>
-    <script type="text/javascript" src="assets/js/plugins/forms/selects/select2.min.js"></script>
-    <script type="text/javascript" src="assets/js/core/app.js"></script>
-    <script type="text/javascript" src="assets/js/pages/datatables_sorting.js"></script>
-    <!-- /theme JS files -->
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KITS ISSUE DETAILS</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+       body {
+            background-color: #f8f9fc;
+            font-family: Arial, sans-serif;
+        }
+        .card {
+            border-radius: 1rem;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        }
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        .btn-group {
+            margin-top: 1.5rem;
+            justify-content: center;
+        }
+        .table {
+            margin-top: 2rem;
+            border-collapse:collapse;
+           
+        }
+        #printbtn {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+        }
+        .error-input {
+            border: 1px solid red;
+        }
+        .date_input {
+            display: flex;
+        }
+        #input_field {
+            margin: 0.1rem;
+        }
+        @media print {
+            #form {
+                display: none;
+            }
+        }
+    </style>
 </head>
-
 <body>
+    <?php include('include/nav.php'); ?>
+    <div class="container-fluid mt-5">
+    <h1 class="h4 text-center mb-4">SHEETS ISSUE DETAILS </h1> 
+        <div id="form" class="row justify-content-center">
+    <!-- Changed container to container-fluid -->
+            <div class="col-lg-8">
+                <div class="card">
+                    <div class="card-body">
+                      
+                        <?php if (!empty($errors)) : ?>
+                            <div class="alert alert-danger" role="alert">
+                                <?php foreach ($errors as $error) : ?>
+                                    <?php echo $error; ?><br>
+                                <?php endforeach; ?>
+                            </div>
+                        <?php endif; ?>
+                        <!-- New form to select labour, associated challan number, and product details -->
+                        <form method="post" action="">
 
-    <!-- Main navbar -->
-    <?php include('include/top.php'); ?>
-    <!-- /main navbar -->
 
-    <!-- Page container -->
-    <div class="page-container">
-
-        <!-- Page content -->
-        <div class="page-content">
-
-            <!-- Main sidebar -->
-         
-
-            <!-- Main content -->
-            <div class="content-wrapper">
-
-                <!-- Page header -->
-                <div class="page-header page-header-default">
-                    <div class="page-header-content">
-                        <div class="page-title">
-                            <h4><i class="icon-arrow-left52 position-left"></i> <a href="inventory.php" class="text-semibold">Click Here - Go Back</a></h4>
-                        </div>
-
-                    </div>
-
-                    <div class="breadcrumb-line">
-                        <ul class="breadcrumb">
-                            <li><a href="dashboard.php"><i class="icon-home2 position-left"></i> Home</a></li>
-                            <li class="active"><a href="inventory.php" class="btn bg-indigo-300"  >Sheets Inventory Data</a></li>
-                        </ul>
-                    </div>
-                </div>
-                <!-- /page header -->
-
-                <!-- Print form -->
-                <div class="content">
-                    <div class="pad margin no-print">
-                        <div class="callout callout-info">
-                            <form action="sheets_issue_data_print.php" method="POST" class="form-horizontal" enctype="multipart/form-data"  autocomplete="off">
-                                <div class="box-body">
+                         <div class="date_input">
+                                      <!-- From date -->
+                                <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="inputEmail3" class="col-sm-1 control-label">From Date</label>
-                                        <div class="col-sm-2">
-                                            <input type="date" class="form-control datepicker" name="from_date" id="startdate">
-                                        </div>
-                                        <label for="inputEmail3" class="col-sm-1 control-label">To Date</label>
-                                        <div class="col-sm-2">
-                                            <input type="date" class="form-control" name="to_date" id="enddate">
-                                        </div>
-                                        <div class="col-sm-2">
-                                            <button type="submit" name="submit" class="btn btn-warning ">Print</button>
-                                        </div>
+                                        <label for="from_date">From Date:</label>
+                                        <input type="date" class="form-control" id="from_date" name="from_date">
                                     </div>
                                 </div>
-                            </form>
-                        </div>
-                    </div>
-             
-                <!-- /Print form -->
+                                <!-- To date -->
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="to_date">To Date:</label>
+                                        <input type="date" class="form-control" id="to_date" name="to_date">
+                                    </div>
+                                </div>
 
-                <!-- Table of football contact query -->
-               
-                    <div class="panel panel-flat" style="overflow: auto;">
-                        <div class="panel-heading">
-                            <h5 class="panel-title">Sheets Inventory Management</h5>
-                            <div class="heading-elements">
-                                <ul class="icons-list">
-                                    <li><a data-action="collapse"></a></li>
-                                    <li><a data-action="reload"></a></li>
-                                    <li><a data-action="close"></a></li>
-                                </ul>
+
+                                </div>
+                            <div id="input_field" class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="select_labour">Select labour:</label>
+                                        <select class="form-select" id="select_labour" name="labour_name">
+         
+                                        <option value="">Select labour</option>
+                                            <?php while ($row = mysqli_fetch_assoc($labour_result)) : ?>
+                                                <option value="<?php echo $row['labour_name']; ?>"><?php echo $row['labour_name']; ?></option>
+                                            <?php endwhile; ?>
+                                        </select>
+                                    </div>
+                                </div>
+                       
+                              
+                            
+                          
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="select_challan">Select Receive Challan No:</label>
+                                        <select class="form-select" id="select_challan" name="challan_no">
+                                            <option value="" selected disabled>Select Issue Challan No</option>
+                                            <?php if (isset($challan_result_issue)) : ?>
+                                                <?php while ($row = mysqli_fetch_assoc($challan_result_issue)) : ?>
+                                                    <option value="<?php echo $row['challan_no']; ?>"><?php echo $row['challan_no']; ?></option>
+                                                <?php endwhile; ?>
+                                            <?php endif; ?>
+                                        </select>
+                                    </div>
+                                </div>
+                          </div>
+                            
+                                <div id="printbtn" class="btn-group">
+                                <div>
+                                <button type="submit" class="btn btn-primary" name="view_entries">View</button>
+                                <button type="button" class="btn btn-primary" onclick="window.print()">Print</button>
+                                </div>
+                               
                             </div>
-                        </div>
-
-                        <table class="table datatable-multi-sorting">
-                            <thead>
-                                <tr>
-                                    <th>Sn.</th>
-                                    <th>Challan No.</th>  
-                                    <th>Labour Name</th>                         
-                                    <th>Product Name</th>
-                                    <th>Product Base</th>
-                                    <th>Product Color</th>
-                                    <th>Big Panel</th>
-                                    <th>Plain Panel</th>
-                                    <th>Small Panel</th>
-                                    <th>Date/Time</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php 
-                                $sn=1;
-                                $result=mysqli_query($con, "SELECT * FROM sheets_issue"); // Selecting all fields from the kits_received table
-                                while($data=mysqli_fetch_array($result)) {
-                                ?>
-                                <tr>
-                                    <td><?php echo $sn; ?>.</td>
-                                    <td><?php echo $data['challan_no']; ?></td>
-                                    <td><?php echo $data['labour_name']; ?></td>
-                                    <td><?php echo $data['product_name']; ?></td>
-                                    <td><?php echo ucfirst($data['product_base']); ?></td>
-                                    <td><?php echo ucfirst($data['product_color']); ?></td>
-                                    <td><?php echo $data['quantity1']; ?></td>
-                                    <td><?php echo $data['quantity2']; ?></td>
-                                    <td><?php echo $data['small_panel_color']; ?></td>
-                                    <td><?php echo $data['quantity1']; ?></td>
-                                    <td><?php echo $data['date_and_time']; ?></td>
-                                </tr>
-                                <?php 
-                                $sn++; 
-                                }  
-                                ?>
-                            </tbody>
-                        </table>
+                            </div>
+                           
+                        </form>
                     </div>
                 </div>
-                <!-- /Table of football contact query -->
-
-                <!-- Footer -->
-                <?php include('include/footer.php'); ?>
-                <!-- /footer -->
-
             </div>
-            <!-- /main content -->
-
         </div>
-        <!-- /page content -->
 
-    </div>
-    <!-- /page container -->
 
-    <!-- Delete/Edit validation -->
-    <script>
-    function del() {
-        var r = confirm('Are you sure want to delete ? ');
-        if (!r) {
-            return false;
-        } else {
-            return true;
+        <?php if (isset($_POST['view_entries']) && mysqli_num_rows($result) > 0): ?>
+        <table class="table datatable-multi-sorting">
+            <thead>
+                <tr>
+                    <th>Sn.</th>
+                    <th>Challan No.</th>
+                    <th>Labour Name</th>
+                    <th>Product Name</th>
+                    <th>Product Base</th>
+                    <th>Product Color</th>
+                    <th>Big Panel</th>
+                    <th>Plain Panel</th>
+                    <th>Small Panel Color</th>
+                    <th>Small Panel</th>
+                    <th>Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php $sn = 1; ?>
+                <?php while ($data = mysqli_fetch_array($result)): ?>
+                    <tr>
+                        <td><?php echo $sn; ?>.</td>
+                        <td><?php echo $data['challan_no']; ?></td>
+                        <td><?php echo $data['labour_name']; ?></td>
+                        <td><?php echo $data['product_name']; ?></td>
+                        <td><?php echo ucfirst($data['product_base']); ?></td>
+                        <td><?php echo ucfirst($data['product_color']); ?></td>
+                        <td><?php echo $data['quantity1']; ?></td>
+                        <td><?php echo $data['quantity2']; ?></td>
+                        <td><?php echo $data['small_panel_color']; ?></td>
+                        <td><?php echo $data['quantity3']; ?></td>
+                        <td><?php echo date('d/m/Y', strtotime($data['date_and_time'])); ?></td>
+
+                    </tr>
+                    <?php $sn++; ?>
+                <?php endwhile; ?>
+            </tbody>
+        </table>
+    <?php elseif (isset($_POST['view_entries'])): ?>
+        <p>No entries found.</p>
+    <?php endif; ?>
+
+
+   <!-- JavaScript code for fetching challan numbers based on selected labour and date range -->
+ 
+
+   <script>
+     // ajax_script.js
+
+function fetchChallanNumbers(selectedLabour) {
+    var fromDate = document.getElementById("from_date").value;
+    var toDate = document.getElementById("to_date").value;
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            var challanSelect = document.getElementById("select_challan");
+            var challanNumbers = JSON.parse(this.responseText);
+            challanSelect.innerHTML = "<option value='' selected disabled>Select Issue Challan No</option>";
+            challanNumbers.forEach(function(challan) {
+                var option = document.createElement("option");
+                option.value = challan;
+                option.text = challan;
+                challanSelect.appendChild(option);
+            });
         }
-    }
+    };
+    xhttp.open("GET", "fatch_challan_no_for_sheet_issue.php?labour=" + selectedLabour + "&from_date=" + fromDate + "&to_date=" + toDate, true);
+    xhttp.send();
+}
 
-    function edit() {
-        var r = confirm('Are you sure want to edit ?');
-        if (!r) {
-            return false;
-        } else {
-            return true;
-        }
+function handleLabourChange() {
+    var selectedLabour = document.getElementById("select_labour").value;
+    if (selectedLabour) {
+        fetchChallanNumbers(selectedLabour);
     }
+}
+
+document.getElementById("select_labour").addEventListener("change", handleLabourChange);
+document.getElementById("from_date").addEventListener("change", handleLabourChange);
+document.getElementById("to_date").addEventListener("change", handleLabourChange);
+
+// Trigger initial fetch when page loads
+handleLabourChange();
+
     </script>
-    <!-- /Delete/Edit validation -->
-
 </body>
 </html>
