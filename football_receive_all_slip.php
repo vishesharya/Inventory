@@ -8,8 +8,13 @@ include_once 'include/admin-main.php';
 $stitcher_query = "SELECT DISTINCT stitcher_name FROM football_received"; 
 $stitcher_result = mysqli_query($con, $stitcher_query);
 
-// Get Challan No from session
-$challan_no = $_SESSION['challan_no'];
+$challan_no = isset($_POST['challan_no']) ? $_POST['challan_no'] : "";
+
+
+// Check if 'challan_no' is set in session
+if (isset($_SESSION['challan_no'])) {
+    $challan_no = $_SESSION['challan_no'];
+};
 
 // Initialize $result variable
 $result = null;
@@ -24,7 +29,7 @@ if (isset($_POST['view_entries'])) {
         $stitcher_contact_row = mysqli_fetch_assoc($stitcher_contact_result);
         $stitcher_contact = $stitcher_contact_row['stitcher_contact'];
     }
-
+ 
     // Get selected challan number
     $selected_challan = isset($_POST['challan_no']) ? mysqli_real_escape_string($con, $_POST['challan_no']) : '';
 
@@ -259,7 +264,7 @@ if (!empty($selected_challan)) {
                     <!-- Add other details as needed -->
                 </div>
                 <div>
-                    <p><br/><br/>Challan No: <?php echo $challan_no; ?></p>
+                <p><br/><br/>Challan No: <?php echo $challan_no; ?></p>
                 </div>
             </div>
         </div>
