@@ -409,7 +409,7 @@ if (isset($_POST['submit_products'])) {
                                     </div>
                                 </div>
                             </div>
-
+                            <div class="row">
                             <div class="col-md-6">
                                     <div class="form-group">
                                       <label for="labour_name">Labour Name:</label>
@@ -426,6 +426,7 @@ if (isset($_POST['submit_products'])) {
                                         <label for="date_and_time">Date and Time:</label>
                                         <input type="datetime-local" class="form-control" id="date_and_time" name="date_and_time">
                                     </div>
+                                </div>
                                 </div>
                             <div class="btn-group">
                                 <button type="submit" class="btn btn-primary me-2" name="add_product">Add</button>
