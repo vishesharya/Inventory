@@ -6,6 +6,8 @@ include_once 'include/admin-main.php';
 // Fetch stitcher names from the database
 $stitcher_query = "SELECT DISTINCT stitcher_name FROM kits_issue ORDER BY stitcher_name ASC"; 
 $stitcher_result = mysqli_query($con, $stitcher_query);
+$challan_no = isset($_POST['challan_no']) ? $_POST['challan_no'] : "";
+$stitcher_contact = isset($_POST['stitcher_contact']) ? $_POST['stitcher_contact'] : "";
 
 // Check if 'challan_no' is set in session
 if (isset($_SESSION['challan_no'])) {
@@ -19,7 +21,13 @@ $result = null;
 if (isset($_POST['view_entries'])) {
     // Get selected stitcher
     $stitcher_name = isset($_POST['stitcher_name']) ? mysqli_real_escape_string($con, $_POST['stitcher_name']) : '';
-
+   
+    if (!empty($stitcher_name)) {
+        $stitcher_contact_query = "SELECT stitcher_contact FROM stitcher WHERE stitcher_name = '$stitcher_name' LIMIT 1";
+        $stitcher_contact_result = mysqli_query($con, $stitcher_contact_query);
+        $stitcher_contact_row = mysqli_fetch_assoc($stitcher_contact_result);
+        $stitcher_contact = $stitcher_contact_row['stitcher_contact'];
+    }
     // Initialize conditions
     $conditions = "";
 
@@ -78,11 +86,7 @@ if (isset($_POST['view_entries'])) {
             margin-top: 1.5rem;
             justify-content: center;
         }
-        .table {
-            margin-top: 2rem;
-            border-collapse:collapse;
-           
-        }
+        
         #printbtn {
             display: flex;
             justify-content: space-between;
@@ -102,13 +106,63 @@ if (isset($_POST['view_entries'])) {
                 display: none;
             }
         }
+        .container_slip {
+            margin-top: 50px;
+            background-color: #f8f9fc;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+        .heading {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+        .table {
+            margin-top: 0px;
+        }
+        .signature {
+            margin-top: 20px;
+            display: flex;
+            justify-content: space-between;
+            gap: 9rem;
+            align-items: flex-end;
+            color: #555;
+        }
+        .receiver-signature{
+            text-align: right;
+            
+        
+        }
+        .issuer-signature {
+            text-align: left;
+        
+        }
+        .middle-signature {
+            text-align: center;
+           
+        }
+        .print-btn {
+            display: block;
+            margin-top: 20px;
+            text-align: center;
+        }
+        #head_details{
+            display: flex;
+            margin-top: 0px;
+            padding-top: 0px;
+            flex-direction: row;
+            align-items: flex-end;
+            justify-content: space-between;
+        }
     </style>
 </head>
 <body>
     <?php include('include/nav.php'); ?>
     <div class="container-fluid mt-5">
-          <h1 class="h4 text-center mb-4">KITS ISSUE DETAILS </h1> <!-- Changed container to container-fluid -->
+          
         <div id="form" class="row justify-content-center">
+        <h1 class="h4 text-center mb-4">KITS ISSUE SLIP </h1> <!-- Changed container to container-fluid -->
             <div class="col-lg-8">
                 <div class="card">
                     <div class="card-body">
@@ -182,9 +236,6 @@ if (isset($_POST['view_entries'])) {
                                
                             </div>
                             </div>
-                          
-                       
-                           
                            
                         </form>
                     </div>
@@ -193,57 +244,72 @@ if (isset($_POST['view_entries'])) {
         </div>
 
 
-
         <?php if (isset($_POST['view_entries']) && mysqli_num_rows($result) > 0): ?>
-        <table class="table datatable-multi-sorting">
-            <thead>
-                <tr>
-                    <th>Sn.</th>
-                    <th>Challan No.</th>
-                    <th>Stitcher Name</th>
-                    <th>Product Name</th>
-                    <th>Product Base</th>
-                    <th>Product Color</th>
-                    <th>Issue Quantity</th>
-                    <th>Bladder Name</th>
-                    <th>Bladder Quantity</th>
-                    <th>Thread Name</th>
-                    <th>Thread Quantity</th>
-                    <th>Date</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php $sn = 1; ?>
-                <?php while ($data = mysqli_fetch_array($result)): ?>
-                    <tr>
-                        <td><?php echo $sn; ?>.</td>
-                        <td><?php echo $data['challan_no']; ?></td>
-                        <td><?php echo $data['stitcher_name']; ?></td>
-                        <td><?php echo $data['product_name']; ?></td>
-                        <td><?php echo ucfirst($data['product_base']); ?></td>
-                        <td><?php echo ucfirst($data['product_color']); ?></td>
-                        <td><?php echo $data['issue_quantity']; ?></td>
-                        <td><?php echo $data['bladder_name']; ?></td>
-                        <td><?php echo $data['bladder_quantity']; ?></td>
-                        <td><?php echo $data['thread_name']; ?></td>
-                        <td><?php echo $data['thread_quantity']; ?></td>
-                        <td><?php echo date('d/m/Y', strtotime($data['date_and_time'])); ?></td>
-
-                    </tr>
-                    <?php $sn++; ?>
-                <?php endwhile; ?>
-            </tbody>
-        </table>
-    <?php elseif (isset($_POST['view_entries'])): ?>
-        <p>No entries found.</p>
-    <?php endif; ?>
-
-
+    <div class="container_slip">
+        <!-- Add your HTML structure here to display kits issue details -->
+        <div class="invoice-header">
+            <div>
+                <h2 class="heading">KHANNA SPORTS KITS ISSUE SLIP</h2>
+                <p>Sports Complex, A-7, Delhi Road, Phase 1,<br/>Industrial Area, Mohkam Pur, Meerut,<br/>Uttar Pradesh 250002 (India)</p>
+                <p>Contact: 8449441387, 98378427750</p>
+            </div>
+            <div id="head_details">
+                <div>
+                    <p>Stitcher : <?php echo $stitcher_name; ?></p>
+                     <p>Stitcher Contact : <?php echo $stitcher_contact; ?></p>
+                    <!-- Add other details as needed -->
+                </div>
+                <div>
+                    <p><br/><br/>Challan No: <?php echo $challan_no; ?></p>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Product Name</th>
+                            <th>Product Base</th>
+                            <th>Product Color</th>
+                            <th>Product Quantity</th>
+                            <th>Bladder Type</th>
+                            <th>Bladder Quantity</th>
+                            <th>Thread Type</th>
+                            <th>Thread Quantity</th>
+                            <th>Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php while ($product = mysqli_fetch_assoc($result)) : ?>
+                            <tr>
+                                <td><?php echo $product['product_name']; ?></td>
+                                <td><?php echo ucfirst($product['product_base']); ?></td>
+                                <td><?php echo ucfirst($product['product_color']); ?></td>
+                                <td><?php echo $product['issue_quantity']; ?></td>
+                                <td><?php echo $product['bladder_name']; ?></td>
+                                <td><?php echo $product['bladder_quantity']; ?></td>
+                                <td><?php echo $product['thread_name']; ?></td>
+                                <td><?php echo $product['thread_quantity']; ?></td>
+                                <td><?php echo date('d/m/Y', strtotime($product['date_and_time'])); ?></td>
+                            </tr>
+                        <?php endwhile; ?>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="signature">
+            <div class="receiver-signature">Receiver Signature</div>
+            <div class="middle-signature">Guard Signature</div>
+            <div class="issuer-signature">Issuer Signature</div>
+        </div>
+    </div>
+<?php endif; ?>
 
    <!-- JavaScript code for fetching challan numbers based on selected stitcher and date range -->
  
 
-<script>
+   <script>
         function fetchChallanNumbers(selectedStitcher, fromDate, toDate) {
             var xhttp = new XMLHttpRequest();
             xhttp.onreadystatechange = function() {
@@ -281,8 +347,3 @@ if (isset($_POST['view_entries'])) {
     </script>
 </body>
 </html>
-
-
-
-
-
