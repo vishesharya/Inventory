@@ -430,6 +430,12 @@ if (isset($_POST['submit_products'])) {
                                 </select>
                                 </div>
                                 </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="date_and_time">Date and Time:</label>
+                                        <input type="datetime-local" class="form-control" id="date_and_time" name="date_and_time">
+                                    </div>
+                                </div>
                             </div>
                             <div id="printbtn" class="btn-group">
                                 <div>
