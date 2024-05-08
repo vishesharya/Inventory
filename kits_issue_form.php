@@ -154,7 +154,8 @@ if (isset($_POST['add_product'])) {
                     'btemp_total' => $btemp_total,
                     'thread_name' => $selected_thread,
                     'thread_quantity' => $thread_quantity,
-                    'ttemp_total' => $ttemp_total
+                    'ttemp_total' => $ttemp_total,
+                    'date_and_time' => isset($_POST['date_and_time']) ? $_POST['date_and_time'] : date('Y-m-d H:i:s')
                 );
 
                 $_SESSION['temp_products'][] = $temp_product;
@@ -229,6 +230,7 @@ if (isset($_POST['submit_products'])) {
             $bladder_quantity = mysqli_real_escape_string($con, $product['bladder_quantity']);
             $thread_name = mysqli_real_escape_string($con, $product['thread_name']);
             $thread_quantity = mysqli_real_escape_string($con, $product['thread_quantity']);
+            $date_and_time = mysqli_real_escape_string($con, $product['date_and_time']);
 
             // Insert product into the database
             $insert_query = "INSERT INTO kits_issue (challan_no, stitcher_name, product_name, product_base, product_color, issue_quantity, total, bladder_name, bladder_quantity, thread_name, thread_quantity) 
