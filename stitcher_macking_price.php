@@ -214,7 +214,7 @@ if (isset($_POST['view_entries'])) {
 <tr>
         <td colspan="7"></td> <!-- Adjust colspan according to your table structure -->
         <td>Total Ist Price: <?php echo $total_ist_price; ?></td>
-        <td colspan="9"></td>
+        <td colspan="1"></td>
         <td>Total IInd Price: <?php echo $total_iind_price; ?></td>
         
     </tr>
