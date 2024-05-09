@@ -52,58 +52,59 @@ if (isset($_POST['view_entries'])) {
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
        body {
-    background-color: #f8f9fc;
-    font-family: Arial, sans-serif;
-}
+            background-color: #f8f9fc;
+            font-family: Arial, sans-serif;
+        }
+        .card {
+            border-radius: 1rem;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        }
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        .btn-group {
+            margin-top: 1.5rem;
+            justify-content: center;
+        }
+        .table {
+            margin-top: 2rem;
+            border-collapse:collapse;
+           
+        }
+        #printbtn {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+        }
+        .error-input {
+            border: 1px solid red;
+        }
+        .date_input {
+            display: flex;
+        }
+        #input_field {
+            margin: 0.1rem;
+        }
+        .tablefoot{
+            width: 300px;
+        }
+        tfoot {
+               background-color: #f8f9fc; /* Light gray background */
+               font-weight: bold; /* Make the text bold */
+               color: #333; /* Dark text color */
+        }
 
-.card {
-    border-radius: 1rem;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-}
-
-.form-group {
-    margin-bottom: 1.5rem;
-}
-
-.btn-group {
-    margin-top: 1.5rem;
-    justify-content: center;
-}
-
-.table {
-    margin-top: 2rem;
-    border-collapse: collapse;
-    width: 100%;
-    overflow-x: auto; /* Enable horizontal scrolling */
-}
-
-#form {
-    margin-bottom: 20px; /* Add space between form and table */
-}
-
-.table th,
-.table td {
-    padding: 10px;
-}
-
-.table th {
-    background-color: #f8f9fc; /* Light gray background */
-    font-weight: bold; /* Make the text bold */
-    color: #333; /* Dark text color */
-}
-
-.table tfoot td {
-    padding: 10px; /* Add padding for better spacing */
-    font-weight: bold; /* Make the text bold */
-    color: #333; /* Dark text color */
-}
-
-@media print {
-    #form {
-        display: none;
-    }
-}
-
+        tfoot td {
+         padding: 10px; /* Add padding for better spacing */
+        }
+        @media print {
+            #form {
+                display: none;
+            }
+            .tablefoot{
+            width: 300px;
+        }
+        }
     </style>
 </head>
 <body>
