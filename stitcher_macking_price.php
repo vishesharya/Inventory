@@ -244,7 +244,7 @@ if (isset($_POST['view_entries'])) {
   
 <tfoot>
     <tr>
-        <td collapse"5"></td>
+        <td colspan="6"></td>
         <td>Total Ist Price: <?php echo $total_ist_price; ?></td>
         <td>Total IInd Price: <?php echo $total_iind_price; ?></td>
         <td>Total Thread Price: <?php echo $total_thread_price; ?></td>
