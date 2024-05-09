@@ -11,7 +11,8 @@ $stitcher_result = mysqli_query($con, $stitcher_query);
 // Initialize $result variable
 $result = null;
 
-
+$total_ist_price = 0;
+$total_iind_price = 0;
 
 // Check if 'View' button is clicked
 if (isset($_POST['view_entries'])) {
@@ -36,6 +37,7 @@ if (isset($_POST['view_entries'])) {
 
     $result = mysqli_query($con, $query);
 }
+
 ?>
 
 
@@ -191,6 +193,10 @@ if (isset($_POST['view_entries'])) {
             $iind_price_result = mysqli_query($con, $iind_price_query);
             $iind_price_row = mysqli_fetch_assoc($iind_price_result);
             $iind_price = ($data['S_IInd_C_Ist'] + $data['S_IInd_C_IInd']) * $iind_price_row['2nd_price'];
+
+            $total_ist_price += $ist_price;
+            $total_iind_price += $iind_price;
+
             ?>
             <td><?php echo $ist_price; ?></td>
             <td><?php echo $iind_price; ?></td>
@@ -199,6 +205,16 @@ if (isset($_POST['view_entries'])) {
         <?php $sn++; ?>
     <?php endwhile; ?>
 </tbody>
+
+<tfoot>
+    <tr>
+        <td colspan="9"></td> <!-- Adjust colspan according to your table structure -->
+        <td>Total Ist Price: <?php echo $total_ist_price; ?></td>
+        <td>Total IInd Price: <?php echo $total_iind_price; ?></td>
+        <td></td> <!-- Add more empty cells if needed -->
+    </tr>
+</tfoot>
+
 
             </table>
         <?php elseif (isset($_POST['view_entries'])): ?>
