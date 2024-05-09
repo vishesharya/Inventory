@@ -207,8 +207,8 @@ if (isset($_POST['view_entries'])) {
             <td><?php echo $ist_price; ?></td>
             <td><?php echo $data['S_IInd_C_Ist'] + $data['S_IInd_C_IInd']; ?></td>
             <td><?php echo $iind_price; ?></td>
-            <td>Total Ist Price: <?php echo $total_ist_price; ?></td>
-            <td>Total IInd Price: <?php echo $total_iind_price; ?></td>
+            <td><?php echo $thread_data['thread_name']; ?></td>
+            <td><?php echo $thread_data['thread_quantity']; ?></td>
             <td><?php echo $data['total']; ?></td>
             
           
