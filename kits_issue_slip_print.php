@@ -108,6 +108,9 @@ $stitcher_contact = $stitcher_contact_row['stitcher_contact'];
         p{
             line-height: 7px;
         }
+        .stitcher_bold{
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
@@ -116,18 +119,21 @@ $stitcher_contact = $stitcher_contact_row['stitcher_contact'];
             <div>
                 <h2 class="heading">KHANNA SPORTS INDUSTRIES PVT. LTD</h2>
                 <p class="heading"> A-7, Sports Complex Delhi Road Meerut Uttar Pradesh 250002</p>
-                <p class="heading">Contact : 8449441387,98378427750 GST : 09AAACK9669A1ZD</p>
+                <p class="heading">Contact : 8449441387,98378427750   GST : 09AAACK9669A1ZD</p>
                   
-                     <p>Stitcher Aadhaar : <?php echo $stitcher_aadhar; ?></p>
-                     <p>Stitcher PAN : <?php echo $stitcher_pan; ?></p>
+                     
                   
             </div>
             
             <div id="head_details">
                 <div>
-                    <p>Stitcher : <?php echo $stitcher_name; ?></p>
-                    <p>Stitcher Address : <?php echo $stitcher_address; ?></p>
+                    <p class="stitcher_bold" >Stitcher : <?php echo $stitcher_name; ?></p>
+                    
                     <p>Stitcher Contact : <?php echo $stitcher_contact; ?></p>
+                    <p>Stitcher Address : <?php echo $stitcher_address; ?></p>
+                    <p>Stitcher Aadhaar : <?php echo $stitcher_aadhar; ?></p>
+                    <p>Stitcher PAN : <?php echo $stitcher_pan; ?></p>
+                     
                 </div>
                 <div>
                     <p><br/><br/>Challan No : <?php echo $entry['challan_no']; ?></p>
