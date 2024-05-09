@@ -2,7 +2,6 @@
 session_start();
 include_once 'include/connection.php';
 
-
 // Fetch the last submitted entry
 $query = "SELECT * FROM kits_issue ORDER BY id DESC LIMIT 1";
 $result = mysqli_query($con, $query);
@@ -126,19 +125,14 @@ $stitcher_contact = $stitcher_contact_row['stitcher_contact'];
                 <h2 class="heading">KHANNA SPORTS INDUSTRIES PVT. LTD</h2>
                 <p class="heading"> A-7, Sports Complex Delhi Road Meerut Uttar Pradesh 250002</p>
                 <p class="heading">Contact : 8449441387,98378427750 &nbsp;  GST : 09AAACK9669A1ZD </p>
-                  
-                     
-                  
             </div>
             <div id="head_details">
                 <div>
                     <p class="stitcher_bold" >Stitcher : <?php echo $stitcher_name; ?></p>
-                    
                     <p>Stitcher Contact : <?php echo $stitcher_contact; ?></p>
-                    <p>Stitcher Address : <?php echo $stitcher_address; ?></p>
                     <p>Stitcher Aadhaar : <?php echo $stitcher_aadhar; ?></p>
                     <p>Stitcher PAN : <?php echo $stitcher_pan; ?></p>
-                     
+                    <p>Stitcher Address : <?php echo $stitcher_address; ?></p>
                 </div>
                 <div>
                     <p><br/><br/>Challan No : <?php echo $entry['challan_no']; ?></p>
@@ -162,7 +156,17 @@ $stitcher_contact = $stitcher_contact_row['stitcher_contact'];
                         </tr>
                     </thead>
                     <tbody>
-                        <?php while ($product = mysqli_fetch_assoc($product_result)) : ?>
+                        <?php 
+                        $total_product_quantity = 0;
+                        $total_bladder_quantity = 0;
+                        $total_thread_quantity = 0;
+
+                        while ($product = mysqli_fetch_assoc($product_result)) : 
+                            // Update total quantities
+                            $total_product_quantity += $product['issue_quantity'];
+                            $total_bladder_quantity += $product['bladder_quantity'];
+                            $total_thread_quantity += $product['thread_quantity'];
+                        ?>
                             <tr>
                                 <td><?php echo $product['product_name']; ?></td>
                                 <td><?php echo $product['product_base']; ?></td>
@@ -173,26 +177,15 @@ $stitcher_contact = $stitcher_contact_row['stitcher_contact'];
                                 <td><?php echo $product['thread_name']; ?></td>
                                 <td><?php echo $product['thread_quantity']; ?></td>
                             </tr>
-                          
                         <?php endwhile; ?>
                     </tbody>
-                    
-                    <?php 
-                    $total_product_quantity = 0;
-                    $total_bladder_quantity = 0;
-                    $total_thread_quantity = 0;
-                    // Update total quantities
-                    $total_product_quantity += $product['issue_quantity'];
-                    $total_bladder_quantity += $product['bladder_quantity'];
-                    $total_thread_quantity += $product['thread_quantity'];
-                    ?>
                     <tfoot>
                         <tr>
                             <td colspan="3">Total</td>
                             <td><?php echo $total_product_quantity; ?></td>
-                            <td></td> <!-- Add empty cells for other columns -->
+                            <td colspan="2"></td> <!-- Add empty cells for other columns -->
                             <td><?php echo $total_bladder_quantity; ?></td>
-                            <td></td> <!-- Add empty cells for other columns -->
+                            <td colspan="2"></td> <!-- Add empty cells for other columns -->
                             <td><?php echo $total_thread_quantity; ?></td>
                         </tr>
                     </tfoot>
