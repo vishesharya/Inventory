@@ -119,6 +119,7 @@ $stitcher_contact = $stitcher_contact_row['stitcher_contact'];
 <body>
     <div class="container">
         <div class="invoice-header">
+        <img src="assets/images/logo_main.png" alt="Company Logo" style="width: 100px; height: auto; float: left; margin-right: 20px;">
             <div>
                 <p class="issue_heading" >KITS ISSUE SLIP</p>
                 <hr>
