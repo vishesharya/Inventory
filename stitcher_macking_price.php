@@ -85,6 +85,16 @@ if (isset($_POST['view_entries'])) {
         #input_field {
             margin: 0.1rem;
         }
+        
+        tfoot {
+               background-color: #f8f9fc; /* Light gray background */
+               font-weight: bold; /* Make the text bold */
+               color: #333; /* Dark text color */
+        }
+
+        tfoot td {
+         padding: 10px; /* Add padding for better spacing */
+        }
         @media print {
             #form {
                 display: none;
@@ -233,15 +243,15 @@ if (isset($_POST['view_entries'])) {
 </tbody>
   
 <tfoot>
-<tr>
-      
+    <tr>
         <td>Total Ist Price: <?php echo $total_ist_price; ?></td>
-        
         <td>Total IInd Price: <?php echo $total_iind_price; ?></td>
         <td>Total Thread Price: <?php echo $total_thread_price; ?></td>
-        
+        <td>Total Stitching Amount: <?php echo $total_ist_price + $total_iind_price; ?></td>
+        <td>Total Payable Amount: <?php echo ($total_ist_price + $total_iind_price) - $total_thread_price; ?></td>
     </tr>
 </tfoot>
+
 
 </table>
 
