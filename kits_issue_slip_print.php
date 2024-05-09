@@ -18,10 +18,13 @@ $product_query = "SELECT * FROM kits_issue WHERE challan_no = '$challan_no'";
 $product_result = mysqli_query($con, $product_query);
 
 // Fetch the stitcher name for the invoice
-$stitcher_query = "SELECT stitcher_name FROM kits_issue WHERE challan_no = '$challan_no' LIMIT 1";
+$stitcher_query = "SELECT * FROM stitcher WHERE stitcher_name = '$stitcher_name' LIMIT 1";
 $stitcher_result = mysqli_query($con, $stitcher_query);
 $stitcher_row = mysqli_fetch_assoc($stitcher_result);
 $stitcher_name = $stitcher_row['stitcher_name'];
+$stitcher_address = $stitcher_row['stitcher_address'];
+$stitcher_aadhar = $stitcher_row['stitcher_aadhar'];
+$stitcher_pan = $stitcher_row['stitcher_pan'];
 
 // Fetch the date and time 
 $date_and_time_query = "SELECT date_and_time FROM kits_issue WHERE challan_no = '$challan_no' LIMIT 1";
@@ -113,15 +116,16 @@ $stitcher_contact = $stitcher_contact_row['stitcher_contact'];
             </div>
             <div id="head_details">
                 <div>
-                <p>Stitcher : <?php echo $stitcher_name; ?></p>
-                <p>Stitcher Contact : <?php echo $stitcher_contact; ?></p>
+                    <p>Stitcher : <?php echo $stitcher_name; ?></p>
+                    <p>Stitcher Address : <?php echo $stitcher_address; ?></p>
+                    <p>Stitcher Aadhaar : <?php echo $stitcher_aadhar; ?></p>
+                    <p>Stitcher PAN : <?php echo $stitcher_pan; ?></p>
+                    <p>Stitcher Contact : <?php echo $stitcher_contact; ?></p>
                 </div>
                 <div>
-                <p><br/><br/>Challan No : <?php echo $entry['challan_no']; ?></p>
-                <p>Date: <?php echo date('d-m-Y', strtotime($date_and_time)); ?></p>
+                    <p><br/><br/>Challan No : <?php echo $entry['challan_no']; ?></p>
+                    <p>Date: <?php echo date('d-m-Y', strtotime($date_and_time)); ?></p>
                 </div>
-               
-                
             </div>
         </div>
         <div class="row">
