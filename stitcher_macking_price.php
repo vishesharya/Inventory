@@ -86,7 +86,7 @@ if (isset($_POST['view_entries'])) {
             margin: 0.1rem;
         }
         .tablefoot{
-            width: 100px;
+            width: 200px;
         }
         tfoot {
                background-color: #f8f9fc; /* Light gray background */
