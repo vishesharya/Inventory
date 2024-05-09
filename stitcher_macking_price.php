@@ -200,7 +200,7 @@ if (isset($_POST['view_entries'])) {
                 $thread_result = mysqli_query($con, $thread_query);
         
                 // Calculate total thread price for each row
-            
+                while ($thread_data = mysqli_fetch_array($thread_result)) {
                     // Fetch thread price from 'threads' table
                     $thread_name = $thread_data['thread_name'];
                     $thread_quantity = $thread_data['thread_quantity'];
@@ -211,7 +211,7 @@ if (isset($_POST['view_entries'])) {
         
                     // Calculate total thread price
                     $total_thread_price += ($thread_quantity * $thread_price);
-                
+                }
             
 
             ?>
