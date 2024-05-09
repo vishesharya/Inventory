@@ -104,11 +104,6 @@ $stitcher_contact = $stitcher_contact_row['stitcher_contact'];
                 display: none !important;
             }
         }
-        .main_details{
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
     </style>
 </head>
 <body>
@@ -116,24 +111,19 @@ $stitcher_contact = $stitcher_contact_row['stitcher_contact'];
         <div class="invoice-header">
             <div>
                 <h2 class="heading">KHANNA SPORTS KITS ISSUE SLIP</h2>
-              <div class="main_details" >
-                <div>
-                <p> Sports Complex, A-7,Delhi Road, Phase 1,<br/> Industrial Area, Mohkam Pur, Meerut,<br/> Uttar Pradesh 250002 (India)</p>
-                <p>Contact : 8449441387,98378427750</p>
-                </div>
-                <div>
+                <p class="heading"> Sports Complex, A-7,Delhi Road, Phase 1,<br/> Industrial Area, Mohkam Pur, Meerut,<br/> Uttar Pradesh 250002 (India)</p>
+                <p class="heading">Contact : 8449441387,98378427750</p>
+                  <div>
                      <p>Stitcher Aadhaar : <?php echo $stitcher_aadhar; ?></p>
                      <p>Stitcher PAN : <?php echo $stitcher_pan; ?></p>
-                </div>
-              </div>
+                   </div>
             </div>
             
             <div id="head_details">
                 <div>
                     <p>Stitcher : <?php echo $stitcher_name; ?></p>
-                    <p>Stitcher Contact : <?php echo $stitcher_contact; ?></p>
                     <p>Stitcher Address : <?php echo $stitcher_address; ?></p>
-                    
+                    <p>Stitcher Contact : <?php echo $stitcher_contact; ?></p>
                 </div>
                 <div>
                     <p><br/><br/>Challan No : <?php echo $entry['challan_no']; ?></p>
