@@ -163,7 +163,7 @@ if (isset($_POST['view_entries'])) {
         <th>Ist Quality Stitches</th>
         <th>Ist Price</th>
         <th>IInd Quality Stitches</th>
-        <th>IInd Price</th> 
+        <th>IInd Price</th>
         <th>Total</th>
         
         
@@ -177,7 +177,6 @@ if (isset($_POST['view_entries'])) {
         <tr>
             <td><?php echo $sn; ?>.</td>
             <?php
-          
             // Calculate Ist Price
             $ist_price_query = "SELECT per_pice_price FROM kits_product WHERE product_name = '" . $data['product_name'] . "' AND product_base = '" . $data['product_base'] . "' AND product_color = '" . $data['product_color'] . "'";
             $ist_price_result = mysqli_query($con, $ist_price_query);
@@ -205,7 +204,6 @@ if (isset($_POST['view_entries'])) {
             <td><?php echo $iind_price; ?></td>
             <td><?php echo $data['total']; ?></td>
             
-          
             <td><?php echo date('d/m/Y', strtotime($data['date_and_time'])); ?></td>
         </tr>
         <?php $sn++; ?>
@@ -223,30 +221,8 @@ if (isset($_POST['view_entries'])) {
 </tfoot>
 
 
- </table>
+            </table>
 
-            <h2>Thread Information</h2>
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Thread Name</th>
-                <th>Thread Quantity</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php while ($data = mysqli_fetch_array($result)): ?>
-                <tr>
-                    <?php
-                    $thread_query = "SELECT thread_name, thread_quantity FROM kits_job_work WHERE stitcher_name = '{$data['stitcher_name']}' AND date_and_time BETWEEN '{$start_date}' AND '{$end_date}'";
-                    $thread_result = mysqli_query($con, $thread_query);
-                    $thread_data = mysqli_fetch_assoc($thread_result);
-                    ?>
-                    <td><?php echo $data['thread_name']; ?></td>
-                    <td><?php echo $data['thread_quantity']; ?></td>
-                </tr>
-            <?php endwhile; ?>
-        </tbody>
-    </table>
         <?php elseif (isset($_POST['view_entries'])): ?>
             <p>No entries found.</p>
         <?php endif; ?>
