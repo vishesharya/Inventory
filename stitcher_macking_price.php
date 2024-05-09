@@ -161,12 +161,13 @@ if (isset($_POST['view_entries'])) {
         </div>
 
         <?php if (isset($_POST['view_entries']) && mysqli_num_rows($result) > 0): ?>
+            <h3 class="text-center mb-4">Stitcher: <?php echo $stitcher_name; ?></h3>
             <table class="table datatable-multi-sorting">
                 <thead>
     <tr>
         <th>Sn.</th>
         <th>Challan No.</th>
-        <th>Stitcher Name</th>
+    
         <th>Product Name</th>
         <th>Product Base</th>
         <th>Product Color</th>
@@ -225,7 +226,7 @@ if (isset($_POST['view_entries'])) {
 
             ?>
             <td><?php echo $data['challan_no']; ?></td>
-            <td><?php echo $data['stitcher_name']; ?></td>
+            
             <td><?php echo $data['product_name']; ?></td>
             <td><?php echo ucfirst($data['product_base']); ?></td>
             <td><?php echo ucfirst($data['product_color']); ?></td>
@@ -255,7 +256,11 @@ if (isset($_POST['view_entries'])) {
 
 
 </table>
-
+         <!-- Note for stitcher -->
+         <div class="text-center mt-5">
+                <p class="mb-1">I'm receiving all stitching payments from <?php echo $start_date; ?> to <?php echo $end_date; ?>.</p>
+                <p class="mb-5">Stitcher Signature: _____________________</p>
+        </div>
         <?php elseif (isset($_POST['view_entries'])): ?>
             <p>No entries found.</p>
         <?php endif; ?>
