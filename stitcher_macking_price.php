@@ -256,11 +256,13 @@ if (isset($_POST['view_entries'])) {
 
 
 </table>
-         <!-- Note for stitcher -->
-         <div class="text-center mt-5">
-                <p class="mb-1">I'm receiving all stitching payments from <?php echo $start_date; ?> to <?php echo $end_date; ?>.</p>
-                <p class="mb-5">Stitcher Signature: _____________________</p>
+
+        <div class="text-center mt-5">
+            <p class="mb-1">मैंने <?php echo date('d/m/Y', strtotime($start_date)); ?> से <?php echo date('d/m/Y', strtotime($end_date)); ?> तक के सभी सिलाई भुगतान प्राप्त कर लिए हैं।</p>
+            <p class="mb-5">Stitcher Signature / सिलाईदार हस्ताक्षर: _____________________</p>
+            <p class="mb-1">I have received all stitching payments from <?php echo date('d/m/Y', strtotime($start_date)); ?> to <?php echo date('d/m/Y', strtotime($end_date)); ?>.</p>
         </div>
+
         <?php elseif (isset($_POST['view_entries'])): ?>
             <p>No entries found.</p>
         <?php endif; ?>
