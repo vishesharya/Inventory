@@ -241,8 +241,8 @@ if (isset($_POST['view_entries'])) {
                     $thread_result = mysqli_query($con, $thread_query);
                     $thread_data = mysqli_fetch_assoc($thread_result);
                     ?>
-                    <td><?php echo $thread_data['thread_name']; ?></td>
-                    <td><?php echo $thread_data['thread_quantity']; ?></td>
+                    <td><?php echo $data['thread_name']; ?></td>
+                    <td><?php echo $data['thread_quantity']; ?></td>
                 </tr>
             <?php endwhile; ?>
         </tbody>
