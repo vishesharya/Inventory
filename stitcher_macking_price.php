@@ -161,10 +161,12 @@ if (isset($_POST['view_entries'])) {
         <th>Product Base</th>
         <th>Product Color</th>
         <th>Ist Quality Stitches</th>
-        <th>IInd Quality Stitches</th>
-        <th>Total</th>
         <th>Ist Price</th>
+        <th>IInd Quality Stitches</th>
         <th>IInd Price</th>
+        <th>Total</th>
+        
+        
         
         <th>Date</th>
     </tr>
@@ -174,14 +176,6 @@ if (isset($_POST['view_entries'])) {
     <?php while ($data = mysqli_fetch_array($result)): ?>
         <tr>
             <td><?php echo $sn; ?>.</td>
-            <td><?php echo $data['challan_no']; ?></td>
-            <td><?php echo $data['stitcher_name']; ?></td>
-            <td><?php echo $data['product_name']; ?></td>
-            <td><?php echo ucfirst($data['product_base']); ?></td>
-            <td><?php echo ucfirst($data['product_color']); ?></td>
-            <td><?php echo $data['S_Ist_C_Ist'] + $data['S_Ist_C_IInd']; ?></td>
-            <td><?php echo $data['S_IInd_C_Ist'] + $data['S_IInd_C_IInd']; ?></td>
-            <td><?php echo $data['total']; ?></td>
             <?php
             // Calculate Ist Price
             $ist_price_query = "SELECT per_pice_price FROM kits_product WHERE product_name = '" . $data['product_name'] . "' AND product_base = '" . $data['product_base'] . "' AND product_color = '" . $data['product_color'] . "'";
@@ -199,8 +193,17 @@ if (isset($_POST['view_entries'])) {
             $total_iind_price += $iind_price;
 
             ?>
+            <td><?php echo $data['challan_no']; ?></td>
+            <td><?php echo $data['stitcher_name']; ?></td>
+            <td><?php echo $data['product_name']; ?></td>
+            <td><?php echo ucfirst($data['product_base']); ?></td>
+            <td><?php echo ucfirst($data['product_color']); ?></td>
+            <td><?php echo $data['S_Ist_C_Ist'] + $data['S_Ist_C_IInd']; ?></td>
             <td><?php echo $ist_price; ?></td>
+            <td><?php echo $data['S_IInd_C_Ist'] + $data['S_IInd_C_IInd']; ?></td>
             <td><?php echo $iind_price; ?></td>
+            <td><?php echo $data['total']; ?></td>
+          
             <td><?php echo date('d/m/Y', strtotime($data['date_and_time'])); ?></td>
         </tr>
         <?php $sn++; ?>
@@ -212,7 +215,7 @@ if (isset($_POST['view_entries'])) {
         <td colspan="9"></td> <!-- Adjust colspan according to your table structure -->
         <td>Total Ist Price: <?php echo $total_ist_price; ?></td>
         <td>Total IInd Price: <?php echo $total_iind_price; ?></td>
-        <td>Total Thread Quantity: <?php echo $total_thread_quantity; ?></td>
+        
     </tr>
 </tfoot>
 
