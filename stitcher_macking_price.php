@@ -13,6 +13,7 @@ $result = null;
 
 $total_ist_price = 0;
 $total_iind_price = 0;
+$total_thread_price = 0;
 
 
 // Check if 'View' button is clicked
@@ -192,6 +193,27 @@ if (isset($_POST['view_entries'])) {
             $total_ist_price += $ist_price;
             $total_iind_price += $iind_price;
 
+
+            while ($data = mysqli_fetch_array($result)) {
+                // Fetch thread data for the selected stitcher and date range
+                $thread_query = "SELECT thread_name, thread_quantity FROM kits_issue WHERE stitcher_name = '$stitcher_name' AND date_and_time BETWEEN '$start_date' AND '$end_date'";
+                $thread_result = mysqli_query($con, $thread_query);
+        
+                // Calculate total thread price for each row
+                while ($thread_data = mysqli_fetch_array($thread_result)) {
+                    // Fetch thread price from 'threads' table
+                    $thread_name = $thread_data['thread_name'];
+                    $thread_quantity = $thread_data['thread_quantity'];
+                    $thread_price_query = "SELECT thread_price FROM threads WHERE thread_name = '$thread_name'";
+                    $thread_price_result = mysqli_query($con, $thread_price_query);
+                    $thread_price_row = mysqli_fetch_assoc($thread_price_result);
+                    $thread_price = $thread_price_row['thread_price'];
+        
+                    // Calculate total thread price
+                    $total_thread_price += ($thread_quantity * $thread_price);
+                }
+            }
+
             ?>
             <td><?php echo $data['challan_no']; ?></td>
             <td><?php echo $data['stitcher_name']; ?></td>
@@ -212,10 +234,11 @@ if (isset($_POST['view_entries'])) {
   
 <tfoot>
 <tr>
-        <td colspan="7"></td> <!-- Adjust colspan according to your table structure -->
+      
         <td>Total Ist Price: <?php echo $total_ist_price; ?></td>
-        <td colspan="1"></td>
+        
         <td>Total IInd Price: <?php echo $total_iind_price; ?></td>
+        <td>Total Thread Price: <?php echo $total_thread_price; ?></td>
         
     </tr>
 </tfoot>
