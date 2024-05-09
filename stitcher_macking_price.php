@@ -102,7 +102,7 @@ if (isset($_POST['view_entries'])) {
                 display: none;
             }
             .tablefoot{
-            width: 300px;
+            width: 400px;
         }
         }
     </style>
@@ -255,7 +255,7 @@ if (isset($_POST['view_entries'])) {
         <td class="tablefoot">Total Thread Price: <?php echo $total_thread_price; ?></td>
         <td class="tablefoot">Total Stitching Amount: <?php echo $total_ist_price + $total_iind_price; ?></td>
         <td class="tablefoot">Total Payable Amount: <?php echo ($total_ist_price + $total_iind_price) - $total_thread_price; ?></td>
-        <td colspan="6"></td>
+        <td colspan="7"></td>
     </tr>
 </tfoot>
 
