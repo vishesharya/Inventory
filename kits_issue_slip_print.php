@@ -111,13 +111,16 @@ $stitcher_contact = $stitcher_contact_row['stitcher_contact'];
         .stitcher_bold{
             font-weight: bold;
         }
+        .issue_heading{
+            text-align: center;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="invoice-header">
             <div>
-                <h5>KITS ISSUE SLIP</h5>
+                <p class="issue_heading" >KITS ISSUE SLIP</p>
                 <hr>
                 <h2 class="heading">KHANNA SPORTS INDUSTRIES PVT. LTD</h2>
                 <p class="heading"> A-7, Sports Complex Delhi Road Meerut Uttar Pradesh 250002</p>
