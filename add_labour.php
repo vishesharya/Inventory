@@ -1,8 +1,10 @@
-<?php
+<?php 
 session_start();
-include_once 'include/connection.php';
+error_reporting(0);
+include('include/connection.php');
 include_once 'include/admin-main.php';
-
+?>
+<?php 
 $updatelabourMsg = '';
 $addlabourMsg = '';
 $deletelabourMsg = '';
