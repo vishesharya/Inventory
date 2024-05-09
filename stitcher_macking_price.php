@@ -15,7 +15,6 @@ $total_ist_price = 0;
 $total_iind_price = 0;
 $total_thread_price = 0;
 
-
 // Check if 'View' button is clicked
 if (isset($_POST['view_entries'])) {
     // Get selected stitcher
@@ -25,23 +24,22 @@ if (isset($_POST['view_entries'])) {
     $start_date = isset($_POST['from_date']) ? mysqli_real_escape_string($con, $_POST['from_date']) : '';
     $end_date = isset($_POST['to_date']) ? mysqli_real_escape_string($con, $_POST['to_date']) : '';
 
-    // Retrieve entries from database based on selected stitcher and/or date range
+    // Check if both stitcher and date range are selected
     if (!empty($stitcher_name) && !empty($start_date) && !empty($end_date)) {
         // Fetch entries within the selected date range for the selected stitcher
         $query = "SELECT * FROM football_received WHERE stitcher_name = '$stitcher_name' AND date_and_time BETWEEN '$start_date' AND '$end_date'";
+        $result = mysqli_query($con, $query);
     } elseif (!empty($stitcher_name)) {
         // Fetch all entries for the selected stitcher without considering date range
         $query = "SELECT * FROM football_received WHERE stitcher_name = '$stitcher_name'";
+        $result = mysqli_query($con, $query);
     } else {
-        // If no stitcher is selected and no other filters are applied, fetch all entries from the database
-        $query = "SELECT * FROM football_received";
+        // If neither stitcher nor date range is selected, do not fetch any entries
+        $result = null;
     }
-
-    $result = mysqli_query($con, $query);
 }
 
 ?>
-
 
 <!DOCTYPE html>
 <html lang="en">
