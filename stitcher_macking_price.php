@@ -85,7 +85,9 @@ if (isset($_POST['view_entries'])) {
         #input_field {
             margin: 0.1rem;
         }
-        
+        .tablefoot{
+            width: 20px;
+        }
         tfoot {
                background-color: #f8f9fc; /* Light gray background */
                font-weight: bold; /* Make the text bold */
@@ -245,11 +247,11 @@ if (isset($_POST['view_entries'])) {
 <tfoot>
     <tr>
        
-        <td class="w-10">Total Ist Price: <?php echo $total_ist_price; ?></td>
-        <td>Total IInd Price: <?php echo $total_iind_price; ?></td>
-        <td>Total Thread Price: <?php echo $total_thread_price; ?></td>
-        <td>Total Stitching Amount: <?php echo $total_ist_price + $total_iind_price; ?></td>
-        <td>Total Payable Amount: <?php echo ($total_ist_price + $total_iind_price) - $total_thread_price; ?></td>
+        <td class="tablefoot">Total Ist Price: <?php echo $total_ist_price; ?></td>
+        <td class="tablefoot">Total IInd Price: <?php echo $total_iind_price; ?></td>
+        <td class="tablefoot">Total Thread Price: <?php echo $total_thread_price; ?></td>
+        <td class="tablefoot">Total Stitching Amount: <?php echo $total_ist_price + $total_iind_price; ?></td>
+        <td class="tablefoot">Total Payable Amount: <?php echo ($total_ist_price + $total_iind_price) - $total_thread_price; ?></td>
         <td colspan="6"></td>
     </tr>
 </tfoot>
