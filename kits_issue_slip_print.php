@@ -116,11 +116,11 @@ $stitcher_contact = $stitcher_contact_row['stitcher_contact'];
             <div>
                 <h2 class="heading">KHANNA SPORTS INDUSTRIES PVT. LTD</h2>
                 <p class="heading"> A-7, Sports Complex Delhi Road Meerut Uttar Pradesh 250002</p>
-                <p class="heading">Contact : 8449441387,98378427750</p>
-                  <div>
+                <p class="heading">Contact : 8449441387,98378427750 GST : 09AAACK9669A1ZD</p>
+                  
                      <p>Stitcher Aadhaar : <?php echo $stitcher_aadhar; ?></p>
                      <p>Stitcher PAN : <?php echo $stitcher_pan; ?></p>
-                   </div>
+                  
             </div>
             
             <div id="head_details">
