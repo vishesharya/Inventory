@@ -29,10 +29,6 @@ if (isset($_POST['view_entries'])) {
         // Fetch entries within the selected date range for the selected stitcher
         $query = "SELECT * FROM football_received WHERE stitcher_name = '$stitcher_name' AND date_and_time BETWEEN '$start_date' AND '$end_date'";
         $result = mysqli_query($con, $query);
-    } elseif (!empty($stitcher_name)) {
-        // Fetch all entries for the selected stitcher without considering date range
-        $query = "SELECT * FROM football_received WHERE stitcher_name = '$stitcher_name'";
-        $result = mysqli_query($con, $query);
     } else {
         // If neither stitcher nor date range is selected, do not fetch any entries
         $result = null;
