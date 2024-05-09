@@ -183,7 +183,7 @@ $stitcher_contact = $stitcher_contact_row['stitcher_contact'];
                         <tr>
                             <td colspan="3">Total</td>
                             <td><?php echo $total_product_quantity; ?></td>
-                            <td colspan="2"></td> <!-- Add empty cells for other columns -->
+                            <td colspan="1"></td> <!-- Add empty cells for other columns -->
                             <td><?php echo $total_bladder_quantity; ?></td>
 
                             <td><?php echo $total_thread_quantity; ?></td>
