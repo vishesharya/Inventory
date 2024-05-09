@@ -2,9 +2,7 @@
 session_start();
 include_once 'include/connection.php';
 
-$total_product_quantity = 0;
-$total_bladder_quantity = 0;
-$total_thread_quantity = 0;
+
 // Fetch the last submitted entry
 $query = "SELECT * FROM kits_issue ORDER BY id DESC LIMIT 1";
 $result = mysqli_query($con, $query);
@@ -180,6 +178,9 @@ $stitcher_contact = $stitcher_contact_row['stitcher_contact'];
                     </tbody>
                     
                     <?php 
+                    $total_product_quantity = 0;
+                    $total_bladder_quantity = 0;
+                    $total_thread_quantity = 0;
                     // Update total quantities
                     $total_product_quantity += $product['issue_quantity'];
                     $total_bladder_quantity += $product['bladder_quantity'];
