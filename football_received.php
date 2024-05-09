@@ -52,7 +52,10 @@ if (isset($_POST['stitcher_name'])) {
 // Fetch product names based on selected stitcher and challan number
 if (isset($_POST['challan_no_issue'])) {
     $selected_challan = mysqli_real_escape_string($con, $_POST['challan_no_issue']);
-    $product_query = "SELECT DISTINCT product_name FROM kits_job_work WHERE stitcher_name = '$selected_stitcher' AND challan_no_issue = '$selected_challan'";
+    $selected_stitcher = mysqli_real_escape_string($con, $_POST['stitcher_name']); // Added this line
+
+    // Query to fetch products based on selected stitcher, challan number, and status = 0
+    $product_query = "SELECT DISTINCT product_name FROM kits_job_work WHERE stitcher_name = '$selected_stitcher' AND challan_no_issue = '$selected_challan' AND status = 0";
     $product_result = mysqli_query($con, $product_query);
 }
 
@@ -69,8 +72,6 @@ if (isset($_POST['product_base'])) {
     $product_color_query = "SELECT DISTINCT product_color FROM kits_job_work WHERE stitcher_name = '$selected_stitcher' AND challan_no_issue = '$selected_challan' AND product_name = '$selected_product' AND product_base = '$selected_product_base'";
     $product_color_result = mysqli_query($con, $product_color_query);
 }
-
-
 
 if (isset($_POST['add_product'])) {
     // Validate input
