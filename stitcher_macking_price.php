@@ -194,13 +194,13 @@ if (isset($_POST['view_entries'])) {
             $total_iind_price += $iind_price;
 
 
-            while ($data = mysqli_fetch_array($result)) {
+           
                 // Fetch thread data for the selected stitcher and date range
                 $thread_query = "SELECT thread_name, thread_quantity FROM kits_issue WHERE stitcher_name = '$stitcher_name' AND date_and_time BETWEEN '$start_date' AND '$end_date'";
                 $thread_result = mysqli_query($con, $thread_query);
         
                 // Calculate total thread price for each row
-                while ($thread_data = mysqli_fetch_array($thread_result)) {
+            
                     // Fetch thread price from 'threads' table
                     $thread_name = $thread_data['thread_name'];
                     $thread_quantity = $thread_data['thread_quantity'];
@@ -211,8 +211,8 @@ if (isset($_POST['view_entries'])) {
         
                     // Calculate total thread price
                     $total_thread_price += ($thread_quantity * $thread_price);
-                }
-            }
+                
+            
 
             ?>
             <td><?php echo $data['challan_no']; ?></td>
