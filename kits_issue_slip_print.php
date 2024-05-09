@@ -119,10 +119,11 @@ $stitcher_contact = $stitcher_contact_row['stitcher_contact'];
 <body>
     <div class="container">
         <div class="invoice-header">
-        <img src="assets/images/logo_main.png" alt="Company Logo" style="width: 100px; height: auto; float: left; margin-right: 20px;">
+        
             <div>
                 <p class="issue_heading" >KITS ISSUE SLIP</p>
                 <hr>
+                <img src="assets/images/logo_main.png" alt="Company Logo" style="width: 100px; height: auto; float: left; margin-right: 20px;">
                 <h2 class="heading">KHANNA SPORTS INDUSTRIES PVT. LTD</h2>
                 <p class="heading"> A-7, Sports Complex Delhi Road Meerut Uttar Pradesh 250002</p>
                 <p class="heading">Contact : 8449441387,98378427750 &nbsp;  GST : 09AAACK9669A1ZD </p>
