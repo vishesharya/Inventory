@@ -164,6 +164,8 @@ if (isset($_POST['view_entries'])) {
         <th>Ist Price</th>
         <th>IInd Quality Stitches</th>
         <th>IInd Price</th>
+        <th>Thread Name</th> 
+        <th>Thread Quantity</th> 
         <th>Total</th>
         
         
@@ -177,6 +179,9 @@ if (isset($_POST['view_entries'])) {
         <tr>
             <td><?php echo $sn; ?>.</td>
             <?php
+            $thread_query = "SELECT thread_name, thread_quantity FROM kits_job_work WHERE stitcher_name = '{$data['stitcher_name']}' AND date_and_time BETWEEN '{$start_date}' AND '{$end_date}'";
+            $thread_result = mysqli_query($con, $thread_query);
+            $thread_data = mysqli_fetch_assoc($thread_result);
             // Calculate Ist Price
             $ist_price_query = "SELECT per_pice_price FROM kits_product WHERE product_name = '" . $data['product_name'] . "' AND product_base = '" . $data['product_base'] . "' AND product_color = '" . $data['product_color'] . "'";
             $ist_price_result = mysqli_query($con, $ist_price_query);
@@ -203,6 +208,7 @@ if (isset($_POST['view_entries'])) {
             <td><?php echo $data['S_IInd_C_Ist'] + $data['S_IInd_C_IInd']; ?></td>
             <td><?php echo $iind_price; ?></td>
             <td><?php echo $data['total']; ?></td>
+            
           
             <td><?php echo date('d/m/Y', strtotime($data['date_and_time'])); ?></td>
         </tr>
