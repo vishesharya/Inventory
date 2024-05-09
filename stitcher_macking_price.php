@@ -220,8 +220,7 @@ if (isset($_POST['view_entries'])) {
     </tr>
 </tfoot>
 
-
-            </table>
+</table>
 
         <?php elseif (isset($_POST['view_entries'])): ?>
             <p>No entries found.</p>
