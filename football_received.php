@@ -39,27 +39,27 @@ function viewChallanNumber($con) {
 $challan_no = viewChallanNumber($con); 
 
 // Fetch stitcher names from the database
-$stitcher_query = "SELECT stitcher_name FROM kits_job_work WHERE status = 0 ORDER BY stitcher_name ASC";
+$stitcher_query = "SELECT DISTINCT stitcher_name FROM kits_job_work WHERE status = 0 ORDER BY stitcher_name ASC";
 $stitcher_result = mysqli_query($con, $stitcher_query);
 
 // Fetch associated challan numbers for selected stitcher
 if (isset($_POST['stitcher_name'])) {
     $selected_stitcher = mysqli_real_escape_string($con, $_POST['stitcher_name']);
-    $challan_query_issue = "SELECT  challan_no_issue FROM kits_job_work WHERE stitcher_name = '$selected_stitcher' AND status = 0";
+    $challan_query_issue = "SELECT DISTINCT  challan_no_issue FROM kits_job_work WHERE stitcher_name = '$selected_stitcher' AND status = 0";
     $challan_result_issue = mysqli_query($con, $challan_query_issue);
 }
 
 // Fetch product names based on selected stitcher and challan number
 if (isset($_POST['challan_no_issue'])) {
     $selected_challan = mysqli_real_escape_string($con, $_POST['challan_no_issue']);
-    $product_query = "SELECT product_name FROM kits_job_work WHERE stitcher_name = '$selected_stitcher' AND challan_no_issue = '$selected_challan'";
+    $product_query = "SELECT DISTINCT product_name FROM kits_job_work WHERE stitcher_name = '$selected_stitcher' AND challan_no_issue = '$selected_challan'";
     $product_result = mysqli_query($con, $product_query);
 }
 
 // Fetch product bases based on selected stitcher, challan number, and product name
 if (isset($_POST['product_name'])) {
     $selected_product = mysqli_real_escape_string($con, $_POST['product_name']);
-    $product_base_query = "SELECT DISTINCT product_base FROM kits_job_work WHERE stitcher_name = '$selected_stitcher' AND challan_no_issue = '$selected_challan' AND product_name = '$selected_product'";
+    $product_base_query = "SELECT  product_base FROM kits_job_work WHERE stitcher_name = '$selected_stitcher' AND challan_no_issue = '$selected_challan' AND product_name = '$selected_product'";
     $product_base_result = mysqli_query($con, $product_base_query);
 }
 
