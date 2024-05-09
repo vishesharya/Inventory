@@ -11,6 +11,9 @@ $deleteStitcherMsg = '';
 if (isset($_POST['add_stitcher'])) {
     $stitcher_name = $_POST['stitcher_name'];
     $stitcher_contact = $_POST['stitcher_contact'];
+    $stitcher_address = $_POST['stitcher_address'];
+    $stitcher_aadhar = $_POST['stitcher_aadhar'];
+    $stitcher_pan = $_POST['stitcher_pan'];
 
     // Check if the stitcher already exists
     $checkQuery = mysqli_query($con, "SELECT * FROM stitcher WHERE stitcher_name = '$stitcher_name'");
@@ -20,7 +23,7 @@ if (isset($_POST['add_stitcher'])) {
         $addStitcherMsg = "<p id='addStitcherMsg' style='color: red;font-size: medium;text-align: center;'>Stitcher already exists</p>";
     } else {
         // Insert into stitcher table
-        $insertStitcherQuery = "INSERT INTO stitcher (stitcher_name, stitcher_contact) VALUES ('$stitcher_name', '$stitcher_contact')";
+        $insertStitcherQuery = "INSERT INTO stitcher (stitcher_name, stitcher_contact, stitcher_address, stitcher_aadhar, stitcher_pan) VALUES ('$stitcher_name', '$stitcher_contact', '$stitcher_address', '$stitcher_aadhar', '$stitcher_pan')";
         if (mysqli_query($con, $insertStitcherQuery)) {
             $addStitcherMsg = "<p id='addStitcherMsg' style='color: green;font-size: medium;text-align: center;'>Stitcher added successfully</p>";
         } else {
@@ -34,21 +37,48 @@ if (isset($_POST['edit_stitcher'])) {
     $stitcher_id = $_POST['stitcher_id'];
     $new_stitcher_name = $_POST['new_stitcher_name'];
     $new_stitcher_contact = $_POST['new_stitcher_contact'];
+    $new_stitcher_address = $_POST['new_stitcher_address'];
+    $new_stitcher_aadhar = $_POST['new_stitcher_aadhar'];
+    $new_stitcher_pan = $_POST['new_stitcher_pan'];
 
-    // Check if the new stitcher name already exists (excluding the current stitcher)
-    $checkQuery = mysqli_query($con, "SELECT * FROM stitcher WHERE stitcher_name = '$new_stitcher_name' AND id != $stitcher_id");
-    $rowCount = mysqli_num_rows($checkQuery);
+    // Fetch the existing details of the stitcher
+    $stitcherDetailsQuery = mysqli_query($con, "SELECT * FROM stitcher WHERE id = $stitcher_id");
+    $stitcherDetails = mysqli_fetch_assoc($stitcherDetailsQuery);
 
-    if ($rowCount > 0) {
-        $updateStitcherMsg = "<p id='updateStitcherMsg' style='color: red;font-size: medium;text-align: center;'>Stitcher name already exists</p>";
+    // Construct the update query
+    $updateStitcherQuery = "UPDATE stitcher SET ";
+
+    // Array to store the fields to be updated
+    $updateFields = array();
+
+    // Check which fields are provided and add them to the updateFields array
+    if (!empty($new_stitcher_name)) {
+        $updateFields[] = "stitcher_name = '$new_stitcher_name'";
+    }
+    if (!empty($new_stitcher_contact)) {
+        $updateFields[] = "stitcher_contact = '$new_stitcher_contact'";
+    }
+    if (!empty($new_stitcher_address)) {
+        $updateFields[] = "stitcher_address = '$new_stitcher_address'";
+    }
+    if (!empty($new_stitcher_aadhar)) {
+        $updateFields[] = "stitcher_aadhar = '$new_stitcher_aadhar'";
+    }
+    if (!empty($new_stitcher_pan)) {
+        $updateFields[] = "stitcher_pan = '$new_stitcher_pan'";
+    }
+
+    // Append the fields to the update query
+    $updateStitcherQuery .= implode(", ", $updateFields);
+
+    // Add the WHERE clause
+    $updateStitcherQuery .= " WHERE id = $stitcher_id";
+
+    // Execute the update query
+    if (mysqli_query($con, $updateStitcherQuery)) {
+        $updateStitcherMsg = "<p id='updateStitcherMsg' style='color: green;font-size: medium;text-align: center;'>Stitcher updated successfully</p>";
     } else {
-        // Update stitcher name and contact
-        $updateStitcherQuery = "UPDATE stitcher SET stitcher_name='$new_stitcher_name', stitcher_contact='$new_stitcher_contact' WHERE id=$stitcher_id";
-        if (mysqli_query($con, $updateStitcherQuery)) {
-            $updateStitcherMsg = "<p id='updateStitcherMsg' style='color: green;font-size: medium;text-align: center;'>Stitcher updated successfully</p>";
-        } else {
-            $updateStitcherMsg = "<p id='updateStitcherMsg' style='color: red;font-size: medium;text-align: center;'>Failed to update stitcher</p>";
-        }
+        $updateStitcherMsg = "<p id='updateStitcherMsg' style='color: red;font-size: medium;text-align: center;'>Failed to update stitcher</p>";
     }
 }
 
@@ -107,6 +137,18 @@ if (isset($_POST['delete_stitcher'])) {
                                 <label for="stitcher_contact">Enter Contact Number</label>
                                 <input type="text" name="stitcher_contact" id="stitcher_contact" class="form-control" required>
                             </div>
+                            <div class="form-group">
+                                <label for="stitcher_address">Enter Address</label>
+                                <input type="text" name="stitcher_address" id="stitcher_address" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label for="stitcher_aadhar">Enter Aadhar No</label>
+                                <input type="text" name="stitcher_aadhar" id="stitcher_aadhar" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label for="stitcher_pan">Enter Pan No</label>
+                                <input type="text" name="stitcher_pan" id="stitcher_pan" class="form-control">
+                            </div>
                             <button type="submit" class="btn btn-primary" name="add_stitcher">Add Stitcher</button>
                         </form>
                     </div>
@@ -135,11 +177,23 @@ if (isset($_POST['delete_stitcher'])) {
                             </div>
                             <div class="form-group">
                                 <label for="new_stitcher_name">New Stitcher Name</label>
-                                <input type="text" name="new_stitcher_name" id="new_stitcher_name" class="form-control" required>
+                                <input type="text" name="new_stitcher_name" id="new_stitcher_name" class="form-control">
                             </div>
                             <div class="form-group">
                                 <label for="new_stitcher_contact">New Contact Number</label>
-                                <input type="text" name="new_stitcher_contact" id="new_stitcher_contact" class="form-control" required>
+                                <input type="text" name="new_stitcher_contact" id="new_stitcher_contact" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label for="new_stitcher_address">New Address</label>
+                                <input type="text" name="new_stitcher_address" id="new_stitcher_address" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label for="new_stitcher_aadhar">New Aadhar No</label>
+                                <input type="text" name="new_stitcher_aadhar" id="new_stitcher_aadhar" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label for="new_stitcher_pan">New Pan No</label>
+                                <input type="text" name="new_stitcher_pan" id="new_stitcher_pan" class="form-control">
                             </div>
                             <button type="submit" class="btn btn-primary" name="edit_stitcher">Edit Stitcher</button>
                         </form>
