@@ -102,7 +102,7 @@ if (isset($_POST['view_entries'])) {
 <body>
     <?php include('include/nav.php'); ?>
     <div class="container-fluid mt-5">
-          <h1 class="h4 text-center mb-4">STITCHING AMOUNT DETAILS </h1> <!-- Changed container to container-fluid -->
+          <h1 class="h4 text-center mb-4">STITCHING PAYMENT SLIP </h1> <!-- Changed container to container-fluid -->
         <div id="form" class="row justify-content-center">
             <div class="col-lg-8">
                 <div class="card">
