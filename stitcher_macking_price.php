@@ -244,12 +244,13 @@ if (isset($_POST['view_entries'])) {
   
 <tfoot>
     <tr>
-        <td colspan="6"></td>
-        <td>Total Ist Price: <?php echo $total_ist_price; ?></td>
+       
+        <td class="w-10">Total Ist Price: <?php echo $total_ist_price; ?></td>
         <td>Total IInd Price: <?php echo $total_iind_price; ?></td>
         <td>Total Thread Price: <?php echo $total_thread_price; ?></td>
         <td>Total Stitching Amount: <?php echo $total_ist_price + $total_iind_price; ?></td>
         <td>Total Payable Amount: <?php echo ($total_ist_price + $total_iind_price) - $total_thread_price; ?></td>
+        <td colspan="6"></td>
     </tr>
 </tfoot>
 
