@@ -13,6 +13,7 @@ $result = null;
 
 $total_ist_price = 0;
 $total_iind_price = 0;
+$total_thread_quantity = 0;
 
 // Check if 'View' button is clicked
 if (isset($_POST['view_entries'])) {
@@ -36,6 +37,16 @@ if (isset($_POST['view_entries'])) {
     }
 
     $result = mysqli_query($con, $query);
+
+    // Calculate total thread quantity
+    while ($data = mysqli_fetch_array($result)) {
+        // Fetch thread quantity for each entry and add to the total
+        $thread_quantity_query = "SELECT thread_quantity FROM kits_job_work WHERE stitcher_name = '$stitcher_name' AND date_and_time BETWEEN '$start_date' AND '$end_date'";
+        $thread_quantity_result = mysqli_query($con, $thread_quantity_query);
+        while ($row = mysqli_fetch_assoc($thread_quantity_result)) {
+            $total_thread_quantity += $row['thread_quantity'];
+        }
+    }
 }
 
 ?>
@@ -207,11 +218,11 @@ if (isset($_POST['view_entries'])) {
 </tbody>
 
 <tfoot>
-    <tr>
+<tr>
         <td colspan="9"></td> <!-- Adjust colspan according to your table structure -->
         <td>Total Ist Price: <?php echo $total_ist_price; ?></td>
         <td>Total IInd Price: <?php echo $total_iind_price; ?></td>
-        <td></td> <!-- Add more empty cells if needed -->
+        <td>Total Thread Quantity: <?php echo $total_thread_quantity; ?></td>
     </tr>
 </tfoot>
 
