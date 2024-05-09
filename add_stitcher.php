@@ -135,7 +135,7 @@ if (isset($_POST['delete_stitcher'])) {
                             </div>
                             <div class="form-group">
                                 <label for="stitcher_contact">Enter Contact Number</label>
-                                <input type="text" name="stitcher_contact" id="stitcher_contact" class="form-control" required>
+                                <input type="number" name="stitcher_contact" id="stitcher_contact" class="form-control" required>
                             </div>
                             <div class="form-group">
                                 <label for="stitcher_address">Enter Address</label>
@@ -143,7 +143,7 @@ if (isset($_POST['delete_stitcher'])) {
                             </div>
                             <div class="form-group">
                                 <label for="stitcher_aadhar">Enter Aadhar No</label>
-                                <input type="text" name="stitcher_aadhar" id="stitcher_aadhar" class="form-control">
+                                <input type="number" name="stitcher_aadhar" id="stitcher_aadhar" class="form-control">
                             </div>
                             <div class="form-group">
                                 <label for="stitcher_pan">Enter Pan No</label>
@@ -181,7 +181,7 @@ if (isset($_POST['delete_stitcher'])) {
                             </div>
                             <div class="form-group">
                                 <label for="new_stitcher_contact">New Contact Number</label>
-                                <input type="text" name="new_stitcher_contact" id="new_stitcher_contact" class="form-control">
+                                <input type="number" name="new_stitcher_contact" id="new_stitcher_contact" class="form-control">
                             </div>
                             <div class="form-group">
                                 <label for="new_stitcher_address">New Address</label>
@@ -189,7 +189,7 @@ if (isset($_POST['delete_stitcher'])) {
                             </div>
                             <div class="form-group">
                                 <label for="new_stitcher_aadhar">New Aadhar No</label>
-                                <input type="text" name="new_stitcher_aadhar" id="new_stitcher_aadhar" class="form-control">
+                                <input type="number" name="new_stitcher_aadhar" id="new_stitcher_aadhar" class="form-control">
                             </div>
                             <div class="form-group">
                                 <label for="new_stitcher_pan">New Pan No</label>
