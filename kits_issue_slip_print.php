@@ -18,10 +18,10 @@ $product_query = "SELECT * FROM kits_issue WHERE challan_no = '$challan_no'";
 $product_result = mysqli_query($con, $product_query);
 
 // Fetch the stitcher name for the invoice
+$stitcher_name = $entry['stitcher_name']; // Fetching stitcher name from the last submitted entry
 $stitcher_query = "SELECT * FROM stitcher WHERE stitcher_name = '$stitcher_name' LIMIT 1";
 $stitcher_result = mysqli_query($con, $stitcher_query);
 $stitcher_row = mysqli_fetch_assoc($stitcher_result);
-$stitcher_name = $stitcher_row['stitcher_name'];
 $stitcher_address = $stitcher_row['stitcher_address'];
 $stitcher_aadhar = $stitcher_row['stitcher_aadhar'];
 $stitcher_pan = $stitcher_row['stitcher_pan'];
