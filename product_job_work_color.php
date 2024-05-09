@@ -1,13 +1,5 @@
 <?php
-session_start();
-
-// Check if the user is not logged in, redirect them to the login page
-if (!isset($_SESSION['user_id'])) {
-    header("Location: index.php"); // Redirect to your login page
-    exit; // Stop further execution
-}
 include_once 'include/connection.php';
-include_once 'include/admin-main.php';
 
 if (isset($_GET['product_name']) && isset($_GET['product_base'])) {
     $product_name = $_GET['product_name'];
