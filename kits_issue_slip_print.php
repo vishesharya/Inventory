@@ -37,7 +37,7 @@ $stitcher_contact_query = "SELECT stitcher_contact FROM stitcher WHERE stitcher_
 $stitcher_contact_result = mysqli_query($con, $stitcher_contact_query);
 $stitcher_contact_row = mysqli_fetch_assoc($stitcher_contact_result);
 $stitcher_contact = $stitcher_contact_row['stitcher_contact'];
-?>
+?> 
 
 <!DOCTYPE html>
 <html lang="en">
