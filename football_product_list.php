@@ -108,7 +108,7 @@ $result = mysqli_query($con, "SELECT id, product_name, product_base, product_col
                     <div class="breadcrumb-line">
                         <ul class="breadcrumb">
                             <li><a href="dashboard.php"><i class="icon-home2 position-left"></i> Home</a></li>
-                            <li class="active"><a href="inventory.phpp" class="btn bg-indigo-300"  >Kits Inventory Data</a></li>
+                            <li class="active"><a href="inventory.phpp" class="btn bg-indigo-300"  >Football Inventory Data</a></li>
                         </ul>
                     </div>
                 </div>
