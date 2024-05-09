@@ -65,7 +65,7 @@ $stitcher_contact = $stitcher_contact_row['stitcher_contact'];
             text-align: center;
             margin-bottom: 20px;
             color: #333;
-            line-height: 1px;
+            line-height: 5px;
         }
         .table {
             margin-top: 0px;
@@ -104,6 +104,9 @@ $stitcher_contact = $stitcher_contact_row['stitcher_contact'];
             .print-btn {
                 display: none !important;
             }
+        }
+        p{
+            line-height: 7px;
         }
     </style>
 </head>
