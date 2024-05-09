@@ -1,9 +1,7 @@
 <?php
 session_start();
-error_reporting(0);
-include('include/connection.php');
+include './include/connection.php';
 include_once 'include/admin-main.php';
-
 // Fetch stitcher names from the database
 $stitcher_query = "SELECT DISTINCT stitcher_name FROM football_received"; 
 $stitcher_result = mysqli_query($con, $stitcher_query);

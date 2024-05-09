@@ -1,5 +1,6 @@
 <?php
-include_once 'include/connection.php';
+session_start();
+include './include/connection.php';
 include_once 'include/admin-main.php';
 
 $msg ='';

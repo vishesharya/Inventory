@@ -1,7 +1,7 @@
 <?php
-// Include your database connection file
-include_once 'include/connection.php';
-
+session_start();
+include './include/connection.php';
+include_once 'include/admin-main.php';
 // Check if the necessary parameter (stitcher) is set
 if (isset($_GET['stitcher'])) {
     $selectedStitcher = mysqli_real_escape_string($con, $_GET['stitcher']);
