@@ -107,6 +107,13 @@ include_once 'include/admin-main.php';
                                         </div>
                                     </div>
                                 </a>
+                                <a href="./stitcher_macking_price.php" style='color:white'>
+                                    <div class="col-lg-4">
+                                        <div class="panel bg-teal-400">
+                                            <p style="margin: 10px; font-size: large;">Stitcher Payment Details</p>
+                                        </div>
+                                    </div>
+                                </a>
                                  <a href="update_bladder_balance.php" style='color:white'>
                                     <div class="col-lg-4">
                                         <div class="panel bg-teal-400">
