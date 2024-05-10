@@ -310,19 +310,7 @@ if (isset($_POST['view_entries'])) {
                     </thead>
                     <tbody>
                         
-                        <?php 
- 
-                          $total_product_quantity = 0;
-                          $total_bladder_quantity = 0;
-                          $total_thread_quantity = 0;
-  
-                          while ($product = mysqli_fetch_assoc($product_result)) : 
-                              // Update total quantities
-                              $total_product_quantity += $product['issue_quantity'];
-                              $total_bladder_quantity += $product['bladder_quantity'];
-                              $total_thread_quantity += $product['thread_quantity'];
-                          ?>
-                            
+                        <?php while ($product = mysqli_fetch_assoc($product_result)) : ?>
                             <tr>
                                 <td><?php echo $product['product_name']; ?></td>
                                 <td><?php echo ucfirst($product['product_base']); ?></td>
@@ -333,6 +321,18 @@ if (isset($_POST['view_entries'])) {
                                 <td><?php echo $product['thread_name']; ?></td>
                                 <td><?php echo $product['thread_quantity']; ?></td>
                                 <td><?php echo date('d/m/Y', strtotime($product['date_and_time'])); ?></td>
+                                 <?php 
+                        $total_product_quantity = 0;
+                        $total_bladder_quantity = 0;
+                        $total_thread_quantity = 0;
+
+                        while ($product = mysqli_fetch_assoc($product_result)) : 
+                            // Update total quantities
+                            $total_product_quantity += $product['issue_quantity'];
+                            $total_bladder_quantity += $product['bladder_quantity'];
+                            $total_thread_quantity += $product['thread_quantity'];
+                        ?>
+                                
                             </tr>
                         <?php endwhile; ?>
                     </tbody>
