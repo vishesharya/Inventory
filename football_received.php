@@ -50,7 +50,7 @@ if (isset($_POST['stitcher_name'])) {
 }
 
 // Fetch product names based on selected stitcher and challan number
-if (isset($_POST['challan_no_issue'])) {
+if (isset($_POST['challan_no_issue'])) { 
     $selected_challan = mysqli_real_escape_string($con, $_POST['challan_no_issue']);
     $selected_stitcher = mysqli_real_escape_string($con, $_POST['stitcher_name']); // Added this line
 
