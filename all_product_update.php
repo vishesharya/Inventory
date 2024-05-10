@@ -157,8 +157,8 @@ $result = mysqli_query($con, "SELECT kp.id, kp.product_name, kp.product_base, kp
                                 ?>
                                 <tr>
                                      <td><?php echo $sn; ?>.</td>
-                                    <td contenteditable="true" data-field="product_name" data-id="<?php echo $data['id']; ?>"><?php echo $data['product_name']; ?></td>
-                                    <td contenteditable="true" data-field="product_base" data-id="<?php echo $data['id']; ?>"><?php echo $data['product_base']; ?></td>
+                                     <td contenteditable="true" data-field="product_name" data-id="<?php echo $data['id']; ?>"><?php echo $data['product_name']; ?></td>
+                                     <td contenteditable="true" data-field="product_base" data-id="<?php echo $data['id']; ?>"><?php echo $data['product_base']; ?></td>
                                     <td contenteditable="true" data-field="product_color" data-id="<?php echo $data['id']; ?>"><?php echo $data['product_color']; ?></td>
                                     <td><button class="btn btn-danger delete-row" data-id="<?php echo $data['id']; ?>">Delete</button></td>
 
