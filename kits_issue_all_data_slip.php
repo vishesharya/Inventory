@@ -9,7 +9,7 @@ $stitcher_result = mysqli_query($con, $stitcher_query);
 $challan_no = isset($_POST['challan_no']) ? $_POST['challan_no'] : "";
 $stitcher_contact = isset($_POST['stitcher_contact']) ? $_POST['stitcher_contact'] : "";
 // Fetch the stitcher name for the invoice
-$stitcher_name = $entry['stitcher_name']; // Fetching stitcher name from the last submitted entry
+$stitcher_name = ['stitcher_name']; // Fetching stitcher name from the last submitted entry
 $stitcher_query = "SELECT * FROM stitcher WHERE stitcher_name = '$stitcher_name' LIMIT 1";
 $stitcher_result = mysqli_query($con, $stitcher_query);
 $stitcher_row = mysqli_fetch_assoc($stitcher_result);
@@ -317,6 +317,17 @@ if (isset($_POST['view_entries'])) {
                             </tr>
                         <?php endwhile; ?>
                     </tbody>
+                    <div>
+                    <p class="stitcher_bold" >Stitcher : <?php echo $stitcher_name; ?></p>
+                    <p>Stitcher Contact : <?php echo $stitcher_contact; ?></p>
+                    <p>Stitcher Aadhaar : <?php echo $stitcher_aadhar; ?></p>
+                    <p>Stitcher PAN : <?php echo $stitcher_pan; ?></p>
+                    <p>Stitcher Address : <?php echo $stitcher_address; ?></p>
+                </div>
+                <div>
+                    <p><br/><br/>Challan No : <?php echo $entry['challan_no']; ?></p>
+                    <p>Date: <?php echo date('d-m-Y', strtotime($date_and_time)); ?></p>
+                </div>
                 </table>
             </div>
         </div>
