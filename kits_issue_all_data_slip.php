@@ -295,6 +295,7 @@ if (isset($_POST['view_entries'])) {
             <div class="col-md-12">
                 <table class="table table-bordered">
                     <thead>
+                        
                         <tr>
                             <th>Product Name</th>
                             <th>Product Base</th>
@@ -308,7 +309,20 @@ if (isset($_POST['view_entries'])) {
                         </tr>
                     </thead>
                     <tbody>
-                        <?php while ($product = mysqli_fetch_assoc($result)) : ?>
+                        
+                        <?php 
+ 
+                          $total_product_quantity = 0;
+                          $total_bladder_quantity = 0;
+                          $total_thread_quantity = 0;
+  
+                          while ($product = mysqli_fetch_assoc($product_result)) : 
+                              // Update total quantities
+                              $total_product_quantity += $product['issue_quantity'];
+                              $total_bladder_quantity += $product['bladder_quantity'];
+                              $total_thread_quantity += $product['thread_quantity'];
+                          ?>
+                            
                             <tr>
                                 <td><?php echo $product['product_name']; ?></td>
                                 <td><?php echo ucfirst($product['product_base']); ?></td>
@@ -322,6 +336,16 @@ if (isset($_POST['view_entries'])) {
                             </tr>
                         <?php endwhile; ?>
                     </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="3">Total</td>
+                            <td><?php echo $total_product_quantity; ?></td>
+                            <td colspan="1"></td> <!-- Add empty cells for other columns -->
+                            <td><?php echo $total_bladder_quantity; ?></td>
+                            <td colspan="1"></td>
+                            <td><?php echo $total_thread_quantity; ?></td>
+                        </tr>
+                    </tfoot>
                 </table>
             </div>
         </div>
