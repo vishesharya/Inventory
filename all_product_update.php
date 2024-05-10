@@ -159,7 +159,7 @@ $result = mysqli_query($con, "SELECT kp.id, kp.product_name, kp.product_base, kp
                                      <td><?php echo $sn; ?>.</td>
                                      <td contenteditable="true" data-field="product_name" data-id="<?php echo $data['id']; ?>"><?php echo $data['product_name']; ?></td>
                                      <td contenteditable="true" data-field="product_base" data-id="<?php echo $data['id']; ?>"><?php echo $data['product_base']; ?></td>
-                                    <td contenteditable="true" data-field="product_color" data-id="<?php echo $data['id']; ?>"><?php echo $data['product_color']; ?></td>
+                                     <td contenteditable="true" data-field="product_color" data-id="<?php echo $data['id']; ?>"><?php echo $data['product_color']; ?></td>
                                     <td><button class="btn btn-danger delete-row" data-id="<?php echo $data['id']; ?>">Delete</button></td>
 
                                
@@ -191,17 +191,32 @@ $result = mysqli_query($con, "SELECT kp.id, kp.product_name, kp.product_base, kp
 <!-- Delete/Edit validation -->
 <script>
     // Function to handle update operation via AJAX
-    function updateDatabase(id, field, value) {
-        var xhr = new XMLHttpRequest();
-        xhr.open('POST', 'update.php', true);
-        xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-        xhr.onreadystatechange = function() {
-            if (xhr.readyState == 4 && xhr.status == 200) {
-                console.log(xhr.responseText);
-            }
-        };
-        xhr.send('id=' + id + '&field=' + field + '&value=' + value);
+   // Function to validate input value
+function isValidInput(value) {
+    // Regular expression to allow only alphanumeric characters and some special characters like '-' and '_'
+    var regex = /^[a-zA-Z0-9\-_]+$/;
+    return regex.test(value);
+}
+
+// Function to handle update operation via AJAX
+function updateDatabase(id, field, value) {
+    // Validate the input value
+    if (!isValidInput(value)) {
+        console.log('Invalid input value');
+        return;
     }
+
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', 'update.php', true);
+    xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState == 4 && xhr.status == 200) {
+            console.log(xhr.responseText);
+        }
+    };
+    xhr.send('id=' + id + '&field=' + field + '&value=' + value);
+}
+
 
     // Function to handle delete operation via AJAX
     function deleteRow(id) {
