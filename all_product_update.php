@@ -194,7 +194,7 @@ $result = mysqli_query($con, "SELECT kp.id, kp.product_name, kp.product_base, kp
    // Function to validate input value
 function isValidInput(value) {
     // Regular expression to allow only alphanumeric characters and some special characters like '-' and '_'
-    var regex = /^[a-zA-Z0-9\-_]+$/;
+    var regex = /^[a-zA-Z0-9\-_&]+$/;
     return regex.test(value);
 }
 
