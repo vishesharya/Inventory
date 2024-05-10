@@ -34,6 +34,15 @@ $stitcher_contact_query = "SELECT stitcher_contact FROM stitcher WHERE stitcher_
 $stitcher_contact_result = mysqli_query($con, $stitcher_contact_query);
 $stitcher_contact_row = mysqli_fetch_assoc($stitcher_contact_result);
 $stitcher_contact = $stitcher_contact_row['stitcher_contact'];
+
+// Fetch the stitcher name for the invoice
+$stitcher_name = $entry['stitcher_name']; // Fetching stitcher name from the last submitted entry
+$stitcher_query = "SELECT * FROM stitcher WHERE stitcher_name = '$stitcher_name' LIMIT 1";
+$stitcher_result = mysqli_query($con, $stitcher_query);
+$stitcher_row = mysqli_fetch_assoc($stitcher_result);
+$stitcher_address = $stitcher_row['stitcher_address'];
+$stitcher_aadhar = $stitcher_row['stitcher_aadhar'];
+$stitcher_pan = $stitcher_row['stitcher_pan'];
 ?>
 
 <!DOCTYPE html>
