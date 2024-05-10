@@ -8,19 +8,14 @@ $stitcher_query = "SELECT DISTINCT stitcher_name FROM kits_issue ORDER BY stitch
 $stitcher_result = mysqli_query($con, $stitcher_query);
 $challan_no = isset($_POST['challan_no']) ? $_POST['challan_no'] : "";
 $stitcher_contact = isset($_POST['stitcher_contact']) ? $_POST['stitcher_contact'] : "";
-$stitcher_name = isset($_POST['stitcher_name']) ? $_POST['stitcher_name'] : "";
-$date_and_time = isset($_POST['date_and_time']) ? $_POST['date_and_time'] : "";
-$product_result = isset($_POST['product_result']) ? $_POST['product_result'] : "";
-
 // Fetch the stitcher name for the invoice
-if (!empty($stitcher_name)) {
-    $stitcher_query = "SELECT * FROM stitcher WHERE stitcher_name = '$stitcher_name' LIMIT 1";
-    $stitcher_result = mysqli_query($con, $stitcher_query);
-    $stitcher_row = mysqli_fetch_assoc($stitcher_result);
-    $stitcher_address = $stitcher_row['stitcher_address'];
-    $stitcher_aadhar = $stitcher_row['stitcher_aadhar'];
-    $stitcher_pan = $stitcher_row['stitcher_pan'];
-}
+$stitcher_name = ['stitcher_name']; // Fetching stitcher name from the last submitted entry
+$stitcher_query = "SELECT * FROM stitcher WHERE stitcher_name = '$stitcher_name' LIMIT 1";
+$stitcher_result = mysqli_query($con, $stitcher_query);
+$stitcher_row = mysqli_fetch_assoc($stitcher_result);
+$stitcher_address = $stitcher_row['stitcher_address'];
+$stitcher_aadhar = $stitcher_row['stitcher_aadhar'];
+$stitcher_pan = $stitcher_row['stitcher_pan'];
 
 // Check if 'challan_no' is set in session
 if (isset($_SESSION['challan_no'])) {
@@ -75,7 +70,6 @@ if (isset($_POST['view_entries'])) {
     $result = mysqli_query($con, $query);
 }
 ?>
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -277,23 +271,18 @@ if (isset($_POST['view_entries'])) {
         <!-- Add your HTML structure here to display kits issue details -->
         <div class="invoice-header">
             <div>
-                <p class="issue_heading" >FOOTBALLS RECEIVING SLIP</p>
-                <hr>
-                <h2 class="heading">KHANNA SPORTS INDUSTRIES PVT. LTD</h2>
-                <p class="heading"> A-7, Sports Complex Delhi Road Meerut Uttar Pradesh 250002</p>
-                <p class="heading">Contact : 8449441387,98378427750 &nbsp;  GST : 09AAACK9669A1ZD </p>
+                <h2 class="heading">KHANNA SPORTS KITS ISSUE SLIP</h2>
+                <p>Sports Complex, A-7, Delhi Road, Phase 1,<br/>Industrial Area, Mohkam Pur, Meerut,<br/>Uttar Pradesh 250002 (India)</p>
+                <p>Contact: 8449441387, 98378427750</p>
             </div>
             <div id="head_details">
                 <div>
-                    <p class="stitcher_bold" >Stitcher : <?php echo $stitcher_name; ?></p>
-                    <p>Stitcher Contact : <?php echo $stitcher_contact; ?></p>
-                    <p>Stitcher Aadhaar : <?php echo $stitcher_aadhar; ?></p>
-                    <p>Stitcher PAN : <?php echo $stitcher_pan; ?></p>
-                    <p>Stitcher Address : <?php echo $stitcher_address; ?></p>
+                    <p>Stitcher : <?php echo $stitcher_name; ?></p>
+                     <p>Stitcher Contact : <?php echo $stitcher_contact; ?></p>
+                    <!-- Add other details as needed -->
                 </div>
                 <div>
-                    <p><br/><br/>Challan No : <?php echo $entry['challan_no']; ?></p>
-                    <p>Date: <?php echo date('d-m-Y', strtotime($date_and_time)); ?></p>
+                    <p><br/><br/>Challan No: <?php echo $challan_no; ?></p>
                 </div>
             </div>
         </div>
@@ -301,7 +290,6 @@ if (isset($_POST['view_entries'])) {
             <div class="col-md-12">
                 <table class="table table-bordered">
                     <thead>
-                        
                         <tr>
                             <th>Product Name</th>
                             <th>Product Base</th>
@@ -315,8 +303,7 @@ if (isset($_POST['view_entries'])) {
                         </tr>
                     </thead>
                     <tbody>
-                        
-                        <?php while ($product = mysqli_fetch_assoc($product_result)) : ?>
+                        <?php while ($product = mysqli_fetch_assoc($result)) : ?>
                             <tr>
                                 <td><?php echo $product['product_name']; ?></td>
                                 <td><?php echo ucfirst($product['product_base']); ?></td>
@@ -327,20 +314,9 @@ if (isset($_POST['view_entries'])) {
                                 <td><?php echo $product['thread_name']; ?></td>
                                 <td><?php echo $product['thread_quantity']; ?></td>
                                 <td><?php echo date('d/m/Y', strtotime($product['date_and_time'])); ?></td>
-                                
                             </tr>
                         <?php endwhile; ?>
                     </tbody>
-                    <tfoot>
-                        <tr>
-                            <td colspan="3">Total</td>
-                            <td><?php echo $total_product_quantity; ?></td>
-                            <td colspan="1"></td> <!-- Add empty cells for other columns -->
-                            <td><?php echo $total_bladder_quantity; ?></td>
-                            <td colspan="1"></td>
-                            <td><?php echo $total_thread_quantity; ?></td>
-                        </tr>
-                    </tfoot>
                 </table>
             </div>
         </div>
