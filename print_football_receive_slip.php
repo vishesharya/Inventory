@@ -126,7 +126,7 @@ $stitcher_pan = $stitcher_row['stitcher_pan'];
     <div class="container">
         <div class="invoice-header">
              <div>
-                <p class="issue_heading" >KITS ISSUE SLIP</p>
+                <p class="issue_heading" >FOOTBALL RECEIVING SLIP</p>
                 <hr>
                 <h2 class="heading">KHANNA SPORTS INDUSTRIES PVT. LTD</h2>
                 <p class="heading"> A-7, Sports Complex Delhi Road Meerut Uttar Pradesh 250002</p>
