@@ -251,10 +251,6 @@ if (isset($_POST['submit_form'])) {
             VALUES ( '$challan_no', '$stitcher_name', '$product_name', '$product_base', '$product_color', '$stitcher_ist_company_ist', '$stitcher_iind_company_iind', '$stitcher_iind_company_ist', '$stitcher_ist_company_iind', '$total', '$date_and_time')";
              $insert_result = mysqli_query($con, $insert_query);
 
-
-       
-       
-
             if (!$insert_result) {
                 $errors[] = "Failed to store data in the database.";
             }
