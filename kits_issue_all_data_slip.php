@@ -9,7 +9,7 @@ $stitcher_result = mysqli_query($con, $stitcher_query);
 $challan_no = isset($_POST['challan_no']) ? $_POST['challan_no'] : "";
 $stitcher_contact = isset($_POST['stitcher_contact']) ? $_POST['stitcher_contact'] : "";
 // Fetch the stitcher name for the invoice
-$stitcher_name = ['stitcher_name']; // Fetching stitcher name from the last submitted entry
+$stitcher_name = $entry['stitcher_name']; // Fetching stitcher name from the last submitted entry
 $stitcher_query = "SELECT * FROM stitcher WHERE stitcher_name = '$stitcher_name' LIMIT 1";
 $stitcher_result = mysqli_query($con, $stitcher_query);
 $stitcher_row = mysqli_fetch_assoc($stitcher_result);
