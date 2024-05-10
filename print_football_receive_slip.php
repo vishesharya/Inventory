@@ -84,14 +84,18 @@ $stitcher_pan = $stitcher_row['stitcher_pan'];
             align-items: flex-end;
             color: #555;
         }
-        .receiver-signature,
+        .receiver-signature{
+            text-align: right;
+            
+        
+        }
         .issuer-signature {
-            flex: 1;
             text-align: left;
+        
         }
         .middle-signature {
-            flex: 1;
             text-align: center;
+           
         }
         .print-btn {
             display: block;
@@ -101,7 +105,7 @@ $stitcher_pan = $stitcher_row['stitcher_pan'];
         #head_details{
             display: flex;
             margin-top: 0px;
-            padding-top: 0px;
+            padding-top: 0px; 
             flex-direction: row;
             align-items: flex-end;
             justify-content: space-between;
@@ -126,7 +130,7 @@ $stitcher_pan = $stitcher_row['stitcher_pan'];
     <div class="container">
         <div class="invoice-header">
              <div>
-                <p class="issue_heading" >FOOTBALL RECEIVING SLIP</p>
+                <p class="issue_heading" >FOOTBALLS RECEIVING SLIP</p>
                 <hr>
                 <h2 class="heading">KHANNA SPORTS INDUSTRIES PVT. LTD</h2>
                 <p class="heading"> A-7, Sports Complex Delhi Road Meerut Uttar Pradesh 250002</p>

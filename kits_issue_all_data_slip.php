@@ -8,6 +8,14 @@ $stitcher_query = "SELECT DISTINCT stitcher_name FROM kits_issue ORDER BY stitch
 $stitcher_result = mysqli_query($con, $stitcher_query);
 $challan_no = isset($_POST['challan_no']) ? $_POST['challan_no'] : "";
 $stitcher_contact = isset($_POST['stitcher_contact']) ? $_POST['stitcher_contact'] : "";
+// Fetch the stitcher name for the invoice
+$stitcher_name = $entry['stitcher_name']; // Fetching stitcher name from the last submitted entry
+$stitcher_query = "SELECT * FROM stitcher WHERE stitcher_name = '$stitcher_name' LIMIT 1";
+$stitcher_result = mysqli_query($con, $stitcher_query);
+$stitcher_row = mysqli_fetch_assoc($stitcher_result);
+$stitcher_address = $stitcher_row['stitcher_address'];
+$stitcher_aadhar = $stitcher_row['stitcher_aadhar'];
+$stitcher_pan = $stitcher_row['stitcher_pan'];
 
 // Check if 'challan_no' is set in session
 if (isset($_SESSION['challan_no'])) {
@@ -71,6 +79,10 @@ if (isset($_POST['view_entries'])) {
     <title>KITS ISSUE DETAILS</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
+        @page {
+            size: A4;
+            margin: 1cm;
+        }
        body {
             background-color: #f8f9fc;
             font-family: Arial, sans-serif;
@@ -117,7 +129,9 @@ if (isset($_POST['view_entries'])) {
             text-align: center;
             margin-bottom: 20px;
             color: #333;
+            line-height: 5px;
         }
+        
         .table {
             margin-top: 0px;
         }
@@ -154,6 +168,14 @@ if (isset($_POST['view_entries'])) {
             flex-direction: row;
             align-items: flex-end;
             justify-content: space-between;
+        }
+        .footer {
+            margin-top: 30px;
+            display: flex;
+            justify-content: space-between;
+            gap: 8.2rem;
+            align-items: flex-end;
+            color: #555;
         }
     </style>
 </head>
