@@ -17,6 +17,8 @@ $stitcher_address = $stitcher_row['stitcher_address'];
 $stitcher_aadhar = $stitcher_row['stitcher_aadhar'];
 $stitcher_pan = $stitcher_row['stitcher_pan'];
 
+$stitcher_name = " ";
+
 // Check if 'challan_no' is set in session
 if (isset($_SESSION['challan_no'])) {
     $challan_no = $_SESSION['challan_no'];
