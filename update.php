@@ -1,40 +1,38 @@
 <?php
-session_start();
-include './include/connection.php';
+// Include your database connection file
+include_once 'include/connection.php';
 
+// Check if the request method is POST
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Check if the necessary POST data is set
+    // Check if the required parameters are set
     if (isset($_POST['id']) && isset($_POST['field']) && isset($_POST['value'])) {
-        $id = $_POST['id'];
-        $field = $_POST['field'];
-        $value = $_POST['value'];
-
         // Sanitize input to prevent SQL injection
-        $id = mysqli_real_escape_string($con, $id);
-        $field = mysqli_real_escape_string($con, $field);
-        $value = mysqli_real_escape_string($con, $value);
+        $id = mysqli_real_escape_string($con, $_POST['id']);
+        $field = mysqli_real_escape_string($con, $_POST['field']);
+        $value = mysqli_real_escape_string($con, $_POST['value']);
 
-        // Update database for kits_product table
-        $query_kits_product = "UPDATE kits_product SET $field = '$value' WHERE id = $id";
-        $result_kits_product = mysqli_query($con, $query_kits_product);
+        // Update database
+        $query = "UPDATE kits_product SET $field = '$value' WHERE id = $id";
+        $result = mysqli_query($con, $query);
 
-        // Update database for products table
-        $query_products = "UPDATE products SET $field = '$value' WHERE id = $id";
-        $result_products = mysqli_query($con, $query_products);
-        
-        // Update database for sheets_product table
-        $query_sheets_product = "UPDATE sheets_product SET $field = '$value' WHERE id = $id";
-        $result_sheets_product = mysqli_query($con, $query_sheets_product);
+        // Update database
+        $query = "UPDATE products SET $field = '$value' WHERE id = $id";
+        $result = mysqli_query($con, $query);
 
-        if ($result_kits_product && $result_products && $result_sheets_product) {
-            echo "Record updated successfully";
-        } else {
+        // Update database
+        $query = "UPDATE sheets_product SET $field = '$value' WHERE id = $id";
+        $result = mysqli_query($con, $query);
+
+        // Check if update was successful
+        if (!$result) {
             echo "Error updating record: " . mysqli_error($con);
+        } else {
+            echo "Record updated successfully";
         }
     } else {
-        echo "Missing POST data";
+        echo "Missing parameters";
     }
 } else {
-    echo "Invalid request";
+    echo "Invalid request method";
 }
 ?>
