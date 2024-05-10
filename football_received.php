@@ -247,8 +247,8 @@ if (isset($_POST['submit_form'])) {
             $date_and_time = mysqli_real_escape_string($con, $product['date_and_time']);
 
             // Insert product into the database
-            $insert_query = "INSERT INTO football_received ( challan_no, stitcher_name, product_name, product_base, product_color, S_Ist_C_Ist, S_IInd_C_IInd, S_IInd_C_Ist, S_Ist_C_IInd, total) 
-            VALUES ( '$challan_no', '$stitcher_name', '$product_name', '$product_base', '$product_color', '$stitcher_ist_company_ist', '$stitcher_iind_company_iind', '$stitcher_iind_company_ist', '$stitcher_ist_company_iind', '$total')";
+            $insert_query = "INSERT INTO football_received ( challan_no, stitcher_name, product_name, product_base, product_color, S_Ist_C_Ist, S_IInd_C_IInd, S_IInd_C_Ist, S_Ist_C_IInd, total, date_and_time) 
+            VALUES ( '$challan_no', '$stitcher_name', '$product_name', '$product_base', '$product_color', '$stitcher_ist_company_ist', '$stitcher_iind_company_iind', '$stitcher_iind_company_ist', '$stitcher_ist_company_iind', '$total', '$date_and_time')";
              $insert_result = mysqli_query($con, $insert_query);
 
 
