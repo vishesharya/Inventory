@@ -10,7 +10,7 @@ $entry = mysqli_fetch_assoc($result);
 if (!$entry) {
     echo "No entries found.";
     exit();
-} 
+}  
 
 // Fetch all added products corresponding to the last submitted entry's challan_no
 $challan_no = $entry['challan_no'];
