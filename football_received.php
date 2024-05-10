@@ -50,7 +50,7 @@ if (isset($_POST['stitcher_name'])) {
 }
 
 // Fetch product names based on selected stitcher and challan number
-if (isset($_POST['challan_no_issue'])) { 
+if (isset($_POST['challan_no_issue'])) {
     $selected_challan = mysqli_real_escape_string($con, $_POST['challan_no_issue']);
     $selected_stitcher = mysqli_real_escape_string($con, $_POST['stitcher_name']); // Added this line
 
@@ -287,11 +287,11 @@ if (isset($_POST['submit_form'])) {
              $new_remaining_quantity_iind_company_iind = $existing_remaining_quantity_iind_company_iind + $stitcher_iind_company_iind + $stitcher_ist_company_iind ;
  
              // Update remaining quantity in products table for Ist Company Ist
-             $update_remaining_quantity_ist_company_ist_query = "UPDATE products SET remaining_quantity = '$new_remaining_quantity_ist_company_ist' WHERE product_name = '$product_name' AND product_base = '$product_base'";
+             $update_remaining_quantity_ist_company_ist_query = "UPDATE products SET remaining_quantity = '$new_remaining_quantity_ist_company_ist' WHERE product_name = '$product_name' AND product_base = '$product_base' AND  product_color = '$product_color'";
              $update_remaining_quantity_ist_company_ist_result = mysqli_query($con, $update_remaining_quantity_ist_company_ist_query);
  
              // Update remaining quantity in products table for IInd Company IInd
-             $update_remaining_quantity_iind_company_iind_query = "UPDATE products SET remaining_quantity = '$new_remaining_quantity_iind_company_iind' WHERE product_name = '$product_name IIND' AND product_base = 'N/A' AND product_color = 'N/A'";
+             $update_remaining_quantity_iind_company_iind_query = "UPDATE products SET remaining_quantity = '$new_remaining_quantity_iind_company_iind' WHERE product_name = '$product_name IIND' AND product_base = 'MIX COLOR' AND product_color = 'MIX COLOR'";
              $update_remaining_quantity_iind_company_iind_result = mysqli_query($con, $update_remaining_quantity_iind_company_iind_query);
  
              if (!$update_remaining_quantity_ist_company_ist_result || !$update_remaining_quantity_iind_company_iind_result) {
@@ -556,7 +556,7 @@ if (isset($_POST['submit_form'])) {
         </div>
     </div>
     <script>
-        document.getElementById("select_stitcher").addEventListener("change", function() {
+          document.getElementById("select_stitcher").addEventListener("change", function() {
             var selectedStitcher = this.value;
             fetchChallanNumbers(selectedStitcher);
         });
@@ -581,61 +581,89 @@ if (isset($_POST['submit_form'])) {
         }
     </script>
 
-    <!-- Add this JavaScript code to dynamically update the dropdowns -->
 <script>
-    document.getElementById("select_stitcher").addEventListener("change", function() {
-        var selectedStitcher = this.value;
-        fetchChallanNumbers(selectedStitcher);
-    });
+        document.getElementById("select_challan").addEventListener("change", function() {
+    var selectedChallan = this.value;
+    fetchProductNames(selectedChallan);
+});
 
-    document.getElementById("select_challan").addEventListener("change", function() {
-        var selectedStitcher = document.getElementById("select_stitcher").value;
-        var selectedChallan = this.value;
-        fetchProductData(selectedStitcher, selectedChallan);
-    });
+function fetchProductNames(selectedChallan) {
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            var productSelect = document.getElementById("product_name");
+            var productNames = JSON.parse(this.responseText);
+            productSelect.innerHTML = "<option value='' selected disabled>Select Product Name</option>";
+            productNames.forEach(function(product) {
+                var option = document.createElement("option");
+                option.value = product;
+                option.text = product;
+                productSelect.appendChild(option);
+            });
+        }
+    };
+    xhttp.open("GET", "fetch_product_name_football.php?challan_no=" + selectedChallan, true);
+    xhttp.send();
+}
 
-    function fetchProductData(selectedStitcher, selectedChallan) {
-        var xhttp = new XMLHttpRequest();
-        xhttp.onreadystatechange = function() {
-            if (this.readyState == 4 && this.status == 200) {
-                var responseData = JSON.parse(this.responseText);
-
-                // Update product name dropdown
-                var productNameSelect = document.getElementById("product_name");
-                productNameSelect.innerHTML = "<option value='' selected disabled>Select Product Name</option>";
-                responseData.productNames.forEach(function(productName) {
-                    var option = document.createElement("option");
-                    option.value = productName;
-                    option.text = productName;
-                    productNameSelect.appendChild(option);
-                });
-
-                // Update product base dropdown
-                var productBaseSelect = document.getElementById("product_base");
-                productBaseSelect.innerHTML = "<option value='' selected disabled>Select Product Base</option>";
-                responseData.productBases.forEach(function(productBase) {
-                    var option = document.createElement("option");
-                    option.value = productBase;
-                    option.text = productBase;
-                    productBaseSelect.appendChild(option);
-                });
-
-                // Update product color dropdown
-                var productColorSelect = document.getElementById("product_color");
-                productColorSelect.innerHTML = "<option value='' selected disabled>Select Product Color</option>";
-                responseData.productColors.forEach(function(productColor) {
-                    var option = document.createElement("option");
-                    option.value = productColor;
-                    option.text = productColor;
-                    productColorSelect.appendChild(option);
-                });
-            }
-        };
-        xhttp.open("GET", "fetch_product_data.php?stitcher=" + selectedStitcher + "&challan=" + selectedChallan, true);
-        xhttp.send();
-    }
 </script>
-        ]
 
+
+<script>
+document.getElementById("product_name").addEventListener("change", function() {
+    var productName = this.value;
+    var selectedChallan = document.getElementById("select_challan").value;
+    fetchProductBase(productName, selectedChallan);
+});
+
+function fetchProductBase(productName, selectedChallan) {
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            var productBaseSelect = document.getElementById("product_base");
+            productBaseSelect.innerHTML = "<option value='' selected disabled>Select Product Base</option>"; // Clear previous options
+            var productBaseData = JSON.parse(this.responseText);
+            productBaseData.forEach(function(productBase) {
+                var option = document.createElement("option");
+                option.value = productBase;
+                option.text = productBase;
+                productBaseSelect.appendChild(option);
+            });
+        }
+    };
+    xhttp.open("GET", "fetch_product_base_football.php?product_name=" + encodeURIComponent(productName) + "&challan_no_issue=" + encodeURIComponent(selectedChallan), true);
+    xhttp.send();
+}
+
+</script>
+
+<script>
+document.getElementById("product_base").addEventListener("change", function() {
+    var selectedChallan = document.getElementById("select_challan").value;
+    var productName = document.getElementById("product_name").value;
+    var productBase = this.value;
+    fetchProductColor(selectedChallan, productName, productBase);
+});
+
+function fetchProductColor(selectedChallan, productName, productBase) {
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            var productColorSelect = document.getElementById("product_color");
+            productColorSelect.innerHTML = "<option value='' selected disabled>Select Product Color</option>"; // Clear previous options
+            var productColorData = JSON.parse(this.responseText);
+            productColorData.forEach(function(productColor) {
+                var option = document.createElement("option");
+                option.value = productColor;
+                option.text = productColor;
+                productColorSelect.appendChild(option);
+            });
+        }
+    };
+    xhttp.open("GET", "fetch_product_color_football.php?challan_no_issue=" + encodeURIComponent(selectedChallan) + "&product_name=" + encodeURIComponent(productName) + "&product_base=" + encodeURIComponent(productBase), true);
+    xhttp.send();
+}
+
+</script>
 </body>
 </html>
