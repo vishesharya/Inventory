@@ -233,13 +233,13 @@ if (isset($_POST['submit_products'])) {
             $date_and_time = mysqli_real_escape_string($con, $product['date_and_time']);
 
             // Insert product into the database
-            $insert_query = "INSERT INTO kits_issue (challan_no, stitcher_name, product_name, product_base, product_color, issue_quantity, total, bladder_name, bladder_quantity, thread_name, thread_quantity) 
-            VALUES ('$challan_no', '$stitcher_name', '$product_name', '$product_base', '$product_color', '$quantity', '$total', '$bladder_name', '$bladder_quantity', '$thread_name', '$thread_quantity')";
+            $insert_query = "INSERT INTO kits_issue (challan_no, stitcher_name, product_name, product_base, product_color, issue_quantity, total, bladder_name, bladder_quantity, thread_name, thread_quantity, date_and_time) 
+            VALUES ('$challan_no', '$stitcher_name', '$product_name', '$product_base', '$product_color', '$quantity', '$total', '$bladder_name', '$bladder_quantity', '$thread_name', '$thread_quantity', '$date_and_time')";
              $insert_result = mysqli_query($con, $insert_query);
 
             // Insert product into the kits_job_work table
             $insert_job_work_query = "INSERT INTO kits_job_work (challan_no_issue, stitcher_name, product_name, product_base, product_color, issue_quantity, bladder_name, bladder_quantity, thread_name, thread_quantity, date_and_time) 
-            VALUES ('$challan_no', '$stitcher_name', '$product_name', '$product_base', '$product_color', '$quantity', '$bladder_name', '$bladder_quantity', '$thread_name', '$thread_quantity', NOW())";
+            VALUES ('$challan_no', '$stitcher_name', '$product_name', '$product_base', '$product_color', '$quantity', '$bladder_name', '$bladder_quantity', '$thread_name', '$thread_quantity', '$date_and_time')";
             $insert_job_work_result = mysqli_query($con, $insert_job_work_query);
     
 
