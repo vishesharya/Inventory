@@ -631,7 +631,7 @@ function fetchProductBase(productName, selectedChallan) {
             });
         }
     };
-    xhttp.open("GET", "fetch_product_base_football.php?product_name=" + encodeURIComponent(productName) + "&challan_no_issue=" + encodeURIComponent(selectedChallan), true);
+    xhttp.open("GET", "fetch-product_base_football.php?product_name=" + encodeURIComponent(productName) + "&challan_no_issue=" + encodeURIComponent(selectedChallan), true);
     xhttp.send();
 }
 
