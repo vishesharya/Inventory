@@ -77,8 +77,9 @@ $total_small_panel = 0;
             text-align: center;
             margin-bottom: 20px;
             color: #333;
-            line-height: 5px;
+            line-height: 0px;
         }
+       
         
     </style>
 </head>
