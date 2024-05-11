@@ -70,28 +70,14 @@ $total_small_panel = 0;
                 display: none !important;
             }
         }
-        .issue_heading{
-            text-align: center;
-        }
-        .heading {
-            text-align: center;
-            margin-bottom: 20px;
-            color: #333;
-            line-height: 0px;
-        }
+     
        
         
     </style>
 </head>
 <body>
     <div class="container">
-    <div>
-                <p class="issue_heading" >KITS ISSUE SLIP</p>
-                <hr>
-                <h2 class="heading">KHANNA SPORTS INDUSTRIES PVT. LTD</h2>
-                <p class="heading"> A-7, Sports Complex Delhi Road Meerut Uttar Pradesh 250002</p>
-                <p class="heading">Contact : 8449441387,98378427750 &nbsp;  GST : 09AAACK9669A1ZD </p>
-            </div>
+                <h2 class="heading">SHEETS INVENTORY (PRODUCTION)</h2>
         <div class="table-container">
             <?php 
             // Initialize totals
