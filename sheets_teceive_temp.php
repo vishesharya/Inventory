@@ -72,123 +72,72 @@ if (isset($_POST['add_product'])) {
         $errors[] = "Please fill in all fields.";
     } else {
         // Sanitize input
-       
         $product_name = mysqli_real_escape_string($con, $_POST['product_name']);
         $product_base = mysqli_real_escape_string($con, $_POST['product_base']);
         $product_color = mysqli_real_escape_string($con, $_POST['product_color']);
-   
+        
         $quantity1 = mysqli_real_escape_string($con, $_POST['quantity1']);
         $quantity2 = mysqli_real_escape_string($con, $_POST['quantity2']);
         $quantity3 = mysqli_real_escape_string($con, $_POST['quantity3']);
 
+        // Fetch remaining_big_panel from sheets_product table
+        $remaining_big_panel_query = "SELECT remaining_big_panel FROM sheets_product WHERE product_name = '$product_name' AND product_base = '$product_base' AND product_color = '$product_color'";
+        $remaining_big_panel_result = mysqli_query($con, $remaining_big_panel_query);
+        $row = mysqli_fetch_assoc($remaining_big_panel_result);
+        $remaining_big_panel = $row['remaining_big_panel'];
 
- // Fetch remaining_big_panel from sheets_product table
- $remaining_big_panel_query = "SELECT remaining_big_panel FROM sheets_product WHERE product_name = '$product_name' AND product_base = '$product_base' AND product_color = '$product_color'";
- $remaining_big_panel_result = mysqli_query($con, $remaining_big_panel_query);
- $row = mysqli_fetch_assoc($remaining_big_panel_result);
- $remaining_big_panel = $row['remaining_big_panel'];        
+        // Fetch remaining_big_panel from sheets_production_product table
+        $production_remaining_big_panel_query = "SELECT remaining_big_panel FROM sheets_production_product WHERE product_name = '$product_name' AND product_base = '$product_base' AND product_color = '$product_color'";
+        $production_remaining_big_panel_result = mysqli_query($con, $production_remaining_big_panel_query);
+        $row = mysqli_fetch_assoc($production_remaining_big_panel_result);
+        $production_remaining_big_panel = $row['remaining_big_panel'];
 
-// Fetch remaining_big_panel from sheets_production_product table
-$production_remaining_big_panel_query = "SELECT remaining_big_panel FROM sheets_production_product WHERE product_name = '$product_name' AND product_base = '$product_base' AND product_color = '$product_color'";
-$production_remaining_big_panel_result = mysqli_query($con, $production_remaining_big_panel_query);
-$row = mysqli_fetch_assoc($production_remaining_big_panel_result);
-$production_remaining_big_panel = $row['remaining_big_panel'];
+        if ($quantity1 > $production_remaining_big_panel) {
+            $errors[] = "Requested quantity exceeds available stock for $product_name, $product_base, $product_color (big panel).";
+        } else {
+            // Calculate excess quantity
+            $excess_quantity1 = max(0, $quantity1 - $production_remaining_big_panel);
+            
+            // Update remaining_big_panel in sheets_production_product table
+            $production_updated_remaining_big_panel = max(0, $production_remaining_big_panel - $quantity1);
+            $production_update_remaining_big_panel_query = "UPDATE sheets_production_product SET remaining_big_panel = $production_updated_remaining_big_panel WHERE product_name = '$product_name' AND product_base = '$product_base' AND product_color = '$product_color'";
+            mysqli_query($con, $production_update_remaining_big_panel_query);
+        
+            // Update remaining_big_panel in sheets_product table
+            $updated_remaining_big_panel = $remaining_big_panel + $quantity1 - $excess_quantity1;
+            $update_remaining_big_panel_query = "UPDATE sheets_product SET remaining_big_panel = $updated_remaining_big_panel WHERE product_name = '$product_name' AND product_base = '$product_base' AND product_color = '$product_color'";
+            mysqli_query($con, $update_remaining_big_panel_query);
+        }
+        
+        // Repeat the same logic for quantity2 and quantity3
+        
+        // Similarly for quantity2
+        if ($quantity2 > $production_remaining_plain_panel) {
+            $errors[] = "Requested quantity exceeds available stock for $product_name, $product_base, $product_color (plain panel).";
+        } else {
+            $excess_quantity2 = max(0, $quantity2 - $production_remaining_plain_panel);
+            $production_updated_remaining_plain_panel = max(0, $production_remaining_plain_panel - $quantity2);
+            $production_update_remaining_plain_panel_query = "UPDATE sheets_production_product SET remaining_plain_panel = $production_updated_remaining_plain_panel WHERE product_name = '$product_name' AND product_base = '$product_base' AND product_color = '$product_color'";
+            mysqli_query($con, $production_update_remaining_plain_panel_query);
+            $updated_remaining_plain_panel = $remaining_plain_panel + $quantity2 - $excess_quantity2;
+            $update_remaining_plain_panel_query = "UPDATE sheets_product SET remaining_plain_panel = $updated_remaining_plain_panel WHERE product_name = '$product_name' AND product_base = '$product_base' AND product_color = '$product_color'";
+            mysqli_query($con, $update_remaining_plain_panel_query);
+        }
+        
+        // Similarly for quantity3
+        if ($quantity3 > $production_remaining_small_panel) {
+            $errors[] = "Requested quantity exceeds available stock for $product_name, $product_base, $product_color (small panel).";
+        } else {
+            $excess_quantity3 = max(0, $quantity3 - $production_remaining_small_panel);
+            $production_updated_remaining_small_panel = max(0, $production_remaining_small_panel - $quantity3);
+            $production_update_remaining_small_panel_query = "UPDATE sheets_production_product SET remaining_small_panel = $production_updated_remaining_small_panel WHERE product_name = '$product_name' AND product_base = '$product_base' AND product_color = '$product_color'";
+            mysqli_query($con, $production_update_remaining_small_panel_query);
+            $updated_remaining_small_panel = $remaining_small_panel + $quantity3 - $excess_quantity3;
+            $update_remaining_small_panel_query = "UPDATE sheets_product SET remaining_small_panel = $updated_remaining_small_panel WHERE product_name = '$product_name' AND product_base = '$product_base' AND product_color = '$product_color'";
+            mysqli_query($con, $update_remaining_small_panel_query);
+        }
+        
 
-if ($quantity1 > $production_remaining_big_panel) {
-    $errors[] = "Requested quantity exceeds available stock for $product_name, $product_base, $product_color.";
-} else {
-         // Update remaining_big_panel in sheets_production_product table
-         $production_updated_remaining_big_panel = $production_remaining_big_panel - (int)$quantity1;
-         $production_update_remaining_big_panel_query = "UPDATE sheets_production_product SET remaining_big_panel = $production_updated_remaining_big_panel WHERE product_name = '$product_name' AND product_base = '$product_base' AND product_color = '$product_color'";
-         mysqli_query($con, $production_update_remaining_big_panel_query);
-
-    
-         // Update remaining_big_panel in sheets_product table
-         $updated_remaining_big_panel = $remaining_big_panel + (int)$quantity1;
-         $update_remaining_big_panel_query = "UPDATE sheets_product SET remaining_big_panel = $updated_remaining_big_panel WHERE product_name = '$product_name' AND product_base = '$product_base' AND product_color = '$product_color'";
-         mysqli_query($con, $update_remaining_big_panel_query);
-}
-
- // Fetch remaining_plain_panel from sheets_product table
- $remaining_plain_panel_query = "SELECT remaining_plain_panel FROM sheets_product WHERE product_name = '$product_name' AND product_base = '$product_base' AND product_color = '$product_color'";
- $remaining_plain_panel_result = mysqli_query($con, $remaining_plain_panel_query);
- $row = mysqli_fetch_assoc($remaining_plain_panel_result);
- $remaining_plain_panel = $row['remaining_plain_panel'];
-
-// Fetch remaining_plain_panel from sheets_production_product table
-$production_remaining_plain_panel_query = "SELECT remaining_plain_panel FROM sheets_production_product WHERE product_name = '$product_name' AND product_base = '$product_base' AND product_color = '$product_color'";
-$production_remaining_plain_panel_result = mysqli_query($con, $production_remaining_plain_panel_query);
-$row = mysqli_fetch_assoc($production_remaining_plain_panel_result);
-$production_remaining_plain_panel = $row['remaining_plain_panel'];
-
-if ($quantity2 > $production_remaining_plain_panel) {
-    $errors[] = "Requested quantity exceeds available stock for $product_name, $product_base, $product_color.";
-} else {
-    // Update remaining_plain_panel in sheets_production_product table
-    $production_updated_remaining_plain_panel = $production_remaining_plain_panel - (int)$quantity2;
-    $production_update_remaining_plain_panel_query = "UPDATE sheets_production_product SET remaining_plain_panel = $production_updated_remaining_plain_panel WHERE product_name = '$product_name' AND product_base = '$product_base' AND product_color = '$product_color'";
-    mysqli_query($con, $production_update_remaining_plain_panel_query);
-
-      // Update remaining_plain_panel in sheets_product table
-      $updated_remaining_plain_panel = $remaining_plain_panel + (int)$quantity2;
-      $update_remaining_plain_panel_query = "UPDATE sheets_product SET remaining_plain_panel = $updated_remaining_plain_panel WHERE product_name = '$product_name' AND product_base = '$product_base' AND product_color = '$product_color'";
-      mysqli_query($con, $update_remaining_plain_panel_query);
-}
-
-if (empty($_POST['small_sheet_color'])) {
-
-    $remaining_small_panel_query = "SELECT remaining_small_panel FROM sheets_product WHERE product_name = '$product_name' AND product_base = '$product_base' AND product_color = '$product_color'";
-    $remaining_small_panel_result = mysqli_query($con, $remaining_small_panel_query);
-    $row = mysqli_fetch_assoc($remaining_small_panel_result);
-    $remaining_small_panel = $row['remaining_small_panel'];
-
-    // Fetch remaining_small_panel from sheets_production_product table
-    $production_remaining_small_panel_query = "SELECT remaining_small_panel FROM sheets_production_product WHERE product_name = '$product_name' AND product_base = '$product_base' AND product_color = '$product_color'";
-    $production_remaining_small_panel_result = mysqli_query($con, $production_remaining_small_panel_query);
-    $row = mysqli_fetch_assoc($production_remaining_small_panel_result);
-    $production_remaining_small_panel = $row['remaining_small_panel'];
-
-    if ($quantity3 > $production_remaining_small_panel) {
-        $errors[] = "Requested quantity exceeds available stock for $product_name, $product_base, $product_color.";
-    } else {
-        // Update remaining_small_panel in sheets_production_product table
-        $production_updated_remaining_small_panel = $production_remaining_small_panel - (int)$quantity3;
-        $production_update_remaining_small_panel_query = "UPDATE sheets_production_product SET remaining_small_panel = $production_updated_remaining_small_panel WHERE product_name = '$product_name' AND product_base = '$product_base' AND product_color = '$product_color'";
-        mysqli_query($con, $production_update_remaining_small_panel_query);
-
-          // Update remaining_small_panel in sheets_product table
-          $updated_remaining_small_panel = $remaining_small_panel + (int)$quantity3;
-          $update_remaining_small_panel_query = "UPDATE sheets_product SET remaining_small_panel = $updated_remaining_small_panel WHERE product_name = '$product_name' AND product_base = '$product_base' AND product_color = '$product_color'";
-          mysqli_query($con, $update_remaining_small_panel_query); 
-    }
-} else {
-
-    $remaining_small_panel_query = "SELECT small_sheet_balance FROM sheets_small_stock WHERE product_name = '$product_name'";
-    $remaining_small_panel_result = mysqli_query($con, $remaining_small_panel_query);
-    $row = mysqli_fetch_assoc($remaining_small_panel_result);
-    $remaining_small_panel = $row['small_sheet_balance'];
-
-    // Fetch remaining_small_panel from sheets_production_small_stock table
-    $production_remaining_small_panel_query = "SELECT small_sheet_balance FROM sheets_production_small_stock WHERE product_name = '$product_name'";
-    $production_remaining_small_panel_result = mysqli_query($con, $production_remaining_small_panel_query);
-    $row = mysqli_fetch_assoc($production_remaining_small_panel_result);
-    $production_remaining_small_panel = $row['small_sheet_balance'];
-    if ($quantity3 > $production_remaining_small_panel) {
-        $errors[] = "Requested quantity exceeds available stock for $product_name, $product_base, $product_color.";
-    } else {
-
-        // Update remaining_small_panel in sheets_production_small_stock table
-        $production_updated_remaining_small_panel = $production_remaining_small_panel - (int)$quantity3;
-        $production_update_remaining_small_panel_query = "UPDATE sheets_production_small_stock SET small_sheet_balance = $production_updated_remaining_small_panel WHERE product_name = '$product_name'";
-        mysqli_query($con, $production_update_remaining_small_panel_query);
-
-        // Update remaining_small_panel in sheets_product table
-         $updated_remaining_small_panel = $remaining_small_panel + (int)$quantity3;
-         $update_remaining_small_panel_query = "UPDATE sheets_small_stock SET small_sheet_balance = $updated_remaining_small_panel WHERE product_name = '$product_name'";
-         mysqli_query($con, $update_remaining_small_panel_query);
-    }
-}
- 
 
         // Insert data into temporary session storage
         $temp_product = array(
@@ -205,6 +154,7 @@ if (empty($_POST['small_sheet_color'])) {
         $_SESSION['temp_products'][] = $temp_product;
     }
 }
+
 
 // Check if delete button is clicked
 if (isset($_POST['delete_product'])) {
