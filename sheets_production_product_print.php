@@ -8,6 +8,7 @@ $total_big_panel = 0;
 $total_plain_panel = 0;
 $total_small_panel = 0;
 
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
