@@ -134,9 +134,6 @@ $result = mysqli_query($con, "SELECT kp.id, kp.product_name, kp.product_base, kp
                             <div class="heading-elements">
                         
                                 <ul class="icons-list">
-                                    <li><a  href="print_kits_product_list.php" >
-					     	<button  class="btn btn-success ">Print </button>  
-				        	</a>    </li>
                                     <li><a data-action="collapse"></a></li>
                                     <li><a data-action="reload"></a></li>
                                     <li><a data-action="close"></a></li>
