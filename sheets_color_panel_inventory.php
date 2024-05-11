@@ -148,8 +148,8 @@ $result = mysqli_query($con, "SELECT id, product_name, small_sheet_color, small_
                         </tbody>
                         <tfoot>
                           <tr>
-                               <th colspan="3">Total:</th>
-                              <th><?php echo $total_balance; ?></th>
+                               <th colspan="3"></th>
+                              <th> Total: <?php echo $total_balance; ?></th>
                           </tr>
                        </tfoot>
                     </table>
