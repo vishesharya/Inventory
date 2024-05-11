@@ -1,3 +1,13 @@
+<?php
+session_start();
+include_once 'include/connection.php';
+include_once 'include/admin-main.php';
+
+// Initialize totals
+$total_big_panel = 0;
+$total_plain_panel = 0;
+$total_small_panel = 0;
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
