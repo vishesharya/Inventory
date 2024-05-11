@@ -145,8 +145,8 @@ $result = mysqli_query($con, "SELECT id, product_name, product_base, product_col
                                 <td><?php echo ucfirst($data['product_base']); ?></td>
                                 <td><?php echo ucfirst($data['product_color']); ?></td>
                                 <td contenteditable="true" data-field="remaining_big_panel" data-id="<?php echo $data['id']; ?>"><?php echo $data['remaining_big_panel']; ?></td>
-                                <td contenteditable="true" data-field="remaining_small_panel" data-id="<?php echo $data['id']; ?>"><?php echo $data['remaining_small_panel']; ?></td>
                                 <td contenteditable="true" data-field="remaining_plain_panel" data-id="<?php echo $data['id']; ?>"><?php echo $data['remaining_plain_panel']; ?></td>
+                                <td contenteditable="true" data-field="remaining_small_panel" data-id="<?php echo $data['id']; ?>"><?php echo $data['remaining_small_panel']; ?></td>
                             </tr>
                             <?php 
                             $sn++; 
@@ -157,8 +157,9 @@ $result = mysqli_query($con, "SELECT id, product_name, product_base, product_col
                            <tr>
                                  <td colspan="4"></td>
                                  <td><strong>Total Big Panel: <?php echo $total_big_panel; ?></strong></td>
-                                  <td><strong>Total Small Panel: <?php echo $total_small_panel; ?></strong></td>
                                   <td><strong>Total Plain Panel: <?php echo $total_plain_panel; ?></strong></td>
+                                  
+                                  <td><strong>Total Small Panel: <?php echo $total_small_panel; ?></strong></td>
                            </tr>
                       </tfoot>
                     </table>
