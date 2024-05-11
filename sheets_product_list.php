@@ -159,6 +159,20 @@ $result = mysqli_query($con, "SELECT id, product_name, product_base, product_col
 
     
     <script>
+    
+    document.querySelectorAll('[contenteditable="true"]').forEach(function(element) {
+    element.addEventListener('keydown', function(event) {
+        if (event.key === 'Enter') {
+            event.preventDefault();
+            this.blur();
+            var id = this.getAttribute('data-id');
+            var field = this.getAttribute('data-field');
+            var value = this.innerText;
+            updateDatabase(id, field, value);
+        }
+    });
+});
+
     function updateDatabase(id, field, value) {
     var xhr = new XMLHttpRequest();
     xhr.open('POST', 'sheets_product_stock_update.php', true);
