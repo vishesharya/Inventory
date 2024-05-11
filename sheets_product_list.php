@@ -159,28 +159,41 @@ $result = mysqli_query($con, "SELECT id, product_name, product_base, product_col
     
 </body>
 
-      
 <script>
-    $(document).ready(function(){
-        // Handle 'Enter' key press event on editable table cells
-        $('td[contenteditable=true]').keypress(function(event){
-            if(event.which == 13){ // 13 is the keycode for 'Enter'
-                var id = $(this).data('id');
-                var field = $(this).data('field');
-                var value = $(this).text().trim();
-
-                // AJAX request to update the database
-                $.ajax({
-                    url: 'update_database.php',
-                    method: 'POST',
-                    data: { id: id, field: field, value: value },
-                    success: function(response){
-                        console.log(response);
-                    }
-                });
-            }
-        });
+    // Add an event listener to all editable cells
+document.querySelectorAll('[contenteditable="true"]').forEach(function(element) {
+    element.addEventListener('keydown', function(event) {
+        if (event.key === 'Enter') {
+            // Prevent the default behavior (e.g., adding a newline)
+            event.preventDefault();
+            // Trigger the update function
+            updateDatabase(this);
+        }
     });
+});
+
+// Function to update the database
+function updateDatabase(cell) {
+    // Retrieve the data attributes
+    var id = cell.getAttribute('data-id');
+    var field = cell.getAttribute('data-field');
+    var value = cell.innerText.trim();
+
+    // Send an AJAX request to update the database
+    $.ajax({
+        url: 'sheets_product_stock_update.php',
+        method: 'POST',
+        data: { id: id, field: field, value: value },
+        success: function(response){
+            console.log(response);
+        },
+        error: function(xhr, status, error) {
+            console.error(xhr.responseText);
+        }
+    });
+}
+
 </script>
+
 
 </html>
