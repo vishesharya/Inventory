@@ -15,7 +15,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $value = mysqli_real_escape_string($con, $value);
 
         // Update database
-        $query = "UPDATE sheets_product SET $field = '$value' WHERE id = $id";
+        $query = "UPDATE sheets_production_product SET $field = '$value' WHERE id = $id";
         $result = mysqli_query($con, $query);
 
         if (!$result) {
@@ -28,12 +28,11 @@ $total_big_panel = 0;
 $total_small_panel = 0;
 $total_plain_panel = 0;
 
-
-
 // Fetch data alphabetically
-$result = mysqli_query($con, "SELECT id, product_name, product_base, product_color, remaining_big_panel, remaining_small_panel, remaining_plain_panel FROM sheets_product ORDER BY product_name ASC");
+$result = mysqli_query($con, "SELECT id, product_name, product_base, product_color, remaining_big_panel, remaining_small_panel, remaining_plain_panel FROM sheets_production_product ORDER BY product_name ASC");
 
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -89,7 +88,7 @@ $result = mysqli_query($con, "SELECT id, product_name, product_base, product_col
                 <div class="page-header page-header-default">
                     <div class="page-header-content">
                         <div class="page-title">
-                            <h4><i class="icon-arrow-left52 position-left"></i> <a href="inventory.php" class="text-semibold">Sheets Product Inventory For Packaging</a></h4>
+                            <h4><i class="icon-arrow-left52 position-left"></i> <a href="inventory.php" class="text-semibold">Sheets Product Inventory For Production</a></h4>
                         </div>
 
                     </div>
@@ -109,7 +108,7 @@ $result = mysqli_query($con, "SELECT id, product_name, product_base, product_col
                         <h5 class="panel-title">Sheets Product List</h5>
                         <div class="heading-elements">
                             <ul class="icons-list">
-                                <li><a  href="sheets_product_list_print.php" >
+                                <li><a  href="sheets_production_product_print.php" >
 				     	<button  class="btn btn-success ">Print</button>  
 			        	</a>    </li>
                                 <li><a data-action="collapse"></a></li>
@@ -189,7 +188,7 @@ $result = mysqli_query($con, "SELECT id, product_name, product_base, product_col
 
     function updateDatabase(id, field, value) {
         var xhr = new XMLHttpRequest();
-        xhr.open('POST', 'sheets_product_stock_update.php', true);
+        xhr.open('POST', 'sheets_production_product_stock_update.php', true);
         xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
         xhr.onreadystatechange = function() {
             if (xhr.readyState == 4 && xhr.status == 200) {

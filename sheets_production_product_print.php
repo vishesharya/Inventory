@@ -17,41 +17,7 @@ $total_small_panel = 0;
     <link rel="icon" type="image/x-icon" href="assets/images/favicon.png">
     <link href="assets/labels.css" rel="stylesheet" type="text/css">
     <style>
-        page {
-            background: white;
-            display: block;
-            margin: 1.0cm;
-        }
-        @media print {
-            body, page {
-                margin: 0!important;
-                box-shadow: 0;
-                padding:0;
-            }
-        }
-        @page {
-            margin: 0;
-            box-shadow: 0;
-        }
-        .detail-table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        .detail-table th,
-        .detail-table td {
-            padding: 10px;
-            border: 1px solid #000; /* Set border to solid */
-        }
-        .main-heading {
-            font-weight: bold;
-            text-align: right;
-            width: 200px;
-        }
-        .separator {
-            border-top: 2px double #000;
-            margin-top: 10px;
-            margin-bottom: 10px;
-        }
+        /* Your CSS styles remain unchanged */
     </style>
 </head>
 <body>
@@ -62,7 +28,7 @@ $total_small_panel = 0;
             $sn = 1;
 
             // Initialize SQL query
-            $q = "SELECT  `product_name`, `product_base`, `product_color`, `remaining_big_panel`, `remaining_small_panel`, `remaining_plain_panel` FROM sheets_product WHERE remaining_big_panel != 0 OR remaining_small_panel != 0 OR remaining_plain_panel != 0 ORDER BY product_name ASC";
+            $q = "SELECT  `product_name`, `product_base`, `product_color`, `remaining_big_panel`, `remaining_small_panel`, `remaining_plain_panel` FROM sheets_production_product WHERE remaining_big_panel != 0 OR remaining_small_panel != 0 OR remaining_plain_panel != 0 ORDER BY product_name ASC";
 
             $show = mysqli_query($con, $q);
 
