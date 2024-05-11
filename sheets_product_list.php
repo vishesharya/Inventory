@@ -89,7 +89,7 @@ $result = mysqli_query($con, "SELECT id, product_name, product_base, product_col
                 <div class="page-header page-header-default">
                     <div class="page-header-content">
                         <div class="page-title">
-                            <h4><i class="icon-arrow-left52 position-left"></i> <a href="inventory.php" class="text-semibold">Click Here - Go Back</a></h4>
+                            <h4><i class="icon-arrow-left52 position-left"></i> <a href="inventory.php" class="text-semibold">Sheets Product Inventory For Packaging</a></h4>
                         </div>
 
                     </div>

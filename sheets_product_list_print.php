@@ -3,12 +3,17 @@ session_start();
 include_once 'include/connection.php';
 include_once 'include/admin-main.php';
 
+// Initialize totals
+$total_big_panel = 0;
+$total_plain_panel = 0;
+$total_small_panel = 0;
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Football Query Print</title>
+    <title>Sheets Inventory Data For Packaging</title>
     <link rel="icon" type="image/x-icon" href="assets/images/favicon.png">
     <link href="assets/labels.css" rel="stylesheet" type="text/css">
     <style>
@@ -16,7 +21,6 @@ include_once 'include/admin-main.php';
             background: white;
             display: block;
             margin: 1.0cm;
-           
         }
         @media print {
             body, page {
@@ -60,8 +64,6 @@ include_once 'include/admin-main.php';
             // Initialize SQL query
             $q = "SELECT  `product_name`, `product_base`, `product_color`, `remaining_big_panel`, `remaining_small_panel`, `remaining_plain_panel` FROM sheets_product WHERE remaining_big_panel != 0 OR remaining_small_panel != 0 OR remaining_plain_panel != 0 ORDER BY product_name ASC";
 
-     
-
             $show = mysqli_query($con, $q);
 
             // Check if there are rows returned
@@ -88,8 +90,22 @@ include_once 'include/admin-main.php';
                     <td>".$data['remaining_plain_panel']."</td>
                     <td>".$data['remaining_small_panel']."</td>
                     </tr>";
+
+                    // Add to totals
+                    $total_big_panel += $data['remaining_big_panel'];
+                    $total_plain_panel += $data['remaining_plain_panel'];
+                    $total_small_panel += $data['remaining_small_panel'];
+
                     $sn++; // Increment serial number
                 }
+
+                // Display totals in table footer
+                echo "<tr>
+                    <td colspan='4'></td>
+                    <td>Total: $total_big_panel</td>
+                    <td>Total: $total_plain_panel</td>
+                    <td>Total: $total_small_panel</td>
+                    </tr>";
 
                 echo "</table>";
             } else {
