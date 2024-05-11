@@ -17,47 +17,78 @@ $total_small_panel = 0;
     <link rel="icon" type="image/x-icon" href="assets/images/favicon.png">
     <link href="assets/labels.css" rel="stylesheet" type="text/css">
     <style>
-        page {
-            background: white;
-            display: block;
-            margin: 1.0cm;
-        }
-        @media print {
-            body, page {
-                margin: 0!important;
-                box-shadow: 0;
-                padding:0;
-            }
-        }
-        @page {
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
             margin: 0;
-            box-shadow: 0;
+            padding: 0;
         }
-        .detail-table {
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .table-container {
+            overflow-x: auto;
+        }
+        table {
             width: 100%;
             border-collapse: collapse;
         }
-        .detail-table th,
-        .detail-table td {
-            padding: 10px;
-            border: 1px solid #000; /* Set border to solid */
+        th, td {
+            padding: 8px 12px;
+            border-bottom: 1px solid #ddd;
+            text-align: left;
         }
-        .main-heading {
+        th {
+            background-color: #f2f2f2;
+        }
+        .total-row td {
             font-weight: bold;
-            text-align: right;
-            width: 200px;
         }
-        .separator {
-            border-top: 2px double #000;
-            margin-top: 10px;
-            margin-bottom: 10px;
+        .no-data {
+            text-align: center;
+            margin-top: 20px;
         }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        @media print {
+            .print_btn {
+                display: none !important;
+            }
+        }
+        .heading{
+            align-items: center;
+            text-align: center;
+        }
+     
+       
+        
     </style>
 </head>
 <body>
-    <center>
-        <page size="A4">
+    <div class="container">
+                <h2 class="heading">SHEETS INVENTORY (PACKAGING)</h2>
+        <div class="table-container">
             <?php 
+            // Initialize totals
+            $total_big_panel = 0;
+            $total_plain_panel = 0;
+            $total_small_panel = 0;
+
             // Initialize serial number
             $sn = 1;
 
@@ -68,7 +99,7 @@ $total_small_panel = 0;
 
             // Check if there are rows returned
             if(mysqli_num_rows($show) > 0) {
-                echo "<table class='detail-table'> <!-- Add class for the table -->
+                echo "<table>
                     <tr>
                     <th>Sn.</th>
                     <th>Product Name</th>
@@ -100,7 +131,7 @@ $total_small_panel = 0;
                 }
 
                 // Display totals in table footer
-                echo "<tr>
+                echo "<tr class='total-row'>
                     <td colspan='4'></td>
                     <td>Total: $total_big_panel</td>
                     <td>Total: $total_plain_panel</td>
@@ -109,25 +140,12 @@ $total_small_panel = 0;
 
                 echo "</table>";
             } else {
-                // If no data found, display only the table headers
-                echo "<table class='detail-table'> <!-- Add class for the table -->
-                    <tr>
-                    <th>Sn.</th>
-                    <th>Product Name</th>
-                    <th>Product Base</th>
-                    <th>Product Color</th>
-                    <th>Big Panel Stock</th>
-                    <th>Plain Panel Stock</th>
-                    <th>Small Panel Stock</th>
-                    </tr>";
-                echo "</table>"; 
-                echo "<p>No data found</p>";
+                // If no data found, display message
+                echo "<p class='no-data'>No data found</p>";
             }
             ?>
-        </page>
-    </center>
-    <script type="text/javascript">
-        window.print();
-    </script>    
+        </div>
+        <button class="print_btn" onclick="window.print()">Print</button>
+    </div>
 </body>
 </html>

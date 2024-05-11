@@ -13,7 +13,7 @@ $total_small_panel = 0;
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Sheets Inventory Data For Packaging</title>
+    <title>Sheets Inventory Data For Production</title>
     <link rel="icon" type="image/x-icon" href="assets/images/favicon.png">
     <link href="assets/labels.css" rel="stylesheet" type="text/css">
     <style>
