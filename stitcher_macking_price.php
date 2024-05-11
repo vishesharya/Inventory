@@ -158,7 +158,7 @@ if (isset($_POST['view_entries'])) {
             </div>
         </div>
 
-        <?php if (isset($_POST['view_entries']) && mysqli_num_rows($result) > 0): ?>
+        <?php if (isset($_POST['view_entries']) && !empty($stitcher_name) && !empty($start_date) && !empty($end_date) && $result !== null && mysqli_num_rows($result) > 0): ?>
             <h3 class="text-center mb-4">Stitcher: <?php echo $stitcher_name; ?></h3>
             <table class="table datatable-multi-sorting">
                 <thead>
