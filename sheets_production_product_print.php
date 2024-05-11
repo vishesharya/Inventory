@@ -65,6 +65,12 @@ $total_small_panel = 0;
         button:hover {
             background-color: #45a049;
         }
+        @media print {
+            .print_btn {
+                display: none !important;
+            }
+        }
+        
     </style>
 </head>
 <body>
@@ -133,7 +139,7 @@ $total_small_panel = 0;
             }
             ?>
         </div>
-        <button onclick="window.print()">Print</button>
+        <button class="print_btn" onclick="window.print()">Print</button>
     </div>
 </body>
 </html>
