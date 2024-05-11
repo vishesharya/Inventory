@@ -1,4 +1,3 @@
-
 <?php
 session_start();
 include_once 'include/connection.php';
@@ -30,7 +29,7 @@ $result = mysqli_query($con, "SELECT id, product_name, product_base, product_col
 
 ?>
 <!DOCTYPE html>
-<html lang="en"> 
+<html lang="en">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -64,6 +63,16 @@ $result = mysqli_query($con, "SELECT id, product_name, product_base, product_col
     <!-- /theme JS files -->
 
     <style>
+             /* Hide the column with per_pice_price data */
+        td[data-field="per_pice_price"] {
+         display: none;
+         }
+
+        /* Hide the column with 2nd_price data */
+       td[data-field="2nd_price"] {
+        display: none;
+        }
+
     </style>
 
 </head>
@@ -150,50 +159,40 @@ $result = mysqli_query($con, "SELECT id, product_name, product_base, product_col
                         </tbody>
                     </table>
                 </div>
-               
+                <!-- /Table of football contact query -->
             </div>
-           
+            <!-- /main content -->
         </div>
-      
+        <!-- /page content -->
     </div>
-    
+    <!-- /page container -->
+
+    <!-- Delete/Edit validation -->
+    <script>
+    document.querySelectorAll('[contenteditable="true"]').forEach(function(element) {
+        element.addEventListener('keydown', function(event) {
+            if (event.key === 'Enter') {
+                event.preventDefault();
+                this.blur();
+                var id = this.getAttribute('data-id');
+                var field = this.getAttribute('data-field');
+                var value = this.innerText;
+                updateDatabase(id, field, value);
+            }
+        });
+    });
+
+    function updateDatabase(id, field, value) {
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', 'sheets_product_stock_update.php', true);
+        xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                console.log(xhr.responseText);
+            }
+        };
+        xhr.send('id=' + id + '&field=' + field + '&value=' + value);
+    }
+    </script>
 </body>
-
-<script>
-    // Add an event listener to all editable cells
-document.querySelectorAll('[contenteditable="true"]').forEach(function(element) {
-    element.addEventListener('keydown', function(event) {
-        if (event.key === 'Enter') {
-            // Prevent the default behavior (e.g., adding a newline)
-            event.preventDefault();
-            // Trigger the update function
-            updateDatabase(this);
-        }
-    });
-});
-
-// Function to update the database
-function updateDatabase(cell) {
-    // Retrieve the data attributes
-    var id = cell.getAttribute('data-id');
-    var field = cell.getAttribute('data-field');
-    var value = cell.innerText.trim();
-
-    // Send an AJAX request to update the database
-    $.ajax({
-        url: 'sheets_product_stock_update.php',
-        method: 'POST',
-        data: { id: id, field: field, value: value },
-        success: function(response){
-            console.log(response);
-        },
-        error: function(xhr, status, error) {
-            console.error(xhr.responseText);
-        }
-    });
-}
-
-</script>
-
-
 </html>

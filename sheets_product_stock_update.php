@@ -1,6 +1,7 @@
 <?php
 session_start();
 include_once 'include/connection.php';
+include_once 'include/admin-main.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (isset($_POST['id']) && isset($_POST['field']) && isset($_POST['value'])) {
@@ -17,15 +18,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $query = "UPDATE sheets_product SET $field = '$value' WHERE id = $id";
         $result = mysqli_query($con, $query);
 
-        if ($result) {
-            echo "Record updated successfully.";
-        } else {
+        if (!$result) {
             echo "Error updating record: " . mysqli_error($con);
+        } else {
+            echo "Record updated successfully";
         }
     } else {
-        echo "Missing parameters.";
+        echo "Invalid request";
     }
 } else {
-    echo "Invalid request method.";
+    echo "Invalid request method";
 }
 ?>
