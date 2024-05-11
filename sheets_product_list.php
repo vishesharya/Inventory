@@ -24,6 +24,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 
+$total_big_panel = 0;
+$total_small_panel = 0;
+$total_plain_panel = 0;
+
+
+
 // Fetch data alphabetically
 $result = mysqli_query($con, "SELECT id, product_name, product_base, product_color, remaining_big_panel, remaining_small_panel, remaining_plain_panel FROM sheets_product ORDER BY product_name ASC");
 
@@ -60,20 +66,7 @@ $result = mysqli_query($con, "SELECT id, product_name, product_base, product_col
     <script type="text/javascript" src="assets/js/pages/datatables_sorting.js"></script>
 
 
-    <!-- /theme JS files -->
-
-    <style>
-             /* Hide the column with per_pice_price data */
-        td[data-field="per_pice_price"] {
-         display: none;
-         }
-
-        /* Hide the column with 2nd_price data */
-       td[data-field="2nd_price"] {
-        display: none;
-        }
-
-    </style>
+    
 
 </head>
 
@@ -117,7 +110,7 @@ $result = mysqli_query($con, "SELECT id, product_name, product_base, product_col
                         <div class="heading-elements">
                             <ul class="icons-list">
                                 <li><a  href="sheets_product_list_print.php" >
-				     	<button  class="btn btn-success ">Print </button>  
+				     	<button  class="btn btn-success ">Print</button>  
 			        	</a>    </li>
                                 <li><a data-action="collapse"></a></li>
                                 <li><a data-action="reload"></a></li>
@@ -142,6 +135,9 @@ $result = mysqli_query($con, "SELECT id, product_name, product_base, product_col
                             <?php 
                             $sn=1;
                             while($data=mysqli_fetch_array($result)) {
+                                $total_big_panel += $data['remaining_big_panel'];
+                                $total_small_panel += $data['remaining_small_panel'];
+                                $total_plain_panel += $data['remaining_plain_panel'];
                             ?>
                             <tr>
                                 <td><?php echo $sn; ?>.</td>
@@ -157,6 +153,14 @@ $result = mysqli_query($con, "SELECT id, product_name, product_base, product_col
                             }  
                             ?>
                         </tbody>
+                        <tfoot>
+                           <tr>
+                                 <td colspan="4"></td>
+                                 <td><strong>Total Big Panel: <?php echo $total_big_panel; ?></strong></td>
+                                  <td><strong>Total Small Panel: <?php echo $total_small_panel; ?></strong></td>
+                                  <td><strong>Total Plain Panel: <?php echo $total_plain_panel; ?></strong></td>
+                           </tr>
+                      </tfoot>
                     </table>
                 </div>
                 <!-- /Table of football contact query -->
