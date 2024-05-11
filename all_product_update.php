@@ -27,19 +27,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $query_sheets_product = "UPDATE sheets_product SET $field = '$value' WHERE id = $id";
         $result_sheets_product = mysqli_query($con, $query_sheets_product);
 
-        if (!$result_kits_product || !$result_products || !$result_sheets_product) {
+        // Update database for sheets_production_product table
+        $query_sheets_production_product = "UPDATE sheets_production_product SET $field = '$value' WHERE id = $id";
+        $result_sheets_production_product = mysqli_query($con, $query_sheets_production_product);
+
+        if (!$result_kits_product || !$result_products || !$result_sheets_product || !$result_sheets_production_product) {
             echo "Error updating record: " . mysqli_error($con);
         }
     }
 }
 
-// Fetch common fields from kits_product and products tables
+// Fetch common fields from all tables
 $result = mysqli_query($con, "SELECT kp.id, kp.product_name, kp.product_base, kp.product_color, 
                                     p.product_name AS product_name_product, p.product_base AS product_base_product, p.product_color AS product_color_product,
-                                    sp.product_name AS product_name_sheets, sp.product_base AS product_base_sheets, sp.product_color AS product_color_sheets
+                                    sp.product_name AS product_name_sheets, sp.product_base AS product_base_sheets, sp.product_color AS product_color_sheets,
+                                    spp.product_name AS product_name_sheets_production, spp.product_base AS product_base_sheets_production, spp.product_color AS product_color_sheets_production
                              FROM kits_product kp 
                              JOIN products p ON kp.id = p.id 
                              JOIN sheets_product sp ON kp.id = sp.id
+                             JOIN sheets_production_product spp ON kp.id = spp.id
                              ORDER BY kp.product_name ASC");
 
 ?>
@@ -159,7 +165,7 @@ $result = mysqli_query($con, "SELECT kp.id, kp.product_name, kp.product_base, kp
                                      <td><?php echo $sn; ?>.</td>
                                      <td contenteditable="true" data-field="product_name" data-id="<?php echo $data['id']; ?>"><?php echo $data['product_name']; ?></td>
                                      <td contenteditable="true" data-field="product_base" data-id="<?php echo $data['id']; ?>"><?php echo $data['product_base']; ?></td>
-                        <td contenteditable="true" data-field="product_color" data-id="<?php echo $data['id']; ?>"><?php echo $data['product_color']; ?></td>
+                                     <td contenteditable="true" data-field="product_color" data-id="<?php echo $data['id']; ?>"><?php echo $data['product_color']; ?></td>
                                     <td><button class="btn btn-danger delete-row" data-id="<?php echo $data['id']; ?>">Delete</button></td>
 
                                

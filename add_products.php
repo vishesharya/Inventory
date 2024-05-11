@@ -19,6 +19,8 @@ if (isset($_POST['add_product'])) {
     $rowCount = mysqli_num_rows($checkQuery);
     $checkQuery = mysqli_query($con, "SELECT * FROM sheets_product WHERE product_name = '$product_name' AND product_base = '$product_base' AND product_color = '$product_color'");
     $rowCount = mysqli_num_rows($checkQuery);
+    $checkQuery = mysqli_query($con, "SELECT * FROM sheets_production_product WHERE product_name = '$product_name' AND product_base = '$product_base' AND product_color = '$product_color'");
+    $rowCount = mysqli_num_rows($checkQuery);
 
     if ($rowCount > 0) {
         $addProductMsg = "<p style='color: red;font-size: medium;text-align: center;'>Product already exists</p>";
@@ -31,9 +33,13 @@ if (isset($_POST['add_product'])) {
         $insertKitsProductQuery = "INSERT INTO kits_product (product_name, product_base, product_color) VALUES ('$product_name', '$product_base', '$product_color')";
         mysqli_query($con, $insertKitsProductQuery);
         
-        // Insert into kits_product table
+        // Insert into sheets table
         $insertSheetsProductQuery = "INSERT INTO sheets_product (product_name, product_base, product_color) VALUES ('$product_name', '$product_base', '$product_color')";
         mysqli_query($con, $insertSheetsProductQuery);
+
+        // Insert into sheets production table
+        $insertSheetsProductionProductQuery = "INSERT INTO sheets_production_product (product_name, product_base, product_color) VALUES ('$product_name', '$product_base', '$product_color')";
+        mysqli_query($con, $insertSheetsProductionProductQuery);
 
         // Check if insertion was successful
         if (mysqli_affected_rows($con) > 0) {

@@ -18,12 +18,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $query_products = "DELETE FROM products WHERE id = $id";
         $result_products = mysqli_query($con, $query_products);
 
-        // Delete from products table
-        $query_products = "DELETE FROM sheets_product WHERE id = $id";
-        $result_products = mysqli_query($con, $query_products);
+        // Delete from sheets_product table
+        $query_sheets_product = "DELETE FROM sheets_product WHERE id = $id";
+        $result_sheets_product = mysqli_query($con, $query_sheets_product);
 
+        // Delete from sheets_production_product table
+        $query_sheets_production_product = "DELETE FROM sheets_production_product WHERE id = $id";
+        $result_sheets_production_product = mysqli_query($con, $query_sheets_production_product);
 
-        if ($result_kits_product && $result_products) {
+        if ($result_kits_product && $result_products && $result_sheets_product && $result_sheets_production_product) {
             echo "Row deleted successfully.";
         } else {
             echo "Error deleting row: " . mysqli_error($con);

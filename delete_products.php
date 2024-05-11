@@ -32,16 +32,20 @@ if (isset($_POST['delete_product'])) {
     $product_color = $_POST['product_color'];
 
     // Delete from products table
-    $deleteKitsProductQuery = "DELETE FROM products WHERE product_name = '$product_name' AND product_base = '$product_base' AND product_color = '$product_color'";
-    mysqli_query($con, $deleteKitsProductQuery);
+    $deleteProductsQuery = "DELETE FROM products WHERE product_name = '$product_name' AND product_base = '$product_base' AND product_color = '$product_color'";
+    mysqli_query($con, $deleteProductsQuery);
 
     // Delete from kits_product table
     $deleteKitsProductQuery = "DELETE FROM kits_product WHERE product_name = '$product_name' AND product_base = '$product_base' AND product_color = '$product_color'";
     mysqli_query($con, $deleteKitsProductQuery);
 
-     // Delete from kits_product table
-     $deleteSheetsProductQuery = "DELETE FROM sheets_product WHERE product_name = '$product_name' AND product_base = '$product_base' AND product_color = '$product_color'";
-     mysqli_query($con, $deleteSheetsProductQuery);
+    // Delete from sheets_product table
+    $deleteSheetsProductQuery = "DELETE FROM sheets_product WHERE product_name = '$product_name' AND product_base = '$product_base' AND product_color = '$product_color'";
+    mysqli_query($con, $deleteSheetsProductQuery);
+
+    // Delete from sheets_production_product table
+    $deleteSheetsProductionProductQuery = "DELETE FROM sheets_production_product WHERE product_name = '$product_name' AND product_base = '$product_base' AND product_color = '$product_color'";
+    mysqli_query($con, $deleteSheetsProductionProductQuery);
 
     // Check if deletion was successful
     if (mysqli_affected_rows($con) > 0) {
@@ -151,8 +155,8 @@ if (isset($_POST['delete_product'])) {
         </div>
     </div>
 </body>
+
 <script>
-    // Function to update product colors based on selected product name and base
     function updateProductColors() {
         var productName = document.getElementById('product_name').value;
         var productBase = document.getElementById('product_base').value;
