@@ -158,26 +158,29 @@ $result = mysqli_query($con, "SELECT id, product_name, product_base, product_col
     </div>
     
 </body>
-<script>
-        $(document).ready(function(){
-            // Handle 'Enter' key press event on editable table cells
-            $('td[contenteditable=true]').keypress(function(event){
-                if(event.which == 13){ // 13 is the keycode for 'Enter'
-                    var id = $(this).data('id');
-                    var field = $(this).data('field');
-                    var value = $(this).text().trim();
 
-                    // AJAX request to update the database
-                    $.ajax({
-                        url: 'sheets_product_stock_update.php',
-                        method: 'POST',
-                        data: { id: id, field: field, value: value },
-                        success: function(response){
-                            console.log(response);
-                        }
-                    });
-                }
-            });
+      
+<script>
+    $(document).ready(function(){
+        // Handle 'Enter' key press event on editable table cells
+        $('td[contenteditable=true]').keypress(function(event){
+            if(event.which == 13){ // 13 is the keycode for 'Enter'
+                var id = $(this).data('id');
+                var field = $(this).data('field');
+                var value = $(this).text().trim();
+
+                // AJAX request to update the database
+                $.ajax({
+                    url: 'update_database.php',
+                    method: 'POST',
+                    data: { id: id, field: field, value: value },
+                    success: function(response){
+                        console.log(response);
+                    }
+                });
+            }
         });
-    </script>
+    });
+</script>
+
 </html>
