@@ -70,6 +70,10 @@ $total_small_panel = 0;
                 display: none !important;
             }
         }
+        .heading{
+            align-items: center;
+            text-align: center;
+        }
      
        
         
