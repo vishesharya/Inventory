@@ -145,8 +145,8 @@ if (empty($_POST['small_sheet_color'])) {
     // Fetch remaining_small_panel from sheets_production_product table
     $production_remaining_small_panel_query = "SELECT remaining_small_panel FROM sheets_production_product WHERE product_name = '$product_name' AND product_base = '$product_base' AND product_color = '$product_color'";
     $production_remaining_small_panel_result = mysqli_query($con, $production_remaining_small_panel_query);
-    $row = mysqli_fetch_assoc($remaining_small_panel_result);
-    $remaining_small_panelproduction_ = $row['remaining_small_panel'];
+    $row = mysqli_fetch_assoc($production_remaining_small_panel_result);
+    $production_remaining_small_panel = $row['remaining_small_panel'];
 
     if ($quantity3 > $production_remaining_small_panel) {
         $errors[] = "Requested quantity exceeds available stock for $product_name, $product_base, $product_color.";
