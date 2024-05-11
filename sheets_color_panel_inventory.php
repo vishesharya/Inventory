@@ -85,7 +85,7 @@ $result = mysqli_query($con, "SELECT id, product_name, small_sheet_color, small_
                 <div class="page-header page-header-default">
                     <div class="page-header-content">
                         <div class="page-title">
-                            <h4><i class="icon-arrow-left52 position-left"></i> <a href="inventory.php" class="text-semibold">Click Here - Go Back</a></h4>
+                            <h4><i class="icon-arrow-left52 position-left"></i> <a href="inventory.php" class="text-semibold">Small Color Panel Inventory (Packaging)</a></h4>
                         </div>
 
                     </div>
@@ -93,7 +93,7 @@ $result = mysqli_query($con, "SELECT id, product_name, small_sheet_color, small_
                     <div class="breadcrumb-line">
                         <ul class="breadcrumb">
                             <li><a href="dashboard.php"><i class="icon-home2 position-left"></i> Home</a></li>
-                            <li class="active"><a href="inventory.phpp" class="btn bg-indigo-300"  >Kits Inventory Data</a></li>
+                            <li class="active"><a href="inventory.phpp" class="btn bg-indigo-300"  >Small Color Panel Inventory</a></li>
                         </ul>
                     </div>
                 </div>
@@ -105,7 +105,7 @@ $result = mysqli_query($con, "SELECT id, product_name, small_sheet_color, small_
                         <h5 class="panel-title">Kits Product List</h5>
                         <div class="heading-elements">
                             <ul class="icons-list">
-                                <li><a  href="sheets_product_list_print.php" >
+                                <li><a  href="./sheets_color_panel_print.php" >
 				     	<button  class="btn btn-success ">Print </button>  
 			        	</a>    </li>
                                 <li><a data-action="collapse"></a></li>
