@@ -20,7 +20,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         if (!$result) {
             echo "Error updating record: " . mysqli_error($con);
-        }
+        } 
     }
 }
 

@@ -8,7 +8,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $id = $_POST['id'];
         $field = $_POST['field'];
         $value = $_POST['value'];
-
+ 
         // Sanitize input to prevent SQL injection
         $id = mysqli_real_escape_string($con, $id);
         $field = mysqli_real_escape_string($con, $field);

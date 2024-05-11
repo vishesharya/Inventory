@@ -9,7 +9,7 @@ if (isset($_POST['add_color'])) {
     $product_name = $_POST['product_name'];
     $small_sheet_color = isset($_POST['small_sheet_color']) ? $_POST['small_sheet_color'] : "";
 
-    // Check if the color already exists
+    // Check if the color already exists in sheets_small_stock
     $checkColorQuery = "SELECT * FROM sheets_small_stock WHERE product_name = '$product_name' AND small_sheet_color = '$small_sheet_color'";
     $result = mysqli_query($con, $checkColorQuery);
 
@@ -20,8 +20,15 @@ if (isset($_POST['add_color'])) {
         // Insert into sheets_small_stock table
         $insertPanelColorQuery = "INSERT INTO sheets_small_stock (product_name, small_sheet_color) VALUES ('$product_name', '$small_sheet_color')";
         if(mysqli_query($con, $insertPanelColorQuery)) {
-            // Color added successfully
-            $addColorMsg = "Color added successfully.";
+            // Insert into sheets_production_small_stock table
+            $insertPanelColorQueryProduction = "INSERT INTO sheets_production_small_stock (product_name, small_sheet_color) VALUES ('$product_name', '$small_sheet_color')";
+            if(mysqli_query($con, $insertPanelColorQueryProduction)) {
+                // Color added successfully
+                $addColorMsg = "Color added successfully.";
+            } else {
+                // Error adding color in sheets_production_small_stock
+                $addColorMsg = "Error: Unable to add color in production stock.";
+            }
         } else {
             // Error adding color
             $addColorMsg = "Error: Unable to add color.";
@@ -38,8 +45,15 @@ if (isset($_POST['delete_color'])) {
     // Delete color from sheets_small_stock table
     $deleteColorQuery = "DELETE FROM sheets_small_stock WHERE product_name = '$product_name' AND small_sheet_color = '$small_sheet_color'";
     if(mysqli_query($con, $deleteColorQuery)) {
-        // Color deleted successfully
-        $deleteColorMsg = "Color deleted successfully.";
+        // Delete color from sheets_production_small_stock table
+        $deleteColorQueryProduction = "DELETE FROM sheets_production_small_stock WHERE product_name = '$product_name' AND small_sheet_color = '$small_sheet_color'";
+        if(mysqli_query($con, $deleteColorQueryProduction)) {
+            // Color deleted successfully
+            $deleteColorMsg = "Color deleted successfully.";
+        } else {
+            // Error deleting color in sheets_production_small_stock
+            $deleteColorMsg = "Error: Unable to delete color from production stock.";
+        }
     } else {
         // Error deleting color
         $deleteColorMsg = "Error: Unable to delete color.";
