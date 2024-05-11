@@ -24,7 +24,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             echo "Record updated successfully";
         }
     } else {
-        echo "Invalid request";
+        echo "Invalid request"; 
     }
 } else {
     echo "Invalid request method";

@@ -29,7 +29,7 @@ $result = mysqli_query($con, "SELECT id, product_name, product_base, product_col
 
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en"> 
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -63,16 +63,6 @@ $result = mysqli_query($con, "SELECT id, product_name, product_base, product_col
     <!-- /theme JS files -->
 
     <style>
-             /* Hide the column with per_pice_price data */
-        td[data-field="per_pice_price"] {
-         display: none;
-         }
-
-        /* Hide the column with 2nd_price data */
-       td[data-field="2nd_price"] {
-        display: none;
-        }
-
     </style>
 
 </head>
@@ -104,7 +94,7 @@ $result = mysqli_query($con, "SELECT id, product_name, product_base, product_col
                     <div class="breadcrumb-line">
                         <ul class="breadcrumb">
                             <li><a href="dashboard.php"><i class="icon-home2 position-left"></i> Home</a></li>
-                            <li class="active"><a href="inventory.phpp" class="btn bg-indigo-300"  >Kits Inventory Data</a></li>
+                            <li class="active"><a href="inventory.phpp" class="btn bg-indigo-300"  >Sheets Inventory Data</a></li>
                         </ul>
                     </div>
                 </div>
@@ -113,7 +103,7 @@ $result = mysqli_query($con, "SELECT id, product_name, product_base, product_col
                 <!-- Table of football contact query -->
                 <div class="panel panel-flat" style="overflow: auto;">
                     <div class="panel-heading">
-                        <h5 class="panel-title">Kits Product List</h5>
+                        <h5 class="panel-title">Sheets Product List</h5>
                         <div class="heading-elements">
                             <ul class="icons-list">
                                 <li><a  href="sheets_product_list_print.php" >
@@ -159,40 +149,28 @@ $result = mysqli_query($con, "SELECT id, product_name, product_base, product_col
                         </tbody>
                     </table>
                 </div>
-                <!-- /Table of football contact query -->
+               
             </div>
-            <!-- /main content -->
+           
         </div>
-        <!-- /page content -->
+      
     </div>
-    <!-- /page container -->
+    
 
-    <!-- Delete/Edit validation -->
+    
     <script>
-    document.querySelectorAll('[contenteditable="true"]').forEach(function(element) {
-        element.addEventListener('keydown', function(event) {
-            if (event.key === 'Enter') {
-                event.preventDefault();
-                this.blur();
-                var id = this.getAttribute('data-id');
-                var field = this.getAttribute('data-field');
-                var value = this.innerText;
-                updateDatabase(id, field, value);
-            }
-        });
-    });
-
     function updateDatabase(id, field, value) {
-        var xhr = new XMLHttpRequest();
-        xhr.open('POST', 'sheets_product_stock_update.php', true);
-        xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-        xhr.onreadystatechange = function() {
-            if (xhr.readyState == 4 && xhr.status == 200) {
-                console.log(xhr.responseText);
-            }
-        };
-        xhr.send('id=' + id + '&field=' + field + '&value=' + value);
-    }
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', 'sheets_product_stock_update.php', true);
+    xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState == 4 && xhr.status == 200) {
+            console.log(xhr.responseText);
+        }
+    };
+    xhr.send('id=' + id + '&field=' + field + '&value=' + value);
+}
+
     </script>
 </body>
 </html>
