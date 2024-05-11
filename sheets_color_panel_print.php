@@ -120,7 +120,7 @@ $total_small_panel = 0;
 
                 // Display totals in table footer
                 echo "<tr class='total-row'>
-                    <td colspan='2'></td>
+                    <td colspan='3'></td>
                  
                     <td>Total: $total_small_panel</td>
                     </tr>";
