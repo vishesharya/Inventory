@@ -1,6 +1,7 @@
 <?php
 session_start();
-include_once 'include/connection.php';
+include './include/connection.php';
+include_once 'include/admin-main.php';
 
 $addProductMsg = '';
 $deleteProductMsg = '';
@@ -12,26 +13,31 @@ if (isset($_POST['add_product'])) {
     $product_color = $_POST['product_color'];
 
     // Check if the product already exists
-    $checkQuery = "SELECT * FROM products WHERE product_name = '$product_name' AND product_base = '$product_base' AND product_color = '$product_color'";
-    $result = mysqli_query($con, $checkQuery);
-    $rowCount = mysqli_num_rows($result);
+    $checkQuery = mysqli_query($con, "SELECT * FROM kits_product WHERE product_name = '$product_name' AND product_base = '$product_base' AND product_color = '$product_color'");
+    $rowCount = mysqli_num_rows($checkQuery);
+    $checkQuery = mysqli_query($con, "SELECT * FROM products WHERE product_name = '$product_name' AND product_base = '$product_base' AND product_color = '$product_color'");
+    $rowCount = mysqli_num_rows($checkQuery);
+    $checkQuery = mysqli_query($con, "SELECT * FROM sheets_product WHERE product_name = '$product_name' AND product_base = '$product_base' AND product_color = '$product_color'");
+    $rowCount = mysqli_num_rows($checkQuery);
+    $checkQuery = mysqli_query($con, "SELECT * FROM sheets_production_product WHERE product_name = '$product_name' AND product_base = '$product_base' AND product_color = '$product_color'");
+    $rowCount = mysqli_num_rows($checkQuery);
 
     if ($rowCount > 0) {
         $addProductMsg = "<p style='color: red;font-size: medium;text-align: center;'>Product already exists</p>";
     } else {
         // Insert into products table
-        $insertProductsQuery = "INSERT INTO products (product_name, product_base, product_color) VALUES ('$product_name', '$product_base', '$product_color')";
-        mysqli_query($con, $insertProductsQuery);
+        $insertKitsProductQuery = "INSERT INTO products (product_name, product_base, product_color) VALUES ('$product_name', '$product_base', '$product_color')";
+        mysqli_query($con, $insertKitsProductQuery);
 
         // Insert into kits_product table
         $insertKitsProductQuery = "INSERT INTO kits_product (product_name, product_base, product_color) VALUES ('$product_name', '$product_base', '$product_color')";
         mysqli_query($con, $insertKitsProductQuery);
-
-        // Insert into sheets_product table
+        
+        // Insert into sheets table
         $insertSheetsProductQuery = "INSERT INTO sheets_product (product_name, product_base, product_color) VALUES ('$product_name', '$product_base', '$product_color')";
         mysqli_query($con, $insertSheetsProductQuery);
 
-        // Insert into sheets_production_product table
+        // Insert into sheets production table
         $insertProductionProductQuery = "INSERT INTO sheets_production_product (product_name, product_base, product_color) VALUES ('$product_name', '$product_base', '$product_color')";
         mysqli_query($con, $insertProductionProductQuery);
 
@@ -43,13 +49,18 @@ if (isset($_POST['add_product'])) {
         }
     }
 }
+
+
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <!-- Head content remains unchanged -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Management</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 
 <body>
@@ -82,6 +93,7 @@ if (isset($_POST['add_product'])) {
             </div>
         </div>
     </div>
+
 </body>
 
 </html>
