@@ -214,15 +214,15 @@ if (isset($_POST['delete_product'])) {
    
          
                // Calculate excess quantity
-               $excess_$deleted_quantity1 = max(0, $$deleted_quantity1 + $production_remaining_big_panel);
+               $excess_deleted_quantity1 = max(0, $deleted_quantity1 + $production_remaining_big_panel);
                
                // Update remaining_big_panel in sheets_production_product table
-               $production_updated_remaining_big_panel = max(0, $production_remaining_big_panel + $$deleted_quantity1);
+               $production_updated_remaining_big_panel = max(0, $production_remaining_big_panel + $deleted_quantity1);
                $production_update_remaining_big_panel_query = "UPDATE sheets_production_product SET remaining_big_panel = $production_updated_remaining_big_panel WHERE product_name = '$product_name' AND product_base = '$product_base' AND product_color = '$product_color'";
                mysqli_query($con, $production_update_remaining_big_panel_query);
    
                // Update remaining_big_panel in sheets_product table
-               $updated_remaining_big_panel = $remaining_big_panel - $$deleted_quantity1 + $excess_$deleted_quantity1;
+               $updated_remaining_big_panel = $remaining_big_panel - $deleted_quantity1 + $excess_deleted_quantity1;
                $update_remaining_big_panel_query = "UPDATE sheets_product SET remaining_big_panel = $updated_remaining_big_panel WHERE product_name = '$product_name' AND product_base = '$product_base' AND product_color = '$product_color'";
                mysqli_query($con, $update_remaining_big_panel_query);
            
