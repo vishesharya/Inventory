@@ -109,9 +109,6 @@ $total_small_panel = 0;
                     <td>".$data['product_name']."</td>
                     <td>".$data['small_sheet_color']."</td>
                     <td>".$data['small_sheet_balance']."</td>
-                    <td>".$data['remaining_big_panel']."</td>
-                    <td>".$data['remaining_plain_panel']."</td>
-                    <td>".$data['remaining_small_panel']."</td>
                     </tr>";
 
                     // Add to totals
