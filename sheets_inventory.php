@@ -141,11 +141,17 @@ include_once 'include/admin-main.php';
                                 <a href="sheets_color_panel_inventory.php" style='color:white'>
                                     <div class="col-lg-4">
                                         <div class="panel bg-teal-400">
-                                            <p style="margin: 10px; font-size: large;">Color Pannel Inventory Status</p>
+                                            <p style="margin: 10px; font-size: large;">Color Pannel (Packaging)</p>
                                         </div>
                                     </div>
                                 </a>
-                                
+                                <a href="./sheets_color_panel_production_inventory.php" style='color:white'>
+                                    <div class="col-lg-4">
+                                        <div class="panel bg-teal-400">
+                                            <p style="margin: 10px; font-size: large;">Color Pannel (Production)</p>
+                                        </div>
+                                    </div>
+                                </a>
                               
                                 <a href="sheets_panel_color.php" style='color:white'>
                                     <div class="col-lg-4">

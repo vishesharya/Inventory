@@ -25,7 +25,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }
 
 // Fetch data alphabetically
-$result = mysqli_query($con, "SELECT id, product_name, small_sheet_color, small_sheet_balance FROM sheets_small_stock ORDER BY product_name ASC");
+$result = mysqli_query($con, "SELECT id, product_name, small_sheet_color, small_sheet_balance FROM sheets_production_small_stock ORDER BY product_name ASC");
 
 ?>
 <!DOCTYPE html>
@@ -85,7 +85,7 @@ $result = mysqli_query($con, "SELECT id, product_name, small_sheet_color, small_
                 <div class="page-header page-header-default">
                     <div class="page-header-content">
                         <div class="page-title">
-                            <h4><i class="icon-arrow-left52 position-left"></i> <a href="inventory.php" class="text-semibold">Small Color Panel Inventory (Packaging)</a></h4>
+                            <h4><i class="icon-arrow-left52 position-left"></i> <a href="inventory.php" class="text-semibold">Small Color Panel Inventory (Production)</a></h4>
                         </div>
 
                     </div>
@@ -146,7 +146,7 @@ $result = mysqli_query($con, "SELECT id, product_name, small_sheet_color, small_
                             }  
                             ?>
                         </tbody>
-                        <tfoot> 
+                        <tfoot>
                           <tr>
                                <th colspan="3"></th>
                               <th> Total: <?php echo $total_balance; ?></th>
@@ -179,7 +179,7 @@ $result = mysqli_query($con, "SELECT id, product_name, small_sheet_color, small_
 
     function updateDatabase(id, field, value) {
         var xhr = new XMLHttpRequest();
-        xhr.open('POST', 'sheet_color_panel_stock_update.php', true);
+        xhr.open('POST', 'sheets_production_color_panel_stock_update.php', true);
         xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
         xhr.onreadystatechange = function() {
             if (xhr.readyState == 4 && xhr.status == 200) {
