@@ -129,7 +129,9 @@ $result = mysqli_query($con, "SELECT id, product_name, small_sheet_color, small_
                         <tbody>
                             <?php 
                             $sn=1;
+                            $total_balance = 0; 
                             while($data=mysqli_fetch_array($result)) {
+                                $total_balance += $data['small_sheet_balance'];
                             ?>
                             <tr>
                                 <td><?php echo $sn; ?>.</td>
@@ -144,6 +146,12 @@ $result = mysqli_query($con, "SELECT id, product_name, small_sheet_color, small_
                             }  
                             ?>
                         </tbody>
+                        <tfoot>
+                          <tr>
+                               <th colspan="3">Total:</th>
+                              <th><?php echo $total_balance; ?></th>
+                          </tr>
+                       </tfoot>
                     </table>
                 </div>
                 <!-- /Table of football contact query -->
