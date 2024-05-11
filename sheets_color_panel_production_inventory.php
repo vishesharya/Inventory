@@ -28,7 +28,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 $result = mysqli_query($con, "SELECT id, product_name, small_sheet_color, small_sheet_balance FROM sheets_production_small_stock ORDER BY product_name ASC");
 
 ?>
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html lang="en">
 <head>
     <meta charset="utf-8">
