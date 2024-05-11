@@ -144,8 +144,8 @@ if (isset($_POST['add_product'])) {
         mysqli_query($con, $update_remaining_small_panel_query);}
 
       }
- 
-
+  
+     
          // Check if requested quantity exceeds available stock
         if ($quantity1 > $remaining_big_panel || $quantity2 > $remaining_plain_panel || $quantity3 > $remaining_small_panel) {
             $errors[] = " ";

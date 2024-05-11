@@ -138,34 +138,54 @@ if (isset($_POST['add_product'])) {
             mysqli_query($con, $update_remaining_plain_panel_query);
         }
 
-        // Fetch remaining_small_panel from sheets_product table
-        $remaining_small_panel_query = "SELECT remaining_small_panel FROM sheets_product WHERE product_name = '$product_name' AND product_base = '$product_base' AND product_color = '$product_color'";
-        $remaining_small_panel_result = mysqli_query($con, $remaining_small_panel_query);
-        $row = mysqli_fetch_assoc($remaining_small_panel_result);
-        $remaining_small_panel = $row['remaining_small_panel'];
 
-        // Fetch remaining_small_panel from sheets_production_product table
-        $production_remaining_small_panel_query = "SELECT remaining_small_panel FROM sheets_production_product WHERE product_name = '$product_name' AND product_base = '$product_base' AND product_color = '$product_color'";
-        $production_remaining_small_panel_result = mysqli_query($con, $production_remaining_small_panel_query);
-        $row = mysqli_fetch_assoc($production_remaining_small_panel_result);
-        $production_remaining_small_panel = $row['remaining_small_panel'];
 
-        if ($quantity3 > $production_remaining_small_panel) {
-            $errors[] = "Requested quantity exceeds available stock for $product_name, $product_base, $product_color (small panel).";
-        } else {
-            // Calculate excess quantity
-            $excess_quantity3 = max(0, $quantity3 - $production_remaining_small_panel);
+        if (empty($_POST['small_sheet_color'])) {
             
-            // Update remaining_small_panel in sheets_production_product table
-            $production_updated_remaining_small_panel = max(0, $production_remaining_small_panel - $quantity3);
-            $production_update_remaining_small_panel_query = "UPDATE sheets_production_product SET remaining_small_panel = $production_updated_remaining_small_panel WHERE product_name = '$product_name' AND product_base = '$product_base' AND product_color = '$product_color'";
-            mysqli_query($con, $production_update_remaining_small_panel_query);
+            $remaining_small_panel_query = "SELECT remaining_small_panel FROM sheets_product WHERE product_name = '$product_name' AND product_base = '$product_base' AND product_color = '$product_color'";
+            $remaining_small_panel_result = mysqli_query($con, $remaining_small_panel_query);
+            $row = mysqli_fetch_assoc($remaining_small_panel_result);
+            $remaining_small_panel = $row['remaining_small_panel'];
 
-            // Update remaining_small_panel in sheets_product table
-            $updated_remaining_small_panel = $remaining_small_panel + $quantity3 - $excess_quantity3;
-            $update_remaining_small_panel_query = "UPDATE sheets_product SET remaining_small_panel = $updated_remaining_small_panel WHERE product_name = '$product_name' AND product_base = '$product_base' AND product_color = '$product_color'";
-            mysqli_query($con, $update_remaining_small_panel_query);
-        }
+            $remaining_production_small_panel_query = "SELECT remaining_small_panel FROM sheets_production_product WHERE product_name = '$product_name' AND product_base = '$product_base' AND product_color = '$product_color'";
+            $remaining_production_small_panel_result = mysqli_query($con, $remaining_production_small_panel_query);
+            $row = mysqli_fetch_assoc($remaining_production_small_panel_result);
+            $remaining_small_panel = $row['remaining_small_panel'];
+            
+               // Update remaining_small_panel in sheets_product table
+               $updated_remaining_small_panel = $remaining_small_panel + (int)$quantity3;
+               $update_remaining_small_panel_query = "UPDATE sheets_product SET remaining_small_panel = $updated_remaining_small_panel WHERE product_name = '$product_name' AND product_base = '$product_base' AND product_color = '$product_color'";
+               mysqli_query($con, $update_remaining_small_panel_query); 
+
+                // Update remaining_small_panel in sheets_product table
+                $updated_remaining_small_panel = $remaining_small_panel - (int)$quantity3;
+                $update_remaining_production_small_panel_query = "UPDATE sheets_production_product SET remaining_small_panel = $updated_remaining_small_panel WHERE product_name = '$product_name' AND product_base = '$product_base' AND product_color = '$product_color'";
+                mysqli_query($con, $update_remaining_production_small_panel_query); 
+            } else {
+               
+            $remaining_small_panel_query = "SELECT small_sheet_balance FROM sheets_small_stock WHERE product_name = '$product_name'";
+            $remaining_small_panel_result = mysqli_query($con, $remaining_small_panel_query);
+            $row = mysqli_fetch_assoc($remaining_small_panel_result);
+            $remaining_small_panel = $row['small_sheet_balance'];
+
+            $remaining_production_small_panel_query = "SELECT small_sheet_balance FROM sheets_production_small_stock WHERE product_name = '$product_name'";
+            $remaining_production_small_panel_result = mysqli_query($con, $remaining_production_small_panel_query);
+            $row = mysqli_fetch_assoc($remaining_production_small_panel_result);
+            $remaining_small_panel = $row['small_sheet_balance'];
+            
+           // Update remaining_small_panel in sheets_product table
+           $updated_remaining_small_panel = $remaining_small_panel + (int)$quantity3;
+           $update_remaining_small_panel_query = "UPDATE sheets_small_stock SET small_sheet_balance = $updated_remaining_small_panel WHERE product_name = '$product_name'";
+           mysqli_query($con, $update_remaining_small_panel_query);
+
+           // Update remaining_small_panel in sheets_product table
+           $updated_remaining_small_panel = $remaining_small_panel - (int)$quantity3;
+           $update_remaining_production_small_panel_query = "UPDATE sheets_production_small_stock SET small_sheet_balance = $updated_remaining_small_panel WHERE product_name = '$product_name'";
+           mysqli_query($con, $update_remaining_production_small_panel_query);
+   
+         }
+         
+
 
         // Insert data into temporary session storage
         $temp_product = array(
@@ -254,30 +274,50 @@ if (isset($_POST['delete_product'])) {
                mysqli_query($con, $update_remaining_plain_panel_query);
        
    
-           // Fetch remaining_small_panel from sheets_product table
-           $remaining_small_panel_query = "SELECT remaining_small_panel FROM sheets_product WHERE product_name = '$product_name' AND product_base = '$product_base' AND product_color = '$product_color'";
-           $remaining_small_panel_result = mysqli_query($con, $remaining_small_panel_query);
-           $row = mysqli_fetch_assoc($remaining_small_panel_result);
-           $remaining_small_panel = $row['remaining_small_panel'];
-   
-           // Fetch remaining_small_panel from sheets_production_product table
-           $production_remaining_small_panel_query = "SELECT remaining_small_panel FROM sheets_production_product WHERE product_name = '$product_name' AND product_base = '$product_base' AND product_color = '$product_color'";
-           $production_remaining_small_panel_result = mysqli_query($con, $production_remaining_small_panel_query);
-           $row = mysqli_fetch_assoc($production_remaining_small_panel_result);
-           $production_remaining_small_panel = $row['remaining_small_panel'];
-   
-               // Calculate excess quantity
-               $excess_deleted_quantity3 = max(0, $deleted_quantity3 + $production_remaining_small_panel);
-               
-               // Update remaining_small_panel in sheets_production_product table
-               $production_updated_remaining_small_panel = max(0, $production_remaining_small_panel + $deleted_quantity3);
-               $production_update_remaining_small_panel_query = "UPDATE sheets_production_product SET remaining_small_panel = $production_updated_remaining_small_panel WHERE product_name = '$product_name' AND product_base = '$product_base' AND product_color = '$product_color'";
-               mysqli_query($con, $production_update_remaining_small_panel_query);
-   
+               if (empty($_POST['small_sheet_color'])) {
+            
+                $remaining_small_panel_query = "SELECT remaining_small_panel FROM sheets_product WHERE product_name = '$product_name' AND product_base = '$product_base' AND product_color = '$product_color'";
+                $remaining_small_panel_result = mysqli_query($con, $remaining_small_panel_query);
+                $row = mysqli_fetch_assoc($remaining_small_panel_result);
+                $remaining_small_panel = $row['remaining_small_panel'];
+    
+                $remaining_production_small_panel_query = "SELECT remaining_small_panel FROM sheets_production_product WHERE product_name = '$product_name' AND product_base = '$product_base' AND product_color = '$product_color'";
+                $remaining_production_small_panel_result = mysqli_query($con, $remaining_production_small_panel_query);
+                $row = mysqli_fetch_assoc($remaining_production_small_panel_result);
+                $remaining_small_panel = $row['remaining_small_panel'];
+                
+                   // Update remaining_small_panel in sheets_product table
+                   $updated_remaining_small_panel = $remaining_small_panel - (int)$quantity3;
+                   $update_remaining_small_panel_query = "UPDATE sheets_product SET remaining_small_panel = $updated_remaining_small_panel WHERE product_name = '$product_name' AND product_base = '$product_base' AND product_color = '$product_color'";
+                   mysqli_query($con, $update_remaining_small_panel_query); 
+    
+                    // Update remaining_small_panel in sheets_product table
+                    $updated_remaining_small_panel = $remaining_small_panel + (int)$quantity3;
+                    $update_remaining_production_small_panel_query = "UPDATE sheets_production_product SET remaining_small_panel = $updated_remaining_small_panel WHERE product_name = '$product_name' AND product_base = '$product_base' AND product_color = '$product_color'";
+                    mysqli_query($con, $update_remaining_production_small_panel_query); 
+                } else {
+                   
+                $remaining_small_panel_query = "SELECT small_sheet_balance FROM sheets_small_stock WHERE product_name = '$product_name'";
+                $remaining_small_panel_result = mysqli_query($con, $remaining_small_panel_query);
+                $row = mysqli_fetch_assoc($remaining_small_panel_result);
+                $remaining_small_panel = $row['small_sheet_balance'];
+    
+                $remaining_production_small_panel_query = "SELECT small_sheet_balance FROM sheets_production_small_stock WHERE product_name = '$product_name'";
+                $remaining_production_small_panel_result = mysqli_query($con, $remaining_production_small_panel_query);
+                $row = mysqli_fetch_assoc($remaining_production_small_panel_result);
+                $remaining_small_panel = $row['small_sheet_balance'];
+                
                // Update remaining_small_panel in sheets_product table
-               $updated_remaining_small_panel = $remaining_small_panel - $deleted_quantity3 + $excess_deleted_quantity3;
-               $update_remaining_small_panel_query = "UPDATE sheets_product SET remaining_small_panel = $updated_remaining_small_panel WHERE product_name = '$product_name' AND product_base = '$product_base' AND product_color = '$product_color'";
+               $updated_remaining_small_panel = $remaining_small_panel - (int)$quantity3;
+               $update_remaining_small_panel_query = "UPDATE sheets_small_stock SET small_sheet_balance = $updated_remaining_small_panel WHERE product_name = '$product_name'";
                mysqli_query($con, $update_remaining_small_panel_query);
+    
+               // Update remaining_small_panel in sheets_product table
+               $updated_remaining_small_panel = $remaining_small_panel + (int)$quantity3;
+               $update_remaining_production_small_panel_query = "UPDATE sheets_production_small_stock SET small_sheet_balance = $updated_remaining_small_panel WHERE product_name = '$product_name'";
+               mysqli_query($con, $update_remaining_production_small_panel_query);
+       
+             }
            
     // Remove the product from the session
     unset($_SESSION['temp_products'][$delete_index]);
