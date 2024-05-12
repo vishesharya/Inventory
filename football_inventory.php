@@ -65,7 +65,7 @@ include_once 'include/admin-main.php';
                 <div class="page-header page-header-default">
                     <div class="page-header-content">
                         <div class="page-title">
-                            <h4><i class="icon-arrow-left52 position-left"></i> <span class="text-semibold">Home</span> - Dashboard <?php echo $_SESSION['name']; ?></h4>
+                            <h4><i class="icon-arrow-left52 position-left"></i> <span class="text-semibold">Home</span> Football Inventory <?php echo $_SESSION['name']; ?></h4>
                         </div>
                     </div>
 
