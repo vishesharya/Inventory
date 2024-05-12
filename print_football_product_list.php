@@ -75,18 +75,18 @@ include_once 'include/admin-main.php';
                     <th>Balance</th>
                     </tr>";
 
-                // Fetch and display data
+             
                 while($data = mysqli_fetch_array($show)) {
-                    if ($data['remaining_quantity'] > 0)
-                 {
-                    echo "<tr>
-                    <td>".$sn."</td>
-                    <td>".$data['product_name']."</td>
-                    <td>".$data['product_base']."</td>
-                    <td>".$data['product_color']."</td>
-                    <td>".$data['remaining_quantity']."</td>
-                    </tr>";
-                    $sn++; // Increment serial number
+                    if ($data['remaining_quantity'] > 0) {
+                        echo "<tr>
+                        <td>".$sn."</td>
+                        <td>".$data['product_name']."</td>
+                        <td>".$data['product_base']."</td>
+                        <td>".$data['product_color']."</td>
+                        <td>".$data['remaining_quantity']."</td>
+                        </tr>";
+                        $sn++; // Increment serial number
+                    }
                 }
 
                 echo "</table>";
