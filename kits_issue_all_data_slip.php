@@ -190,7 +190,7 @@ if (isset($_POST['view_entries'])) {
             line-height: 7px;
         }
         #company_heading{
-            line-height: 3px;
+            line-height: 5px;
         }
     </style> 
 </head>
