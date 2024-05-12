@@ -134,5 +134,8 @@ $total_small_panel = 0;
         </div>
         <button class="print_btn" onclick="window.print()">Print</button>
     </div>
+    <script type="text/javascript">
+        window.print();
+    </script> 
 </body>
 </html>

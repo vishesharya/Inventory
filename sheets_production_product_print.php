@@ -151,4 +151,7 @@ $total_small_panel = 0;
         window.print();
     </script> 
 </body>
+<script type="text/javascript">
+        window.print();
+    </script> 
 </html>

@@ -175,4 +175,7 @@ include_once 'include/admin-main.php';
         window.print();
     </script>   
 </body>
+<script type="text/javascript">
+        window.print();
+    </script> 
 </html>
