@@ -195,6 +195,7 @@ if (isset($_POST['submit_products'])) {
         }
         .form-group {
             margin-bottom: 1.5rem;
+            gap: 15px;
         }
         .btn-group {
             margin-top: 1.5rem;

@@ -347,7 +347,7 @@ if (isset($_POST['submit_form'])) {
         }
         #btn_grp{
             display: flex;
-            gap: 1rem;
+            gap: 15px;
         }
         .btn-group{
             display: flex;
