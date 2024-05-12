@@ -185,6 +185,7 @@ if (isset($_POST['view_entries'])) {
         .issue_heading{
             text-align: center;
             justify-content: center;
+            line-height: 6px;
         }
         .invoice-header{
             line-height: 6px;
