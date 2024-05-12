@@ -61,7 +61,7 @@ include_once 'include/admin-main.php';
                 <div class="page-header page-header-default">
                     <div class="page-header-content">
                         <div class="page-title">
-                            <h4><i class="icon-arrow-left52 position-left"></i> <a href="inventory.php" class="text-semibold">Click Here - Go Back</a></h4>
+                            <h4><i class="icon-arrow-left52 position-left"></i> <a href="inventory.php" class="text-semibold">Sheets Selling Data</a></h4>
                         </div>
 
                     </div>
@@ -69,7 +69,7 @@ include_once 'include/admin-main.php';
                     <div class="breadcrumb-line">
                         <ul class="breadcrumb">
                             <li><a href="dashboard.php"><i class="icon-home2 position-left"></i> Home</a></li>
-                            <li class="active"><a href="inventory.php" class="btn bg-indigo-300"  >Sheets Inventory Data</a></li>
+                            <li class="active"><a href="inventory.php" class="btn bg-indigo-300"  >Sheets Selling Data</a></li>
                         </ul>
                     </div>
                 </div>
@@ -105,7 +105,7 @@ include_once 'include/admin-main.php';
                
                     <div class="panel panel-flat" style="overflow: auto;">
                         <div class="panel-heading">
-                            <h5 class="panel-title">Sheets Inventory Management</h5>
+                            <h5 class="panel-title">Sheets Selling Data</h5>
                             <div class="heading-elements">
                                 <ul class="icons-list">
                                     <li><a data-action="collapse"></a></li>
@@ -119,7 +119,9 @@ include_once 'include/admin-main.php';
                             <thead>
                                 <tr>
                                     <th>Sn.</th>
-                                    <th>Challan No.</th>                           
+                                    <th>Challan No.</th> 
+                                    <th>invoice No.</th> 
+                                    <th>Buyer Name</th>                           
                                     <th>Product Name</th>
                                     <th>Product Base</th>
                                     <th>Product Color</th>
@@ -132,12 +134,14 @@ include_once 'include/admin-main.php';
                             <tbody>
                                 <?php 
                                 $sn=1;
-                                $result=mysqli_query($con, "SELECT * FROM sheets_received"); // Selecting all fields from the kits_received table
+                                $result=mysqli_query($con, "SELECT * FROM sheets_selling"); // Selecting all fields from the kits_received table
                                 while($data=mysqli_fetch_array($result)) {
                                 ?>
                                 <tr>
                                     <td><?php echo $sn; ?>.</td>
                                     <td><?php echo $data['challan_no']; ?></td>
+                                    <td><?php echo $data['invoice_number']; ?></td>
+                                    <td><?php echo $data['buyer_name']; ?></td>
                                     <td><?php echo $data['product_name']; ?></td>
                                     <td><?php echo ucfirst($data['product_base']); ?></td>
                                     <td><?php echo ucfirst($data['product_color']); ?></td>

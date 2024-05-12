@@ -2,35 +2,36 @@
 session_start();
 include_once 'include/connection.php';
 include_once 'include/admin-main.php';
+
 ?> 
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Football Query Print</title>
+    <title>Seets Selling Data</title>
     <link rel="icon" type="image/x-icon" href="assets/images/favicon.png">
-    <link href="assets/styles.css" rel="stylesheet" type="text/css"> <!-- Link to your CSS file -->
+    <link href="assets/labels.css" rel="stylesheet" type="text/css">
     <style>
         page {
             background: white;
             display: block;
-            margin: 1.0cm; 
+            margin: 1.0cm;
+           
         }
         @media print {
             body, page {
                 margin: 0!important;
-                box-shadow: none; /* Removed box shadow when printing */
-                padding: 0;
+                box-shadow: 0;
+                padding:0;
             }
         }
         @page {
             margin: 0;
-            box-shadow: none; /* Removed box shadow when printing */
+            box-shadow: 0;
         }
         .detail-table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 20px; /* Added margin for better spacing */
         }
         .detail-table th,
         .detail-table td {
@@ -46,11 +47,6 @@ include_once 'include/admin-main.php';
             border-top: 2px double #000;
             margin-top: 10px;
             margin-bottom: 10px;
-        }
-        .no-data-msg {
-            margin-top: 20px; /* Added margin for better spacing */
-            text-align: center;
-            font-style: italic;
         }
     </style>
 </head>
@@ -99,7 +95,7 @@ include_once 'include/admin-main.php';
                 // Fetch and display data
                 while($data = mysqli_fetch_array($show)) {
                     echo "<tr>
-                    <td>".$sn."</td>
+                    <td>".$data['id']."</td>
                     <td>".$data['challan_no']."</td>
                     <td>".$data['product_name']."</td>
                     <td>".$data['product_base']."</td>
@@ -130,7 +126,7 @@ include_once 'include/admin-main.php';
                 <th>Date And Time</th>
                 </tr>";
                 echo "</table>";
-                echo "<p class='no-data-msg'>No data found</p>"; // Added a message for no data found
+                echo "<p>No data found</p>";
             }
             ?>
         </page>
