@@ -61,7 +61,6 @@ include_once 'include/admin-main.php';
             $q = "SELECT  `product_name`, `product_base`, `product_color`, `remaining_quantity` FROM products";
 
             $q .= " ORDER BY `product_name` ASC";
-              $q .= " WHERE remaining_quantity > 0";
 
             $show = mysqli_query($con, $q);
 
@@ -78,6 +77,8 @@ include_once 'include/admin-main.php';
 
                 // Fetch and display data
                 while($data = mysqli_fetch_array($show)) {
+                    if ($data['remaining_quantity'] > 0)
+                 {
                     echo "<tr>
                     <td>".$sn."</td>
                     <td>".$data['product_name']."</td>
