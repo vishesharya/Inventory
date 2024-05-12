@@ -185,10 +185,10 @@ if (isset($_POST['view_entries'])) {
         .issue_heading{
             text-align: center;
             justify-content: center;
-            line-height:0px;
+         
         }
         .invoice-header{
-            line-height: 6px;
+            line-height: 7px;
         }
     </style> 
 </head>
@@ -284,7 +284,7 @@ if (isset($_POST['view_entries'])) {
         <!-- Add your HTML structure here to display kits issue details -->
         <div class="invoice-header">
            <div>
-                <p class="issue_heading" >KITS ISSUE SLIP</p>
+                <p id="issue_heading" >KITS ISSUE SLIP</p>
                 <hr>
                 <h2 class="heading">KHANNA SPORTS INDUSTRIES PVT. LTD</h2>
                 <p class="heading"> A-7, Sports Complex Delhi Road Meerut Uttar Pradesh 250002</p>
