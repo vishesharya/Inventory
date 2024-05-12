@@ -71,7 +71,7 @@ $errors = array();
 
 if (isset($_POST['add_product'])) {
     // Validate input
-    if (empty($_POST['product_name']) || empty($_POST['product_base']) || empty($_POST['product_color'])) {
+    if (empty($_POST['product_name']) || empty($_POST['product_base']) || empty($_POST['product_color']) || empty($_POST['labour_name'])) {
         $errors[] = "Please fill in all fields.";
     } else {
         // Sanitize input
