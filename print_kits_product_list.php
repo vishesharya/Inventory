@@ -54,6 +54,7 @@ include_once 'include/admin-main.php';
 <body>
     <center>
         <page size="A4">
+            <h1>KITS INVENTORY</h1>
             <?php 
             // Initialize serial number
             $sn = 1;
