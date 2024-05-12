@@ -2,8 +2,8 @@
 session_start();
 include_once 'include/connection.php';
 include_once 'include/admin-main.php';
+?>
 
-?> 
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,127 +12,124 @@ include_once 'include/admin-main.php';
     <link rel="icon" type="image/x-icon" href="assets/images/favicon.png">
     <link href="assets/labels.css" rel="stylesheet" type="text/css">
     <style>
-        page {
-            background: white;
-            display: block;
-            margin: 1.0cm;
-           
-        }
-        @media print {
-            body, page {
-                margin: 0!important;
-                box-shadow: 0;
-                padding:0;
-            }
-        }
-        @page {
+        /* Add custom styles for improved UI */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
             margin: 0;
-            box-shadow: 0;
+            padding: 0;
         }
-        .detail-table {
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        table {
             width: 100%;
             border-collapse: collapse;
+            margin-top: 20px;
         }
-        .detail-table th,
-        .detail-table td {
+        th, td {
             padding: 10px;
-            border: 1px solid #000; /* Set border to solid */
+            text-align: left;
+            border-bottom: 1px solid #ddd;
         }
-        .main-heading {
-            font-weight: bold;
-            text-align: right;
-            width: 200px;
+        th {
+            background-color: #f2f2f2;
         }
-        .separator {
-            border-top: 2px double #000;
-            margin-top: 10px;
-            margin-bottom: 10px;
+        .no-data {
+            text-align: center;
+            color: #999;
+            margin-top: 20px;
         }
     </style>
 </head>
 <body>
-    <center>
-        <page size="A4">
-            <?php 
-            // Initialize serial number
-            $sn = 1;
+    <div class="container">
+        <h1>Seets Selling Data</h1>
+        <form method="post" action="">
+            <label for="from_date">From Date:</label>
+            <input type="date" id="from_date" name="from_date">
+            <label for="to_date">To Date:</label>
+            <input type="date" id="to_date" name="to_date">
+            <button type="submit" name="submit">Submit</button>
+        </form>
+        <?php
+        // Initialize serial number
+        $sn = 1;
 
-            // Initialize SQL query
-            $q = "SELECT `id`, `challan_no`, `product_name`, `product_base`, `quantity1`, `quantity2`, `small_panel_color`, `quantity3`, `date_and_time` FROM sheets_received";
+        // Initialize SQL query
+        $q = "SELECT `id`, `challan_no`,`invoice_number`,`buyer_name`, `product_name`, `product_base`, `quantity1`, `quantity2`, `small_panel_color`, `quantity3`, `date_and_time` FROM sheets_selling";
 
-            // Check if the submit button is clicked and from_date and to_date are specified
-            if(isset($_POST['submit']) && !empty($_POST['from_date']) && !empty($_POST['to_date'])) {
-                $from_date = $_POST['from_date'];
-                $to_date = $_POST['to_date'];
+        // Check if the submit button is clicked and from_date and to_date are specified
+        if(isset($_POST['submit']) && !empty($_POST['from_date']) && !empty($_POST['to_date'])) {
+            $from_date = $_POST['from_date'];
+            $to_date = $_POST['to_date'];
 
-                $fdate = date('Y-m-d', strtotime($_POST['from_date']));
-                $tdate = date('Y-m-d', strtotime($_POST['to_date']));
+            $fdate = date('Y-m-d', strtotime($_POST['from_date']));
+            $tdate = date('Y-m-d', strtotime($_POST['to_date']));
 
-                // Add condition for date range
-                $q .= " WHERE date_and_time BETWEEN '$fdate' AND '$tdate'";
-            }
+            // Add condition for date range
+            $q .= " WHERE date_and_time BETWEEN '$fdate' AND '$tdate'";
+        }
 
-            $q .= " ORDER BY date_and_time ASC";
+        $q .= " ORDER BY date_and_time ASC";
 
-            $show = mysqli_query($con, $q);
+        $show = mysqli_query($con, $q);
 
-            // Check if there are rows returned
-            if(mysqli_num_rows($show) > 0) {
-                echo "<table class='detail-table'> <!-- Add class for the table -->
+        // Check if there are rows returned
+        if(mysqli_num_rows($show) > 0) {
+            echo "<table>
                     <tr>
-                    <th>Sr.</th>
-                    <th>Challan No.</th>
-                    <th>Product Name</th>
-                    <th>Product Base</th>
-                    <th>Product Color</th>
-                    <th>Big Panel Quantity</th>
-                    <th>Plain Panel Quantity</th>
-                    <th>Small Panel Color</th>
-                    <th>Small Panel Quantity</th>
-                    <th>Date And Time</th>
+                        <th>Sr.</th>
+                        <th>Challan No.</th>
+                        <th>Invoice No.</th>
+                        <th>Buyer Name</th>
+                        <th>Product Name</th>
+                        <th>Product Base</th>
+                        <th>Product Color</th>
+                        <th>Big Panel Quantity</th>
+                        <th>Plain Panel Quantity</th>
+                        <th>Small Panel Color</th>
+                        <th>Small Panel Quantity</th>
+                        <th>Date And Time</th>
                     </tr>";
 
-                // Fetch and display data
-                while($data = mysqli_fetch_array($show)) {
-                    echo "<tr>
-                    <td>".$data['id']."</td>
-                    <td>".$data['challan_no']."</td>
-                    <td>".$data['product_name']."</td>
-                    <td>".$data['product_base']."</td>
-                    <td>".$data['product_color']."</td>
-                    <td>".$data['quantity1']."</td>
-                    <td>".$data['quantity2']."</td>
-                    <td>".$data['small_panel_color']."</td>
-                    <td>".$data['quantity3']."</td>
-                    <td>".$data['date_and_time']."</td>
+            // Fetch and display data
+            while($data = mysqli_fetch_array($show)) {
+                echo "<tr>
+                        <td>".$sn."</td>
+                        <td>".$data['challan_no']."</td>
+                        <td>".$data['invoice_number']."</td>
+                        <td>".$data['buyer_name']."</td>
+                        <td>".$data['product_name']."</td>
+                        <td>".$data['product_base']."</td>
+                        <td>".$data['product_color']."</td>
+                        <td>".$data['quantity1']."</td>
+                        <td>".$data['quantity2']."</td>
+                        <td>".$data['small_panel_color']."</td>
+                        <td>".$data['quantity3']."</td>
+                        <td>".$data['date_and_time']."</td>
                     </tr>";
-                    $sn++; // Increment serial number
-                }
-
-                echo "</table>";
-            } else {
-                // If no data found, display only the table headers
-                echo "<table class='detail-table'> <!-- Add class for the table -->
-                <tr>
-                <th>Sr.</th>
-                <th>Challan No.</th>
-                <th>Product Name</th>
-                <th>Product Base</th>
-                <th>Product Color</th>
-                <th>Big Panel Quantity</th>
-                <th>Plain Panel Quantity</th>
-                <th>Small Panel Color</th>
-                <th>Small Panel Quantity</th>
-                <th>Date And Time</th>
-                </tr>";
-                echo "</table>";
-                echo "<p>No data found</p>";
+                $sn++; // Increment serial number
             }
-            ?>
-        </page>
-    </center>
+
+            echo "</table>";
+        } else {
+            // If no data found, display only the table headers
+            echo "<p class='no-data'>No data found</p>";
+        }
+        ?>
+    </div>
     <script type="text/javascript">
         window.print();
-    </script>   
+    </script>  
 </body>
 </html>
