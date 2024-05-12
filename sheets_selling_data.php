@@ -120,7 +120,7 @@ include_once 'include/admin-main.php';
                                 <tr>
                                     <th>Sn.</th>
                                     <th>Challan No.</th> 
-                                    <th>invoice No.</th> 
+                                    <th>Invoice No.</th> 
                                     <th>Buyer Name</th>                           
                                     <th>Product Name</th>
                                     <th>Product Base</th>
