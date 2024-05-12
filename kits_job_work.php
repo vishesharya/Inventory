@@ -231,13 +231,14 @@ if (isset($_POST['view_entries'])) {
                 $totalIssueQuantity += $data['issue_quantity']; // Sum up issue_quantity
                 $sn++; 
                 ?>
-                <tr>
+               
+                <?php endwhile; ?>
+            </tbody>
+            <tr>
                 <td colspan="6"></td>
                 <td><strong>Total:</strong></td>
                 <td><?php echo $totalIssueQuantity; ?></td>
             </tr>
-                <?php endwhile; ?>
-            </tbody>
         </table>
     <?php elseif (isset($_POST['view_entries'])): ?>
         <p>No entries found.</p>
