@@ -148,9 +148,11 @@ $result = mysqli_query($con, "SELECT id, product_name, product_base, product_col
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php 
-                                $sn=1;
-                                while($data=mysqli_fetch_array($result)) {
+                            <?php 
+                            $totalRemainingQuantity = 0; // Initialize total remaining quantity
+                            $sn = 1;
+                            while ($data = mysqli_fetch_array($result)) {
+                                $totalRemainingQuantity += $data['remaining_quantity']; // Add to total
                                 ?>
                                 <tr>
                                     <td><?php echo $sn; ?>.</td>
@@ -166,6 +168,14 @@ $result = mysqli_query($con, "SELECT id, product_name, product_base, product_col
                                 }  
                                 ?>
                             </tbody>
+                            <tfoot>
+            <tr>
+                <th colspan="4">Total Remaining Quantity:</th>
+                <th><?php echo $totalRemainingQuantity; ?></th>
+                <th></th>
+                <th></th>
+            </tr>
+        </tfoot>
                         </table>
                     </div>
                 </div>
