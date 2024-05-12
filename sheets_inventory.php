@@ -104,7 +104,7 @@ include_once 'include/admin-main.php';
                                 <a href="./sheets_buyer.php" style='color:white'>
                                     <div class="col-lg-4">
                                         <div class="panel bg-teal-400">
-                                            <p style="margin: 10px; font-size: large;">Issue Form</p>
+                                            <p style="margin: 10px; font-size: large;">Selling Form</p>
                                         </div>
                                     </div>
                                 </a>
