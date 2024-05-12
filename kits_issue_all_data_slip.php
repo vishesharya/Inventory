@@ -180,14 +180,14 @@ if (isset($_POST['view_entries'])) {
             text-align: center;
             margin-bottom: 20px;
             color: #333;
-            line-height: 5px;
+          
         }
         .issue_heading{
             text-align: center;
             justify-content: center;
         }
         .invoice-header{
-            line-height: 5px;
+            line-height: 6px;
         }
     </style> 
 </head>
