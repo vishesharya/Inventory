@@ -46,6 +46,9 @@ include_once 'include/admin-main.php';
             margin-top: 10px;
             margin-bottom: 10px;
         }
+        .total-row td {
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
@@ -54,6 +57,8 @@ include_once 'include/admin-main.php';
             <?php 
             // Initialize serial number
             $sn = 1;
+            // Initialize total quantity
+            $total_quantity = 0;
 
             // Initialize SQL query
             $q = "SELECT  `product_name`, `product_base`, `product_color`, `remaining_quantity` FROM kits_product";
@@ -83,10 +88,15 @@ include_once 'include/admin-main.php';
                         <td>".$data['product_color']."</td>
                         <td>".$data['remaining_quantity']."</td>
                         </tr>";
+                        $total_quantity += $data['remaining_quantity']; // Add remaining_quantity to total
                         $sn++; // Increment serial number
                     }
                 }
 
+                echo "<tr class='total-row'>
+                        <td colspan='4' style='text-align: right;'>Total:</td>
+                        <td>".$total_quantity."</td>
+                    </tr>";
                 echo "</table>";
             } else {
                 // If no data found, display only the table headers
