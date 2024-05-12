@@ -80,10 +80,9 @@ if (isset($_POST['add_product'])) {
         $product_base = mysqli_real_escape_string($con, $_POST['product_base']);
         $product_color = mysqli_real_escape_string($con, $_POST['product_color']);
         
-        $quantity1 = mysqli_real_escape_string($con, $_POST['quantity1']);
-        $quantity2 = mysqli_real_escape_string($con, $_POST['quantity2']);
-        $quantity3 = mysqli_real_escape_string($con, $_POST['quantity3']);
-
+        $quantity1 = isset($_POST['quantity1']) ? intval($_POST['quantity1']) : 0;
+        $quantity2 = isset($_POST['quantity2']) ? intval($_POST['quantity2']) : 0;
+        $quantity3 = isset($_POST['quantity3']) ? intval($_POST['quantity3']) : 0;
 
         
         // Fetch remaining_big_panel from sheets_product table
