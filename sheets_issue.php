@@ -75,7 +75,7 @@ if (isset($_POST['add_product'])) {
         $errors[] = "Please fill in all fields.";
     } else {
         // Sanitize input
-       
+        $labour_name = mysqli_real_escape_string($con, $_POST['labour_name']);
         $product_name = mysqli_real_escape_string($con, $_POST['product_name']);
         $product_base = mysqli_real_escape_string($con, $_POST['product_base']);
         $product_color = mysqli_real_escape_string($con, $_POST['product_color']);
