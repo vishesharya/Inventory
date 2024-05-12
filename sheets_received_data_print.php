@@ -84,7 +84,7 @@ include_once 'include/admin-main.php';
             $total_small_panel_quantity = 0;
 
             // Initialize SQL query
-            $q = "SELECT `id`, `challan_no`, `product_name`, `product_base`, `quantity1`, `quantity2`, `small_panel_color`, `quantity3`, `date_and_time` FROM sheets_received";
+            $q = "SELECT `id`, `challan_no`, `product_name`, `product_base`,`product_color`, `quantity1`, `quantity2`, `small_panel_color`, `quantity3`, `date_and_time` FROM sheets_received";
 
             // Check if the submit button is clicked and from_date and to_date are specified
             if(isset($_POST['submit']) && !empty($_POST['from_date']) && !empty($_POST['to_date'])) {
