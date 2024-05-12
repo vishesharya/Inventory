@@ -196,8 +196,10 @@ if (isset($_POST['view_entries'])) {
         </div>
 
 
-
-        <?php if (isset($_POST['view_entries']) && mysqli_num_rows($result) > 0): ?>
+        
+        <?php 
+         $totalIssueQuantity = 0;
+        if (isset($_POST['view_entries']) && mysqli_num_rows($result) > 0): ?>
         <table class="table datatable-multi-sorting">
             <thead>
                 <tr>
@@ -213,6 +215,7 @@ if (isset($_POST['view_entries'])) {
             </thead>
             <tbody>
                 <?php $sn = 1; ?>
+                
                 <?php while ($data = mysqli_fetch_array($result)): ?>
                     <tr>
                         <td><?php echo $sn; ?>.</td>
@@ -224,7 +227,15 @@ if (isset($_POST['view_entries'])) {
                         <td><?php echo $data['issue_quantity']; ?></td>
                         <td><?php echo date('d/m/Y', strtotime($data['date_and_time'])); ?></td>
                     </tr>
-                    <?php $sn++; ?>
+                    <?php 
+                $totalIssueQuantity += $data['issue_quantity']; // Sum up issue_quantity
+                $sn++; 
+                ?>
+                <tr>
+                <td colspan="6"></td>
+                <td><strong>Total:</strong></td>
+                <td><?php echo $totalIssueQuantity; ?></td>
+            </tr>
                 <?php endwhile; ?>
             </tbody>
         </table>
