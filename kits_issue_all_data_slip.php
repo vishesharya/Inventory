@@ -285,6 +285,7 @@ if (isset($_POST['view_entries'])) {
                 </div>
                 <div>
                     <p><br/><br/>Challan No: <?php echo $challan_no; ?></p>
+                    <p>Date: <?php echo date('d-m-Y', strtotime($date_and_time)); ?></p>
                 </div>
             </div>
         </div>
@@ -301,7 +302,7 @@ if (isset($_POST['view_entries'])) {
                             <th>Bladder Quantity</th>
                             <th>Thread Type</th>
                             <th>Thread Quantity</th>
-                            <th>Date</th>
+                            
                         </tr>
                     </thead>
                     <tbody>
@@ -315,7 +316,7 @@ if (isset($_POST['view_entries'])) {
                                 <td><?php echo $product['bladder_quantity']; ?></td>
                                 <td><?php echo $product['thread_name']; ?></td>
                                 <td><?php echo $product['thread_quantity']; ?></td>
-                                <td><?php echo date('d/m/Y', strtotime($product['date_and_time'])); ?></td>
+                             
                             </tr>
                         <?php endwhile; ?>
                     </tbody>
