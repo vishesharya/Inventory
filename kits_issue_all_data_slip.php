@@ -8,6 +8,10 @@ $stitcher_query = "SELECT DISTINCT stitcher_name FROM kits_issue ORDER BY stitch
 $stitcher_result = mysqli_query($con, $stitcher_query);
 $challan_no = isset($_POST['challan_no']) ? $_POST['challan_no'] : "";
 $stitcher_contact = isset($_POST['stitcher_contact']) ? $_POST['stitcher_contact'] : "";
+$stitcher_address = isset($_POST['stitcher_address']) ? $_POST['stitcher_address'] : "";
+$stitcher_aadhar = isset($_POST['stitcher_aadhar']) ? $_POST['stitcher_aadhar'] : "";
+$stitcher_pan = isset($_POST['stitcher_pan']) ? $_POST['stitcher_pan'] : "";
+
 
 // Check if 'challan_no' is set in session
 if (isset($_SESSION['challan_no'])) {
@@ -252,24 +256,29 @@ if (isset($_POST['view_entries'])) {
 
         <?php if (isset($_POST['view_entries']) && mysqli_num_rows($result) > 0): ?>
     <div class="container_slip">
-        <!-- Add your HTML structure here to display kits issue details -->
-        <div class="invoice-header">
+    <div class="invoice-header">
+        
+        <div>
+            <p class="issue_heading" >KITS ISSUE SLIP</p>
+            <hr>
+            <h2 class="heading">KHANNA SPORTS INDUSTRIES PVT. LTD</h2>
+            <p class="heading"> A-7, Sports Complex Delhi Road Meerut Uttar Pradesh 250002</p>
+            <p class="heading">Contact : 8449441387,98378427750 &nbsp;  GST : 09AAACK9669A1ZD </p>
+        </div>
+        <div id="head_details">
             <div>
-                <h2 class="heading">KHANNA SPORTS KITS ISSUE SLIP</h2>
-                <p>Sports Complex, A-7, Delhi Road, Phase 1,<br/>Industrial Area, Mohkam Pur, Meerut,<br/>Uttar Pradesh 250002 (India)</p>
-                <p>Contact: 8449441387, 98378427750</p>
+                <p class="stitcher_bold" >Stitcher : <?php echo $stitcher_name; ?></p>
+                <p>Stitcher Contact : <?php echo $stitcher_contact; ?></p>
+                <p>Stitcher Aadhaar : <?php echo $stitcher_aadhar; ?></p>
+                <p>Stitcher PAN : <?php echo $stitcher_pan; ?></p>
+                <p>Stitcher Address : <?php echo $stitcher_address; ?></p>
             </div>
-            <div id="head_details">
-                <div>
-                    <p>Stitcher : <?php echo $stitcher_name; ?></p>
-                     <p>Stitcher Contact : <?php echo $stitcher_contact; ?></p>
-                    <!-- Add other details as needed -->
-                </div>
-                <div>
-                    <p><br/><br/>Challan No: <?php echo $challan_no; ?></p>
-                </div>
+            <div>
+                <p><br/><br/>Challan No : <?php echo $entry['challan_no']; ?></p>
+                <p>Date: <?php echo date('d-m-Y', strtotime($date_and_time)); ?></p>
             </div>
         </div>
+    </div>
         <div class="row">
             <div class="col-md-12">
                 <table class="table table-bordered">
