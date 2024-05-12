@@ -162,7 +162,7 @@ if (isset($_POST['add_product'])) {
                 'quantity1' => $quantity1,
                 'quantity2' => $quantity2,
                 'quantity3' => $quantity3,
-                'date_and_time' => $date_and_time
+                'date_and_time' => isset($_POST['date_and_time']) ? $_POST['date_and_time'] : date('Y-m-d H:i:s')
             );
             $_SESSION['temp_products'][] = $temp_product;
         }
@@ -306,7 +306,6 @@ if (isset($_POST['submit_products'])) {
         .btn-group {
             margin-top: 1.5rem;
             justify-content: center;
-            gap: 15px;
         }
         .table {
             margin-top: 2rem;
