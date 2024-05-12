@@ -11,46 +11,62 @@ include_once 'include/admin-main.php';
     <link rel="icon" type="image/x-icon" href="assets/images/favicon.png">
     <link href="assets/styles.css" rel="stylesheet" type="text/css"> <!-- Link to your CSS file -->
     <style>
-        page {
-            background: white;
-            display: block;
-            margin: 1.0cm; 
-        }
-        @media print {
-            body, page {
-                margin: 0!important;
-                box-shadow: none; /* Removed box shadow when printing */
-                padding: 0;
-            }
-        }
-        @page {
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
             margin: 0;
-            box-shadow: none; /* Removed box shadow when printing */
+            padding: 0;
         }
-        .detail-table {
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .table-container {
+            overflow-x: auto;
+        }
+        table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 20px; /* Added margin for better spacing */
         }
-        .detail-table th,
-        .detail-table td {
-            padding: 10px;
-            border: 1px solid #000; /* Set border to solid */
+        th, td {
+            padding: 8px 12px;
+            border-bottom: 1px solid #ddd;
+            text-align: left;
         }
-        .main-heading {
+        th {
+            background-color: #f2f2f2;
+        }
+        .total-row td {
             font-weight: bold;
-            text-align: right;
-            width: 200px;
         }
-        .separator {
-            border-top: 2px double #000;
-            margin-top: 10px;
-            margin-bottom: 10px;
-        }
-        .no-data-msg {
-            margin-top: 20px; /* Added margin for better spacing */
+        .no-data {
             text-align: center;
-            font-style: italic;
+            margin-top: 20px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        @media print {
+            .print_btn {
+                display: none !important;
+            }
+        }
+        .heading {
+            align-items: center;
+            text-align: center;
         }
     </style>
 </head>
@@ -60,6 +76,11 @@ include_once 'include/admin-main.php';
             <?php 
             // Initialize serial number
             $sn = 1;
+
+            // Initialize totals
+            $total_big_panel_quantity = 0;
+            $total_plain_panel_quantity = 0;
+            $total_small_panel_quantity = 0;
 
             // Initialize SQL query
             $q = "SELECT `id`, `challan_no`, `product_name`, `product_base`, `quantity1`, `quantity2`, `small_panel_color`, `quantity3`, `date_and_time` FROM sheets_received";
@@ -110,9 +131,24 @@ include_once 'include/admin-main.php';
                     <td>".$data['quantity3']."</td>
                     <td>".$data['date_and_time']."</td>
                     </tr>";
+
+                    // Sum up the quantities
+                    $total_big_panel_quantity += $data['quantity1'];
+                    $total_plain_panel_quantity += $data['quantity2'];
+                    $total_small_panel_quantity += $data['quantity3'];
+
                     $sn++; // Increment serial number
                 }
 
+                // Display totals row
+                echo "<tr class='total-row'>
+                    <td colspan='5'></td>
+                    <td>".$total_big_panel_quantity."</td>
+                    <td>".$total_plain_panel_quantity."</td>
+                    <td></td>
+                    <td>".$total_small_panel_quantity."</td>
+                    <td></td>
+                    </tr>";
                 echo "</table>";
             } else {
                 // If no data found, display only the table headers
