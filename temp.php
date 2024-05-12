@@ -6,18 +6,17 @@ include_once 'include/admin-main.php';
 // Default value for Labour Name
 
 $small_sheet_color = isset($_POST['small_sheet_color']) ? $_POST['small_sheet_color'] : "";
+$buyer_name = isset($_POST['buyer_name']) ? $_POST['buyer_name'] : "";
+$invoice_number = isset($_POST['invoice_number']) ? $_POST['invoice_number'] : "";
 // Logic to fetch product names from the database
-$product_query = "SELECT DISTINCT product_name FROM sheets_product ORDER BY product_name ASC";
+$product_query = "SELECT DISTINCT product_name FROM sheets_production_product ORDER BY product_name ASC";
 $product_result = mysqli_query($con, $product_query);
-
-$labour_query = "SELECT DISTINCT labour_name FROM labour ORDER BY labour_name ASC";
-$labour_result = mysqli_query($con, $labour_query);
 
 // Logic to fetch product bases and colors based on selected product
 $selected_product = isset($_POST['product_name']) ? $_POST['product_name'] : null;
 if ($selected_product) {
-    $product_base_query = "SELECT DISTINCT product_base FROM sheets_product WHERE product_name = '$selected_product' ORDER BY product_base ASC";
-    $product_color_query = "SELECT DISTINCT product_color FROM sheets_product WHERE product_name = '$selected_product' ORDER BY product_color ASC";
+    $product_base_query = "SELECT DISTINCT product_base FROM sheets_production_product WHERE product_name = '$selected_product' ORDER BY product_base ASC";
+    $product_color_query = "SELECT DISTINCT product_color FROM sheets_production_product WHERE product_name = '$selected_product' ORDER BY product_color ASC";
     $product_base_result = mysqli_query($con, $product_base_query);
     $product_color_result = mysqli_query($con, $product_color_query);
 }
@@ -25,7 +24,7 @@ if ($selected_product) {
 // Logic to fetch product bases and colors based on selected product
 $selected_product = isset($_POST['product_name']) ? $_POST['product_name'] : null;
 if ($selected_product) {
-    $product_small_query = "SELECT DISTINCT small_sheet_color FROM sheets_small_stock WHERE product_name = '$selected_product'";
+    $product_small_query = "SELECT DISTINCT small_sheet_color FROM production_small_stock WHERE product_name = '$selected_product'";
     $product_small_result = mysqli_query($con, $product_small_query);
  
 }
@@ -33,19 +32,19 @@ if ($selected_product) {
 
 // Function to fetch current number from the database
 function getCurrentNumber($con) {
-    $result = mysqli_query($con, "SELECT sheets_received_temp FROM challan_temp LIMIT 1");
+    $result = mysqli_query($con, "SELECT sheets_selling_temp FROM challan_temp LIMIT 1");
     $row = mysqli_fetch_assoc($result);
-    return $row['sheets_received_temp'];
+    return $row['sheets_selling_temp'];
 }
 
 // Function to update the current number in the database
 function updateCurrentNumber($con, $newNumber) {
-    mysqli_query($con, "UPDATE challan_temp SET sheets_received_temp = $newNumber");
+    mysqli_query($con, "UPDATE challan_temp SET sheets_selling_temp = $newNumber");
 }
 
 // Function to generate the code prefix
 function generateCodePrefix($number) {
-    return "KSI-SI-" . $number;
+    return "KSI-SS-" . $number;
 }
 
 // Function to generate the Challan number
@@ -71,11 +70,12 @@ $errors = array();
 
 if (isset($_POST['add_product'])) {
     // Validate input
-    if (empty($_POST['product_name']) || empty($_POST['product_base']) || empty($_POST['product_color'])) {
+    if (empty($_POST['product_name']) || empty($_POST['product_base']) || empty($_POST['product_color']) || empty($_POST['product_base']) ){
         $errors[] = "Please fill in all fields.";
     } else {
         // Sanitize input
-       
+        $invoice_number = isset($_POST['invoice_number']) ? mysqli_real_escape_string($con, $_POST['invoice_number']) : "";
+        $buyer_name = isset($_POST['buyer_name']) ? mysqli_real_escape_string($con, $_POST['buyer_name']) : "";
         $product_name = mysqli_real_escape_string($con, $_POST['product_name']);
         $product_base = mysqli_real_escape_string($con, $_POST['product_base']);
         $product_color = mysqli_real_escape_string($con, $_POST['product_color']);
@@ -86,8 +86,8 @@ if (isset($_POST['add_product'])) {
 
 
         
-        // Fetch remaining_big_panel from sheets_product table
-        $remaining_big_panel_query = "SELECT remaining_big_panel FROM sheets_product WHERE product_name = '$product_name' AND product_base = '$product_base' AND product_color = '$product_color'";
+        // Fetch remaining_big_panel from sheets_production_product table
+        $remaining_big_panel_query = "SELECT remaining_big_panel FROM sheets_production_product WHERE product_name = '$product_name' AND product_base = '$product_base' AND product_color = '$product_color'";
         $remaining_big_panel_result = mysqli_query($con, $remaining_big_panel_query);
         $row = mysqli_fetch_assoc($remaining_big_panel_result);
         $remaining_big_panel = $row['remaining_big_panel'];
@@ -95,13 +95,13 @@ if (isset($_POST['add_product'])) {
         if ($quantity1 > $remaining_big_panel) {
             $errors[] = "Requested quantity exceeds available stock for $product_name, $product_base, $product_color.";
         }else{
-         // Update remaining_big_panel in sheets_product table
+         // Update remaining_big_panel in sheets_production_product table
         $updated_remaining_big_panel = $remaining_big_panel - (int)$quantity1;
-        $update_remaining_big_panel_query = "UPDATE sheets_product SET remaining_big_panel = $updated_remaining_big_panel WHERE product_name = '$product_name' AND product_base = '$product_base' AND product_color = '$product_color'";
+        $update_remaining_big_panel_query = "UPDATE sheets_production_product SET remaining_big_panel = $updated_remaining_big_panel WHERE product_name = '$product_name' AND product_base = '$product_base' AND product_color = '$product_color'";
         mysqli_query($con, $update_remaining_big_panel_query);}
 
-        // Fetch remaining_plain_panel from sheets_product table
-        $remaining_plain_panel_query = "SELECT remaining_plain_panel FROM sheets_product WHERE product_name = '$product_name' AND product_base = '$product_base' AND product_color = '$product_color'";
+        // Fetch remaining_plain_panel from sheets_production_product table
+        $remaining_plain_panel_query = "SELECT remaining_plain_panel FROM sheets_production_product WHERE product_name = '$product_name' AND product_base = '$product_base' AND product_color = '$product_color'";
         $remaining_plain_panel_result = mysqli_query($con, $remaining_plain_panel_query);
         $row = mysqli_fetch_assoc($remaining_plain_panel_result);
         $remaining_plain_panel = $row['remaining_plain_panel'];
@@ -109,38 +109,38 @@ if (isset($_POST['add_product'])) {
         if ($quantity2 > $remaining_plain_panel) {
             $errors[] = "Requested quantity exceeds available stock for $product_name, $product_base, $product_color.";
         }else{
-         // Update remaining_plain_panel in sheets_product table
+         // Update remaining_plain_panel in sheets_production_product table
         $updated_remaining_plain_panel = $remaining_plain_panel - (int)$quantity2;
-        $update_remaining_plain_panel_query = "UPDATE sheets_product SET remaining_plain_panel = $updated_remaining_plain_panel WHERE product_name = '$product_name' AND product_base = '$product_base' AND product_color = '$product_color'";
+        $update_remaining_plain_panel_query = "UPDATE sheets_production_product SET remaining_plain_panel = $updated_remaining_plain_panel WHERE product_name = '$product_name' AND product_base = '$product_base' AND product_color = '$product_color'";
         mysqli_query($con, $update_remaining_plain_panel_query);
         }
          
         
          if (empty($_POST['small_sheet_color'])) {
             
-         $remaining_small_panel_query = "SELECT remaining_small_panel FROM sheets_product WHERE product_name = '$product_name' AND product_base = '$product_base' AND product_color = '$product_color'";
+         $remaining_small_panel_query = "SELECT remaining_small_panel FROM sheets_production_product WHERE product_name = '$product_name' AND product_base = '$product_base' AND product_color = '$product_color'";
          $remaining_small_panel_result = mysqli_query($con, $remaining_small_panel_query);
          $row = mysqli_fetch_assoc($remaining_small_panel_result);
          $remaining_small_panel = $row['remaining_small_panel'];
          if ($quantity3 > $remaining_small_panel) {
             $errors[] = "Requested quantity exceeds available stock for $product_name, $product_base, $product_color.";
         }else{
-            // Update remaining_small_panel in sheets_product table
+            // Update remaining_small_panel in sheets_production_product table
             $updated_remaining_small_panel = $remaining_small_panel - (int)$quantity3;
-            $update_remaining_small_panel_query = "UPDATE sheets_product SET remaining_small_panel = $updated_remaining_small_panel WHERE product_name = '$product_name' AND product_base = '$product_base' AND product_color = '$product_color'";
+            $update_remaining_small_panel_query = "UPDATE sheets_production_product SET remaining_small_panel = $updated_remaining_small_panel WHERE product_name = '$product_name' AND product_base = '$product_base' AND product_color = '$product_color'";
             mysqli_query($con, $update_remaining_small_panel_query); }
          } else {
             
-         $remaining_small_panel_query = "SELECT small_sheet_balance FROM sheets_small_stock WHERE product_name = '$product_name'";
+         $remaining_small_panel_query = "SELECT small_sheet_balance FROM production_small_stock WHERE product_name = '$product_name'";
          $remaining_small_panel_result = mysqli_query($con, $remaining_small_panel_query);
          $row = mysqli_fetch_assoc($remaining_small_panel_result);
          $remaining_small_panel = $row['small_sheet_balance'];
          if ($quantity3 > $remaining_small_panel) {
             $errors[] = "Requested quantity exceeds available stock for $product_name, $product_base, $product_color.";
         }else{
-        // Update remaining_small_panel in sheets_product table
+        // Update remaining_small_panel in sheets_production_product table
         $updated_remaining_small_panel = $remaining_small_panel - (int)$quantity3;
-        $update_remaining_small_panel_query = "UPDATE sheets_small_stock SET small_sheet_balance = $updated_remaining_small_panel WHERE product_name = '$product_name'";
+        $update_remaining_small_panel_query = "UPDATE production_small_stock SET small_sheet_balance = $updated_remaining_small_panel WHERE product_name = '$product_name'";
         mysqli_query($con, $update_remaining_small_panel_query);}
 
       }
@@ -153,7 +153,8 @@ if (isset($_POST['add_product'])) {
             // Insert data into temporary session storage
             $temp_product = array(
                 'challan_no' => $challan_no,
-                'labour_name' => $labour_name,
+                'invoice_number' => $invoice_number,
+                'buyer_name' => $buyer_name,
                 'small_sheet_color' => $small_sheet_color,
                 'product_name' => $product_name,
                 'product_base' => $product_base,
@@ -173,7 +174,7 @@ if (isset($_POST['delete_product'])) {
     // Get the index of the product to be deleted
     $delete_index = $_POST['delete_index'];
 
-    // Get the product details to update remaining_quantity in sheets_product table
+    // Get the product details to update remaining_quantity in sheets_production_product table
     $deleted_product = $_SESSION['temp_products'][$delete_index];
     $small_sheet_color = isset($deleted_product['small_sheet_color']) ? $deleted_product['small_sheet_color'] : "";
     $product_name = mysqli_real_escape_string($con, $deleted_product['product_name']);
@@ -183,49 +184,49 @@ if (isset($_POST['delete_product'])) {
     $deleted_quantity2 = mysqli_real_escape_string($con, $deleted_product['quantity2']);
     $deleted_quantity3 = mysqli_real_escape_string($con, $deleted_product['quantity3']);
    
-    // Fetch remaining_big_panel from sheets_product table
-    $remaining_big_panel_query = "SELECT remaining_big_panel FROM sheets_product WHERE product_name = '$product_name' AND product_base = '$product_base' AND product_color = '$product_color'";
+    // Fetch remaining_big_panel from sheets_production_product table
+    $remaining_big_panel_query = "SELECT remaining_big_panel FROM sheets_production_product WHERE product_name = '$product_name' AND product_base = '$product_base' AND product_color = '$product_color'";
     $remaining_big_panel_result = mysqli_query($con, $remaining_big_panel_query);
     $row = mysqli_fetch_assoc($remaining_big_panel_result);
     $remaining_big_panel = $row['remaining_big_panel'];
 
-    // Update remaining_big_panel in sheets_product table
+    // Update remaining_big_panel in sheets_production_product table
     $updated_remaining_big_panel = $remaining_big_panel + (int)$deleted_quantity1;
-    $update_remaining_big_panel_query = "UPDATE sheets_product SET remaining_big_panel = $updated_remaining_big_panel WHERE product_name = '$product_name' AND product_base = '$product_base' AND product_color = '$product_color'";
+    $update_remaining_big_panel_query = "UPDATE sheets_production_product SET remaining_big_panel = $updated_remaining_big_panel WHERE product_name = '$product_name' AND product_base = '$product_base' AND product_color = '$product_color'";
     mysqli_query($con, $update_remaining_big_panel_query);
 
-    // Fetch remaining_plain_panel from sheets_product table
-    $remaining_plain_panel_query = "SELECT remaining_plain_panel FROM sheets_product WHERE product_name = '$product_name' AND product_base = '$product_base' AND product_color = '$product_color'";
+    // Fetch remaining_plain_panel from sheets_production_product table
+    $remaining_plain_panel_query = "SELECT remaining_plain_panel FROM sheets_production_product WHERE product_name = '$product_name' AND product_base = '$product_base' AND product_color = '$product_color'";
     $remaining_plain_panel_result = mysqli_query($con, $remaining_plain_panel_query);
     $row = mysqli_fetch_assoc($remaining_plain_panel_result);
     $remaining_plain_panel = $row['remaining_plain_panel'];
 
-    // Update remaining_plain_panel in sheets_product table
+    // Update remaining_plain_panel in sheets_production_product table
     $updated_remaining_plain_panel = $remaining_plain_panel + (int)$deleted_quantity2;
-    $update_remaining_plain_panel_query = "UPDATE sheets_product SET remaining_plain_panel = $updated_remaining_plain_panel WHERE product_name = '$product_name' AND product_base = '$product_base' AND product_color = '$product_color'";
+    $update_remaining_plain_panel_query = "UPDATE sheets_production_product SET remaining_plain_panel = $updated_remaining_plain_panel WHERE product_name = '$product_name' AND product_base = '$product_base' AND product_color = '$product_color'";
     mysqli_query($con, $update_remaining_plain_panel_query);
 
     // Check if small_sheet_color is not selected or empty
     if (empty($small_sheet_color)) {
-        $remaining_small_panel_query = "SELECT remaining_small_panel FROM sheets_product WHERE product_name = '$product_name' AND product_base = '$product_base' AND product_color = '$product_color'";
+        $remaining_small_panel_query = "SELECT remaining_small_panel FROM sheets_production_product WHERE product_name = '$product_name' AND product_base = '$product_base' AND product_color = '$product_color'";
         $remaining_small_panel_result = mysqli_query($con, $remaining_small_panel_query);
         $row = mysqli_fetch_assoc($remaining_small_panel_result);
         $remaining_small_panel = $row['remaining_small_panel'];
 
-        // Update remaining_small_panel in sheets_product table
+        // Update remaining_small_panel in sheets_production_product table
         $updated_remaining_small_panel = $remaining_small_panel + (int)$deleted_quantity3;
-        $update_remaining_small_panel_query = "UPDATE sheets_product SET remaining_small_panel = $updated_remaining_small_panel WHERE product_name = '$product_name' AND product_base = '$product_base' AND product_color = '$product_color'";
+        $update_remaining_small_panel_query = "UPDATE sheets_production_product SET remaining_small_panel = $updated_remaining_small_panel WHERE product_name = '$product_name' AND product_base = '$product_base' AND product_color = '$product_color'";
         mysqli_query($con, $update_remaining_small_panel_query); 
     } else {
-        // Update small_sheet_balance in sheets_small_stock table
-        $remaining_small_panel_query = "SELECT small_sheet_balance FROM sheets_small_stock WHERE product_name = '$product_name'";
+        // Update small_sheet_balance in production_small_stock table
+        $remaining_small_panel_query = "SELECT small_sheet_balance FROM production_small_stock WHERE product_name = '$product_name'";
         $remaining_small_panel_result = mysqli_query($con, $remaining_small_panel_query);
         $row = mysqli_fetch_assoc($remaining_small_panel_result);
         $remaining_small_panel = $row['small_sheet_balance'];
 
-        // Update remaining_small_panel in sheets_small_stock table
+        // Update remaining_small_panel in production_small_stock table
         $updated_remaining_small_panel = $remaining_small_panel + (int)$deleted_quantity3;
-        $update_remaining_small_panel_query = "UPDATE sheets_small_stock SET small_sheet_balance = $updated_remaining_small_panel WHERE product_name = '$product_name'";
+        $update_remaining_small_panel_query = "UPDATE production_small_stock SET small_sheet_balance = $updated_remaining_small_panel WHERE product_name = '$product_name'";
         mysqli_query($con, $update_remaining_small_panel_query);
     }
 
@@ -246,7 +247,8 @@ if (isset($_POST['submit_products'])) {
     } else {
         foreach ($temp_products as $product) {
             $challan_no = mysqli_real_escape_string($con, $product['challan_no']);
-            $labour_name = mysqli_real_escape_string($con, $product['labour_name']);
+            $invoice_number = mysqli_real_escape_string($con, $product['invoice_number']);
+            $buyer_name = mysqli_real_escape_string($con, $product['buyer_name']);
             $small_sheet_color = mysqli_real_escape_string($con, $product['small_sheet_color']);
             $product_name = mysqli_real_escape_string($con, $product['product_name']);
             $product_base = mysqli_real_escape_string($con, $product['product_base']);
@@ -257,8 +259,8 @@ if (isset($_POST['submit_products'])) {
             $date_and_time = mysqli_real_escape_string($con, $product['date_and_time']);
 
             // Insert product into the database
-            $insert_query = "INSERT INTO sheets_issue (challan_no, labour_name , product_name, product_base, product_color, quantity1, quantity2, quantity3, small_panel_color) 
-                            VALUES ('$challan_no', '$product_name','$labour_name', '$product_base', '$product_color', '$quantity1' , '$quantity2', '$quantity3', '$small_sheet_color')";
+            $insert_query = "INSERT INTO sheets_selling (challan_no,invoice_number, buyer_name , product_name, product_base, product_color, quantity1, quantity2, quantity3, small_panel_color) 
+                            VALUES ('$challan_no', '$invoice_number','$buyer_name', '$product_name', '$product_base', '$product_color', '$quantity1' , '$quantity2', '$quantity3', '$small_sheet_color')";
             $insert_result = mysqli_query($con, $insert_query);
 
             if (!$insert_result) {
@@ -330,6 +332,12 @@ if (isset($_POST['submit_products'])) {
                                     <div class="form-group">
                                         <label for="challan_no">Challan No:</label>
                                         <input type="text" class="form-control" id="challan_no" name="challan_no" value="<?php echo $challan_no; ?>" readonly>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="buyer_name">Invoice Number:</label>
+                                        <input type="text" class="form-control" id="invoice_number" name="invoice_number" value="<?php echo $invoice_number; ?>" placeholder="Enter Invoice Number" >
                                     </div>
                                 </div>
                                
@@ -412,13 +420,8 @@ if (isset($_POST['submit_products'])) {
                             <div class="row">
                             <div class="col-md-6">
                                     <div class="form-group">
-                                      <label for="labour_name">Labour Name:</label>
-                                         <select class="form-select" id="labour_name" name="labour_name">
-                                            <option value="" selected disabled>Select Labour</option>
-                                            <?php while ($row = mysqli_fetch_assoc($labour_result)) : ?>
-                                            <option value="<?php echo $row['labour_name']; ?>"><?php echo $row['labour_name']; ?></option>
-                                            <?php endwhile; ?>
-                                        </select>
+                                        <label for="buyer_name">Buyer Name:</label>
+                                        <input type="text" class="form-control" id="buyer_name" name="buyer_name" value="<?php echo $buyer_name; ?>" placeholder="Enter Labour Name" >
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -441,7 +444,7 @@ if (isset($_POST['submit_products'])) {
                                     <thead>
                                         <tr>
                                             <th>Challan No</th>
-                                            <th>Labour Name</th>
+                                            <th>Buyer Name</th>
                                             <th>Product Name</th>
                                             <th>Product Base</th>
                                             <th>Product Color</th>
@@ -457,7 +460,7 @@ if (isset($_POST['submit_products'])) {
                                             <?php foreach ($_SESSION['temp_products'] as $key => $product) : ?>
                                                 <tr>
                                                     <td><?php echo $product['challan_no']; ?></td>
-                                                    <td><?php echo $product['labour_name']; ?></td>
+                                                    <td><?php echo $product['buyer_name']; ?></td>
                                                     <td><?php echo $product['product_name']; ?></td>
                                                     <td><?php echo $product['product_base']; ?></td>
                                                     <td><?php echo $product['product_color']; ?></td>

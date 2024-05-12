@@ -33,14 +33,14 @@ if ($selected_product) {
 
 // Function to fetch current number from the database
 function getCurrentNumber($con) {
-    $result = mysqli_query($con, "SELECT sheets_received_temp FROM challan_temp LIMIT 1");
+    $result = mysqli_query($con, "SELECT sheets_issue_temp FROM challan_temp LIMIT 1");
     $row = mysqli_fetch_assoc($result);
-    return $row['sheets_received_temp'];
+    return $row['sheets_issue_temp'];
 }
 
 // Function to update the current number in the database
 function updateCurrentNumber($con, $newNumber) {
-    mysqli_query($con, "UPDATE challan_temp SET sheets_received_temp = $newNumber");
+    mysqli_query($con, "UPDATE challan_temp SET sheets_issue_temp = $newNumber");
 }
 
 // Function to generate the code prefix
