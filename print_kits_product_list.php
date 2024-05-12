@@ -2,7 +2,6 @@
 session_start();
 include_once 'include/connection.php';
 include_once 'include/admin-main.php';
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -16,7 +15,6 @@ include_once 'include/admin-main.php';
             background: white;
             display: block;
             margin: 1.0cm;
-           
         }
         @media print {
             body, page {
@@ -77,14 +75,16 @@ include_once 'include/admin-main.php';
 
                 // Fetch and display data
                 while($data = mysqli_fetch_array($show)) {
-                    echo "<tr>
-                    <td>".$sn."</td>
-                    <td>".$data['product_name']."</td>
-                    <td>".$data['product_base']."</td>
-                    <td>".$data['product_color']."</td>
-                    <td>".$data['remaining_quantity']."</td>
-                    </tr>";
-                    $sn++; // Increment serial number
+                    if($data['remaining_quantity'] > 0) { // Only display if remaining_quantity is greater than 0
+                        echo "<tr>
+                        <td>".$sn."</td>
+                        <td>".$data['product_name']."</td>
+                        <td>".$data['product_base']."</td>
+                        <td>".$data['product_color']."</td>
+                        <td>".$data['remaining_quantity']."</td>
+                        </tr>";
+                        $sn++; // Increment serial number
+                    }
                 }
 
                 echo "</table>";
