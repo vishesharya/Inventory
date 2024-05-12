@@ -174,7 +174,7 @@ if (isset($_POST['view_entries'])) {
             flex-direction: row;
             align-items: flex-end;
             justify-content: space-between;
-            line-height: 5px;
+            
         }
         .heading {
             text-align: center;
@@ -185,6 +185,9 @@ if (isset($_POST['view_entries'])) {
         .issue_heading{
             text-align: center;
             justify-content: center;
+        }
+        .invoice-header{
+            line-height: 5px;
         }
     </style> 
 </head>
