@@ -133,10 +133,13 @@ $result = mysqli_query($con, "SELECT id, product_name, product_base, product_col
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php 
-                                $sn=1;
-                                while($data=mysqli_fetch_array($result)) {
-                                ?>
+                                <?php
+                                $totalRemainingQuantity = 0; // Variable to store total remaining quantity
+                                $sn = 1; // Counter for serial number
+                                while($data = mysqli_fetch_array($result)) {
+                                    // Accumulate remaining quantity for total calculation
+                                    $totalRemainingQuantity += $data['remaining_quantity'];
+                                    ?>
                                 <tr>
                                     <td><?php echo $sn; ?>.</td>
                                     <td><?php echo $data['product_name']; ?></td>
@@ -151,6 +154,14 @@ $result = mysqli_query($con, "SELECT id, product_name, product_base, product_col
                                 }  
                                 ?>
                             </tbody>
+                            <tfoot>
+    <tr>
+        <th colspan="4">Total</th>
+        <th><?php echo $totalRemainingQuantity; ?></th>
+        <th></th>
+        <th></th>
+    </tr>
+</tfoot>
                         </table>
                     </div>
                 </div>
