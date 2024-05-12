@@ -235,7 +235,7 @@ if (isset($_POST['view_entries'])) {
                 <?php endwhile; ?>
             </tbody>
             <tr>
-                <td colspan="4"></td>
+                <td colspan="5"></td>
                 <td><strong>Total:</strong></td>
                 <td><?php echo $totalIssueQuantity; ?></td>
             </tr>
