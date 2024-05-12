@@ -2,7 +2,6 @@
 session_start();
 include_once 'include/connection.php';
 include_once 'include/admin-main.php';
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -16,7 +15,6 @@ include_once 'include/admin-main.php';
             background: white;
             display: block;
             margin: 1.0cm;
-           
         }
         @media print {
             body, page {
@@ -58,6 +56,9 @@ include_once 'include/admin-main.php';
             // Initialize serial number
             $sn = 1;
 
+            // Initialize total quantity
+            $total_quantity = 0;
+
             // Initialize SQL query
             $q = "SELECT  `product_name`, `product_base`, `product_color`, `remaining_quantity` FROM products";
 
@@ -76,7 +77,6 @@ include_once 'include/admin-main.php';
                     <th>Balance</th>
                     </tr>";
 
-             
                 while($data = mysqli_fetch_array($show)) {
                     if ($data['remaining_quantity'] > 0) {
                         echo "<tr>
@@ -87,8 +87,16 @@ include_once 'include/admin-main.php';
                         <td>".$data['remaining_quantity']."</td>
                         </tr>";
                         $sn++; // Increment serial number
+                        // Add remaining quantity to total
+                        $total_quantity += $data['remaining_quantity'];
                     }
                 }
+
+                // Display total row
+                echo "<tr>
+                    <td colspan='4' style='text-align: right;'>Total:</td>
+                    <td>".$total_quantity."</td>
+                </tr>";
 
                 echo "</table>";
             } else {
@@ -107,7 +115,7 @@ include_once 'include/admin-main.php';
             ?>
         </page>
     </center>
-    <script type="text/javascript">
+    <script type="text/javascript"> 
         window.print();
     </script>   
 </body>
