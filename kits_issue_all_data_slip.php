@@ -181,6 +181,10 @@ if (isset($_POST['view_entries'])) {
             color: #333;
             line-height: 5px;
         }
+        .issue_heading{
+            text-align: center;
+            justify-content: center;
+        }
     </style> 
 </head>
 <body>
