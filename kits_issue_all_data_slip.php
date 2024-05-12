@@ -200,14 +200,14 @@ if (isset($_POST['view_entries'])) {
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="from_date">From Date:</label>
-                                        <input type="date" class="form-control" id="from_date" name="from_date">
+                                        <input type="date" class="form-control" id="from_date" name="from_date" required>
                                     </div>
                                 </div>
                                 <!-- To date -->
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="to_date">To Date:</label>
-                                        <input type="date" class="form-control" id="to_date" name="to_date">
+                                        <input type="date" class="form-control" id="to_date" name="to_date" required>
                                     </div>
                                 </div>
 
@@ -217,7 +217,7 @@ if (isset($_POST['view_entries'])) {
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="select_stitcher">Select Stitcher:</label>
-                                        <select class="form-select" id="select_stitcher" name="stitcher_name">
+                                        <select class="form-select" id="select_stitcher" name="stitcher_name" required>
          
                                         <option value="">Select Stitcher</option>
                                             <?php while ($row = mysqli_fetch_assoc($stitcher_result)) : ?>
