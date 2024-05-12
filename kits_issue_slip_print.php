@@ -131,8 +131,8 @@ $stitcher_contact = $stitcher_contact_row['stitcher_contact'];
                 <div>
                     <p class="stitcher_bold" >Stitcher : <?php echo $stitcher_name; ?></p>
                     <p>Stitcher Contact : <?php echo $stitcher_contact; ?></p>
-                    <p>Stitcher Aadhaar : <?php echo $stitcher_aadhar; ?></p>
-                    <p>Stitcher PAN : <?php echo $stitcher_pan; ?></p>
+                    <p>Stitcher Aadhar : <?php echo $stitcher_aadhar; ?></p>
+                    <p>Stitcher Pan : <?php echo $stitcher_pan; ?></p>
                     <p>Stitcher Address : <?php echo $stitcher_address; ?></p>
                 </div>
                 <div>
