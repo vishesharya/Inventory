@@ -421,7 +421,7 @@ if (isset($_POST['submit_products'])) {
                             <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="buyer_name">Buyer Name:</label>
-                                        <input type="text" class="form-control" id="buyer_name" name="buyer_name" value="<?php echo $buyer_name; ?>" placeholder="Enter Labour Name" >
+                                        <input type="text" class="form-control" id="buyer_name" name="buyer_name" value="<?php echo $buyer_name; ?>" placeholder="Enter Buyer Name" >
                                     </div>
                                 </div>
                                 <div class="col-md-6">
