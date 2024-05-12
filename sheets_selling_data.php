@@ -79,7 +79,7 @@ include_once 'include/admin-main.php';
                 <div class="content">
                     <div class="pad margin no-print">
                         <div class="callout callout-info">
-                            <form action="sheets_received_data_print.php" method="POST" class="form-horizontal" enctype="multipart/form-data"  autocomplete="off">
+                            <form action="./sheets_selling_data_print.php" method="POST" class="form-horizontal" enctype="multipart/form-data"  autocomplete="off">
                                 <div class="box-body">
                                     <div class="form-group">
                                         <label for="inputEmail3" class="col-sm-1 control-label">From Date</label>
