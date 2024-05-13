@@ -129,7 +129,7 @@ if (isset($_POST['view_entries'])) {
             #form {
                 display: none;
             .container_slip{
-                margin: 200px;
+                background-color: aqua;
 
             }
             }
