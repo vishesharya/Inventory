@@ -94,6 +94,10 @@ if (isset($_POST['add_product'])) {
         $update_remaining_quantity_query = "UPDATE kits_product SET remaining_quantity = $updated_remaining_quantity WHERE product_name = '$product_name' AND product_base = '$product_base' AND product_color = '$product_color'";
         mysqli_query($con, $update_remaining_quantity_query);
 
+        // Update status in sheets_job_work table
+        $update_status_query = "UPDATE sheets_job_work SET status = 1 WHERE challan_no_issue = '$challan_no_issue' AND product_name = '$product_name' AND product_base = '$product_base' AND product_color = '$product_color'";
+        mysqli_query($con, $update_status_query);
+        
         // Insert data into temporary session storage
         $temp_product = array(
             'challan_no' => $challan_no,
@@ -108,6 +112,7 @@ if (isset($_POST['add_product'])) {
         );
         $_SESSION['temp_products'][] = $temp_product;
     }
+
 }
 
 // Check if delete button is clicked
@@ -135,6 +140,11 @@ if (isset($_POST['delete_product'])) {
     // Update remaining_quantity in kits_product table
     $update_remaining_quantity_query = "UPDATE kits_product SET remaining_quantity = $updated_remaining_quantity WHERE product_name = '$product_name' AND product_base = '$product_base' AND product_color = '$product_color'";
     mysqli_query($con, $update_remaining_quantity_query);
+
+    // Update status in sheets_job_work table
+    $update_status_query = "UPDATE sheets_job_work SET status = 0 WHERE challan_no_issue = '$challan_no_issue' AND product_name = '$product_name' AND product_base = '$product_base' AND product_color = '$product_color'";
+    mysqli_query($con, $update_status_query);
+    
 
     // Update the total in the session data
     $_SESSION['temp_products'][$delete_index]['total'] -= $deleted_total;
