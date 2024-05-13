@@ -132,9 +132,15 @@ include_once 'include/admin-main.php';
                             </thead>
                             <tbody>
                                 <?php 
+                                $total_quantity1 = 0;
+                                $total_quantity2 = 0;
+                                $total_quantity3 = 0;
                                 $sn=1;
                                 $result=mysqli_query($con, "SELECT * FROM sheets_received"); // Selecting all fields from the kits_received table
                                 while($data=mysqli_fetch_array($result)) {
+                                    $total_quantity1 += $data['quantity1'];
+                                    $total_quantity2 += $data['quantity2'];
+                                    $total_quantity3 += $data['quantity3'];
                                 ?>
                                 <tr>
                                     <td><?php echo $sn; ?>.</td>
@@ -153,6 +159,14 @@ include_once 'include/admin-main.php';
                                 }  
                                 ?>
                             </tbody>
+                            <tr>
+                <th colspan="7">Total:</th>
+                <th><?php echo $total_quantity1; ?></th>
+                <th><?php echo $total_quantity2; ?></th>
+                <th>-</th> 
+                <th><?php echo $total_quantity3; ?></th>
+                <th>-</th> 
+            </tr>
                         </table>
                     </div>
                 </div>
