@@ -113,13 +113,23 @@ if (isset($_POST['view_entries'])) {
          padding: 10px; /* Add padding for better spacing */
         }
         @media print {
-            #form {
-                display: none;
-            }
-            .tablefoot{
-            width: 400px;
-        }
-        }
+    #form {
+        display: none;
+    }
+    .tablefoot {
+        width: 400px;
+    }
+    body {
+        margin: 20px; /* Add margin for printing */
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Add box-shadow for printing */
+        background-color: white; /* Change background color for printing */
+    }
+    .card {
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Add box-shadow for printing */
+    }
+}
+
+        
         .heading {
             text-align: center;
             margin-bottom: 20px;
