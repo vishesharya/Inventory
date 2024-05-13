@@ -14,11 +14,11 @@ $product_query = "SELECT DISTINCT product_name FROM kits_product ORDER BY produc
 $product_result = mysqli_query($con, $product_query);
 
 // Fetch associated challan numbers for selected stitcher
-
+if (isset($_POST['labour_name'])) {
     $selected_stitcher = mysqli_real_escape_string($con, $_POST['labour_name']);
     $challan_query_issue = "SELECT DISTINCT  challan_no_issue FROM sheets_job_work WHERE labour_name = '$selected_labour' AND status = 0";
     $challan_result_issue = mysqli_query($con, $challan_query_issue);
-
+}
 
 // Fetch product names based on selected stitcher and challan number
 if (isset($_POST['challan_no_issue'])) {
@@ -251,13 +251,9 @@ if (isset($_POST['submit_products'])) {
                                     <div class="form-group">
                                         <label for="select_challan">Select Issue Challan No:</label>
                                         <select class="form-select" id="select_challan" name="challan_no_issue">
-                                            <option value="" selected disabled>Select Issue Challan No</option>
-                                            <?php if (isset($challan_result_issue)) : ?>
-                                                <?php while ($row = mysqli_fetch_assoc($challan_result_issue)) : ?>
-                                                    <option value="<?php echo $row['challan_no_issue']; ?>"><?php echo $row['challan_no_issue']; ?></option>
-                                                <?php endwhile; ?>
-                                            <?php endif; ?>
+                                         <option value="" selected disabled>Select Issue Challan No</option>
                                         </select>
+
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -370,36 +366,39 @@ if (isset($_POST['submit_products'])) {
     </div>
 </body>
 <script>
-    // Function to update product colors based on selected product name and base
-    function updateProductColors() {
-        var productName = document.getElementById('product_name').value;
-        var productBase = document.getElementById('product_base').value;
+   
+// Function to fetch challan numbers dynamically based on selected labour
+function fetchChallanNumbers() {
+    var labourName = document.getElementById('select_labour').value;
+    var challanSelect = document.getElementById('select_challan');
 
-        // Make an AJAX request to fetch product colors based on product name and base
-        var xhr = new XMLHttpRequest();
-        xhr.onreadystatechange = function() {
-            if (this.readyState === 4 && this.status === 200) {
-                var colors = JSON.parse(this.responseText);
-                var productColorSelect = document.getElementById('product_color');
-                // Clear existing options
-                productColorSelect.innerHTML = '<option value="" selected disabled>Select Product Color</option>';
-                // Add fetched colors as options
-                colors.forEach(function(color) {
-                    var option = document.createElement('option');
-                    option.value = color;
-                    option.text = color;
-                    productColorSelect.appendChild(option);
-                });
-            }
-        };
-        xhr.open('GET', 'kits_issue_product_color.php?product_name=' + productName + '&product_base=' + productBase, true);
-        xhr.send();
-    }
+    // Make an AJAX request to fetch challan numbers
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function() {
+        if (this.readyState === 4 && this.status === 200) {
+            // Clear existing options
+            challanSelect.innerHTML = '<option value="" selected disabled>Select Issue Challan No</option>';
+            // Parse the JSON response
+            var challanNumbers = JSON.parse(this.responseText);
+            // Add fetched challan numbers as options
+            challanNumbers.forEach(function(challan) {
+                var option = document.createElement('option');
+                option.value = challan;
+                option.text = challan;
+                challanSelect.appendChild(option);
+            });
+        }
+    };
+    // Make GET request to fetch_challan_numbers.php with labour_name parameter
+    xhr.open('GET', 'kits_received_challan_no_issue_fatch.php?labour_name=' + labourName, true);
+    xhr.send();
+}
 
-    // Event listeners for product name and product base change
-    document.getElementById('product_name').addEventListener('change', updateProductColors);
-    document.getElementById('product_base').addEventListener('change', updateProductColors);
+// Add event listener to call fetchChallanNumbers() when labour name is selected
+document.getElementById('select_labour').addEventListener('change', fetchChallanNumbers);
 </script>
+
+
 </html>
 
 
