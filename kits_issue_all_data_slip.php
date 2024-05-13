@@ -128,6 +128,9 @@ if (isset($_POST['view_entries'])) {
         @media print {
             #form {
                 display: none;
+            .container_slip{
+                margin: 20px;
+            }
             }
         }
         .container_slip {
