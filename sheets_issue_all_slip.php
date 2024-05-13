@@ -188,14 +188,14 @@ if (isset($_POST['view_entries'])) {
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="from_date">From Date:</label>
-                                        <input type="date" class="form-control" id="from_date" name="from_date">
+                                        <input type="date" class="form-control" id="from_date" name="from_date" required>
                                     </div>
                                 </div>
                                 <!-- To date -->
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="to_date">To Date:</label>
-                                        <input type="date" class="form-control" id="to_date" name="to_date">
+                                        <input type="date" class="form-control" id="to_date" name="to_date" required>
                                     </div>
                                 </div>
 
@@ -205,7 +205,7 @@ if (isset($_POST['view_entries'])) {
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="select_labour">Select labour:</label>
-                                        <select class="form-select" id="select_labour" name="labour_name">
+                                        <select class="form-select" id="select_labour" name="labour_name" required>
          
                                         <option value="">Select labour</option>
                                             <?php while ($row = mysqli_fetch_assoc($labour_result)) : ?>
@@ -221,7 +221,7 @@ if (isset($_POST['view_entries'])) {
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="select_challan">Select Receive Challan No:</label>
-                                        <select class="form-select" id="select_challan" name="challan_no">
+                                        <select class="form-select" id="select_challan" name="challan_no" required>
                                             <option value="" selected disabled>Select Issue Challan No</option>
                                             <?php if (isset($challan_result_issue)) : ?>
                                                 <?php while ($row = mysqli_fetch_assoc($challan_result_issue)) : ?>
@@ -264,7 +264,7 @@ if (isset($_POST['view_entries'])) {
        
         <div id="head_details">
             <div>
-            <p>labour : <?php echo $labour_name; ?></p>
+            <p class="fw-bold" >labour : <?php echo $labour_name; ?></p>
             </div>
             <div>
                     <p><br/><br/>Challan No: <?php echo $challan_no; ?></p>
