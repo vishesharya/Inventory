@@ -279,7 +279,7 @@ if (isset($_POST['view_entries'])) {
                             <th>Small Panel Color</th>
                             <th>Small Panel</th>
                            
-                            <th>Date</th>
+                            
                         </tr>
                     </thead>
                     <tbody>
@@ -301,7 +301,6 @@ while ($product = mysqli_fetch_assoc($result)) {
         <td><?php echo $product['quantity2']; ?></td>
         <td><?php echo $product['small_panel_color']; ?></td>
         <td><?php echo $product['quantity3']; ?></td>
-        <td><?php echo date('d/m/Y', strtotime($product['date_and_time'])); ?></td>
     </tr>
 <?php } ?>
 
