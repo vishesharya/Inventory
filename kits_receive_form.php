@@ -3,7 +3,7 @@ session_start();
 include_once 'include/connection.php';
 include_once 'include/admin-main.php';
 
-
+$labour_name = isset($_POST['labour_name']) ? $_POST['labour_name'] : "";
 
 $labour_query = "SELECT DISTINCT labour_name FROM sheets_job_work WHERE status = 0 ORDER BY labour_name ASC";
 $labour_result = mysqli_query($con, $labour_query);
@@ -96,6 +96,7 @@ if (isset($_POST['add_product'])) {
         // Insert data into temporary session storage
         $temp_product = array(
             'challan_no' => $challan_no,
+            'challan_no_issue' => $challan_no_issue,
             'labour_name' => $labour_name,
             'product_name' => $product_name,
             'product_base' => $product_base,
