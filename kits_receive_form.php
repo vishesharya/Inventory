@@ -4,6 +4,7 @@ include_once 'include/connection.php';
 include_once 'include/admin-main.php';
 
 $labour_name = isset($_POST['labour_name']) ? $_POST['labour_name'] : "";
+$challan_no_issue = isset($_POST['challan_no_issue']) ? $_POST['challan_no_issue'] : "";
 
 $labour_query = "SELECT DISTINCT labour_name FROM sheets_job_work WHERE status = 0 ORDER BY labour_name ASC";
 $labour_result = mysqli_query($con, $labour_query);
