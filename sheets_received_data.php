@@ -125,6 +125,7 @@ include_once 'include/admin-main.php';
                                     <th>Product Color</th>
                                     <th>Big Panel</th>
                                     <th>Plain Panel</th>
+                                    <th>Plain Panel Color</th>
                                     <th>Small Panel</th>
                                     <th>Date/Time</th>
                                 </tr>
