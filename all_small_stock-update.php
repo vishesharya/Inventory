@@ -10,7 +10,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $field = $_POST['field']; 
         $value = $_POST['value'];
 
-        // Sanitize input to prevent SQL injection
+        // Sanitize input to prevent SQL injection (Prepared Statement would be better)
         $id = mysqli_real_escape_string($con, $id);
         $field = mysqli_real_escape_string($con, $field);
         $value = mysqli_real_escape_string($con, $value);
@@ -23,8 +23,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $query_products = "UPDATE sheets_small_stock SET $field = '$value' WHERE id = $id";
         $result_products = mysqli_query($con, $query_products);
         
-       
-
         if (!$result_kits_product || !$result_products) {
             echo "Error updating record: " . mysqli_error($con);
         }
@@ -33,9 +31,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 // Fetch common fields from all tables
 $result = mysqli_query($con, "SELECT kp.id, kp.small_sheet_color,
-                                    p.small_sheet_color AS small_sheet_color_product,
-                                   
-                                   
+                                    p.small_sheet_color AS small_sheet_color_product
                              FROM sheets_production_small_stock kp 
                              JOIN sheets_small_stock p ON kp.id = p.id 
                              ORDER BY kp.small_sheet_color ASC");
@@ -106,67 +102,48 @@ $result = mysqli_query($con, "SELECT kp.id, kp.small_sheet_color,
                         <ul class="breadcrumb">
                             <li><a href="dashboard.php"><i class="icon-home2 position-left"></i> Home</a></li>
                             <li class="active"><a href="inventory.php" class="btn bg-indigo-300"  >Update All Small Panel Color</a></li>
-                            
                         </ul>
                     </div>
                 </div>
                 <!-- /page header -->
-              
-               
-             
-                <!-- /Print form -->
 
                 <!-- Table of football contact query -->
-               
-                    <div class="panel panel-flat" style="overflow: auto;">
-                    
-                        <div class="panel-heading">
-                            <h5 class="panel-title">Update All Small Panel Color</h5>
-                            
-                            <div class="heading-elements">
-                        
-                                <ul class="icons-list">
-                                    <li><a data-action="collapse"></a></li>
-                                    <li><a data-action="reload"></a></li>
-                                    <li><a data-action="close"></a></li>
-                                </ul>
-                                
-                            </div>
+                <div class="panel panel-flat" style="overflow: auto;">
+                    <div class="panel-heading">
+                        <h5 class="panel-title">Update All Small Panel Color</h5>
+                        <div class="heading-elements">
+                            <ul class="icons-list">
+                                <li><a data-action="collapse"></a></li>
+                                <li><a data-action="reload"></a></li>
+                                <li><a data-action="close"></a></li>
+                            </ul>
                         </div>
-
-                        <table class="table datatable-multi-sorting">
-                            <thead>
-                                <tr>
-                                    <th>Sn.</th>
-                                    <th>Product Name</th>
-                                   
-                                  
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php 
-                                $sn=1;
-                                while($data=mysqli_fetch_array($result)) {
-                                ?>
-                                <tr>
-                                     <td><?php echo $sn; ?>.</td>
-                                     <td contenteditable="true" data-field="small_sheet_color" data-id="<?php echo $data['id']; ?>"><?php echo $data['small_sheet_color']; ?></td>
-                                    
-                                    <td><button class="btn btn-danger delete-row" data-id="<?php echo $data['id']; ?>">Delete</button></td>
-
-                               
-                                </tr>
-                                <?php 
-                                $sn++; 
-                                }  
-                                ?>
-                            </tbody>
-                        </table>
                     </div>
+                    <table class="table datatable-multi-sorting">
+                        <thead>
+                            <tr>
+                                <th>Sn.</th>
+                                <th>Product Name</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php 
+                            $sn=1;
+                            while($data=mysqli_fetch_array($result)) {
+                            ?>
+                            <tr>
+                                 <td><?php echo $sn; ?>.</td>
+                                 <td contenteditable="true" data-field="small_sheet_color" data-id="<?php echo $data['id']; ?>"><?php echo $data['small_sheet_color']; ?></td>
+                                <td><button class="btn btn-danger delete-row" data-id="<?php echo $data['id']; ?>">Delete</button></td>
+                            </tr>
+                            <?php 
+                            $sn++; 
+                            }  
+                            ?>
+                        </tbody>
+                    </table>
                 </div>
                 <!-- /Table of football contact query -->
-
-               
 
             </div>
             <!-- /main content -->
@@ -178,62 +155,59 @@ $result = mysqli_query($con, "SELECT kp.id, kp.small_sheet_color,
     <!-- /page container -->
 
     <!-- Delete/Edit validation -->
-   
-    
-<!-- Delete/Edit validation -->
-<script>
-    // Function to handle update operation via AJAX
-    function updateDatabase(id, field, value) {
-        var xhr = new XMLHttpRequest();
-        xhr.open('POST', 'update_small_stock_product.php', true);
-        xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-        xhr.onreadystatechange = function() {
-            if (xhr.readyState == 4 && xhr.status == 200) {
-                console.log(xhr.responseText);
-            }
-        };
-        xhr.send('id=' + id + '&field=' + field + '&value=' + value);
-    }
+    <script>
+        // Function to handle update operation via AJAX
+        function updateDatabase(id, field, value) {
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', 'update_small_stock_product.php', true);
+            xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    console.log(xhr.responseText);
+                }
+            };
+            xhr.send('id=' + id + '&field=' + field + '&value=' + value);
+        }
 
-    // Function to handle delete operation via AJAX
-    function deleteRow(id) {
-        var xhr = new XMLHttpRequest();
-        xhr.open('POST', 'delete_product_row.php', true);
-        xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-        xhr.onreadystatechange = function() {
-            if (xhr.readyState == 4 && xhr.status == 200) {
-                console.log(xhr.responseText);
-                // Reload the page or update the table if necessary
-            }
-        };
-        xhr.send('id=' + id);
-    }
+        // Function to handle delete operation via AJAX
+        function deleteRow(id) {
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', 'delete_product_row.php', true);
+            xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    console.log(xhr.responseText);
+                    // Reload the page or update the table if necessary
+                }
+            };
+            xhr.send('id=' + id);
+        }
 
-    // Event listener for update operation
-    document.querySelectorAll('[contenteditable="true"]').forEach(function(element) {
-        element.addEventListener('keydown', function(event) {
-            if (event.key === 'Enter') {
-                event.preventDefault();
-                this.blur();
+        // Event listener for update operation
+        document.querySelectorAll('[contenteditable="true"]').forEach(function(element) {
+            element.addEventListener('keydown', function(event) {
+                if (event.key === 'Enter') {
+                    event.preventDefault();
+                    this.blur();
+                    var id = this.getAttribute('data-id');
+                    var field = this.getAttribute('data-field');
+                    var value = this.innerText;
+                    updateDatabase(id, field, value);
+                }
+            });
+        });
+
+        // Event listener for delete operation
+        document.querySelectorAll('.delete-row').forEach(function(element) {
+            element.addEventListener('click', function() {
                 var id = this.getAttribute('data-id');
-                var field = this.getAttribute('data-field');
-                var value = this.innerText;
-                updateDatabase(id, field, value);
-            }
+                if(confirm('Are you sure you want to delete this Product?')) {
+                    deleteRow(id);
+                }
+            });
         });
-    });
-
-    // Event listener for delete operation
-    document.querySelectorAll('.delete-row').forEach(function(element) {
-        element.addEventListener('click', function() {
-            var id = this.getAttribute('data-id');
-            if(confirm('Are you sure you want to delete this Product?')) {
-                deleteRow(id);
-            }
-        });
-    });
-</script>
-
+    </script>
+    <!-- /Delete/Edit validation -->
 
 </body>
 </html>
