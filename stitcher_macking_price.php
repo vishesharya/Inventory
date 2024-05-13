@@ -14,7 +14,7 @@ $total_iind_price = 0;
 $total_thread_price = 0;
 
 // Check if 'View' button is clicked
-if (isset($_POST['view_entries'])) {
+if (isset($_POST['view_entries'])) { 
     // Get selected stitcher
     $stitcher_name = isset($_POST['stitcher_name']) ? mysqli_real_escape_string($con, $_POST['stitcher_name']) : '';
 
@@ -160,6 +160,29 @@ if (isset($_POST['view_entries'])) {
 
         <?php if (isset($_POST['view_entries']) && !empty($stitcher_name) && !empty($start_date) && !empty($end_date) && $result !== null && mysqli_num_rows($result) > 0): ?>
             <h3 class="text-center mb-4">Stitcher: <?php echo $stitcher_name; ?></h3>
+            <div class="invoice-header">
+           <div>
+                <p class="issue_heading" >KITS ISSUE SLIP</p>
+                <hr>
+                <h2 id="company_heading" class="heading">KHANNA SPORTS INDUSTRIES PVT. LTD</h2>
+                <p class="heading"> A-7, Sports Complex Delhi Road Meerut Uttar Pradesh 250002</p>
+                <p class="heading">Contact : 8449441387,98378427750 &nbsp;  GST : 09AAACK9669A1ZD </p>
+            </div>
+            <div id="head_details">
+                <div>
+                    <p>Stitcher : <?php echo $stitcher_name; ?></p>
+                     <p>Stitcher Contact : <?php echo $stitcher_contact; ?></p>
+                     <p>Stitcher Aadhar : <?php echo $stitcher_aadhar; ?></p>
+                     <p>Stitcher Pan : <?php echo $stitcher_pan; ?></p>
+                     <p>Stitcher Address : <?php echo $stitcher_address; ?></p>
+                    <!-- Add other details as needed -->
+                </div>
+                <div>
+                    <p><br/><br/>Challan No: <?php echo $challan_no; ?></p>
+                    <p>Date: <?php echo date('d-m-Y', strtotime($date_and_time)); ?></p>
+                </div>
+            </div>
+        </div>
             <table class="table datatable-multi-sorting">
                 <thead>
     <tr>
