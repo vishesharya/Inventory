@@ -3,7 +3,9 @@ session_start();
 include_once 'include/connection.php';
 include_once 'include/admin-main.php';
 
-$labour_query = "SELECT DISTINCT labour_name FROM labour ORDER BY labour_name ASC";
+
+
+$labour_query = "SELECT DISTINCT sheets_job_work FROM labour WHERE status = 0 ORDER BY labour_name ASC";
 $labour_result = mysqli_query($con, $labour_query);
 
 
@@ -11,13 +13,21 @@ $labour_result = mysqli_query($con, $labour_query);
 $product_query = "SELECT DISTINCT product_name FROM kits_product ORDER BY product_name ASC";
 $product_result = mysqli_query($con, $product_query);
 
-// Logic to fetch product bases and colors based on selected product
-$selected_product = isset($_POST['product_name']) ? $_POST['product_name'] : null;
-if ($selected_product) {
-    $product_base_query = "SELECT DISTINCT product_base FROM kits_product WHERE product_name = '$selected_product' ORDER BY product_base ASC";
-    $product_color_query = "SELECT DISTINCT product_color FROM kits_product WHERE product_name = '$selected_product' ORDER BY product_color ASC";
-    $product_base_result = mysqli_query($con, $product_base_query);
-    $product_color_result = mysqli_query($con, $product_color_query);
+// Fetch associated challan numbers for selected stitcher
+if (isset($_POST['labour_name'])) {
+    $selected_stitcher = mysqli_real_escape_string($con, $_POST['labour_name']);
+    $challan_query_issue = "SELECT DISTINCT  challan_no_issue FROM sheets_job_work WHERE labour_name = '$selected_labour' AND status = 0";
+    $challan_result_issue = mysqli_query($con, $challan_query_issue);
+}
+
+// Fetch product names based on selected stitcher and challan number
+if (isset($_POST['challan_no_issue'])) {
+    $selected_challan = mysqli_real_escape_string($con, $_POST['challan_no_issue']);
+    $selected_stitcher = mysqli_real_escape_string($con, $_POST['labour_name']); // Added this line
+
+    // Query to fetch products based on selected stitcher, challan number, and status = 0
+    $product_query = "SELECT DISTINCT product_name,product_base,product_color FROM sheets_job_work WHERE labour_name = '$selected_labour' AND challan_no_issue = '$selected_challan' AND status = 0";
+    $product_result = mysqli_query($con, $product_query);
 }
 
 // Function to fetch current number from the database
@@ -199,7 +209,7 @@ if (isset($_POST['submit_products'])) {
         }
         .btn-group {
             margin-top: 1.5rem;
-            justify-content: center;
+            justify-content: center; 
         }
         .table {
             margin-top: 2rem;

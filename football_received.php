@@ -344,7 +344,7 @@ if (isset($_POST['submit_form'])) {
         }
         .error-input {
             border: 1px solid red;
-        }
+        } 
         #btn_grp{
             display: flex;
             gap: 15px;
