@@ -159,6 +159,7 @@ include_once 'include/admin-main.php';
                                 }  
                                 ?>
                             </tbody>
+                            <tfoot>
                             <tr>
                 <th colspan="7">Total:</th>
                 <th><?php echo $total_quantity1; ?></th>
@@ -167,6 +168,7 @@ include_once 'include/admin-main.php';
                 <th><?php echo $total_quantity3; ?></th>
                 <th>-</th> 
             </tr>
+                            </tfoot>
                         </table>
                     </div>
                 </div>
