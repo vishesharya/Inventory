@@ -145,7 +145,7 @@ $result = mysqli_query($con, "SELECT id, small_sheet_color, small_sheet_balance 
                         </tbody>
                         <tfoot> 
                           <tr>
-                               <th colspan="3"></th>
+                               <th colspan="2"></th>
                               <th> Total: <?php echo $total_balance; ?></th>
                           </tr>
                        </tfoot>
