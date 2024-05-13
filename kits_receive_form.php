@@ -268,14 +268,9 @@ if (isset($_POST['submit_products'])) {
                                     <div class="form-group">
                                         <label for="product_base">Product Base:</label>
                                         <select class="form-select" id="product_base" name="product_base">
-                                            <option value="" selected disabled>Select Product Base</option>
-                                            <?php if ($selected_product) : ?>
-                                                <?php while ($row = mysqli_fetch_assoc($product_base_result)) : ?>
-                                                    <option value="<?php echo $row['product_base']; ?>"><?php echo $row['product_base']; ?></option>
-                                                <?php endwhile; ?>
-                                            <?php endif; ?>
+                                         <option value="" selected disabled>Select Product Base</option>
                                         </select>
-                                    </div>
+                                     </div>
                                 </div>
                             </div>
                             <div class="row">
@@ -283,12 +278,7 @@ if (isset($_POST['submit_products'])) {
                                     <div class="form-group">
                                         <label for="product_color">Product Color:</label>
                                         <select class="form-select" id="product_color" name="product_color">
-                                            <option value="" selected disabled>Select Product Color</option>
-                                            <?php if ($selected_product) : ?>
-                                                <?php while ($row = mysqli_fetch_assoc($product_color_result)) : ?>
-                                                    <option value="<?php echo $row['product_color']; ?>"><?php echo $row['product_color']; ?></option>
-                                                <?php endwhile; ?>
-                                            <?php endif; ?>
+                                         <option value="" selected disabled>Select Product Color</option>
                                         </select>
                                     </div>
                                 </div>
@@ -424,6 +414,75 @@ function fetchProductNames() {
 
 // Add event listener to call fetchProductNames() when challan_no_issue is selected
 document.getElementById('select_challan').addEventListener('change', fetchProductNames);
+
+// Function to fetch product bases dynamically based on selected challan_no_issue and product_name
+function fetchProductBases() {
+    var challanNo = document.getElementById('select_challan').value;
+    var productName = document.getElementById('product_name').value;
+    var productBaseSelect = document.getElementById('product_base');
+
+    // Make an AJAX request to fetch product bases
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function() {
+        if (this.readyState === 4 && this.status === 200) {
+            // Clear existing options
+            productBaseSelect.innerHTML = '<option value="" selected disabled>Select Product Base</option>';
+            // Parse the JSON response
+            var productBases = JSON.parse(this.responseText);
+            // Add fetched product bases as options
+            productBases.forEach(function(base) {
+                var option = document.createElement('option');
+                option.value = base;
+                option.text = base;
+                productBaseSelect.appendChild(option);
+            });
+        }
+    };
+    // Make GET request to fetch_product_base.php with challan_no_issue and product_name parameters
+    xhr.open('GET', 'kits_received_product_base_fatch.php?challan_no_issue=' + challanNo + '&product_name=' + productName, true);
+    xhr.send();
+}
+
+// Add event listener to call fetchProductBases() when product name is selected
+document.getElementById('product_name').addEventListener('change', fetchProductBases);
+// Add event listener to call fetchProductBases() when challan_no_issue is selected
+document.getElementById('select_challan').addEventListener('change', fetchProductBases);
+
+// Function to fetch product colors dynamically based on selected challan_no_issue, product_name, and product_base
+function fetchProductColors() {
+    var challanNo = document.getElementById('select_challan').value;
+    var productName = document.getElementById('product_name').value;
+    var productBase = document.getElementById('product_base').value;
+    var productColorSelect = document.getElementById('product_color');
+
+    // Make an AJAX request to fetch product colors
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function() {
+        if (this.readyState === 4 && this.status === 200) {
+            // Clear existing options
+            productColorSelect.innerHTML = '<option value="" selected disabled>Select Product Color</option>';
+            // Parse the JSON response
+            var productColors = JSON.parse(this.responseText);
+            // Add fetched product colors as options
+            productColors.forEach(function(color) {
+                var option = document.createElement('option');
+                option.value = color;
+                option.text = color;
+                productColorSelect.appendChild(option);
+            });
+        }
+    };
+    // Make GET request to fetch_product_color.php with challan_no_issue, product_name, and product_base parameters
+    xhr.open('GET', 'kits_received_product_color_fatch.php?challan_no_issue=' + challanNo + '&product_name=' + productName + '&product_base=' + productBase, true);
+    xhr.send();
+}
+
+// Add event listener to call fetchProductColors() when product base is selected
+document.getElementById('product_base').addEventListener('change', fetchProductColors);
+// Add event listener to call fetchProductColors() when product name is selected
+document.getElementById('product_name').addEventListener('change', fetchProductColors);
+// Add event listener to call fetchProductColors() when challan_no_issue is selected
+document.getElementById('select_challan').addEventListener('change', fetchProductColors);
 </script>
 
 
