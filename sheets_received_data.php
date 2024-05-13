@@ -161,7 +161,7 @@ include_once 'include/admin-main.php';
                             </tbody>
                             <tfoot>
                             <tr>
-                <th colspan="7">Total:</th>
+                <th colspan="5">Total:</th>
                 <th><?php echo $total_quantity1; ?></th>
                 <th><?php echo $total_quantity2; ?></th>
                 <th>-</th> 
