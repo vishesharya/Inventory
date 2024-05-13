@@ -143,6 +143,9 @@ if (isset($_POST['view_entries'])) {
             line-height: 1px;
             color: black;
         }
+        #stitcher_name{
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
@@ -215,7 +218,7 @@ if (isset($_POST['view_entries'])) {
             </div>
             <div id="head_details">
                 <div>
-                    <p>Stitcher : <?php echo $stitcher_name; ?></p>
+                    <p id="stitcher_name" >Stitcher : <?php echo $stitcher_name; ?></p>
                      <p>Stitcher Contact : <?php echo $stitcher_contact; ?></p>
                      <p>Stitcher Aadhar : <?php echo $stitcher_aadhar; ?></p>
                      <p>Stitcher Pan : <?php echo $stitcher_pan; ?></p>
