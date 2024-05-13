@@ -278,7 +278,7 @@ if (isset($_POST['view_entries'])) {
                             <th>Plain Panel</th>
                             <th>Small Panel Color</th>
                             <th>Small Panel</th>
-                            <th>Challan No.</th>
+                           
                             <th>Date</th>
                         </tr>
                     </thead>
@@ -294,7 +294,6 @@ while ($product = mysqli_fetch_assoc($result)) {
     $total_quantity3 += $product['quantity3'];
     ?>
     <tr>
-        <td><?php echo $product['labour_name']; ?></td>
         <td><?php echo $product['product_name']; ?></td>
         <td><?php echo ucfirst($product['product_base']); ?></td>
         <td><?php echo ucfirst($product['product_color']); ?></td>
