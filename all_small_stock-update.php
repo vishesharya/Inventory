@@ -16,37 +16,29 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $value = mysqli_real_escape_string($con, $value);
 
         // Update database for kits_product table
-        $query_kits_product = "UPDATE kits_product SET $field = '$value' WHERE id = $id";
+        $query_kits_product = "UPDATE sheets_production_small_stock SET $field = '$value' WHERE id = $id";
         $result_kits_product = mysqli_query($con, $query_kits_product);
 
         // Update database for products table
-        $query_products = "UPDATE products SET $field = '$value' WHERE id = $id";
+        $query_products = "UPDATE sheets_small_stock SET $field = '$value' WHERE id = $id";
         $result_products = mysqli_query($con, $query_products);
         
-        // Update database for sheets_product table
-        $query_sheets_product = "UPDATE sheets_product SET $field = '$value' WHERE id = $id";
-        $result_sheets_product = mysqli_query($con, $query_sheets_product);
+       
 
-        // Update database for sheets_production_product table
-        $query_sheets_production_product = "UPDATE sheets_production_product SET $field = '$value' WHERE id = $id";
-        $result_sheets_production_product = mysqli_query($con, $query_sheets_production_product);
-
-        if (!$result_kits_product || !$result_products || !$result_sheets_product || !$result_sheets_production_product) {
+        if (!$result_kits_product || !$result_products) {
             echo "Error updating record: " . mysqli_error($con);
         }
     }
 }
 
 // Fetch common fields from all tables
-$result = mysqli_query($con, "SELECT kp.id, kp.product_name, kp.product_base, kp.product_color, 
-                                    p.product_name AS product_name_product, p.product_base AS product_base_product, p.product_color AS product_color_product,
-                                    sp.product_name AS product_name_sheets, sp.product_base AS product_base_sheets, sp.product_color AS product_color_sheets,
-                                    spp.product_name AS product_name_sheets_production, spp.product_base AS product_base_sheets_production, spp.product_color AS product_color_sheets_production
-                             FROM kits_product kp 
-                             JOIN products p ON kp.id = p.id 
-                             JOIN sheets_product sp ON kp.id = sp.id
-                             JOIN sheets_production_product spp ON kp.id = spp.id
-                             ORDER BY kp.product_name ASC");
+$result = mysqli_query($con, "SELECT kp.id, kp.small_sheet_color,
+                                    p.small_sheet_color AS small_sheet_color_product,
+                                   
+                                   
+                             FROM sheets_production_small_stock kp 
+                             JOIN sheets_small_stock p ON kp.id = p.id 
+                             ORDER BY kp.small_sheet_color ASC");
 
 ?>
 
@@ -105,7 +97,7 @@ $result = mysqli_query($con, "SELECT kp.id, kp.product_name, kp.product_base, kp
                 <div class="page-header page-header-default">
                     <div class="page-header-content">
                         <div class="page-title">
-                            <h4><i class="icon-arrow-left52 position-left"></i> <a href="inventory.php" class="text-semibold">Update All Products</a></h4>
+                            <h4><i class="icon-arrow-left52 position-left"></i> <a href="inventory.php" class="text-semibold">Update All Small Panel Color</a></h4>
                         </div>
 
                     </div>
@@ -113,7 +105,7 @@ $result = mysqli_query($con, "SELECT kp.id, kp.product_name, kp.product_base, kp
                     <div class="breadcrumb-line">
                         <ul class="breadcrumb">
                             <li><a href="dashboard.php"><i class="icon-home2 position-left"></i> Home</a></li>
-                            <li class="active"><a href="inventory.php" class="btn bg-indigo-300"  >Update All Products</a></li>
+                            <li class="active"><a href="inventory.php" class="btn bg-indigo-300"  >Update All Small Panel Color</a></li>
                             
                         </ul>
                     </div>
@@ -129,7 +121,7 @@ $result = mysqli_query($con, "SELECT kp.id, kp.product_name, kp.product_base, kp
                     <div class="panel panel-flat" style="overflow: auto;">
                     
                         <div class="panel-heading">
-                            <h5 class="panel-title">All Product List</h5>
+                            <h5 class="panel-title">Update All Small Panel Color</h5>
                             
                             <div class="heading-elements">
                         
@@ -147,9 +139,7 @@ $result = mysqli_query($con, "SELECT kp.id, kp.product_name, kp.product_base, kp
                                 <tr>
                                     <th>Sn.</th>
                                     <th>Product Name</th>
-                                    <th>Product Base</th>
-                                    <th>Product Color</th>
-                                    <th>Delete Product</th>
+                                   
                                   
                                 </tr>
                             </thead>
@@ -160,9 +150,8 @@ $result = mysqli_query($con, "SELECT kp.id, kp.product_name, kp.product_base, kp
                                 ?>
                                 <tr>
                                      <td><?php echo $sn; ?>.</td>
-                                     <td contenteditable="true" data-field="product_name" data-id="<?php echo $data['id']; ?>"><?php echo $data['product_name']; ?></td>
-                                     <td contenteditable="true" data-field="product_base" data-id="<?php echo $data['id']; ?>"><?php echo $data['product_base']; ?></td>
-                                     <td contenteditable="true" data-field="product_color" data-id="<?php echo $data['id']; ?>"><?php echo $data['product_color']; ?></td>
+                                     <td contenteditable="true" data-field="small_sheet_color" data-id="<?php echo $data['id']; ?>"><?php echo $data['small_sheet_color']; ?></td>
+                                    
                                     <td><button class="btn btn-danger delete-row" data-id="<?php echo $data['id']; ?>">Delete</button></td>
 
                                
@@ -196,7 +185,7 @@ $result = mysqli_query($con, "SELECT kp.id, kp.product_name, kp.product_base, kp
     // Function to handle update operation via AJAX
     function updateDatabase(id, field, value) {
         var xhr = new XMLHttpRequest();
-        xhr.open('POST', 'update.php', true);
+        xhr.open('POST', 'update_small_stock_product.php', true);
         xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
         xhr.onreadystatechange = function() {
             if (xhr.readyState == 4 && xhr.status == 200) {

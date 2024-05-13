@@ -12,21 +12,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $value = mysqli_real_escape_string($con, $_POST['value']);
 
         // Update database
-        $query = "UPDATE kits_product SET $field = '$value' WHERE id = $id";
+        $query = "UPDATE sheets_small_stock SET $field = '$value' WHERE id = $id";
         $result = mysqli_query($con, $query);
 
         // Update database
-        $query = "UPDATE products SET $field = '$value' WHERE id = $id";
+        $query = "UPDATE sheets_production_small_stock SET $field = '$value' WHERE id = $id";
         $result = mysqli_query($con, $query);
-
-        // Update database
-        $query = "UPDATE sheets_product SET $field = '$value' WHERE id = $id";
-        $result = mysqli_query($con, $query);
-
-        // Update database
-        $query = "UPDATE sheets_production_product SET $field = '$value' WHERE id = $id";
-        $result = mysqli_query($con, $query);
-
 
         // Check if update was successful
         if (!$result) {
