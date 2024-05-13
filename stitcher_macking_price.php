@@ -126,6 +126,19 @@ if (isset($_POST['view_entries'])) {
             color: #333;
           
         }
+        .issue_heading{
+            text-align: center;
+            justify-content: center;
+        }
+        .invoice-header{
+            line-height: 7px;
+        }
+        #company_heading{
+            line-height: 5px;
+        }
+        #stitcher_name{
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
@@ -188,7 +201,6 @@ if (isset($_POST['view_entries'])) {
         </div>
 
         <?php if (isset($_POST['view_entries']) && !empty($stitcher_name) && !empty($start_date) && !empty($end_date) && $result !== null && mysqli_num_rows($result) > 0): ?>
-            <h3 class="text-center mb-4">Stitcher: <?php echo $stitcher_name; ?></h3>
             <div class="invoice-header">
            <div>
                 <p class="issue_heading" >KITS ISSUE SLIP</p>
