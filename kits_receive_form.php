@@ -5,7 +5,7 @@ include_once 'include/admin-main.php';
 
 
 
-$labour_query = "SELECT DISTINCT sheets_job_work FROM labour WHERE status = 0 ORDER BY labour_name ASC";
+$labour_query = "SELECT DISTINCT labour_name FROM labour WHERE status = 0 ORDER BY labour_name ASC";
 $labour_result = mysqli_query($con, $labour_query);
 
 
