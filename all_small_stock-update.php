@@ -34,6 +34,7 @@ $result = mysqli_query($con, "SELECT kp.id, kp.small_sheet_color,
                                     p.small_sheet_color AS small_sheet_color_product
                              FROM sheets_production_small_stock kp 
                              JOIN sheets_small_stock p ON kp.id = p.id 
+                             ORDER BY small_sheet_color ASC
                              ");
 
 ?>

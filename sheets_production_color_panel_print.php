@@ -88,7 +88,7 @@ $total_small_panel = 0;
             $sn = 1;
 
             // Initialize SQL query
-            $q = "SELECT `product_name`, `small_sheet_color`, `small_sheet_balance` FROM sheets_production_small_stock WHERE small_sheet_balance != 0  ORDER BY product_name ASC";
+            $q = "SELECT `small_sheet_color`, `small_sheet_balance` FROM sheets_production_small_stock WHERE small_sheet_balance != 0  ORDER BY small_sheet_color` ASC";
 
             $show = mysqli_query($con, $q);
 
@@ -97,7 +97,6 @@ $total_small_panel = 0;
                 echo "<table>
                     <tr>
                     <th>Sn.</th>
-                    <th>Product Name</th>
                     <th>small Panel Color</th>
                     <th>Small panel Balance</th>
                     </tr>";
@@ -106,7 +105,7 @@ $total_small_panel = 0;
                 while($data = mysqli_fetch_array($show)) {
                     echo "<tr>
                     <td>".$sn."</td>
-                    <td>".$data['product_name']."</td>
+                   
                     <td>".$data['small_sheet_color']."</td>
                     <td>".$data['small_sheet_balance']."</td>
                     </tr>";
@@ -120,7 +119,7 @@ $total_small_panel = 0;
 
                 // Display totals in table footer
                 echo "<tr class='total-row'>
-                    <td colspan='3'></td>
+                    <td colspan='2'></td>
                  
                     <td>Total: $total_small_panel</td>
                     </tr>";
