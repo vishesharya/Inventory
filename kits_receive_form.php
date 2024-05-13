@@ -102,8 +102,7 @@ if (isset($_POST['add_product'])) {
             'product_color' => $product_color,
             'received_quantity' => $quantity,
             'total' => $total,
-            'date_and_time' => isset($_POST['date_and_time']) ? $_POST['date_and_time'] : date('Y-m-d H:i:s')// Default to current date and time if not provided
-    
+            'date_and_time' => isset($_POST['date_and_time']) ? $_POST['date_and_time'] : date('Y-m-d H:i:s')
         );
         $_SESSION['temp_products'][] = $temp_product;
     }
