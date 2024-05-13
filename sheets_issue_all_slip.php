@@ -305,12 +305,12 @@ while ($product = mysqli_fetch_assoc($result)) {
 <?php } ?>
 
 <tr>
-    <td colspan="4"><strong>Total:</strong></td>
+    <td colspan="3"><strong>Total:</strong></td>
     <td><?php echo $total_quantity1; ?></td>
     <td><?php echo $total_quantity2; ?></td>
     <td></td> <!-- Assuming you don't want a total for 'small_panel_color' -->
     <td><?php echo $total_quantity3; ?></td>
-    <td></td> <!-- Assuming 'date_and_time' should not have a total -->
+   
 </tr>
 
                     </tbody>
