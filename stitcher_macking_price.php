@@ -139,6 +139,10 @@ if (isset($_POST['view_entries'])) {
         #stitcher_name{
             font-weight: bold;
         }
+        hr{
+            line-height: 1px;
+            color: black;
+        }
     </style>
 </head>
 <body>
@@ -204,7 +208,6 @@ if (isset($_POST['view_entries'])) {
         <?php if (isset($_POST['view_entries']) && !empty($stitcher_name) && !empty($start_date) && !empty($end_date) && $result !== null && mysqli_num_rows($result) > 0): ?>
             <div class="invoice-header">
            <div>
-                <hr>
                 <hr>
                 <h2 id="company_heading" class="heading">KHANNA SPORTS INDUSTRIES PVT. LTD</h2>
                 <p class="heading"> A-7, Sports Complex Delhi Road Meerut Uttar Pradesh 250002</p>
