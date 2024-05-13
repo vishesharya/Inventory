@@ -124,6 +124,7 @@ $result = mysqli_query($con, "SELECT kp.id, kp.small_sheet_color,
                             <tr>
                                 <th>Sn.</th>
                                 <th>Product Name</th>
+                                <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -182,7 +183,6 @@ $result = mysqli_query($con, "SELECT kp.id, kp.small_sheet_color,
             };
             xhr.send('id=' + id);
         }
-
         // Event listener for update operation
         document.querySelectorAll('[contenteditable="true"]').forEach(function(element) {
             element.addEventListener('keydown', function(event) {
