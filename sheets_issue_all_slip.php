@@ -15,7 +15,7 @@ if (isset($_SESSION['challan_no'])) {
 }
 
 // Initialize $result variable
-$result = null;
+$result = null; 
 
 // Check if 'View' button is clicked
 if (isset($_POST['view_entries'])) {
@@ -242,22 +242,25 @@ if (isset($_POST['view_entries'])) {
         <?php if (isset($_POST['view_entries']) && mysqli_num_rows($result) > 0): ?>
     <div class="container_slip">
         <!-- Add your HTML structure here to display kits issue details -->
-        <div class="invoice-header">
+        < class="invoice-header">
+        <div>
+            <hr>
+            <h2 class="heading">KHANNA SPORTS INDUSTRIES PVT. LTD</h2>
+            <p class="heading"> A-7, Sports Complex Delhi Road Meerut Uttar Pradesh 250002</p>
+            <p class="heading">Contact : 8449441387,98378427750 &nbsp;  GST : 09AAACK9669A1ZD </p>
+        </div>
+      
+       
+        <div id="head_details">
             <div>
-                <h2 class="heading">KHANNA SPORTS SHEETS ISSUE SLIP</h2>
-                <p>Sports Complex, A-7, Delhi Road, Phase 1,<br/>Industrial Area, Mohkam Pur, Meerut,<br/>Uttar Pradesh 250002 (India)</p>
-                <p>Contact: 8449441387, 98378427750</p>
+            <p>labour : <?php echo $labour_name; ?></p>
             </div>
-            <div id="head_details">
-                <div>
-                    <p>labour : <?php echo $labour_name; ?></p>
-                     
-                    <!-- Add other details as needed -->
-                </div>
-                <div>
+            <div>
                     <p><br/><br/>Challan No: <?php echo $challan_no; ?></p>
-                </div>
             </div>
+        </div>
+    
+
         </div>
         <div class="row">
             <div class="col-md-12">
@@ -276,19 +279,38 @@ if (isset($_POST['view_entries'])) {
                         </tr>
                     </thead>
                     <tbody>
-                        <?php while ($product = mysqli_fetch_assoc($result)) : ?>
-                            <tr>
-                                <td><?php echo $product['labour_name']; ?></td>
-                        <td><?php echo $product['product_name']; ?></td>
-                        <td><?php echo ucfirst($product['product_base']); ?></td>
-                        <td><?php echo ucfirst($product['product_color']); ?></td>
-                        <td><?php echo $product['quantity1']; ?></td>
-                        <td><?php echo $product['quantity2']; ?></td>
-                        <td><?php echo $product['small_panel_color']; ?></td>
-                        <td><?php echo $product['quantity3']; ?></td>
-                        <td><?php echo date('d/m/Y', strtotime($product['date_and_time'])); ?></td>
-                            </tr>
-                        <?php endwhile; ?>
+                    <?php
+$total_quantity1 = 0;
+$total_quantity2 = 0;
+$total_quantity3 = 0;
+
+while ($product = mysqli_fetch_assoc($result)) {
+    $total_quantity1 += $product['quantity1'];
+    $total_quantity2 += $product['quantity2'];
+    $total_quantity3 += $product['quantity3'];
+    ?>
+    <tr>
+        <td><?php echo $product['labour_name']; ?></td>
+        <td><?php echo $product['product_name']; ?></td>
+        <td><?php echo ucfirst($product['product_base']); ?></td>
+        <td><?php echo ucfirst($product['product_color']); ?></td>
+        <td><?php echo $product['quantity1']; ?></td>
+        <td><?php echo $product['quantity2']; ?></td>
+        <td><?php echo $product['small_panel_color']; ?></td>
+        <td><?php echo $product['quantity3']; ?></td>
+        <td><?php echo date('d/m/Y', strtotime($product['date_and_time'])); ?></td>
+    </tr>
+<?php } ?>
+
+<tr>
+    <td colspan="4"><strong>Total:</strong></td>
+    <td><?php echo $total_quantity1; ?></td>
+    <td><?php echo $total_quantity2; ?></td>
+    <td></td> <!-- Assuming you don't want a total for 'small_panel_color' -->
+    <td><?php echo $total_quantity3; ?></td>
+    <td></td> <!-- Assuming 'date_and_time' should not have a total -->
+</tr>
+
                     </tbody>
                 </table>
             </div>
