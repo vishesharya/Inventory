@@ -16,7 +16,7 @@ $product_result = mysqli_query($con, $product_query);
 // Fetch associated challan numbers for selected stitcher
 if (isset($_POST['labour_name'])) {
     $selected_stitcher = mysqli_real_escape_string($con, $_POST['labour_name']);
-    $challan_query_issue = "SELECT DISTINCT  challan_no_issue FROM sheets_job_work WHERE labour_name = '$selected_labour' AND status = 0";
+    $challan_query_issue = "SELECT DISTINCT  challan_no_issue FROM sheets_job_work WHERE labour_name = '$labour_name' AND status = 0";
     $challan_result_issue = mysqli_query($con, $challan_query_issue);
 }
 
@@ -26,7 +26,7 @@ if (isset($_POST['challan_no_issue'])) {
     $selected_stitcher = mysqli_real_escape_string($con, $_POST['labour_name']); // Added this line
 
     // Query to fetch products based on selected stitcher, challan number, and status = 0
-    $product_query = "SELECT DISTINCT product_name,product_base,product_color FROM sheets_job_work WHERE labour_name = '$selected_labour' AND challan_no_issue = '$selected_challan' AND status = 0";
+    $product_query = "SELECT DISTINCT product_name,product_base,product_color FROM sheets_job_work WHERE labour_name = '$labour_name' AND challan_no_issue = '$selected_challan' AND status = 0";
     $product_result = mysqli_query($con, $product_query);
 }
 
