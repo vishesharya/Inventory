@@ -25,7 +25,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }
 
 // Fetch data alphabetically
-$result = mysqli_query($con, "SELECT id, product_name, small_sheet_color, small_sheet_balance FROM sheets_production_small_stock ORDER BY product_name ASC");
+$result = mysqli_query($con, "SELECT id, small_sheet_color, small_sheet_balance FROM sheets_production_small_stock ORDER BY small_sheet_color ASC");
 
 ?>
 <!DOCTYPE html> 
@@ -119,8 +119,7 @@ $result = mysqli_query($con, "SELECT id, product_name, small_sheet_color, small_
                         <thead>
                             <tr>
                                 <th>Sn.</th>
-                                <th>Product Name</th>
-                               
+                              
                                 <th>Sheets Color Panel</th>
                                 <th>Sheets Color Panel Stock</th>
                                
@@ -135,7 +134,7 @@ $result = mysqli_query($con, "SELECT id, product_name, small_sheet_color, small_
                             ?>
                             <tr>
                                 <td><?php echo $sn; ?>.</td>
-                                <td><?php echo $data['product_name']; ?></td>
+                              
                                 <td><?php echo ucfirst($data['small_sheet_color']); ?></td>
                                
                                 <td contenteditable="true" data-field="small_sheet_balance" data-id="<?php echo $data['id']; ?>"><?php echo $data['small_sheet_balance']; ?></td>
