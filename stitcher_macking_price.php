@@ -27,6 +27,29 @@ if (isset($_POST['view_entries'])) {
         // Fetch entries within the selected date range for the selected stitcher
         $query = "SELECT * FROM football_received WHERE stitcher_name = '$stitcher_name' AND date_and_time BETWEEN '$start_date' AND '$end_date'";
         $result = mysqli_query($con, $query);
+
+        
+            $stitcher_contact_query = "SELECT stitcher_contact FROM stitcher WHERE stitcher_name = '$stitcher_name' LIMIT 1";
+            $stitcher_contact_result = mysqli_query($con, $stitcher_contact_query);
+            $stitcher_contact_row = mysqli_fetch_assoc($stitcher_contact_result);
+            $stitcher_contact = $stitcher_contact_row['stitcher_contact'];
+    
+            $stitcher_aadhar_query = "SELECT stitcher_aadhar FROM stitcher WHERE stitcher_name = '$stitcher_name' LIMIT 1";
+            $stitcher_aadhar_result = mysqli_query($con, $stitcher_aadhar_query);
+            $stitcher_aadhar_row = mysqli_fetch_assoc($stitcher_aadhar_result);
+            $stitcher_aadhar = $stitcher_aadhar_row['stitcher_aadhar'];
+    
+            $stitcher_pan_query = "SELECT stitcher_pan FROM stitcher WHERE stitcher_name = '$stitcher_name' LIMIT 1";
+            $stitcher_pan_result = mysqli_query($con, $stitcher_pan_query);
+            $stitcher_pan_row = mysqli_fetch_assoc($stitcher_pan_result);
+            $stitcher_pan = $stitcher_pan_row['stitcher_pan'];
+    
+            $stitcher_address_query = "SELECT stitcher_address FROM stitcher WHERE stitcher_name = '$stitcher_name' LIMIT 1";
+            $stitcher_address_result = mysqli_query($con, $stitcher_address_query);
+            $stitcher_address_row = mysqli_fetch_assoc($stitcher_address_result);
+            $stitcher_address = $stitcher_address_row['stitcher_address'];
+    
+        
     } else {
         // If neither stitcher nor date range is selected, do not fetch any entries
         $result = null;
