@@ -120,6 +120,12 @@ if (isset($_POST['view_entries'])) {
             width: 400px;
         }
         }
+        .heading {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+          
+        }
     </style>
 </head>
 <body>
