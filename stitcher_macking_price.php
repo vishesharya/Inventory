@@ -144,6 +144,7 @@ if (isset($_POST['view_entries'])) {
 <body>
     <?php include('include/nav.php'); ?>
     <div class="container-fluid mt-5">
+        <hr>
           <h1 class="h4 text-center mb-4">STITCHING PAYMENT SLIP </h1> <!-- Changed container to container-fluid -->
         <div id="form" class="row justify-content-center">
             <div class="col-lg-8">
@@ -203,7 +204,7 @@ if (isset($_POST['view_entries'])) {
         <?php if (isset($_POST['view_entries']) && !empty($stitcher_name) && !empty($start_date) && !empty($end_date) && $result !== null && mysqli_num_rows($result) > 0): ?>
             <div class="invoice-header">
            <div>
-                <p class="issue_heading" >KITS ISSUE SLIP</p>
+                <hr>
                 <hr>
                 <h2 id="company_heading" class="heading">KHANNA SPORTS INDUSTRIES PVT. LTD</h2>
                 <p class="heading"> A-7, Sports Complex Delhi Road Meerut Uttar Pradesh 250002</p>
