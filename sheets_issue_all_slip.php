@@ -150,6 +150,9 @@ if (isset($_POST['view_entries'])) {
             align-items: flex-end;
             justify-content: space-between;
         }
+        .invoice-header{
+            line-height: 6px;
+        }
     </style>
 </head>
 <body>
