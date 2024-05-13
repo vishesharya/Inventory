@@ -121,15 +121,14 @@ if (isset($_POST['view_entries'])) {
     }
     body {
         margin: 20px; /* Add margin for printing */
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Add box-shadow for printing */
         background-color: white; /* Change background color for printing */
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1) !important; /* Add box-shadow for printing */
     }
     .card {
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Add box-shadow for printing */
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1) !important; /* Add box-shadow for printing */
     }
 }
 
-        
         .heading {
             text-align: center;
             margin-bottom: 20px;
