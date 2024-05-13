@@ -129,7 +129,8 @@ if (isset($_POST['view_entries'])) {
             #form {
                 display: none;
             .container_slip{
-                margin: 20px;
+                margin: 200px;
+
             }
             }
         }
