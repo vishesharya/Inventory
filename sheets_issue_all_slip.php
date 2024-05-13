@@ -242,7 +242,7 @@ if (isset($_POST['view_entries'])) {
         <?php if (isset($_POST['view_entries']) && mysqli_num_rows($result) > 0): ?>
     <div class="container_slip">
         <!-- Add your HTML structure here to display kits issue details -->
-        < class="invoice-header">
+        <div class="invoice-header">
         <div>
             <hr>
             <h2 class="heading">KHANNA SPORTS INDUSTRIES PVT. LTD</h2>
