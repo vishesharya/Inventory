@@ -6,11 +6,10 @@ $addColorMsg = '';
 $deleteColorMsg = '';
 
 if (isset($_POST['add_color'])) {
-    $product_name = $_POST['product_name'];
     $small_sheet_color = isset($_POST['small_sheet_color']) ? $_POST['small_sheet_color'] : "";
 
     // Check if the color already exists in sheets_small_stock
-    $checkColorQuery = "SELECT * FROM sheets_small_stock WHERE product_name = '$product_name' AND small_sheet_color = '$small_sheet_color'";
+    $checkColorQuery = "SELECT * FROM sheets_small_stock WHERE small_sheet_color = '$small_sheet_color'";
     $result = mysqli_query($con, $checkColorQuery);
 
     if (mysqli_num_rows($result) > 0) {
@@ -18,10 +17,10 @@ if (isset($_POST['add_color'])) {
         $addColorMsg = "Color already added!";
     } else {
         // Insert into sheets_small_stock table
-        $insertPanelColorQuery = "INSERT INTO sheets_small_stock (product_name, small_sheet_color) VALUES ('$product_name', '$small_sheet_color')";
+        $insertPanelColorQuery = "INSERT INTO sheets_small_stock ( small_sheet_color) VALUES ('$small_sheet_color')";
         if(mysqli_query($con, $insertPanelColorQuery)) {
             // Insert into sheets_production_small_stock table
-            $insertPanelColorQueryProduction = "INSERT INTO sheets_production_small_stock (product_name, small_sheet_color) VALUES ('$product_name', '$small_sheet_color')";
+            $insertPanelColorQueryProduction = "INSERT INTO sheets_production_small_stock (small_sheet_color) VALUES ('$small_sheet_color')";
             if(mysqli_query($con, $insertPanelColorQueryProduction)) {
                 // Color added successfully
                 $addColorMsg = "Color added successfully.";
@@ -39,14 +38,14 @@ if (isset($_POST['add_color'])) {
 }
 
 if (isset($_POST['delete_color'])) {
-    $product_name = $_POST['product_name_delete'];
+ 
     $small_sheet_color = $_POST['small_sheet_color_delete'];
 
     // Delete color from sheets_small_stock table
-    $deleteColorQuery = "DELETE FROM sheets_small_stock WHERE product_name = '$product_name' AND small_sheet_color = '$small_sheet_color'";
+    $deleteColorQuery = "DELETE FROM sheets_small_stock WHERE small_sheet_color = '$small_sheet_color'";
     if(mysqli_query($con, $deleteColorQuery)) {
         // Delete color from sheets_production_small_stock table
-        $deleteColorQueryProduction = "DELETE FROM sheets_production_small_stock WHERE product_name = '$product_name' AND small_sheet_color = '$small_sheet_color'";
+        $deleteColorQueryProduction = "DELETE FROM sheets_production_small_stock WHERE small_sheet_color = '$small_sheet_color'";
         if(mysqli_query($con, $deleteColorQueryProduction)) {
             // Color deleted successfully
             $deleteColorMsg = "Color deleted successfully.";
@@ -69,7 +68,7 @@ if (isset($_POST['delete_color'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Product Management</title>
+    <title>Color Management</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 
@@ -79,7 +78,7 @@ if (isset($_POST['delete_color'])) {
             <div class="col-md-6">
                 <div class="card">
                     <div class="card-header">
-                        <h2>Add Panel Color</h2>
+                        <h2>Add Color</h2>
                     </div>
                     <div class="card-body">
                         <?php if (!empty($addColorMsg)) : ?>
@@ -90,20 +89,7 @@ if (isset($_POST['delete_color'])) {
                         <form action="" method="post">
                             <!-- Add Color Form -->
                             <div class="form-group">
-                                <label for="product_name">Select Product Name</label>
-                                <select name="product_name" id="product_name" class="form-control" required>
-                                    <option value="">Select Product Name</option>
-                                    <?php
-                                    // Fetch product names alphabetically from the database
-                                    $productQuery = mysqli_query($con, "SELECT DISTINCT product_name FROM sheets_product ORDER BY product_name ASC");
-                                    while ($row = mysqli_fetch_assoc($productQuery)) {
-                                        echo "<option value='" . $row['product_name'] . "'>" . $row['product_name'] . "</option>";
-                                    }
-                                    ?>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="small_sheet_color">Enter Panel Color</label>
+                                <label for="small_sheet_color">Enter Color</label>
                                 <input type="text" name="small_sheet_color" id="small_sheet_color" class="form-control" required>
                             </div>
                             <button type="submit" class="btn btn-primary" name="add_color">Add Color</button>
@@ -119,7 +105,7 @@ if (isset($_POST['delete_color'])) {
             <div class="col-md-6">
                 <div class="card">
                     <div class="card-header">
-                        <h2>Delete Panel Color</h2>
+                        <h2>Delete Color</h2>
                     </div>
                     <div class="card-body">
                         <?php if (!empty($deleteColorMsg)) : ?>
@@ -130,22 +116,17 @@ if (isset($_POST['delete_color'])) {
                         <form action="" method="post">
                             <!-- Delete Color Form -->
                             <div class="form-group">
-                                <label for="product_name_delete">Select Product Name</label>
-                                <select name="product_name_delete" id="product_name_delete" class="form-control" required>
-                                    <option value="">Select Product Name</option>
+                                <label for="small_sheet_color_delete">Select Color</label>
+                                <select name="small_sheet_color_delete" id="small_sheet_color_delete" class="form-control" required>
+                                    <option value="">Select Color</option>
                                     <?php
-                                    // Fetch product names alphabetically from the database
-                                    $productQuery = mysqli_query($con, "SELECT DISTINCT product_name FROM sheets_small_stock ORDER BY product_name ASC");
-                                    while ($row = mysqli_fetch_assoc($productQuery)) {
-                                        echo "<option value='" . $row['product_name'] . "'>" . $row['product_name'] . "</option>";
+                                    // Fetch colors from database and populate dropdown
+                                    $colorQuery = "SELECT small_sheet_color FROM sheets_small_stock";
+                                    $colorResult = mysqli_query($con, $colorQuery);
+                                    while ($row = mysqli_fetch_assoc($colorResult)) {
+                                        echo "<option value='" . $row['small_sheet_color'] . "'>" . $row['small_sheet_color'] . "</option>";
                                     }
                                     ?>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="small_sheet_color_delete">Select Panel Color</label>
-                                <select name="small_sheet_color_delete" id="small_sheet_color_delete" class="form-control" required>
-                                    <option value="">Select Panel Color</option>
                                 </select>
                             </div>
                             <button type="submit" class="btn btn-danger" name="delete_color">Delete Color</button>
@@ -155,37 +136,6 @@ if (isset($_POST['delete_color'])) {
             </div>
         </div>
     </div>
-
-    <script>
-    // Function to update product colors based on selected product name for deletion
-    function updateDeleteProductColors() {
-        var productNameDelete = document.getElementById('product_name_delete').value;
-
-        // Make an AJAX request to fetch product colors based on selected product name
-        var xhr = new XMLHttpRequest();
-        xhr.onreadystatechange = function() {
-            if (this.readyState === 4 && this.status === 200) {
-                var colors = JSON.parse(this.responseText);
-                var productColorSelect = document.getElementById('small_sheet_color_delete');
-                // Clear existing options
-                productColorSelect.innerHTML = '<option value="" selected disabled>Select Product Color</option>';
-                // Add fetched colors as options
-                colors.forEach(function(color) {
-                    var option = document.createElement('option');
-                    option.value = color;
-                    option.text = color;
-                    productColorSelect.appendChild(option);
-                });
-            }
-        };
-        // Send GET request to fetch_panel_color.php with selected product name as parameter
-        xhr.open('GET', 'fatch_panel_color.php?product_name=' + encodeURIComponent(productNameDelete), true);
-        xhr.send();
-    }
-
-    // Event listener for product name change in delete section
-    document.getElementById('product_name_delete').addEventListener('change', updateDeleteProductColors);
-</script>
 
 </body>
 
