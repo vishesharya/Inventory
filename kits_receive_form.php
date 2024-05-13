@@ -231,13 +231,35 @@ if (isset($_POST['submit_products'])) {
                             </div>
                         <?php endif; ?>
                         <form method="post" action="">
-                        <div class="col-md-3">
+                        
+                        <div class="row">
+                        <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="challan_no">Challan No:</label>
-                                        <input type="text" class="form-control" id="challan_no" name="challan_no" value="<?php echo $challan_no; ?>" readonly>
+                                        <label for="select_labour">Select Labour:</label>
+                                        <select class="form-select" id="select_labour" name="labour_name">
+         
+                                        <option value="">Select Labour</option>
+                                            <?php while ($row = mysqli_fetch_assoc($labour_result)) : ?>
+                                                <option value="<?php echo $row['labour_name']; ?>"><?php echo $row['labour_name']; ?></option>
+                                            <?php endwhile; ?>
+                                        </select>
                                     </div>
                                 </div>
-                        <div class="row">
+                            
+                          
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="select_challan">Select Issue Challan No:</label>
+                                        <select class="form-select" id="select_challan" name="challan_no_issue">
+                                            <option value="" selected disabled>Select Issue Challan No</option>
+                                            <?php if (isset($challan_result_issue)) : ?>
+                                                <?php while ($row = mysqli_fetch_assoc($challan_result_issue)) : ?>
+                                                    <option value="<?php echo $row['challan_no_issue']; ?>"><?php echo $row['challan_no_issue']; ?></option>
+                                                <?php endwhile; ?>
+                                            <?php endif; ?>
+                                        </select>
+                                    </div>
+                                </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="product_name">Select Product:</label>
@@ -286,17 +308,7 @@ if (isset($_POST['submit_products'])) {
                             </div>
                             <div class="row">
                             
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                      <label for="labour_name">Labour Name:</label>
-                                         <select class="form-select" id="labour_name" name="labour_name">
-                                            <option value="" selected disabled>Select Labour</option>
-                                            <?php while ($row = mysqli_fetch_assoc($labour_result)) : ?>
-                                            <option value="<?php echo $row['labour_name']; ?>"><?php echo $row['labour_name']; ?></option>
-                                            <?php endwhile; ?>
-                                        </select>
-                                    </div>
-                                </div>
+                               
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="date_and_time">Date and Time:</label>
