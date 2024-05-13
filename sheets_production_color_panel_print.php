@@ -88,7 +88,7 @@ $total_small_panel = 0;
             $sn = 1;
 
             // Initialize SQL query
-            $q = "SELECT `small_sheet_color`, `small_sheet_balance` FROM sheets_production_small_stock WHERE small_sheet_balance != 0  ORDER BY small_sheet_color` ASC";
+            $q = "SELECT `small_sheet_color`, `small_sheet_balance` FROM sheets_production_small_stock WHERE small_sheet_balance != 0  ORDER BY small_sheet_color ASC";
 
             $show = mysqli_query($con, $q);
 
