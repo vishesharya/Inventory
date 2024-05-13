@@ -200,10 +200,7 @@ if (isset($_POST['view_entries'])) {
                      <p>Stitcher Address : <?php echo $stitcher_address; ?></p>
                     <!-- Add other details as needed -->
                 </div>
-                <div>
-                    <p><br/><br/>Challan No: <?php echo $challan_no; ?></p>
-                    <p>Date: <?php echo date('d-m-Y', strtotime($date_and_time)); ?></p>
-                </div>
+               
             </div>
         </div>
             <table class="table datatable-multi-sorting">
