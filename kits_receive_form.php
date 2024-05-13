@@ -259,11 +259,8 @@ if (isset($_POST['submit_products'])) {
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="product_name">Select Product:</label>
-                                        <select class="form-select" id="product_name" name="product_name" onchange="this.form.submit()">
-                                            <option value="" selected disabled>Select Product</option>
-                                            <?php while ($row = mysqli_fetch_assoc($product_result)) : ?>
-                                                <option value="<?php echo $row['product_name']; ?>" <?php echo $selected_product == $row['product_name'] ? 'selected' : ''; ?>><?php echo $row['product_name']; ?></option>
-                                            <?php endwhile; ?>
+                                        <select class="form-select" id="product_name" name="product_name">
+                                         <option value="" selected disabled>Select Product</option>
                                         </select>
                                     </div>
                                 </div>
@@ -396,7 +393,39 @@ function fetchChallanNumbers() {
 
 // Add event listener to call fetchChallanNumbers() when labour name is selected
 document.getElementById('select_labour').addEventListener('change', fetchChallanNumbers);
+
+
+// Function to fetch product names dynamically based on selected challan_no_issue
+function fetchProductNames() {
+    var challanNo = document.getElementById('select_challan').value;
+    var productSelect = document.getElementById('product_name');
+
+    // Make an AJAX request to fetch product names
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function() {
+        if (this.readyState === 4 && this.status === 200) {
+            // Clear existing options
+            productSelect.innerHTML = '<option value="" selected disabled>Select Product</option>';
+            // Parse the JSON response
+            var productNames = JSON.parse(this.responseText);
+            // Add fetched product names as options
+            productNames.forEach(function(product) {
+                var option = document.createElement('option');
+                option.value = product;
+                option.text = product;
+                productSelect.appendChild(option);
+            });
+        }
+    };
+    // Make GET request to fetch_product_names.php with challan_no_issue parameter
+    xhr.open('GET', 'kits_received_product_name_fatch.php?challan_no_issue=' + challanNo, true);
+    xhr.send();
+}
+
+// Add event listener to call fetchProductNames() when challan_no_issue is selected
+document.getElementById('select_challan').addEventListener('change', fetchProductNames);
 </script>
+
 
 
 </html>
