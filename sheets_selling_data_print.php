@@ -16,7 +16,6 @@ include_once 'include/admin-main.php';
             background: white;
             display: block;
             margin: 1.0cm;
-           
         }
         @media print {
             body, page {
@@ -53,10 +52,15 @@ include_once 'include/admin-main.php';
 <body>
     <center>
         <page size="A4">
-        <h1>Sheet Selling Data</h1>
+            <h1>Sheet Selling Data</h1>
             <?php 
             // Initialize serial number
             $sn = 1;
+
+            // Initialize totals
+            $total_quantity1 = 0;
+            $total_quantity2 = 0;
+            $total_quantity3 = 0;
 
             // Initialize SQL query
             $q = "SELECT `id`, `challan_no`,`invoice_number`, `buyer_name`,  `product_name`, `product_base`, `product_color`, `quantity1`, `quantity2`, `small_panel_color`, `quantity3`, `date_and_time` FROM sheets_selling";
@@ -111,8 +115,25 @@ include_once 'include/admin-main.php';
                     <td>".$data['quantity3']."</td>
                     <td>".$data['date_and_time']."</td>
                     </tr>";
-                    $sn++; // Increment serial number
+                    
+                    // Increment serial number
+                    $sn++;
+
+                    // Accumulate totals
+                    $total_quantity1 += $data['quantity1'];
+                    $total_quantity2 += $data['quantity2'];
+                    $total_quantity3 += $data['quantity3'];
                 }
+
+                // Display totals in the table footer
+                echo "<tr>
+                    <td colspan='7'><b>Total</b></td>
+                    <td>$total_quantity1</td>
+                    <td>$total_quantity2</td>
+                    <td></td>
+                    <td>$total_quantity3</td>
+                    <td></td>
+                    </tr>";
 
                 echo "</table>";
             } else {
