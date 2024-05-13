@@ -113,22 +113,13 @@ if (isset($_POST['view_entries'])) {
          padding: 10px; /* Add padding for better spacing */
         }
         @media print {
-    #form {
-        display: none;
-    }
-    .tablefoot {
-        width: 400px;
-    }
-    body {
-        margin: 20px; /* Add margin for printing */
-        background-color: white; /* Change background color for printing */
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1) !important; /* Add box-shadow for printing */
-    }
-    .card {
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1) !important; /* Add box-shadow for printing */
-    }
-}
-
+            #form {
+                display: none;
+            }
+            .tablefoot{
+            width: 400px;
+        }
+        }
         .heading {
             text-align: center;
             margin-bottom: 20px;
@@ -158,7 +149,7 @@ if (isset($_POST['view_entries'])) {
     <?php include('include/nav.php'); ?>
     <div class="container-fluid mt-5">
         <hr>
-          <h1 class="h4 text-center mb-4">STITCHING PAYMENT SLIP </h1> <!-- Changed container to container-fluid -->
+          <h1 class="h4 text-center">STITCHING PAYMENT SLIP </h1> <!-- Changed container to container-fluid -->
         <div id="form" class="row justify-content-center">
             <div class="col-lg-8">
                 <div class="card">
