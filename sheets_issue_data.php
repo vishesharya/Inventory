@@ -194,7 +194,8 @@ if (isset($_POST['view_entries'])) {
         </div>
 
 
-        <?php if (isset($_POST['view_entries']) && mysqli_num_rows($result) > 0): ?>
+        <?php 
+        if (isset($_POST['view_entries']) && mysqli_num_rows($result) > 0): ?>
         <table class="table datatable-multi-sorting">
             <thead>
                 <tr>
@@ -212,25 +213,43 @@ if (isset($_POST['view_entries'])) {
                 </tr>
             </thead>
             <tbody>
-                <?php $sn = 1; ?>
-                <?php while ($data = mysqli_fetch_array($result)): ?>
-                    <tr>
-                        <td><?php echo $sn; ?>.</td>
-                        <td><?php echo $data['challan_no']; ?></td>
-                        <td><?php echo $data['labour_name']; ?></td>
-                        <td><?php echo $data['product_name']; ?></td>
-                        <td><?php echo ucfirst($data['product_base']); ?></td>
-                        <td><?php echo ucfirst($data['product_color']); ?></td>
-                        <td><?php echo $data['quantity1']; ?></td>
-                        <td><?php echo $data['quantity2']; ?></td>
-                        <td><?php echo $data['small_panel_color']; ?></td>
-                        <td><?php echo $data['quantity3']; ?></td>
-                        <td><?php echo date('d/m/Y', strtotime($data['date_and_time'])); ?></td>
+            <?php 
+            $sn = 1;
+            $total_quantity1 = 0;
+            $total_quantity2 = 0;
+            $total_quantity3 = 0;
 
-                    </tr>
-                    <?php $sn++; ?>
-                <?php endwhile; ?>
-            </tbody>
+            while ($data = mysqli_fetch_array($result)) {
+                $total_quantity1 += $data['quantity1'];
+                $total_quantity2 += $data['quantity2'];
+                $total_quantity3 += $data['quantity3'];
+                ?>
+                <tr>
+                    <td><?php echo $sn; ?>.</td>
+                    <td><?php echo $data['challan_no']; ?></td>
+                    <td><?php echo $data['labour_name']; ?></td>
+                    <td><?php echo $data['product_name']; ?></td>
+                    <td><?php echo ucfirst($data['product_base']); ?></td>
+                    <td><?php echo ucfirst($data['product_color']); ?></td>
+                    <td><?php echo $data['quantity1']; ?></td>
+                    <td><?php echo $data['quantity2']; ?></td>
+                    <td><?php echo $data['small_panel_color']; ?></td>
+                    <td><?php echo $data['quantity3']; ?></td>
+                    <td><?php echo date('d/m/Y', strtotime($data['date_and_time'])); ?></td>
+                </tr>
+                <?php $sn++; ?>
+            <?php } ?>
+        </tbody>
+            <tfoot>
+            <tr>
+                <td colspan="6">Total:</td>
+                <td><?php echo $total_quantity1; ?></td>
+                <td><?php echo $total_quantity2; ?></td>
+                <td></td> <!-- Assuming no total for small panel color -->
+                <td><?php echo $total_quantity3; ?></td>
+                <td></td> <!-- Assuming no total for date -->
+            </tr>
+        </tfoot>
         </table>
     <?php elseif (isset($_POST['view_entries'])): ?>
         <p>No entries found.</p>
