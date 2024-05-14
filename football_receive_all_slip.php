@@ -316,11 +316,18 @@ if (!empty($selected_challan)) {
                             <th>Stitcher 2nd Company 1st</th>
                             <th>Stitcher 2nd Company 2nd</th>
                             <th>Total</th>
-                            <th>Date</th>
                         </tr>
                     </thead>
                     <tbody>
                         <?php while ($product = mysqli_fetch_assoc($result)) : ?>
+                            <?php
+                            // Sum the values for each column
+                            $total_S_Ist_C_Ist += $product['S_Ist_C_Ist'];
+                            $total_S_Ist_C_IInd += $product['S_Ist_C_IInd'];
+                            $total_S_IInd_C_Ist += $product['S_IInd_C_Ist'];
+                            $total_S_IInd_C_IInd += $product['S_IInd_C_IInd'];
+                            $total_total += $product['total'];
+                            ?>
                             <tr>
                                 <td><?php echo $product['product_name']; ?></td>
                                 <td><?php echo ucfirst($product['product_base']); ?></td>
@@ -330,9 +337,20 @@ if (!empty($selected_challan)) {
                                 <td><?php echo $product['S_IInd_C_Ist']; ?></td>
                                 <td><?php echo $product['S_IInd_C_IInd']; ?></td>
                                 <td><?php echo $product['total']; ?></td>
-                                <td><?php echo date('d/m/Y', strtotime($product['date_and_time'])); ?></td>
+                                
                             </tr>
                         <?php endwhile; ?>
+                        <!-- Add a row for totals -->
+                        <tr>
+                            <td colspan="3"><strong>Total</strong></td>
+                            <td><strong><?php echo $total_S_Ist_C_Ist; ?></strong></td>
+                            <td><strong><?php echo $total_S_Ist_C_IInd; ?></strong></td>
+                            <td><strong><?php echo $total_S_IInd_C_Ist; ?></strong></td>
+                            <td><strong><?php echo $total_S_IInd_C_IInd; ?></strong></td>
+                            <td><strong><?php echo $total_total; ?></strong></td>
+                            <td></td>
+                        </tr>
+                    </tbody>
                     </tbody>
                 </table>
             </div>
