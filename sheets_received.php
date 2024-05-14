@@ -325,7 +325,7 @@ if (isset($_POST['submit_products'])) {
         }
         .btn-group {
             margin-top: 1.5rem;
-            justify-content: center;
+            justify-content: center; 
             gap: 15px;
         }
         .table {

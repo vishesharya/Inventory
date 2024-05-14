@@ -130,7 +130,7 @@ if (isset($_POST['add_product'])) {
             mysqli_query($con, $update_remaining_small_panel_query); }
          } else {
             
-         $remaining_small_panel_query = "SELECT small_sheet_balance FROM sheets_small_stock ";
+         $remaining_small_panel_query = "SELECT small_sheet_balance FROM sheets_small_stock WHERE small_sheet_color = '$small_sheet_color'";
          $remaining_small_panel_result = mysqli_query($con, $remaining_small_panel_query);
          $row = mysqli_fetch_assoc($remaining_small_panel_result);
          $remaining_small_panel = $row['small_sheet_balance'];
@@ -139,7 +139,7 @@ if (isset($_POST['add_product'])) {
         }else{
         // Update remaining_small_panel in sheets_product table
         $updated_remaining_small_panel = $remaining_small_panel - (int)$quantity3;
-        $update_remaining_small_panel_query = "UPDATE sheets_small_stock SET small_sheet_balance = $updated_remaining_small_panel ";
+        $update_remaining_small_panel_query = "UPDATE sheets_small_stock SET small_sheet_balance = $updated_remaining_small_panel WHERE small_sheet_color = '$small_sheet_color'";
         mysqli_query($con, $update_remaining_small_panel_query);}
 
       }
