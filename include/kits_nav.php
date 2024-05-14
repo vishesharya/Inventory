@@ -28,7 +28,7 @@
       background-color: #007bff; /* Blue background for dropdown */
       max-height: 400px; /* Set a fixed height */
       overflow-y: auto; /* Enable vertical scrolling */
-      border-radius: 2rem;
+      border-radius: 3px;
     }
 
     .navbar-nav .dropdown-menu .dropdown-item {
