@@ -69,7 +69,7 @@
 
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Sheets 
+              Sheets Inventory
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
              <a class="dropdown-item" href="#">Receiving Form</a>
@@ -77,6 +77,8 @@
               <a class="dropdown-item" href="#">Selling Form</a>
               <div class="dropdown-divider"></div>
               <a class="dropdown-item" href="#">Issue Slip</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="#">Job Work</a>
               <div class="dropdown-divider"></div>
               <a class="dropdown-item" href="#">Receiving Data</a>
               <a class="dropdown-item" href="#">Issue Data</a>
@@ -93,27 +95,33 @@
             </div>
           </li>
           <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Dropdown
+            <a class="nav-link dropdown-toggle" href="" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Kits Inventory
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" href="#">Action</a>
-              <a class="dropdown-item" href="#">Another action</a>
+             <a class="dropdown-item" href="#">Receiving Form</a>
+              <a class="dropdown-item" href="#">Issue Form</a>
               <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="#">Something else here</a>
+              <a class="dropdown-item" href="#">Receiving Slip</a>
+              <a class="dropdown-item" href="#">Issue Slip</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="#">Job Work</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="#">Receiving Data</a>
+              <a class="dropdown-item" href="#">Issue Data</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="#">Kits Inventory</a>
+              <a class="dropdown-item" href="#">Thread Inventory</a>
+              <a class="dropdown-item" href="#">Bladder Inventory</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="#">Add Thread</a>
+              <a class="dropdown-item" href="#">Add Bladder</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="#">Delete Thread</a>
+              <a class="dropdown-item" href="#">Delete Bladder</a>
             </div>
           </li>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Dropdown
-            </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" href="#">Action</a>
-              <a class="dropdown-item" href="#">Another action</a>
-              <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="#">Something else here</a>
-            </div>
-          </li>
+          
           ';
         }
         ?>
