@@ -94,26 +94,26 @@
               Sheets Inventory
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" href="#">Receiving Form</a>
-              <a class="dropdown-item" href="#">Issue Form</a>
-              <a class="dropdown-item" href="#">Selling Form</a>
+              <a class="dropdown-item" href="sheets_received.php">Receiving Form</a>
+              <a class="dropdown-item" href="sheets_issue.php">Issue Form</a>
+              <a class="dropdown-item" href="sheets_buyer.php">Selling Form</a>
               <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="#">Issue Slip</a>
+              <a class="dropdown-item" href="sheets_issue_all_slip.php">Issue Slip</a>
               <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="#">Job Work</a>
+              <a class="dropdown-item" href="seets_job_work.php">Job Work</a>
               <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="#">Receiving Data</a>
-              <a class="dropdown-item" href="#">Issue Data</a>
-              <a class="dropdown-item" href="#">Selling Data</a>
+              <a class="dropdown-item" href="sheets_received_data.php">Receiving Data</a>
+              <a class="dropdown-item" href="sheets_issue_data.php">Issue Data</a>
+              <a class="dropdown-item" href="sheets_selling_data.php">Selling Data</a>
               <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="#">Production Inventory</a>
-              <a class="dropdown-item" href="#">Packaging Inventory</a>
-              <a class="dropdown-item" href="#">Production Color Panel</a>
-              <a class="dropdown-item" href="#">Packaging Color Panel</a>
+              <a class="dropdown-item" href="sheets_product_list_for_production.php">Production Inventory</a>
+              <a class="dropdown-item" href="sheets_product_list.php">Packaging Inventory</a>
+              <a class="dropdown-item" href="sheets_color_panel_production_inventory.php">Production Color Panel</a>
+              <a class="dropdown-item" href="sheets_color_panel_inventory.php">Packaging Color Panel</a>
               <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="#">Update Color Panel</a>
-              <a class="dropdown-item" href="#">Add/Delete Color Panel</a>
-              <a class="dropdown-item" href="#">Add/Delete Labour</a>
+              <a class="dropdown-item" href="all_small_stock-update.php">Update Color Panel</a>
+              <a class="dropdown-item" href="sheets_panel_color.php">Add/Delete Color Panel</a>
+              <a class="dropdown-item" href="add_labour.php">Add/Delete Labour</a>
             </div>
           </li>
           <li class="nav-item dropdown">
@@ -121,26 +121,26 @@
               Kits Inventory
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" href="#">Receiving Form</a>
-              <a class="dropdown-item" href="#">Issue Form</a>
+              <a class="dropdown-item" href="kits_receive_form.php">Receiving Form</a>
+              <a class="dropdown-item" href="kits_issue_form.php">Issue Form</a>
               <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="#">Receiving Slip</a>
-              <a class="dropdown-item" href="#">Issue Slip</a>
+              <a class="dropdown-item" href="kits_receive_slip_all_data.php">Receiving Slip</a>
+              <a class="dropdown-item" href="kits_issue_all_data_slip.php">Issue Slip</a>
               <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="#">Job Work</a>
+              <a class="dropdown-item" href="kits_job_work.php">Job Work</a>
               <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="#">Receiving Data</a>
-              <a class="dropdown-item" href="#">Issue Data</a>
+              <a class="dropdown-item" href="kits_receive_data.php">Receiving Data</a>
+              <a class="dropdown-item" href="kits_issue_data.php">Issue Data</a>
               <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="#">Kits Inventory</a>
-              <a class="dropdown-item" href="#">Thread Inventory</a>
+              <a class="dropdown-item" href="kits_product_list.php">Kits Inventory</a>
+              <a class="dropdown-item" href="thread_inventory.php">Thread Inventory</a>
               <a class="dropdown-item" href="#">Bladder Inventory</a>
               <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="#">Add Thread</a>
-              <a class="dropdown-item" href="#">Add Bladder</a>
+              <a class="dropdown-item" href="add_thread.php">Add Thread</a>
+              <a class="dropdown-item" href="add_bladder.php">Add Bladder</a>
               <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="#">Delete Thread</a>
-              <a class="dropdown-item" href="#">Delete Bladder</a>
+              <a class="dropdown-item" href="delete_thread.php">Delete Thread</a>
+              <a class="dropdown-item" href="delete_bladder.php">Delete Bladder</a>
             </div>
           </li>
           <li class="nav-item dropdown">
@@ -148,15 +148,15 @@
               Football Inventory
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" href="#">Receiving Form</a>
-              <a class="dropdown-item" href="#">Issue Form</a>
+              <a class="dropdown-item" href="football_received.php">Receiving Form</a>
+              <a class="dropdown-item" href="football_issue.php">Issue Form</a>
               <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="#">Receiving Slip</a>
+              <a class="dropdown-item" href="football_receive_all_slip.php">Receiving Slip</a>
               <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="#">Receiving Data</a>
-              <a class="dropdown-item" href="#">Issue Data</a>
+              <a class="dropdown-item" href="football_receiving_data.php">Receiving Data</a>
+              <a class="dropdown-item" href="football_issue_data.php">Issue Data</a>
               <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="#">Football Inventory</a>
+              <a class="dropdown-item" href="football_product_list.php">Football Inventory</a>
             </div>
           </li>
           ';
