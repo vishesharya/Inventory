@@ -244,7 +244,8 @@ $total_thread_quantity = 0;
     ?>
                 <?php endwhile; ?>
                 <tr>
-    <td colspan="6"></td> <!-- Colspan to span across columns -->
+                    <td><b>Total : </b></td>
+    <td colspan="5"></td> <!-- Colspan to span across columns -->
     <td><?php echo $total_issue_quantity; ?></td>
     <td></td> <!-- Empty cell for bladder name -->
     <td><?php echo $total_bladder_quantity; ?></td>
