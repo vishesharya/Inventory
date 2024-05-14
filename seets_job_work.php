@@ -32,7 +32,7 @@ if (isset($_POST['view_entries'])) {
     $selected_challan = isset($_POST['challan_no_issue']) ? mysqli_real_escape_string($con, $_POST['challan_no_issue']) : '';
     
     // Retrieve entries from database
-    $query = "SELECT * FROM seets_job_work WHERE status = 0";
+    $query = "SELECT * FROM sheets_job_work WHERE status = 0";
     
     // Add date range filter if provided
     if (!empty($start_date) && !empty($end_date)) {
@@ -105,7 +105,7 @@ if (isset($_POST['view_entries'])) {
 <body>
     <?php include('include/nav.php'); ?>
     <div class="container-fluid mt-5">
-          <h1 class="h4 text-center mb-4">KITS JOB WORK </h1> <!-- Changed container to container-fluid -->
+          <h1 class="h4 text-center mb-4">SHEETS JOB WORK </h1> <!-- Changed container to container-fluid -->
         <div id="form" class="row justify-content-center">
             <div class="col-lg-8">
                 <div class="card">
