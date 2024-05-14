@@ -164,7 +164,7 @@ if (isset($_POST['view_entries'])) {
                                     <div class="form-group">
                                         <label for="select_challan">Select Receive Challan No:</label>
                                         <select class="form-select" id="select_challan" name="challan_no">
-                                            <option value="" selected disabled>Select Issue Challan No</option>
+                                            <option value="" selected disabled>Select Receive Challan No:</option>
                                         </select>
                                     </div>
                                 </div>
