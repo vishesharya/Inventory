@@ -213,6 +213,12 @@ if (isset($_POST['view_entries'])) {
                 </tr>
             </thead>
             <tbody>
+            <?php 
+// Initialize variables to hold totals
+$total_issue_quantity = 0;
+$total_bladder_quantity = 0;
+$total_thread_quantity = 0;
+?>
                 <?php $sn = 1; ?>
                 <?php while ($data = mysqli_fetch_array($result)): ?>
                     <tr>
