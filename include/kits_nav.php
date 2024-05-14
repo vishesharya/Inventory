@@ -47,7 +47,8 @@
       }
     }
     .navbar-brand:hover {
-      transform: scale(1.1); /* Scale up by 10% on hover */
+      transform: scale(1.1);
+      transition-duration: 1s;
     }
   </style>
 </head>
