@@ -188,6 +188,9 @@ if (!empty($selected_challan)) {
             text-align: center;
             
         }
+        #stitcher_name{
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
