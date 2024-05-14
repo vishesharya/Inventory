@@ -439,10 +439,9 @@ if (isset($_POST['submit_products'])) {
                                 </div>
                             </div>
                             <div id="printbtn" class="btn-group">
-                                <div>
-                                     <button type="submit" class="btn btn-primary me-2" name="add_product">Add</button>
-                                     <button type="submit" class="btn btn-success" name="submit_products">Submit</button>
-                                </div>
+                                <button type="submit" class="btn btn-primary me-2" name="add_product">Add</button>
+                                <button type="submit" class="btn btn-success" name="submit_products">Submit</button>
+                            </div>
                                
                                   <div>
                                       <a  href="https://khannasports.co.in/kits_issue_slip_print.php" >Print Issue  Slip </a>
