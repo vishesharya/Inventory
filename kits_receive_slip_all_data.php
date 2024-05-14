@@ -167,7 +167,7 @@ if (isset($_POST['view_entries'])) {
     <div class="container-fluid mt-5">
           
         <div id="form" class="row justify-content-center">
-        <h1 class="h4 text-center mb-4">KITS RECEIVE SLIP </h1> <!-- Changed container to container-fluid -->
+        <h1 class="h4 text-center mb-4">KITS RECEIVING SLIP</h1> <!-- Changed container to container-fluid -->
             <div class="col-lg-8">
                 <div class="card">
                     <div class="card-body">
@@ -254,7 +254,7 @@ if (isset($_POST['view_entries'])) {
         <!-- Add your HTML structure here to display kits issue details -->
         <div class="invoice-header">
         <div>
-            <p class="text-center align-items-center" >SHEETS ISSUE SLIP</p>
+            <p class="text-center align-items-center" >KITS RECEIVING SLIP</p>
             <hr>
             <h2 class="heading">KHANNA SPORTS INDUSTRIES PVT. LTD</h2>
             <p class="heading"> A-7, Sports Complex Delhi Road Meerut Uttar Pradesh 250002</p>
@@ -300,9 +300,9 @@ if (isset($_POST['view_entries'])) {
             </div>
         </div>
         <div class="signature">
-            <div class="receiver-signature">Receiver Signature</div>
-            <div class="middle-signature">Guard Signature</div>
             <div class="issuer-signature">Issuer Signature</div>
+            <div class="middle-signature">Guard Signature</div>
+            <div class="receiver-signature">Receiver Signature</div>
         </div>
     </div>
 <?php endif; ?>
