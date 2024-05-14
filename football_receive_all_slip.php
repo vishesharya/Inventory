@@ -164,7 +164,7 @@ if (!empty($selected_challan)) {
 <body>
 <?php include('include/football_nav.php'); ?>
     <div class="container-fluid mt-5">
-          
+           
         <div id="form" class="row justify-content-center">
         <h1 class="h4 text-center mb-4">FOOTBALL RECEIVING SLIP </h1> <!-- Changed container to container-fluid -->
             <div class="col-lg-8">
@@ -250,21 +250,26 @@ if (!empty($selected_challan)) {
 
         <?php if (isset($_POST['view_entries']) && mysqli_num_rows($result) > 0): ?>
     <div class="container_slip">
-        <!-- Add your HTML structure here to display kits issue details -->
-        <div class="invoice-header">
-            <div>
-                <h2 class="heading">KHANNA SPORTS FOOTBALL RECEIVING SLIP</h2>
-                <p>Sports Complex, A-7, Delhi Road, Phase 1,<br/>Industrial Area, Mohkam Pur, Meerut,<br/>Uttar Pradesh 250002 (India)</p>
-                <p>Contact: 8449441387, 98378427750</p>
+    <div class="invoice-header">
+           <div>
+                <p class="issue_heading" >KITS ISSUE SLIP</p>
+                <hr>
+                <h2 id="company_heading" class="heading">KHANNA SPORTS INDUSTRIES PVT. LTD</h2>
+                <p class="heading"> A-7, Sports Complex Delhi Road Meerut Uttar Pradesh 250002</p>
+                <p class="heading">Contact : 8449441387,98378427750 &nbsp;  GST : 09AAACK9669A1ZD </p>
             </div>
             <div id="head_details">
                 <div>
-                    <p>Stitcher : <?php echo $stitcher_name; ?></p>
+                    <p id="stitcher_name" >Stitcher : <?php echo $stitcher_name; ?></p>
                      <p>Stitcher Contact : <?php echo $stitcher_contact; ?></p>
+                     <p>Stitcher Aadhar : <?php echo $stitcher_aadhar; ?></p>
+                     <p>Stitcher Pan : <?php echo $stitcher_pan; ?></p>
+                     <p>Stitcher Address : <?php echo $stitcher_address; ?></p>
                     <!-- Add other details as needed -->
                 </div>
                 <div>
-                <p><br/><br/>Challan No: <?php echo $challan_no; ?></p>
+                    <p><br/><br/>Challan No: <?php echo $challan_no; ?></p>
+                    <p>Date: <?php echo date('d-m-Y', strtotime($date_and_time)); ?></p>
                 </div>
             </div>
         </div>
