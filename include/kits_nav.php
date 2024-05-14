@@ -48,7 +48,7 @@
     }
     .navbar-brand:hover {
       transform: scale(1.1);
-      transition-duration: 1s;
+      transition-duration: 400ms;
     }
   </style>
 </head>
