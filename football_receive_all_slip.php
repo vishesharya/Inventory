@@ -180,6 +180,10 @@ if (!empty($selected_challan)) {
             align-items: flex-end;
             justify-content: space-between;
         }
+        
+        .invoice-header{
+            line-height: 7px;
+        }
     </style>
 </head>
 <body>
