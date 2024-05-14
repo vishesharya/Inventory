@@ -1,5 +1,5 @@
 <?php
-session_start();
+
 ?>
 
 <!DOCTYPE html>
@@ -42,13 +42,32 @@ session_start();
       color: #f8f9fa; /* Light text on hover */
     }
 
+    /* Custom scrollbar styles */
+    .navbar-nav .dropdown-menu::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    .navbar-nav .dropdown-menu::-webkit-scrollbar-track {
+      background: #0056b3; /* Track color */
+    }
+
+    .navbar-nav .dropdown-menu::-webkit-scrollbar-thumb {
+      background-color: #ffffff; /* Thumb color */
+      border-radius: 10px;
+      border: 2px solid #0056b3; /* Thumb border color */
+    }
+
+    .navbar-nav .dropdown-menu::-webkit-scrollbar-thumb:hover {
+      background-color: #cccccc; /* Thumb hover color */
+    }
+
     /* Responsive styles */
     @media (max-width: 991px) {
       .navbar-nav .nav-item {
         padding: 10px 0;
       }
     }
-    
+
     .navbar-brand:hover {
       transform: scale(1.1);
       transition-duration: 400ms;
