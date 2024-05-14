@@ -186,6 +186,7 @@ if (!empty($selected_challan)) {
         #issue_heading{
             align-items: center;
             text-align: center;
+            justify-content: center;
         }
     </style>
 </head>
