@@ -160,21 +160,14 @@ if (isset($_POST['view_entries'])) {
                                     </div>
                                 </div>
                        
-                              
-                            
-                          
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="select_challan">Select Receive Challan No:</label>
                                         <select class="form-select" id="select_challan" name="challan_no">
                                             <option value="" selected disabled>Select Issue Challan No</option>
-                                            <?php if (isset($challan_result_issue)) : ?>
-                                                <?php while ($row = mysqli_fetch_assoc($challan_result_issue)) : ?>
-                                                    <option value="<?php echo $row['challan_no']; ?>"><?php echo $row['challan_no']; ?></option>
-                                                <?php endwhile; ?>
-                                            <?php endif; ?>
                                         </select>
                                     </div>
+                                </div>
                                 </div>
                           </div>
                             
@@ -240,48 +233,41 @@ if (isset($_POST['view_entries'])) {
         <p>No entries found.</p>
     <?php endif; ?>
 
+    <script>
+            function fetchChallanNumbers(selectedLabour) {
+                var fromDate = document.getElementById("from_date").value;
+                var toDate = document.getElementById("to_date").value;
+                var xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = function() {
+                    if (this.readyState == 4 && this.status == 200) {
+                        var challanSelect = document.getElementById("select_challan");
+                        var challanNumbers = JSON.parse(this.responseText);
+                        challanSelect.innerHTML = "<option value='' selected disabled>Select Issue Challan No</option>";
+                        challanNumbers.forEach(function(challan) {
+                            var option = document.createElement("option");
+                            option.value = challan;
+                            option.text = challan;
+                            challanSelect.appendChild(option);
+                        });
+                    }
+                };
+                xhttp.open("GET", "fatch_challan_no_for_kits_received.php?labour=" + selectedLabour + "&from_date=" + fromDate + "&to_date=" + toDate, true);
+                xhttp.send();
+            }
 
-   <!-- JavaScript code for fetching challan numbers based on selected labour and date range -->
- 
+            function handleLabourChange() {
+                var selectedLabour = document.getElementById("select_labour").value;
+                if (selectedLabour) {
+                    fetchChallanNumbers(selectedLabour);
+                }
+            }
 
-   <script>
-     // ajax_script.js
+            document.getElementById("select_labour").addEventListener("change", handleLabourChange);
+            document.getElementById("from_date").addEventListener("change", handleLabourChange);
+            document.getElementById("to_date").addEventListener("change", handleLabourChange);
 
-function fetchChallanNumbers(selectedLabour) {
-    var fromDate = document.getElementById("from_date").value;
-    var toDate = document.getElementById("to_date").value;
-    var xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status == 200) {
-            var challanSelect = document.getElementById("select_challan");
-            var challanNumbers = JSON.parse(this.responseText);
-            challanSelect.innerHTML = "<option value='' selected disabled>Select Issue Challan No</option>";
-            challanNumbers.forEach(function(challan) {
-                var option = document.createElement("option");
-                option.value = challan;
-                option.text = challan;
-                challanSelect.appendChild(option);
-            });
-        }
-    };
-    xhttp.open("GET", "fatch_challan_no_for_kits_received.php?labour=" + selectedLabour + "&from_date=" + fromDate + "&to_date=" + toDate, true);
-    xhttp.send();
-}
-
-function handleLabourChange() {
-    var selectedLabour = document.getElementById("select_labour").value;
-    if (selectedLabour) {
-        fetchChallanNumbers(selectedLabour);
-    }
-}
-
-document.getElementById("select_labour").addEventListener("change", handleLabourChange);
-document.getElementById("from_date").addEventListener("change", handleLabourChange);
-document.getElementById("to_date").addEventListener("change", handleLabourChange);
-
-// Trigger initial fetch when page loads
-handleLabourChange();
-
-    </script>
+            // Trigger initial fetch when page loads
+            handleLabourChange();
+        </script>
 </body>
 </html>
