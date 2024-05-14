@@ -125,7 +125,7 @@ $result = mysqli_query($con, "SELECT kp.id, kp.small_sheet_color,
                             <tr>
                                 <th>Sn.</th>
                                 <th>Product Name</th>
-                                <th>Action</th>
+                            
                             </tr>
                         </thead>
                         <tbody>
@@ -136,7 +136,7 @@ $result = mysqli_query($con, "SELECT kp.id, kp.small_sheet_color,
                             <tr>
                                  <td><?php echo $sn; ?>.</td>
                                  <td contenteditable="true" data-field="small_sheet_color" data-id="<?php echo $data['id']; ?>"><?php echo $data['small_sheet_color']; ?></td>
-                                <td><button class="btn btn-danger delete-row" data-id="<?php echo $data['id']; ?>">Delete</button></td>
+
                             </tr>
                             <?php 
                             $sn++; 
