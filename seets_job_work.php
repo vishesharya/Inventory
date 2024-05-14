@@ -225,6 +225,7 @@ if (isset($_POST['view_entries'])) {
                 <td><strong>Total:</strong></td>
                 <td><?php echo $totalQuantity1; ?></td>
                 <td><?php echo $totalQuantity2; ?></td>
+                <td></td>
                 <td><?php echo $totalQuantity3; ?></td>
             </tr>
         </table>
