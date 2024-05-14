@@ -280,7 +280,7 @@ if (isset($_POST['view_entries'])) {
                             <th>Product Base</th>
                             <th>Product Color</th>
                             <th>Product Quantity</th>
-                            <th>Date</th>
+                         
                         </tr>
                     </thead>
                     <tbody>
@@ -290,8 +290,6 @@ if (isset($_POST['view_entries'])) {
                                 <td><?php echo ucfirst($product['product_base']); ?></td>
                                 <td><?php echo ucfirst($product['product_color']); ?></td>
                                 <td><?php echo $product['received_quantity']; ?></td>
-                               
-                                <td><?php echo date('d/m/Y', strtotime($product['date_and_time'])); ?></td>
                             </tr>
                         <?php endwhile; ?>
                     </tbody>
