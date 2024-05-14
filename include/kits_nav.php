@@ -26,8 +26,9 @@
 
     .navbar-nav .dropdown-menu {
       background-color: #007bff; /* Blue background for dropdown */
-      max-height: 300px; /* Set a fixed height */
+      max-height: 400px; /* Set a fixed height */
       overflow-y: auto; /* Enable vertical scrolling */
+      border-radius: 2rem;
     }
 
     .navbar-nav .dropdown-menu .dropdown-item {
