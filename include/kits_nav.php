@@ -76,9 +76,10 @@
               <a class="dropdown-item" href="#">Issue Form</a>
               <a class="dropdown-item" href="#">Selling Form</a>
               <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="#">Issue Slip</a>
+              <div class="dropdown-divider"></div>
               <a class="dropdown-item" href="#">Receiving Data</a>
               <a class="dropdown-item" href="#">Issue Data</a>
-              <a class="dropdown-item" href="#">Issue Slip</a>
               <a class="dropdown-item" href="#">Selling Data</a>
               <div class="dropdown-divider"></div>
               <a class="dropdown-item" href="#">Production Inventory</a>
