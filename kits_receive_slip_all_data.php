@@ -282,7 +282,7 @@ if (isset($_POST['view_entries'])) {
                             <th>Product Name</th>
                             <th>Product Base</th>
                             <th>Product Color</th>
-                            <th>Product Quantity</th>
+                            <th>Kits Quantity</th>
                          
                         </tr>
                     </thead>
