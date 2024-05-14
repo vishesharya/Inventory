@@ -102,6 +102,21 @@ if (isset($_POST['view_entries'])) {
                 display: none;
             }
         }
+          /* Custom scrollbar styles */
+          .table-container::-webkit-scrollbar {
+            width: 12px;
+        }
+        .table-container::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+        .table-container::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 10px;
+        }
+        .table-container::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
     </style>
 </head>
 <body>
