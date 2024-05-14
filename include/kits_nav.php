@@ -17,7 +17,7 @@
 
     .navbar-brand,
     .navbar-nav .nav-link {
-      color: #fff; /* White text */
+      color: #ffffff; /* White text */
     }
 
     .navbar-nav {
@@ -32,7 +32,7 @@
     }
 
     .navbar-nav .dropdown-menu .dropdown-item {
-      color: #fff; /* White text for dropdown items */
+      color: #ffffff; /* White text for dropdown items */
     }
 
     .navbar-nav .dropdown-menu .dropdown-item:hover {
