@@ -165,9 +165,9 @@ if (isset($_POST['view_entries'])) {
                           
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="select_challan">Select Receive Challan No:</label>
+                                        <label for="select_challan">Select Received Challan No:</label>
                                         <select class="form-select" id="select_challan" name="challan_no">
-                                            <option value="" selected disabled>Select Issue Challan No</option>
+                                            <option value="" selected disabled>Select Received Challan No</option>
                                             <?php if (isset($challan_result_issue)) : ?>
                                                 <?php while ($row = mysqli_fetch_assoc($challan_result_issue)) : ?>
                                                     <option value="<?php echo $row['challan_no']; ?>"><?php echo $row['challan_no']; ?></option>
@@ -176,7 +176,6 @@ if (isset($_POST['view_entries'])) {
                                         </select>
                                     </div>
                                 </div>
-                          </div>
                             
                                 <div id="printbtn" class="btn-group">
                                 <div>
