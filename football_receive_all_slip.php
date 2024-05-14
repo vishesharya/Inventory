@@ -45,7 +45,7 @@ if (isset($_POST['view_entries'])) {
         $stitcher_address = $stitcher_address_row['stitcher_address'];
 
         // Fetch the date and time 
-        $date_and_time_query = "SELECT date_and_time FROM kits_issue WHERE challan_no = '$challan_no' LIMIT 1";
+        $date_and_time_query = "SELECT date_and_time FROM football_received WHERE challan_no = '$challan_no' LIMIT 1";
         $date_and_time_result = mysqli_query($con, $date_and_time_query);
         $date_and_time_row = mysqli_fetch_assoc($date_and_time_result);
         $date_and_time = $date_and_time_row['date_and_time'];
