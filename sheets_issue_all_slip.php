@@ -264,7 +264,7 @@ if (isset($_POST['view_entries'])) {
        
         <div id="head_details">
             <div>
-            <p class="fw-bold" >labour : <?php echo $labour_name; ?></p>
+            <p class="fw-bold" >Labour : <?php echo $labour_name; ?></p>
             </div>
             <div>
                     <p><br/><br/>Challan No: <?php echo $challan_no; ?></p>
