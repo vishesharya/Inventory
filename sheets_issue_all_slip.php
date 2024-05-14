@@ -163,7 +163,7 @@ if (isset($_POST['view_entries'])) {
     </style>
 </head>
 <body>
-    <?php include('include/nav.php'); ?>
+<?php include('include/sheets_nav.php'); ?>
     <div class="container-fluid mt-5">
           
         <div id="form" class="row justify-content-center">

@@ -73,6 +73,7 @@ if (isset($_POST['delete_color'])) {
 </head>
 
 <body>
+<?php include('include/sheets_nav.php'); ?>
     <div class="container mt-5">
         <div class="row justify-content-center">
             <div class="col-md-6">

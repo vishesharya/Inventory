@@ -316,6 +316,7 @@ $insert_result1 = mysqli_query($con, $insert_query1);
     </style> 
 </head>
 <body>
+<?php include('include/sheets_nav.php'); ?>
     <div class="container mt-5">
         <div class="row justify-content-center">
             <div class="col-lg-8">

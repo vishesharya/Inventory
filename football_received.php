@@ -356,7 +356,7 @@ if (isset($_POST['submit_form'])) {
     </style>
 </head>
 <body>
-    <?php include('include/nav.php'); ?>
+    <?php include('include/football_nav.php'); ?>
     <div class="container-fluid mt-5"> <!-- Changed container to container-fluid -->
         <div class="row justify-content-center">
             <div class="col-lg-8">

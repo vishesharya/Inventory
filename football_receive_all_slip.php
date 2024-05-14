@@ -162,7 +162,7 @@ if (!empty($selected_challan)) {
     </style>
 </head>
 <body>
-    <?php include('include/nav.php'); ?>
+<?php include('include/football_nav.php'); ?>
     <div class="container-fluid mt-5">
           
         <div id="form" class="row justify-content-center">

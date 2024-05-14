@@ -108,7 +108,7 @@ if (isset($_POST['view_entries'])) {
     </style>
 </head>
 <body>
-    <?php include('include/nav.php'); ?>
+<?php include('include/sheets_nav.php'); ?>
     <div class="container-fluid mt-5">
     <h1 class="h4 text-center mb-4">SHEETS ISSUE DETAILS </h1> 
         <div id="form" class="row justify-content-center">
