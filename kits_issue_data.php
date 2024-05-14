@@ -63,7 +63,7 @@ if (isset($_POST['view_entries'])) {
     <title>KITS ISSUE DETAILS</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
-       <style>
+       
         body {
             background-color: #f8f9fc;
             font-family: Arial, sans-serif;
@@ -128,7 +128,7 @@ if (isset($_POST['view_entries'])) {
             background: #555;
         }
     </style>
-    </style>
+    
 </head>
 <body>
     <?php include('include/kits_nav.php'); ?>
