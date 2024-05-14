@@ -4,7 +4,7 @@ include_once 'include/connection.php';
 include_once 'include/admin-main.php';
 
 // Fetch labour names from the database
-$labour_query = "SELECT DISTINCT labour_name FROM seets_job_work";
+$labour_query = "SELECT DISTINCT labour_name FROM kits_received ORDER BY labour_name ASC"; 
 $labour_result = mysqli_query($con, $labour_query);
 
 // Fetch associated challan numbers for selected labour
