@@ -63,9 +63,11 @@ if (isset($_POST['view_entries'])) {
     <title>KITS ISSUE DETAILS</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
-       body {
+       <style>
+        body {
             background-color: #f8f9fc;
             font-family: Arial, sans-serif;
+            overflow-y: scroll; /* Enable scrollbar on body */
         }
         .card {
             border-radius: 1rem;
@@ -78,10 +80,18 @@ if (isset($_POST['view_entries'])) {
             margin-top: 1.5rem;
             justify-content: center;
         }
-        .table {
+        .table-container {
+            max-height: 500px;
+            overflow-y: auto;
             margin-top: 2rem;
-            border-collapse:collapse;
-           
+        }
+        .table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        .table th, .table td {
+            text-align: center;
+            padding: 8px;
         }
         #printbtn {
             display: flex;
@@ -102,8 +112,8 @@ if (isset($_POST['view_entries'])) {
                 display: none;
             }
         }
-          /* Custom scrollbar styles */
-          .table-container::-webkit-scrollbar {
+        /* Custom scrollbar styles */
+        .table-container::-webkit-scrollbar {
             width: 12px;
         }
         .table-container::-webkit-scrollbar-track {
@@ -117,6 +127,7 @@ if (isset($_POST['view_entries'])) {
         .table-container::-webkit-scrollbar-thumb:hover {
             background: #555;
         }
+    </style>
     </style>
 </head>
 <body>
