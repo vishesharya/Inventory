@@ -52,7 +52,7 @@
 
 <nav class="navbar navbar-expand-lg navbar-dark">
   <div class="container">
-    <a class="navbar-brand" href="index.php"><img src="./assest/images/logo_main.png" alt=""></a>
+    <a class="navbar-brand" href="index.php"><img src="./assets/images/logo_main.png" alt=""></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
