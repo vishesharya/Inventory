@@ -326,7 +326,7 @@ while ($product = mysqli_fetch_assoc($result)) {
             </div>
         </div>
         <div class="signature">
-            <div class="receiver-signature">Receiver Signature</div>
+            <div class="receiver-signature">Labour Signature</div>
             <div class="middle-signature">Guard Signature</div>
             <div class="issuer-signature">Issuer Signature</div>
         </div>
