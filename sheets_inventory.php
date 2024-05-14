@@ -130,6 +130,13 @@ include_once 'include/admin-main.php';
                                         </div>
                                     </div>
                                 </a>
+                                <a href="./seets_job_work.php" style='color:white'>
+                                    <div class="col-lg-4">
+                                        <div class="panel bg-teal-400">
+                                            <p style="margin: 10px; font-size: large;">Sheets Job Work</p>
+                                        </div>
+                                    </div>
+                                </a>
                                 <a href="sheets_issue_all_slip.php" style='color:white'>
                                     <div class="col-lg-4">
                                         <div class="panel bg-teal-400">
