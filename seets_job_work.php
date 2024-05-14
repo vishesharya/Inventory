@@ -208,7 +208,7 @@ if (isset($_POST['view_entries'])) {
                         <td><?php echo ucfirst($data['product_color']); ?></td>
                         <td><?php echo $data['quantity1']; ?></td>
                         <td><?php echo $data['quantity2']; ?></td>
-                        <td><?php echo $data['small_panel_color	']; ?></td>
+                        <td><?php echo $data['small_panel_color']; ?></td>
                         <td><?php echo $data['quantity3']; ?></td>
                         <td><?php echo date('d/m/Y', strtotime($data['date_and_time'])); ?></td>
                     </tr>
