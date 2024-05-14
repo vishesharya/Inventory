@@ -46,13 +46,16 @@
         padding: 10px 0;
       }
     }
+    navbar-brand :hover{
+        scale: 10px;
+    }
   </style>
 </head>
 <body>
 
 <nav class="navbar navbar-expand-lg navbar-dark">
   <div class="container">
-    <a class="navbar-brand" href="kits_inventory.php"><img width="25px" src="./assets/images/go_back.png" alt="icon">Go Back</a>
+    <a class="navbar-brand" href="kits_inventory.php"><img width="25px" src="./assets/images/go_back.png" alt="icon"> Go Back</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
