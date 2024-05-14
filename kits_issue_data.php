@@ -231,7 +231,21 @@ if (isset($_POST['view_entries'])) {
 
                     </tr>
                     <?php $sn++; ?>
+                    <?php 
+                  $total_issue_quantity += $data['issue_quantity'];
+                  $total_bladder_quantity += $data['bladder_quantity'];
+                  $total_thread_quantity += $data['thread_quantity'];
+    ?>
                 <?php endwhile; ?>
+                <tr>
+    <td colspan="6"></td> <!-- Colspan to span across columns -->
+    <td><?php echo $total_issue_quantity; ?></td>
+    <td></td> <!-- Empty cell for bladder name -->
+    <td><?php echo $total_bladder_quantity; ?></td>
+    <td></td> <!-- Empty cell for thread name -->
+    <td><?php echo $total_thread_quantity; ?></td>
+    <td colspan="1"></td> <!-- Colspan to span across date column -->
+</tr>
             </tbody>
         </table>
     <?php elseif (isset($_POST['view_entries'])): ?>
