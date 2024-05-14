@@ -28,6 +28,27 @@ if (isset($_POST['view_entries'])) {
         $stitcher_contact_result = mysqli_query($con, $stitcher_contact_query);
         $stitcher_contact_row = mysqli_fetch_assoc($stitcher_contact_result);
         $stitcher_contact = $stitcher_contact_row['stitcher_contact'];
+
+        $stitcher_aadhar_query = "SELECT stitcher_aadhar FROM stitcher WHERE stitcher_name = '$stitcher_name' LIMIT 1";
+        $stitcher_aadhar_result = mysqli_query($con, $stitcher_aadhar_query);
+        $stitcher_aadhar_row = mysqli_fetch_assoc($stitcher_aadhar_result);
+        $stitcher_aadhar = $stitcher_aadhar_row['stitcher_aadhar'];
+
+        $stitcher_pan_query = "SELECT stitcher_pan FROM stitcher WHERE stitcher_name = '$stitcher_name' LIMIT 1";
+        $stitcher_pan_result = mysqli_query($con, $stitcher_pan_query);
+        $stitcher_pan_row = mysqli_fetch_assoc($stitcher_pan_result);
+        $stitcher_pan = $stitcher_pan_row['stitcher_pan'];
+
+        $stitcher_address_query = "SELECT stitcher_address FROM stitcher WHERE stitcher_name = '$stitcher_name' LIMIT 1";
+        $stitcher_address_result = mysqli_query($con, $stitcher_address_query);
+        $stitcher_address_row = mysqli_fetch_assoc($stitcher_address_result);
+        $stitcher_address = $stitcher_address_row['stitcher_address'];
+
+        // Fetch the date and time 
+        $date_and_time_query = "SELECT date_and_time FROM kits_issue WHERE challan_no = '$challan_no' LIMIT 1";
+        $date_and_time_result = mysqli_query($con, $date_and_time_query);
+        $date_and_time_row = mysqli_fetch_assoc($date_and_time_result);
+        $date_and_time = $date_and_time_row['date_and_time'];
     }
  
     // Get selected challan number
