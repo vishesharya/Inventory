@@ -90,6 +90,7 @@ if (isset($_POST['view_entries'])) {
             display: flex;
             justify-content: space-between;
             align-items: flex-end;
+            gap: 15px;
 
         }
         .error-input {
