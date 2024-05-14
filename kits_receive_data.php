@@ -8,20 +8,21 @@ $labour_query = "SELECT DISTINCT labour_name FROM kits_received ORDER BY labour_
 $labour_result = mysqli_query($con, $labour_query);
 $challan_no = isset($_POST['challan_no']) ? $_POST['challan_no'] : "";
 
+
 // Check if 'challan_no' is set in session
 if (isset($_SESSION['challan_no'])) {
     $challan_no = $_SESSION['challan_no'];
 }
 
-// Initialize $result and $total_quantity variables
+// Initialize $result variable
 $result = null;
-$total_quantity = 0;
 
 // Check if 'View' button is clicked
 if (isset($_POST['view_entries'])) {
     // Get selected labour
     $labour_name = isset($_POST['labour_name']) ? mysqli_real_escape_string($con, $_POST['labour_name']) : '';
-
+   
+   
     // Initialize conditions
     $conditions = "";
 
@@ -54,16 +55,6 @@ if (isset($_POST['view_entries'])) {
     // Construct the final query
     $query = "SELECT * FROM kits_received $conditions";
     $result = mysqli_query($con, $query);
-
-    // Calculate total quantity
-    if ($result) {
-        while ($data = mysqli_fetch_array($result)) {
-            $total_quantity += $data['received_quantity'];
-        }
-        // Free the result set and rerun the query to reset the pointer
-        mysqli_free_result($result);
-        $result = mysqli_query($con, $query);
-    }
 }
 ?>
 
@@ -75,7 +66,7 @@ if (isset($_POST['view_entries'])) {
     <title>KITS ISSUE DETAILS</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        body {
+       body {
             background-color: #f8f9fc;
             font-family: Arial, sans-serif;
         }
@@ -93,6 +84,7 @@ if (isset($_POST['view_entries'])) {
         .table {
             margin-top: 2rem;
             border-collapse:collapse;
+           
         }
         #printbtn {
             display: flex;
@@ -118,11 +110,13 @@ if (isset($_POST['view_entries'])) {
 <body>
     <?php include('include/nav.php'); ?>
     <div class="container-fluid mt-5">
-        <h1 class="h4 text-center mb-4">KITS RECEIVE DETAILS</h1> 
+    <h1 class="h4 text-center mb-4">KITS RECEIVE DETAILS </h1> 
         <div id="form" class="row justify-content-center">
+    <!-- Changed container to container-fluid -->
             <div class="col-lg-8">
                 <div class="card">
                     <div class="card-body">
+                      
                         <?php if (!empty($errors)) : ?>
                             <div class="alert alert-danger" role="alert">
                                 <?php foreach ($errors as $error) : ?>
@@ -130,33 +124,45 @@ if (isset($_POST['view_entries'])) {
                                 <?php endforeach; ?>
                             </div>
                         <?php endif; ?>
+                        <!-- New form to select labour, associated challan number, and product details -->
                         <form method="post" action="">
-                            <div class="date_input">
+
+
+                         <div class="date_input">
+                                      <!-- From date -->
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="from_date">From Date:</label>
                                         <input type="date" class="form-control" id="from_date" name="from_date">
                                     </div>
                                 </div>
+                                <!-- To date -->
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="to_date">To Date:</label>
                                         <input type="date" class="form-control" id="to_date" name="to_date">
                                     </div>
                                 </div>
-                            </div>
+
+
+                                </div>
                             <div id="input_field" class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="select_labour">Select labour:</label>
                                         <select class="form-select" id="select_labour" name="labour_name">
-                                            <option value="">Select labour</option>
+         
+                                        <option value="">Select labour</option>
                                             <?php while ($row = mysqli_fetch_assoc($labour_result)) : ?>
                                                 <option value="<?php echo $row['labour_name']; ?>"><?php echo $row['labour_name']; ?></option>
                                             <?php endwhile; ?>
                                         </select>
                                     </div>
                                 </div>
+                       
+                              
+                            
+                          
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="select_challan">Select Receive Challan No:</label>
@@ -170,18 +176,24 @@ if (isset($_POST['view_entries'])) {
                                         </select>
                                     </div>
                                 </div>
-                            </div>
-                            <div id="printbtn" class="btn-group">
+                          </div>
+                            
+                                <div id="printbtn" class="btn-group">
                                 <div>
-                                    <button type="submit" class="btn btn-primary" name="view_entries">View</button>
-                                    <button type="button" class="btn btn-primary" onclick="window.print()">Print</button>
+                                <button type="submit" class="btn btn-primary" name="view_entries">View</button>
+                                <button type="button" class="btn btn-primary" onclick="window.print()">Print</button>
                                 </div>
+                               
                             </div>
+                            </div>
+                           
                         </form>
                     </div>
                 </div>
             </div>
         </div>
+
+
         <?php if (isset($_POST['view_entries']) && mysqli_num_rows($result) > 0): ?>
         <table class="table datatable-multi-sorting">
             <thead>
@@ -197,67 +209,79 @@ if (isset($_POST['view_entries'])) {
                 </tr>
             </thead>
             <tbody>
-                <?php $sn = 1; ?>
-                <?php while ($data = mysqli_fetch_array($result)): ?>
+                    <?php 
+                    $sn = 1; 
+                    $total_quantity = 0;
+                    while ($data = mysqli_fetch_array($result)): 
+                        $total_quantity += $data['received_quantity'];
+                    ?>
+                        <tr>
+                            <td><?php echo $sn; ?>.</td>
+                            <td><?php echo $data['challan_no']; ?></td>
+                            <td><?php echo $data['labour_name']; ?></td>
+                            <td><?php echo $data['product_name']; ?></td>
+                            <td><?php echo ucfirst($data['product_base']); ?></td>
+                            <td><?php echo ucfirst($data['product_color']); ?></td>
+                            <td><?php echo $data['received_quantity']; ?></td>
+                            <td><?php echo date('d/m/Y', strtotime($data['date_and_time'])); ?></td>
+                        </tr>
+                        <?php $sn++; ?>
+                    <?php endwhile; ?>
+                </tbody>
+                <tfoot>
                     <tr>
-                        <td><?php echo $sn; ?>.</td>
-                        <td><?php echo $data['challan_no']; ?></td>
-                        <td><?php echo $data['labour_name']; ?></td>
-                        <td><?php echo $data['product_name']; ?></td>
-                        <td><?php echo ucfirst($data['product_base']); ?></td>
-                        <td><?php echo ucfirst($data['product_color']); ?></td>
-                        <td><?php echo $data['received_quantity']; ?></td>
-                        <td><?php echo date('d/m/Y', strtotime($data['date_and_time'])); ?></td>
+                        <th colspan="6" style="text-align:right">Total Quantity:</th>
+                        <th><?php echo $total_quantity; ?></th>
+                        <th></th>
                     </tr>
-                    <?php $sn++; ?>
-                <?php endwhile; ?>
-            </tbody>
-            <tfoot>
-                <tr>
-                    <th colspan="6" class="text-end">Total Quantity:</th>
-                    <th><?php echo $total_quantity; ?></th>
-                    <th></th>
-                </tr>
-            </tfoot>
+                </tfoot>
         </table>
-        <?php elseif (isset($_POST['view_entries'])): ?>
-            <p>No entries found.</p>
-        <?php endif; ?>
-    </div>
-    <script>
-        function fetchChallanNumbers(selectedLabour) {
-            var fromDate = document.getElementById("from_date").value;
-            var toDate = document.getElementById("to_date").value;
-            var xhttp = new XMLHttpRequest();
-            xhttp.onreadystatechange = function() {
-                if (this.readyState == 4 && this.status == 200) {
-                    var challanSelect = document.getElementById("select_challan");
-                    var challanNumbers = JSON.parse(this.responseText);
-                    challanSelect.innerHTML = "<option value='' selected disabled>Select Issue Challan No</option>";
-                    challanNumbers.forEach(function(challan) {
-                        var option = document.createElement("option");
-                        option.value = challan;
-                        option.text = challan;
-                        challanSelect.appendChild(option);
-                    });
-                }
-            };
-            xhttp.open("GET", "fatch_challan_no_for_kits_received.php?labour=" + selectedLabour + "&from_date=" + fromDate + "&to_date=" + toDate, true);
-            xhttp.send();
+    <?php elseif (isset($_POST['view_entries'])): ?>
+        <p>No entries found.</p>
+    <?php endif; ?>
+
+
+   <!-- JavaScript code for fetching challan numbers based on selected labour and date range -->
+ 
+
+   <script>
+     // ajax_script.js
+
+function fetchChallanNumbers(selectedLabour) {
+    var fromDate = document.getElementById("from_date").value;
+    var toDate = document.getElementById("to_date").value;
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            var challanSelect = document.getElementById("select_challan");
+            var challanNumbers = JSON.parse(this.responseText);
+            challanSelect.innerHTML = "<option value='' selected disabled>Select Issue Challan No</option>";
+            challanNumbers.forEach(function(challan) {
+                var option = document.createElement("option");
+                option.value = challan;
+                option.text = challan;
+                challanSelect.appendChild(option);
+            });
         }
+    };
+    xhttp.open("GET", "fatch_challan_no_for_kits_received.php?labour=" + selectedLabour + "&from_date=" + fromDate + "&to_date=" + toDate, true);
+    xhttp.send();
+}
 
-        function handleLabourChange() {
-            var selectedLabour = document.getElementById("select_labour").value;
-            if (selectedLabour) {
-                fetchChallanNumbers(selectedLabour);
-            }
-        }
+function handleLabourChange() {
+    var selectedLabour = document.getElementById("select_labour").value;
+    if (selectedLabour) {
+        fetchChallanNumbers(selectedLabour);
+    }
+}
 
-        document.getElementById("select_labour").addEventListener("change", handleLabourChange);
-        document.getElementById("from_date").addEventListener("change", handleLabourChange);
-        document.getElementById("to_date").addEventListener("change", handleLabourChange);
+document.getElementById("select_labour").addEventListener("change", handleLabourChange);
+document.getElementById("from_date").addEventListener("change", handleLabourChange);
+document.getElementById("to_date").addEventListener("change", handleLabourChange);
 
-        handleLabourChange();
+// Trigger initial fetch when page loads
+handleLabourChange();
+
     </script>
 </body>
 </html>
