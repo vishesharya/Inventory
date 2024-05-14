@@ -183,10 +183,10 @@ if (!empty($selected_challan)) {
         .invoice-header{
             line-height: 7px;
         }
-        #issue_heading{
+        .issue_heading{
             align-items: center;
             text-align: center;
-            justify-content: center;
+            
         }
     </style>
 </head>
