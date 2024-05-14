@@ -121,6 +121,23 @@
               <a class="dropdown-item" href="#">Delete Bladder</a>
             </div>
           </li>
+
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Football Inventory
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+             <a class="dropdown-item" href="#">Receiving Form</a>
+              <a class="dropdown-item" href="#">Issue Form</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="#">Receiving Slip</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="#">Receiving Data</a>
+              <a class="dropdown-item" href="#">Issue Data</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="#">Football Inventory</a>
+            </div>
+          </li>
           
           ';
         }
