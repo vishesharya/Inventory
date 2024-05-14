@@ -80,6 +80,7 @@ if (isset($_POST['view_entries'])) {
         .btn-group {
             margin-top: 1.5rem;
             justify-content: center;
+            gap: 15px;
         }
         .table {
             margin-top: 2rem;
@@ -90,7 +91,6 @@ if (isset($_POST['view_entries'])) {
             display: flex;
             justify-content: space-between;
             align-items: flex-end;
-            gap: 15px;
 
         }
         .error-input {
