@@ -348,7 +348,7 @@ if (!empty($selected_challan)) {
                             <td><strong><?php echo $total_S_IInd_C_Ist; ?></strong></td>
                             <td><strong><?php echo $total_S_IInd_C_IInd; ?></strong></td>
                             <td><strong><?php echo $total_total; ?></strong></td>
-                            <td></td>
+                            
                         </tr>
                     </tbody>
                     </tbody>
