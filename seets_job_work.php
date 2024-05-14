@@ -223,7 +223,9 @@ if (isset($_POST['view_entries'])) {
             <tr>
                 <td colspan="5"></td>
                 <td><strong>Total:</strong></td>
-                <td><?php echo $totalIssueQuantity; ?></td>
+                <td><?php echo $totalQuantity1; ?></td>
+                <td><?php echo $totalQuantity2; ?></td>
+                <td><?php echo $totalQuantity3; ?></td>
             </tr>
         </table>
     <?php elseif (isset($_POST['view_entries'])): ?>
