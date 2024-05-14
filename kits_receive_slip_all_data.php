@@ -287,14 +287,30 @@ if (isset($_POST['view_entries'])) {
                         </tr>
                     </thead>
                     <tbody>
-                        <?php while ($product = mysqli_fetch_assoc($result)) : ?>
-                            <tr>
-                                <td><?php echo $product['product_name']; ?></td>
-                                <td><?php echo ucfirst($product['product_base']); ?></td>
-                                <td><?php echo ucfirst($product['product_color']); ?></td>
-                                <td><?php echo $product['received_quantity']; ?></td>
-                            </tr>
-                        <?php endwhile; ?>
+                    <?php
+// Initialize total quantity
+$total_quantity = 0;
+
+// Fetch and display product details
+while ($product = mysqli_fetch_assoc($result)) {
+    $total_quantity += $product['received_quantity']; // Add received quantity to total
+    ?>
+    <tr>
+        <td><?php echo $product['product_name']; ?></td>
+        <td><?php echo ucfirst($product['product_base']); ?></td>
+        <td><?php echo ucfirst($product['product_color']); ?></td>
+        <td><?php echo $product['received_quantity']; ?></td>
+    </tr>
+    <?php
+}
+
+// Display total quantity row
+?>
+<tr>
+    <td colspan="3" class="text-end">Total</td>
+    <td><?php echo $total_quantity; ?></td>
+</tr>
+
                     </tbody>
                 </table>
             </div>
