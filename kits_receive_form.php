@@ -228,6 +228,7 @@ if (isset($_POST['submit_products'])) {
     </style>
 </head>
 <body> 
+<?php include('include/kits_nav.php'); ?>
     <div class="container mt-5">
         <div class="row justify-content-center">
             <div class="col-lg-8">
