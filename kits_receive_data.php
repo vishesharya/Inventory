@@ -90,6 +90,7 @@ if (isset($_POST['view_entries'])) {
             display: flex;
             justify-content: space-between;
             align-items: flex-end;
+
         }
         .error-input {
             border: 1px solid red;
@@ -150,12 +151,11 @@ if (isset($_POST['view_entries'])) {
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="select_labour">Select labour:</label>
-                                        <select class="form-select" id="select_labour" name="labour_name">
-         
-                                        <option value="">Select labour</option>
-                                            <?php while ($row = mysqli_fetch_assoc($labour_result)) : ?>
-                                                <option value="<?php echo $row['labour_name']; ?>"><?php echo $row['labour_name']; ?></option>
-                                            <?php endwhile; ?>
+                                       <select class="form-select" id="select_labour" name="labour_name">
+                                         <option value="">Select labour</option>
+                                         <?php while ($row = mysqli_fetch_assoc($labour_result)) : ?>
+                                                 <option value="<?php echo $row['labour_name']; ?>"><?php echo $row['labour_name']; ?></option>
+                                           <?php endwhile; ?>
                                         </select>
                                     </div>
                                 </div>
@@ -234,9 +234,7 @@ if (isset($_POST['view_entries'])) {
  
 
    <script>
-     // ajax_script.js
-
-function fetchChallanNumbers(selectedLabour) {
+   function fetchChallanNumbers(selectedLabour) {
     var fromDate = document.getElementById("from_date").value;
     var toDate = document.getElementById("to_date").value;
     var xhttp = new XMLHttpRequest();
@@ -244,7 +242,7 @@ function fetchChallanNumbers(selectedLabour) {
         if (this.readyState == 4 && this.status == 200) {
             var challanSelect = document.getElementById("select_challan");
             var challanNumbers = JSON.parse(this.responseText);
-            challanSelect.innerHTML = "<option value='' selected disabled>Select Issue Challan No</option>";
+            challanSelect.innerHTML = "<option value='' selected disabled>Select Received Challan No</option>";
             challanNumbers.forEach(function(challan) {
                 var option = document.createElement("option");
                 option.value = challan;
@@ -253,7 +251,7 @@ function fetchChallanNumbers(selectedLabour) {
             });
         }
     };
-    xhttp.open("GET", "fatch_challan_no_for_kits_received.php?labour=" + selectedLabour + "&from_date=" + fromDate + "&to_date=" + toDate, true);
+    xhttp.open("GET", "fatch_challan_no_for_kits_receive.php?labour=" + encodeURIComponent(selectedLabour) + "&from_date=" + encodeURIComponent(fromDate) + "&to_date=" + encodeURIComponent(toDate), true);
     xhttp.send();
 }
 
