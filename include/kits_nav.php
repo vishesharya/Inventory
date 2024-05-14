@@ -49,7 +49,7 @@
     }
 
     .navbar-nav .dropdown-menu::-webkit-scrollbar-track {
-      background: #0056b3; /* Track color */
+      background: #ffffff; /* Track color */
     }
 
     .navbar-nav .dropdown-menu::-webkit-scrollbar-thumb {
