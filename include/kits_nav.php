@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 ?>
 
 <!DOCTYPE html>
@@ -18,10 +18,6 @@
     .navbar-brand,
     .navbar-nav .nav-link {
       color: #fff; /* White text */
-    }
-
-    .navbar-nav {
-      margin: 0 auto; /* Center the navigation items */
     }
 
     .navbar-nav .dropdown-menu {
@@ -46,9 +42,18 @@
         padding: 10px 0;
       }
     }
+
     .navbar-brand:hover {
       transform: scale(1.1);
       transition-duration: 400ms;
+    }
+
+    .navbar-toggler {
+      border-color: rgba(255, 255, 255, 0.1);
+    }
+
+    .navbar-toggler-icon {
+      background-image: url('data:image/svg+xml;charset=utf8,%3Csvg viewBox="0 0 30 30" xmlns="http://www.w3.org/2000/svg"%3E%3Cpath stroke="rgba%28255, 255, 255, 0.5%29" stroke-width="2" stroke-linecap="round" stroke-miterlimit="10" d="M4 7h22M4 15h22M4 23h22"/%3E%3C/svg%3E');
     }
   </style>
 </head>
@@ -60,19 +65,18 @@
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
-      <ul class="navbar-nav">
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ml-auto">
         <!-- PHP code for session and verification form -->
         <?php
         if(isset($_SESSION['username'])) {
           echo '
-
           <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownSheets" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               Sheets Inventory
             </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-             <a class="dropdown-item" href="#">Receiving Form</a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdownSheets">
+              <a class="dropdown-item" href="#">Receiving Form</a>
               <a class="dropdown-item" href="#">Issue Form</a>
               <a class="dropdown-item" href="#">Selling Form</a>
               <div class="dropdown-divider"></div>
@@ -95,11 +99,11 @@
             </div>
           </li>
           <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownKits" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               Kits Inventory
             </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-             <a class="dropdown-item" href="#">Receiving Form</a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdownKits">
+              <a class="dropdown-item" href="#">Receiving Form</a>
               <a class="dropdown-item" href="#">Issue Form</a>
               <div class="dropdown-divider"></div>
               <a class="dropdown-item" href="#">Receiving Slip</a>
@@ -121,13 +125,12 @@
               <a class="dropdown-item" href="#">Delete Bladder</a>
             </div>
           </li>
-
           <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownFootball" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               Football Inventory
             </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-             <a class="dropdown-item" href="#">Receiving Form</a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdownFootball">
+              <a class="dropdown-item" href="#">Receiving Form</a>
               <a class="dropdown-item" href="#">Issue Form</a>
               <div class="dropdown-divider"></div>
               <a class="dropdown-item" href="#">Receiving Slip</a>
@@ -137,9 +140,7 @@
               <div class="dropdown-divider"></div>
               <a class="dropdown-item" href="#">Football Inventory</a>
             </div>
-          </li>
-          
-          ';
+          </li>';
         }
         ?>
       </ul>
