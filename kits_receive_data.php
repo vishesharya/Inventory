@@ -208,8 +208,12 @@ if (isset($_POST['view_entries'])) {
                 </tr>
             </thead>
             <tbody>
-                <?php $sn = 1; ?>
-                <?php while ($data = mysqli_fetch_array($result)): ?>
+            <?php 
+                    $sn = 1; 
+                    $total_quantity = 0;
+                    while ($data = mysqli_fetch_array($result)): 
+                        $total_quantity += $data['received_quantity'];
+                    ?>
                     <tr>
                         <td><?php echo $sn; ?>.</td>
                         <td><?php echo $data['challan_no']; ?></td>
@@ -224,6 +228,13 @@ if (isset($_POST['view_entries'])) {
                     <?php $sn++; ?>
                 <?php endwhile; ?>
             </tbody>
+            <tfoot>
+                    <tr>
+                        <th colspan="6" style="text-align:right">Total Quantity:</th>
+                        <th><?php echo $total_quantity; ?></th>
+                        <th></th>
+                    </tr>
+                </tfoot>
         </table>
     <?php elseif (isset($_POST['view_entries'])): ?>
         <p>No entries found.</p>
