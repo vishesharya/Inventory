@@ -133,7 +133,6 @@ if (!empty($selected_challan)) {
         }
         .container_slip {
             margin-top: 50px;
-            background-color: #f8f9fc;
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
@@ -183,6 +182,10 @@ if (!empty($selected_challan)) {
         
         .invoice-header{
             line-height: 7px;
+        }
+        #issue_heading{
+            align-items: center;
+            text-align: center;
         }
     </style>
 </head>
@@ -277,7 +280,7 @@ if (!empty($selected_challan)) {
     <div class="container_slip">
     <div class="invoice-header">
            <div>
-                <p class="issue_heading" >KITS ISSUE SLIP</p>
+                <p class="issue_heading" >FOOTBALL RECEIVING SLIP</p>
                 <hr>
                 <h2 id="company_heading" class="heading">KHANNA SPORTS INDUSTRIES PVT. LTD</h2>
                 <p class="heading"> A-7, Sports Complex Delhi Road Meerut Uttar Pradesh 250002</p>
