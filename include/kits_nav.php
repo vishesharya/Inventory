@@ -40,7 +40,7 @@
     }
 
     .navbar-nav .nav-link:hover {
-      color: #f8f9fa; /* Light text on hover */
+      color: #ffffff; /* Light text on hover */
     }
 
     /* Custom scrollbar styles */
