@@ -9,7 +9,7 @@ $labour_result = mysqli_query($con, $labour_query);
 $challan_no = isset($_POST['challan_no']) ? $_POST['challan_no'] : "";
 
 // Fetch the date and time 
-$date_and_time_query = "SELECT date_and_time FROM sheets_issue WHERE challan_no = '$challan_no' LIMIT 1";
+$date_and_time_query = "SELECT date_and_time FROM kits_received WHERE challan_no = '$challan_no' LIMIT 1";
 $date_and_time_result = mysqli_query($con, $date_and_time_query);
 $date_and_time_row = mysqli_fetch_assoc($date_and_time_result);
 $date_and_time = isset($date_and_time_row['date_and_time']) ? $date_and_time_row['date_and_time'] : "";
