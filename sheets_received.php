@@ -141,18 +141,18 @@ if (isset($_POST['add_product'])) {
 
         if (!empty($_POST['small_sheet_color'])) {
             // Shift quantity from sheets_production_small_stock to sheets_small_stock
-            $remaining_production_small_panel_query = "SELECT small_sheet_balance FROM sheets_production_small_stock ";
+            $remaining_production_small_panel_query = "SELECT small_sheet_balance FROM sheets_production_small_stock WHERE small_sheet_color = '$small_sheet_color'";
             $remaining_production_small_panel_result = mysqli_query($con, $remaining_production_small_panel_query);
             $row = mysqli_fetch_assoc($remaining_production_small_panel_result);
             $remaining_production_small_panel = $row['small_sheet_balance'];
         
             // Update remaining_small_panel in sheets_small_stock table
             $updated_remaining_small_panel = $remaining_production_small_panel - (int)$quantity3;
-            $update_remaining_small_panel_query = "UPDATE sheets_small_stock SET small_sheet_balance = small_sheet_balance + $quantity3";
+            $update_remaining_small_panel_query = "UPDATE sheets_small_stock SET small_sheet_balance = small_sheet_balance + $quantity3 WHERE small_sheet_color = '$small_sheet_color'";
             mysqli_query($con, $update_remaining_small_panel_query);
         
             // Update remaining_small_panel in sheets_production_small_stock table
-            $update_remaining_production_small_panel_query = "UPDATE sheets_production_small_stock SET small_sheet_balance = $updated_remaining_small_panel ";
+            $update_remaining_production_small_panel_query = "UPDATE sheets_production_small_stock SET small_sheet_balance = $updated_remaining_small_panel WHERE small_sheet_color = '$small_sheet_color'";
             mysqli_query($con, $update_remaining_production_small_panel_query);
         } else {
             // Shift quantity from sheets_production_product to sheets_product
