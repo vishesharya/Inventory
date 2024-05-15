@@ -12,6 +12,7 @@ $result = mysqli_query($con, $query);
 
 // HTML for printing
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -23,11 +24,16 @@ $result = mysqli_query($con, $query);
         body {
             font-family: Arial, sans-serif;
             margin: 20px;
+            background-color: #f9f9f9;
         }
 
         .container {
-            width: 100%;
+            max-width: 800px;
             margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
 
         h1 {
@@ -42,7 +48,7 @@ $result = mysqli_query($con, $query);
         }
 
         table, th, td {
-            border: 1px solid black;
+            border: 1px solid #ddd;
         }
 
         th, td {
@@ -53,12 +59,23 @@ $result = mysqli_query($con, $query);
         th {
             background-color: #f2f2f2;
         }
-        button{
-            border: 1px;
-            border: 10px;
-            color: green;
-            color: #f2f2f2;
-            width: 20px;
+
+        .print-btn-container {
+            text-align: right;
+            margin-bottom: 20px;
+        }
+
+        .print-button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .print-button:hover {
+            background-color: #45a049;
         }
 
         @media print {
@@ -71,6 +88,9 @@ $result = mysqli_query($con, $query);
 
 <body>
     <div class="container">
+        <div class="print-btn-container">
+            <button class="print-button" onclick="window.print()">Print</button>
+        </div>
         <h1>Stitcher Details</h1>
         <table>
             <thead>
@@ -108,7 +128,6 @@ $result = mysqli_query($con, $query);
                 ?>
             </tbody>
         </table>
-        <button class="print-button success" onclick="window.print()">Print</button>
     </div>
 </body>
 
