@@ -101,7 +101,7 @@ $result = mysqli_query($con, $query);
                 ?>
             </tbody>
         </table>
-        <button class="print-button" onclick="window.print()">Print</button>
+        <button class="print-button success" onclick="window.print()">Print</button>
     </div>
 </body>
 
