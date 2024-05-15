@@ -28,7 +28,7 @@ $result = mysqli_query($con, $query);
         }
 
         .container {
-            max-width: 800px;
+            
             margin: 0 auto;
             background-color: #fff;
             padding: 20px;
