@@ -224,17 +224,17 @@ if (isset($_POST['view_entries'])) {
                 <p class="heading">Contact : 8449441387,98378427750 &nbsp;  GST : 09AAACK9669A1ZD </p>
             </div>
             <div id="head_details">
-            <div>
-               <p id="stitcher_name" >Stitcher : <?php echo $stitcher_name; ?></p>
-               <p>Stitcher Contact : <?php echo $stitcher_details['stitcher_contact']; ?></p>
-               <p>Stitcher Aadhar : <?php echo $stitcher_details['stitcher_aadhar']; ?></p>
-               <p>Stitcher Pan : <?php echo $stitcher_details['stitcher_pan']; ?></p>
-               <p>Stitcher Address : <?php echo $stitcher_details['stitcher_address']; ?></p>
-               <p>Bank Name : <?php echo $stitcher_details['bank_name']; ?></p>
-               <p>Bank Account Number : <?php echo $stitcher_details['bank_no']; ?></p>
-               <p>IFSC Code : <?php echo $stitcher_details['ifsc_code']; ?></p>
-            
-    </div>
+                <div>
+                    <p id="stitcher_name" >Stitcher : <?php echo $stitcher_name; ?></p>
+                     <p>Stitcher Contact : <?php echo $stitcher_contact; ?></p>
+                     <p>Stitcher Aadhar : <?php echo $stitcher_aadhar; ?></p>
+                     <p>Stitcher Pan : <?php echo $stitcher_pan; ?></p>
+                     <p>Stitcher Address : <?php echo $stitcher_address; ?></p>
+                     <p>Bank Name : <?php echo $stitcher_details['bank_name']; ?></p>
+                    <p>Bank Account Number : <?php echo $stitcher_details['bank_no']; ?></p>
+                     <p>IFSC Code : <?php echo $stitcher_details['ifsc_code']; ?></p>
+                    
+                </div>
                
             </div>
         </div>
