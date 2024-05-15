@@ -53,6 +53,13 @@ $result = mysqli_query($con, $query);
         th {
             background-color: #f2f2f2;
         }
+        button{
+            border: 1px;
+            border: 10px;
+            color: green;
+            color: #f2f2f2;
+            width: 20px;
+        }
 
         @media print {
             .print-button {
