@@ -8,6 +8,27 @@ $labour_query = "SELECT DISTINCT labour_name FROM sheets_issue ORDER BY labour_n
 $labour_result = mysqli_query($con, $labour_query);
 $challan_no = isset($_POST['challan_no']) ? $_POST['challan_no'] : "";
 
+$product_query = "SELECT DISTINCT product_name FROM sheets_product ORDER BY product_name ASC";
+$product_result = mysqli_query($con, $product_query);
+
+// Logic to fetch product bases and colors based on selected product
+$selected_product = isset($_POST['product_name']) ? $_POST['product_name'] : null;
+if ($selected_product) {
+    $product_base_query = "SELECT DISTINCT product_base FROM sheets_product WHERE product_name = '$selected_product' ORDER BY product_base ASC";
+    $product_color_query = "SELECT DISTINCT product_color FROM sheets_product WHERE product_name = '$selected_product' ORDER BY product_color ASC";
+    $product_base_result = mysqli_query($con, $product_base_query);
+    $product_color_result = mysqli_query($con, $product_color_query);
+}
+
+// Logic to fetch product bases and colors based on selected product
+$selected_product = isset($_POST['product_name']) ? $_POST['product_name'] : null;
+if ($selected_product) {
+    $product_small_query = "SELECT DISTINCT small_sheet_color FROM sheets_small_stock";
+    $product_small_result = mysqli_query($con, $product_small_query);
+ 
+}
+
+
 
 // Check if 'challan_no' is set in session
 if (isset($_SESSION['challan_no'])) {
@@ -334,5 +355,37 @@ document.getElementById("to_date").addEventListener("change", handleLabourChange
 handleLabourChange();
 
     </script>
+
+<script>
+    // Function to update product colors based on selected product name and base
+    function updateProductColors() {
+        var productName = document.getElementById('product_name').value;
+        var productBase = document.getElementById('product_base').value;
+
+        // Make an AJAX request to fetch product colors based on product name and base
+        var xhr = new XMLHttpRequest(); 
+        xhr.onreadystatechange = function() {
+            if (this.readyState === 4 && this.status === 200) {
+                var colors = JSON.parse(this.responseText);
+                var productColorSelect = document.getElementById('product_color');
+                // Clear existing options
+                productColorSelect.innerHTML = '<option value="" selected disabled>Select Product Color</option>';
+                // Add fetched colors as options
+                colors.forEach(function(color) {
+                    var option = document.createElement('option');
+                    option.value = color;
+                    option.text = color;
+                    productColorSelect.appendChild(option);
+                });
+            }
+        };
+        xhr.open('GET', 'fetch_product_color.php?product_name=' + productName + '&product_base=' + productBase, true);
+        xhr.send();
+    }
+
+    // Event listeners for product name and product base change
+    document.getElementById('product_name').addEventListener('change', updateProductColors);
+    document.getElementById('product_base').addEventListener('change', updateProductColors);
+</script>
 </body>
 </html>
