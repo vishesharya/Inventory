@@ -73,6 +73,13 @@ if (isset($_POST['view_entries'])) {
         $conditions .= " challan_no = '$challan_no'";
     }
 
+     // Add product condition
+     if (!empty($selected_product)) {
+        $conditions .= ($conditions == "") ? " WHERE" : " AND";
+        $conditions .= " product_name = '$selected_product'";
+    }
+
+
     // Construct the final query
     $query = "SELECT * FROM sheets_issue $conditions";
     $result = mysqli_query($con, $query);
