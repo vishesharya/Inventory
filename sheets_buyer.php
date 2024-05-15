@@ -5,7 +5,7 @@ include_once 'include/admin-main.php';
 
 // Default value for Labour Name
 
-$small_sheet_color = isset($_POST['small_sheet_color']) ? $_POST['small_sheet_color'] : "";
+$small_sheet_color = isset($_POST['small_sheet_color']) ? $_POST['small_sheet_color'] : null;
 $buyer_name = isset($_POST['buyer_name']) ? $_POST['buyer_name'] : "";
 $invoice_number = isset($_POST['invoice_number']) ? $_POST['invoice_number'] : "";
 // Logic to fetch product names from the database
@@ -79,9 +79,10 @@ if (isset($_POST['add_product'])) {
         $product_name = mysqli_real_escape_string($con, $_POST['product_name']);
         $product_base = mysqli_real_escape_string($con, $_POST['product_base']);
         $product_color = mysqli_real_escape_string($con, $_POST['product_color']);
-        $quantity1 = intval($_POST['quantity1'] ?? 0);
-        $quantity2 = intval($_POST['quantity2'] ?? 0);
-        $quantity3 = intval($_POST['quantity3'] ?? 0);
+        $quantity1 = isset($_POST['quantity1']) ? intval($_POST['quantity1']) : 0;
+        $quantity2 = isset($_POST['quantity2']) ? intval($_POST['quantity2']) : 0;
+        $quantity3 = isset($_POST['quantity3']) ? intval($_POST['quantity3']) : 0;
+
 
 
         
