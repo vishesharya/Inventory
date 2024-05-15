@@ -498,7 +498,7 @@ $insert_result1 = mysqli_query($con, $insert_query1);
         var productBase = document.getElementById('product_base').value;
 
         // Make an AJAX request to fetch product colors based on product name and base
-        var xhr = new XMLHttpRequest();
+        var xhr = new XMLHttpRequest(); 
         xhr.onreadystatechange = function() {
             if (this.readyState === 4 && this.status === 200) {
                 var colors = JSON.parse(this.responseText);

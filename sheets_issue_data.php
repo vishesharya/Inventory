@@ -2,7 +2,7 @@
 session_start();
 include_once 'include/connection.php';
 include_once 'include/admin-main.php';
-
+ 
 // Fetch labour names from the database
 $labour_query = "SELECT DISTINCT labour_name FROM sheets_issue ORDER BY labour_name ASC"; 
 $labour_result = mysqli_query($con, $labour_query);
@@ -171,6 +171,42 @@ if (isset($_POST['view_entries'])) {
                                             <?php if (isset($challan_result_issue)) : ?>
                                                 <?php while ($row = mysqli_fetch_assoc($challan_result_issue)) : ?>
                                                     <option value="<?php echo $row['challan_no']; ?>"><?php echo $row['challan_no']; ?></option>
+                                                <?php endwhile; ?>
+                                            <?php endif; ?>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="product_name">Select Product:</label>
+                                        <select class="form-select" id="product_name" name="product_name" onchange="this.form.submit()">
+                                            <option value="" selected disabled>Select Product</option>
+                                            <?php while ($row = mysqli_fetch_assoc($product_result)) : ?>
+                                                <option value="<?php echo $row['product_name']; ?>" <?php echo $selected_product == $row['product_name'] ? 'selected' : ''; ?>><?php echo $row['product_name']; ?></option>
+                                            <?php endwhile; ?>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="product_base">Product Base:</label>
+                                        <select class="form-select" id="product_base" name="product_base">
+                                            <option value="" selected disabled>Select Product Base</option>
+                                            <?php if ($selected_product) : ?>
+                                                <?php while ($row = mysqli_fetch_assoc($product_base_result)) : ?>
+                                                    <option value="<?php echo $row['product_base']; ?>"><?php echo $row['product_base']; ?></option>
+                                                <?php endwhile; ?>
+                                            <?php endif; ?>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="product_color">Product Color:</label>
+                                        <select class="form-select" id="product_color" name="product_color">
+                                            <option value="" selected disabled>Select Product Color</option>
+                                            <?php if ($selected_product) : ?>
+                                                <?php while ($row = mysqli_fetch_assoc($product_color_result)) : ?>
+                                                    <option value="<?php echo $row['product_color']; ?>"><?php echo $row['product_color']; ?></option>
                                                 <?php endwhile; ?>
                                             <?php endif; ?>
                                         </select>
