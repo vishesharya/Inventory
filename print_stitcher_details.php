@@ -2,7 +2,7 @@
 session_start();
 
 include './include/connection.php';
-include_once '<include/admin-main.php';
+include './include/admin-main.php';
 
 include './include/connection.php';
 
