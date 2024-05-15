@@ -1,12 +1,8 @@
 <?php
 session_start();
 
-// Check if user is logged in
-if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
-    // Redirect to login page
-    header("Location: index.php");
-    exit;
-}
+include './include/connection.php';
+include_once '<include/admin-main.php';
 
 include './include/connection.php';
 
