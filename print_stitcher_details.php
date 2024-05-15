@@ -23,7 +23,7 @@ $result = mysqli_query($con, $query);
     <style>
         body {
             font-family: Arial, sans-serif;
-            margin: 20px;
+            
             background-color: #f9f9f9;
         }
 
