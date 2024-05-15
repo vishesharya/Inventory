@@ -79,10 +79,9 @@ if (isset($_POST['add_product'])) {
         $product_name = mysqli_real_escape_string($con, $_POST['product_name']);
         $product_base = mysqli_real_escape_string($con, $_POST['product_base']);
         $product_color = mysqli_real_escape_string($con, $_POST['product_color']);
-        $quantity1 = isset($_POST['quantity1']) ? intval($_POST['quantity1']) : 0;
-        $quantity2 = isset($_POST['quantity2']) ? intval($_POST['quantity2']) : 0;
-        $quantity3 = isset($_POST['quantity3']) ? intval($_POST['quantity3']) : 0;
-
+        $quantity1 = intval($_POST['quantity1'] ?? 0);
+        $quantity2 = intval($_POST['quantity2'] ?? 0);
+        $quantity3 = intval($_POST['quantity3'] ?? 0);
 
 
         
@@ -386,13 +385,13 @@ if (isset($_POST['submit_products'])) {
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="quantity">Big Panel:</label>
+                                        <label for="quantity1">Big Panel:</label>
                                         <input type="number" class="form-control" id="quantity1" name="quantity1" placeholder="Enter Quantity">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="quantity">Plain Panel:</label>
+                                        <label for="quantity2">Plain Panel:</label>
                                         <input type="number" class="form-control" id="quantity2" name="quantity2" placeholder="Enter Quantity">
                                     </div>
                                 </div>
@@ -414,7 +413,7 @@ if (isset($_POST['submit_products'])) {
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="quantity">Small Panel:</label>
+                                        <label for="quantity3">Small Panel:</label>
                                         <input type="number" class="form-control" id="quantity3" name="quantity3" placeholder="Enter Quantity">
                                     </div>
                                 </div>
