@@ -175,7 +175,8 @@ if (isset($_POST['view_entries'])) {
                                             <?php endif; ?>
                                         </select>
                                     </div>
-                                    <div class="col-md-6">
+                                </div>
+                                <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="product_name">Select Product:</label>
                                         <select class="form-select" id="product_name" name="product_name" onchange="this.form.submit()">
@@ -211,7 +212,6 @@ if (isset($_POST['view_entries'])) {
                                             <?php endif; ?>
                                         </select>
                                     </div>
-                                </div>
                           </div>
                             
                                 <div id="printbtn" class="btn-group">
