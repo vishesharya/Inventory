@@ -14,6 +14,9 @@ if (isset($_POST['add_stitcher'])) {
     $stitcher_address = $_POST['stitcher_address'];
     $stitcher_aadhar = $_POST['stitcher_aadhar'];
     $stitcher_pan = $_POST['stitcher_pan'];
+    $bank_name = $_POST['bank_name'];
+    $bank_no = $_POST['bank_no'];
+    $ifsc_code = $_POST['ifsc_code'];
 
     // Check if the stitcher already exists
     $checkQuery = mysqli_query($con, "SELECT * FROM stitcher WHERE stitcher_name = '$stitcher_name'");
@@ -23,7 +26,7 @@ if (isset($_POST['add_stitcher'])) {
         $addStitcherMsg = "<p id='addStitcherMsg' style='color: red;font-size: medium;text-align: center;'>Stitcher already exists</p>";
     } else {
         // Insert into stitcher table
-        $insertStitcherQuery = "INSERT INTO stitcher (stitcher_name, stitcher_contact, stitcher_address, stitcher_aadhar, stitcher_pan) VALUES ('$stitcher_name', '$stitcher_contact', '$stitcher_address', '$stitcher_aadhar', '$stitcher_pan')";
+        $insertStitcherQuery = "INSERT INTO stitcher (stitcher_name, stitcher_contact, stitcher_address, stitcher_aadhar, stitcher_pan, bank_name, bank_no, ifsc_code) VALUES ('$stitcher_name', '$stitcher_contact', '$stitcher_address', '$stitcher_aadhar', '$stitcher_pan', '$bank_name', '$bank_no', '$ifsc_code')";
         if (mysqli_query($con, $insertStitcherQuery)) {
             $addStitcherMsg = "<p id='addStitcherMsg' style='color: green;font-size: medium;text-align: center;'>Stitcher added successfully</p>";
         } else {
@@ -40,6 +43,9 @@ if (isset($_POST['edit_stitcher'])) {
     $new_stitcher_address = $_POST['new_stitcher_address'];
     $new_stitcher_aadhar = $_POST['new_stitcher_aadhar'];
     $new_stitcher_pan = $_POST['new_stitcher_pan'];
+    $new_bank_name = $_POST['new_bank_name'];
+    $new_bank_no = $_POST['new_bank_no'];
+    $new_ifsc_code = $_POST['new_ifsc_code'];
 
     // Fetch the existing details of the stitcher
     $stitcherDetailsQuery = mysqli_query($con, "SELECT * FROM stitcher WHERE id = $stitcher_id");
@@ -66,6 +72,15 @@ if (isset($_POST['edit_stitcher'])) {
     }
     if (!empty($new_stitcher_pan)) {
         $updateFields[] = "stitcher_pan = '$new_stitcher_pan'";
+    }
+    if (!empty($new_bank_name)) {
+        $updateFields[] = "bank_name = '$new_bank_name'";
+    }
+    if (!empty($new_bank_no)) {
+        $updateFields[] = "bank_no = '$new_bank_no'";
+    }
+    if (!empty($new_ifsc_code)) {
+        $updateFields[] = "ifsc_code = '$new_ifsc_code'";
     }
 
     // Append the fields to the update query
@@ -149,6 +164,18 @@ if (isset($_POST['delete_stitcher'])) {
                                 <label for="stitcher_pan">Enter Pan No</label>
                                 <input type="text" name="stitcher_pan" id="stitcher_pan" class="form-control">
                             </div>
+                            <div class="form-group">
+                                <label for="bank_name">Enter Bank Name</label>
+                                <input type="text" name="bank_name" id="bank_name" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label for="bank_no">Enter Bank Account Number</label>
+                                <input type="text" name="bank_no" id="bank_no" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label for="ifsc_code">Enter IFSC Code</label>
+                                <input type="text" name="ifsc_code" id="ifsc_code" class="form-control">
+                            </div>
                             <button type="submit" class="btn btn-primary" name="add_stitcher">Add Stitcher</button>
                         </form>
                     </div>
@@ -194,6 +221,18 @@ if (isset($_POST['delete_stitcher'])) {
                             <div class="form-group">
                                 <label for="new_stitcher_pan">New Pan No</label>
                                 <input type="text" name="new_stitcher_pan" id="new_stitcher_pan" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label for="new_bank_name">New Bank Name</label>
+                                <input type="text" name="new_bank_name" id="new_bank_name" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label for="new_bank_no">New Bank Account Number</label>
+                                <input type="text" name="new_bank_no" id="new_bank_no" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label for="new_ifsc_code">New IFSC Code</label>
+                                <input type="text" name="new_ifsc_code" id="new_ifsc_code" class="form-control">
                             </div>
                             <button type="submit" class="btn btn-primary" name="edit_stitcher">Edit Stitcher</button>
                         </form>
