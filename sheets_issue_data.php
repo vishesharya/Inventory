@@ -28,7 +28,10 @@ if ($selected_product) {
  
 }
 
-
+// Logic to fetch product bases and colors based on selected product
+$selected_product = isset($_POST['product_name']) ? $_POST['product_name'] : null;
+$selected_base = isset($_POST['product_base']) ? $_POST['product_base'] : null;
+$selected_color = isset($_POST['product_color']) ? $_POST['product_color'] : null;
 
 // Check if 'challan_no' is set in session
 if (isset($_SESSION['challan_no'])) {
@@ -42,6 +45,10 @@ $result = null;
 if (isset($_POST['view_entries'])) {
     // Get selected labour
     $labour_name = isset($_POST['labour_name']) ? mysqli_real_escape_string($con, $_POST['labour_name']) : '';
+    $selected_product = isset($_POST['product_name']) ? mysqli_real_escape_string($con, $_POST['product_name']) : '';
+    $selected_base = isset($_POST['product_base']) ? mysqli_real_escape_string($con, $_POST['product_base']) : '';
+    $selected_color = isset($_POST['product_color']) ? mysqli_real_escape_string($con, $_POST['product_color']) : '';
+   
    
    
     // Initialize conditions
@@ -50,6 +57,7 @@ if (isset($_POST['view_entries'])) {
     // Add labour condition
     if (!empty($labour_name)) {
         $conditions .= " WHERE labour_name = '$labour_name'";
+        
     }
 
     // Add date range condition
@@ -68,6 +76,7 @@ if (isset($_POST['view_entries'])) {
         // Get selected challan number
         $challan_no = mysqli_real_escape_string($con, $_POST['challan_no']);
         
+        
         // Add AND or WHERE depending on whether previous conditions exist
         $conditions .= ($conditions == "") ? " WHERE" : " AND";
         $conditions .= " challan_no = '$challan_no'";
@@ -78,7 +87,17 @@ if (isset($_POST['view_entries'])) {
         $conditions .= ($conditions == "") ? " WHERE" : " AND";
         $conditions .= " product_name = '$selected_product'";
     }
+  // Add product base condition
+  if (!empty($selected_base)) {
+    $conditions .= ($conditions == "") ? " WHERE" : " AND";
+    $conditions .= " product_base = '$selected_base'";
+}
 
+   // Add product color condition
+   if (!empty($selected_color)) {
+    $conditions .= ($conditions == "") ? " WHERE" : " AND";
+    $conditions .= " product_color = '$selected_color'";
+}
 
     // Construct the final query
     $query = "SELECT * FROM sheets_issue $conditions";
