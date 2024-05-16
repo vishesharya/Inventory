@@ -273,7 +273,7 @@ if (isset($_POST['submit_form'])) {
              $existing_remaining_quantity_ist_company_ist = $row_ist_company_ist['remaining_quantity'];
  
              // Fetch existing remaining quantity for IInd Company IInd
-             $existing_remaining_quantity_iind_company_iind_query = "SELECT remaining_quantity FROM products WHERE product_name = '$product_name IIND' AND product_base = 'N/A' AND product_color = 'N/A'";
+             $existing_remaining_quantity_iind_company_iind_query = "SELECT remaining_quantity FROM products WHERE product_name = '$product_name IIND' AND product_base = 'MIX COLOR' AND product_color = 'MIX COLOR'";
              $existing_remaining_quantity_iind_company_iind_result = mysqli_query($con, $existing_remaining_quantity_iind_company_iind_query);
              $row_iind_company_iind = mysqli_fetch_assoc($existing_remaining_quantity_iind_company_iind_result);
              $existing_remaining_quantity_iind_company_iind = $row_iind_company_iind['remaining_quantity'];
