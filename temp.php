@@ -366,8 +366,9 @@ if (isset($_POST['submit_products'])) {
                                             <th>Product Name</th>
                                             <th>Product Base</th>
                                             <th>Product Color</th>
-                                            <th>Quantity</th>
-                                            
+                                            <th>Ist Quantity</th>
+                                            <th>IInd Quantity</th>
+                                            <th>Date/Time</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -380,8 +381,9 @@ if (isset($_POST['submit_products'])) {
                                                     <td><?php echo $product['product_name']; ?></td>
                                                     <td><?php echo $product['product_base']; ?></td>
                                                     <td><?php echo $product['product_color']; ?></td>
-                                                    <td><?php echo $product['received_quantity']; ?></td>
-                                                   
+                                                    <td><?php echo $product['ist_quantity']; ?></td>
+                                                    <td><?php echo $product['iind_quantity']; ?></td>
+                                                    <td><?php echo $product['date_and_time']; ?></td>
                                                     <td>
                                                         <form method="post" action="">
                                                             <input type="hidden" name="delete_index" value="<?php echo $key; ?>">
