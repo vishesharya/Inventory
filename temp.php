@@ -325,17 +325,17 @@ if (isset($_POST['submit_products'])) {
                                
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                    <label for="ist_quantity">Ist Quantity:</label>
-                                    <input type="number" name="ist_quantity" id="ist_quantity" value="<?php echo isset($_POST['ist_quantity']) ? $_POST['ist_quantity'] : ''; ?>">
+                                        <label for="ist_quantity" class="form-label">Ist Quantity:</label>
+                                        <input type="number" class="form-control" name="ist_quantity" id="ist_quantity" value="<?php echo isset($_POST['ist_quantity']) ? $_POST['ist_quantity'] : ''; ?>">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                    <label for="iind_quantity">IInd Quantity:</label>
-                                    <input type="number" name="iind_quantity" id="iind_quantity" value="<?php echo isset($_POST['iind_quantity']) ? $_POST['iind_quantity'] : ''; ?>">
-
+                                        <label for="iind_quantity" class="form-label">IInd Quantity:</label>
+                                        <input type="number" class="form-control" name="iind_quantity" id="iind_quantity" value="<?php echo isset($_POST['iind_quantity']) ? $_POST['iind_quantity'] : ''; ?>">
                                     </div>
                                 </div>
+                             
                                 
                             </div>
                             <div class="row">
