@@ -249,6 +249,7 @@ if (isset($_POST['view_entries'])) {
                                             <?php endif; ?>
                                         </select>
                                     </div>
+                                </div>
                                 <div id="printbtn" class="btn-group">
                                 <div>
                                 <button type="submit" class="btn btn-primary" name="view_entries">View</button>
@@ -293,7 +294,7 @@ if (isset($_POST['view_entries'])) {
                         <td><?php echo $sn; ?>.</td>
                         <td><?php echo $data['challan_no']; ?></td>
                         <td><?php echo $data['labour_name']; ?></td>
-                        <td><?php echo $data['product_name']; ?></td>
+                         <td><?php echo $data['product_name']; ?></td>
                         <td><?php echo ucfirst($data['product_base']); ?></td>
                         <td><?php echo ucfirst($data['product_color']); ?></td>
                         <td><?php echo $data['received_quantity1']; ?></td>
