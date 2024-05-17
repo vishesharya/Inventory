@@ -198,11 +198,11 @@ if (isset($_POST['submit_products'])) {
             $product_base = mysqli_real_escape_string($con, $product['product_base']);
             $product_color = mysqli_real_escape_string($con, $product['product_color']);
             $quantity = mysqli_real_escape_string($con, $product['received_quantity']);
-            $total = mysqli_real_escape_string($con, $product['total']);
+         
             $date_and_time = mysqli_real_escape_string($con, $product['date_and_time']);
             // Insert product into the database
-            $insert_query = "INSERT INTO kits_received (challan_no, labour_name, product_name, product_base, product_color, received_quantity1, received_quantity2, total, date_and_time) 
-                            VALUES ('$challan_no', '$labour_name', '$product_name', '$product_base', '$product_color', '$ist_quantity', '$iind_quantity', '$total' ,'$date_and_time')";
+            $insert_query = "INSERT INTO kits_received (challan_no, labour_name, product_name, product_base, product_color, received_quantity1, received_quantity2, date_and_time) 
+                            VALUES ('$challan_no', '$labour_name', '$product_name', '$product_base', '$product_color', '$ist_quantity', '$iind_quantity','$date_and_time')";
             $insert_result = mysqli_query($con, $insert_query);
 
             if (!$insert_result) {
