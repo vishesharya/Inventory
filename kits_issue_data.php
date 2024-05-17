@@ -404,5 +404,7 @@ $total_thread_quantity = 0;
             handleDateRangeChange();
         });
     </script>
+
+    
 </body>
 </html>
