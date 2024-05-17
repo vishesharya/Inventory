@@ -15,7 +15,7 @@ $product_query = "SELECT DISTINCT product_name FROM kits_product ORDER BY produc
 $product_result = mysqli_query($con, $product_query);
 
 // Fetch associated challan numbers for selected stitcher
-if (isset($_POST['labour_name'])) {
+if (isset($_POST['labour_name'])) { 
     $selected_stitcher = mysqli_real_escape_string($con, $_POST['labour_name']);
     $challan_query_issue = "SELECT DISTINCT  challan_no_issue FROM sheets_job_work WHERE labour_name = '$labour_name' AND status = 0";
     $challan_result_issue = mysqli_query($con, $challan_query_issue);

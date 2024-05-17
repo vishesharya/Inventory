@@ -15,7 +15,7 @@ $product_query = "SELECT DISTINCT product_name FROM kits_product ORDER BY produc
 $product_result = mysqli_query($con, $product_query);
 
 // Fetch associated challan numbers for selected stitcher
-if (isset($_POST['labour_name'])) {
+if (isset($_POST['labour_name'])) { 
     $selected_stitcher = mysqli_real_escape_string($con, $_POST['labour_name']);
     $challan_query_issue = "SELECT DISTINCT  challan_no_issue FROM sheets_job_work WHERE labour_name = '$labour_name' AND status = 0";
     $challan_result_issue = mysqli_query($con, $challan_query_issue);
@@ -67,10 +67,9 @@ function viewChallanNumber($con) {
 $challan_no = viewChallanNumber($con); 
 
 $errors = array();
-
 if (isset($_POST['add_product'])) {
     // Validate input
-    if (empty($_POST['product_name']) || empty($_POST['product_base']) || empty($_POST['product_color']) || empty($_POST['quantity'])) {
+    if (empty($_POST['product_name']) || empty($_POST['product_base']) || empty($_POST['product_color']) || empty($_POST['ist_quantity']) || empty($_POST['iind_quantity'])) {
         $errors[] = "Please fill in all fields.";
     } else {
         // Sanitize input
@@ -78,7 +77,9 @@ if (isset($_POST['add_product'])) {
         $product_name = mysqli_real_escape_string($con, $_POST['product_name']);
         $product_base = mysqli_real_escape_string($con, $_POST['product_base']);
         $product_color = mysqli_real_escape_string($con, $_POST['product_color']);
-        $quantity = mysqli_real_escape_string($con, $_POST['quantity']);
+        $ist_quantity = isset($_POST['ist_quantity']) ? mysqli_real_escape_string($con, $_POST['ist_quantity']) : 0;
+        $iind_quantity = isset($_POST['iind_quantity']) ? mysqli_real_escape_string($con, $_POST['iind_quantity']) : 0;
+
 
         // Fetch remaining_quantity from kits_product table
         $remaining_quantity_query = "SELECT remaining_quantity FROM kits_product WHERE product_name = '$product_name' AND product_base = '$product_base' AND product_color = '$product_color'";
@@ -86,18 +87,36 @@ if (isset($_POST['add_product'])) {
         $row = mysqli_fetch_assoc($remaining_quantity_result);
         $remaining_quantity = $row['remaining_quantity'];
 
-        // Calculate total
-        $total = $remaining_quantity + $quantity;
+        // Calculate total for Ist Quantity
+        $total = $remaining_quantity + $ist_quantity;
 
-        // Update remaining_quantity in kits_product table
-        $updated_remaining_quantity = $remaining_quantity + $quantity;
+        // Update remaining_quantity in kits_product table for Ist Quantity
+        $updated_remaining_quantity = $remaining_quantity + $ist_quantity;
         $update_remaining_quantity_query = "UPDATE kits_product SET remaining_quantity = $updated_remaining_quantity WHERE product_name = '$product_name' AND product_base = '$product_base' AND product_color = '$product_color'";
         mysqli_query($con, $update_remaining_quantity_query);
+
+        // Update status in sheets_job_work table for Ist Quantity
+        $update_status_query = "UPDATE sheets_job_work SET status = 1 WHERE challan_no_issue = '$challan_no_issue' AND product_name = '$product_name' AND product_base = '$product_base' AND product_color = '$product_color'";
+        mysqli_query($con, $update_status_query);
+
+        // Fetch remaining_quantity for IInd Quantity
+        $remaining_quantity_query_2 = "SELECT remaining_quantity FROM kits_product WHERE product_name = '$product_name IIND' AND product_base = 'MIX COLOR' AND product_color = 'MIX COLOR'";
+        $remaining_quantity_result_2 = mysqli_query($con, $remaining_quantity_query_2);
+        $row_2 = mysqli_fetch_assoc($remaining_quantity_result_2);
+        $remaining_quantity_2 = $row_2['remaining_quantity'];
+
+        // Calculate total for IInd Quantity
+        $total_2 = $remaining_quantity_2 + $iind_quantity;
+
+        // Update remaining_quantity in kits_product table for IInd Quantity
+        $updated_remaining_quantity_2 = $remaining_quantity_2 + $iind_quantity;
+        $update_remaining_quantity_query_2 = "UPDATE kits_product SET remaining_quantity = $updated_remaining_quantity_2 WHERE product_name = '$product_name IIND' AND product_base = 'MIX COLOR' AND product_color = 'MIX COLOR'";
+        mysqli_query($con, $update_remaining_quantity_query_2);
 
         // Update status in sheets_job_work table
         $update_status_query = "UPDATE sheets_job_work SET status = 1 WHERE challan_no_issue = '$challan_no_issue' AND product_name = '$product_name' AND product_base = '$product_base' AND product_color = '$product_color'";
         mysqli_query($con, $update_status_query);
-        
+
         // Insert data into temporary session storage
         $temp_product = array(
             'challan_no' => $challan_no,
@@ -106,13 +125,14 @@ if (isset($_POST['add_product'])) {
             'product_name' => $product_name,
             'product_base' => $product_base,
             'product_color' => $product_color,
-            'received_quantity' => $quantity,
+            'ist_quantity' => $ist_quantity,
+            'iind_quantity' => $iind_quantity,
             'total' => $total,
+            'total_2' => $total_2,
             'date_and_time' => isset($_POST['date_and_time']) ? $_POST['date_and_time'] : date('Y-m-d H:i:s')
         );
         $_SESSION['temp_products'][] = $temp_product;
     }
-
 }
 
 // Check if delete button is clicked
@@ -125,34 +145,43 @@ if (isset($_POST['delete_product'])) {
     $product_name = mysqli_real_escape_string($con, $deleted_product['product_name']);
     $product_base = mysqli_real_escape_string($con, $deleted_product['product_base']);
     $product_color = mysqli_real_escape_string($con, $deleted_product['product_color']);
-    $deleted_quantity = mysqli_real_escape_string($con, $deleted_product['received_quantity']);
+    $deleted_ist_quantity = mysqli_real_escape_string($con, $deleted_product['ist_quantity']);
+    $deleted_iind_quantity = mysqli_real_escape_string($con, $deleted_product['iind_quantity']);
     $deleted_total = mysqli_real_escape_string($con, $deleted_product['total']);
+    $deleted_total_2 = mysqli_real_escape_string($con, $deleted_product['total_2']);
 
-    // Fetch remaining_quantity from kits_product table
+    // Fetch remaining_quantity from kits_product table for Ist Quantity
     $remaining_quantity_query = "SELECT remaining_quantity FROM kits_product WHERE product_name = '$product_name' AND product_base = '$product_base' AND product_color = '$product_color'";
     $remaining_quantity_result = mysqli_query($con, $remaining_quantity_query);
     $row = mysqli_fetch_assoc($remaining_quantity_result);
     $remaining_quantity = $row['remaining_quantity'];
 
-    // Calculate updated remaining_quantity
-    $updated_remaining_quantity = $remaining_quantity - $deleted_quantity;
+    // Calculate updated remaining_quantity for Ist Quantity
+    $updated_remaining_quantity = $remaining_quantity - $deleted_ist_quantity;
 
-    // Update remaining_quantity in kits_product table
+    // Update remaining_quantity in kits_product table for Ist Quantity
     $update_remaining_quantity_query = "UPDATE kits_product SET remaining_quantity = $updated_remaining_quantity WHERE product_name = '$product_name' AND product_base = '$product_base' AND product_color = '$product_color'";
     mysqli_query($con, $update_remaining_quantity_query);
 
+    // Fetch remaining_quantity from kits_product table for IInd Quantity
+    $remaining_quantity_query_2 = "SELECT remaining_quantity FROM kits_product WHERE product_name = '$product_name IIND' AND product_base = 'MIX COLOR' AND product_color = 'MIX COLOR'";
+    $remaining_quantity_result_2 = mysqli_query($con, $remaining_quantity_query_2);
+    $row_2 = mysqli_fetch_assoc($remaining_quantity_result_2);
+    $remaining_quantity_2 = $row_2['remaining_quantity'];
+
+    // Calculate updated remaining_quantity for IInd Quantity
+    $updated_remaining_quantity_2 = $remaining_quantity_2 - $deleted_iind_quantity;
+
+    // Update remaining_quantity in kits_product table for IInd Quantity
+    $update_remaining_quantity_query_2 = "UPDATE kits_product SET remaining_quantity = $updated_remaining_quantity_2 WHERE product_name = '$product_name IIND' AND product_base = 'MIX COLOR' AND product_color = 'MIX COLOR'";
+    mysqli_query($con, $update_remaining_quantity_query_2);
+
     $update_status_query = "UPDATE sheets_job_work SET status = 0 WHERE product_name = '$product_name' AND product_base = '$product_base' AND product_color = '$product_color'";
     mysqli_query($con, $update_status_query);
-    
 
-    // Update the total in the session data
-    $_SESSION['temp_products'][$delete_index]['total'] -= $deleted_total;
-
-    // Remove the product from the session
+    // Remove the product from the temporary session storage
     unset($_SESSION['temp_products'][$delete_index]);
-
-    // Reset array keys to maintain consecutive numbering
-    $_SESSION['temp_products'] = array_values($_SESSION['temp_products']);
+    $_SESSION['temp_products'] = array_values($_SESSION['temp_products']); // Re-index the array
 }
 
 // Store added products in the database when "Submit" button is clicked
@@ -172,8 +201,8 @@ if (isset($_POST['submit_products'])) {
             $total = mysqli_real_escape_string($con, $product['total']);
             $date_and_time = mysqli_real_escape_string($con, $product['date_and_time']);
             // Insert product into the database
-            $insert_query = "INSERT INTO kits_received (challan_no, labour_name, product_name, product_base, product_color, received_quantity, total, date_and_time) 
-                            VALUES ('$challan_no', '$labour_name', '$product_name', '$product_base', '$product_color', '$quantity', '$total' ,'$date_and_time')";
+            $insert_query = "INSERT INTO kits_received (challan_no, labour_name, product_name, product_base, product_color, received_quantity1, received_quantity2, total, date_and_time) 
+                            VALUES ('$challan_no', '$labour_name', '$product_name', '$product_base', '$product_color', '$ist_quantity', '$iind_quantity', '$total' ,'$date_and_time')";
             $insert_result = mysqli_query($con, $insert_query);
 
             if (!$insert_result) {
@@ -294,12 +323,21 @@ if (isset($_POST['submit_products'])) {
                                         </select>
                                     </div>
                                 </div>
+                               
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="quantity">Quantity:</label>
-                                        <input type="number" class="form-control" id="quantity" name="quantity" placeholder="Enter Quantity">
+                                        <label for="ist_quantity" class="form-label">Ist Quantity:</label>
+                                        <input type="number" class="form-control" name="ist_quantity" id="ist_quantity" value="<?php echo isset($_POST['ist_quantity']) ? $_POST['ist_quantity'] : ''; ?>">
                                     </div>
                                 </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="iind_quantity" class="form-label">IInd Quantity:</label>
+                                        <input type="number" class="form-control" name="iind_quantity" id="iind_quantity" value="<?php echo isset($_POST['iind_quantity']) ? $_POST['iind_quantity'] : ''; ?>">
+                                    </div>
+                                </div>
+                             
+                                
                             </div>
                             <div class="row">
                             
@@ -329,8 +367,9 @@ if (isset($_POST['submit_products'])) {
                                             <th>Product Name</th>
                                             <th>Product Base</th>
                                             <th>Product Color</th>
-                                            <th>Quantity</th>
-                                            
+                                            <th>Ist Quantity</th>
+                                            <th>IInd Quantity</th>
+                                            <th>Date/Time</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -343,8 +382,9 @@ if (isset($_POST['submit_products'])) {
                                                     <td><?php echo $product['product_name']; ?></td>
                                                     <td><?php echo $product['product_base']; ?></td>
                                                     <td><?php echo $product['product_color']; ?></td>
-                                                    <td><?php echo $product['received_quantity']; ?></td>
-                                                   
+                                                    <td><?php echo $product['ist_quantity']; ?></td>
+                                                    <td><?php echo $product['iind_quantity']; ?></td>
+                                                    <td><?php echo $product['date_and_time']; ?></td>
                                                     <td>
                                                         <form method="post" action="">
                                                             <input type="hidden" name="delete_index" value="<?php echo $key; ?>">
