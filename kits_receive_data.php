@@ -8,7 +8,6 @@ $labour_query = "SELECT DISTINCT labour_name FROM kits_received ORDER BY labour_
 $labour_result = mysqli_query($con, $labour_query);
 $challan_no = isset($_POST['challan_no']) ? $_POST['challan_no'] : "";
 
-
 // Check if 'challan_no' is set in session
 if (isset($_SESSION['challan_no'])) {
     $challan_no = $_SESSION['challan_no'];
@@ -38,19 +37,17 @@ if ($selected_product) {
     }
 }
 
-
 // Check if 'View' button is clicked
 if (isset($_POST['view_entries'])) {
     // Get selected labour
     $labour_name = isset($_POST['labour_name']) ? mysqli_real_escape_string($con, $_POST['labour_name']) : '';
-   
-   
+
     // Initialize conditions
-    $conditions = "";
+    $conditions = [];
 
     // Add labour condition
     if (!empty($labour_name)) {
-        $conditions .= " WHERE labour_name = '$labour_name'";
+        $conditions[] = "labour_name = '$labour_name'";
     }
 
     // Add date range condition
@@ -59,9 +56,8 @@ if (isset($_POST['view_entries'])) {
         $start_date = mysqli_real_escape_string($con, $_POST['from_date']);
         $end_date = mysqli_real_escape_string($con, $_POST['to_date']);
 
-        // Add AND or WHERE depending on whether previous conditions exist
-        $conditions .= ($conditions == "") ? " WHERE" : " AND";
-        $conditions .= " date_and_time BETWEEN '$start_date' AND '$end_date'";
+        // Add date range condition
+        $conditions[] = "date_and_time BETWEEN '$start_date' AND '$end_date'";
     }
 
     // Add challan number condition
@@ -69,31 +65,34 @@ if (isset($_POST['view_entries'])) {
         // Get selected challan number
         $challan_no = mysqli_real_escape_string($con, $_POST['challan_no']);
         
-        // Add AND or WHERE depending on whether previous conditions exist
-        $conditions .= ($conditions == "") ? " WHERE" : " AND";
-        $conditions .= " challan_no = '$challan_no'";
+        // Add challan number condition
+        $conditions[] = "challan_no = '$challan_no'";
     }
 
     // Add product name filter if provided
-if (!empty($selected_product)) {
-    $conditions[] = "product_name = '$selected_product'";
-}
+    if (!empty($selected_product)) {
+        $conditions[] = "product_name = '$selected_product'";
+    }
 
-// Add product base filter if provided
-if (!empty($selected_base)) {
-    $conditions[] = "product_base = '$selected_base'";
-}
+    // Add product base filter if provided
+    if (!empty($selected_base)) {
+        $conditions[] = "product_base = '$selected_base'";
+    }
 
-// Add product color filter if provided
-if (!empty($selected_color)) {
-    $conditions[] = "product_color = '$selected_color'";
-}
+    // Add product color filter if provided
+    if (!empty($selected_color)) {
+        $conditions[] = "product_color = '$selected_color'";
+    }
 
     // Construct the final query
-    $query = "SELECT * FROM kits_received $conditions";
+    $query = "SELECT * FROM kits_received";
+    if (!empty($conditions)) {
+        $query .= " WHERE " . implode(" AND ", $conditions);
+    }
     $result = mysqli_query($con, $query);
 }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
