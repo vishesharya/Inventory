@@ -283,9 +283,11 @@ if (isset($_POST['view_entries'])) {
             <tbody>
             <?php 
                     $sn = 1; 
-                    $total_quantity = 0;
+                    $total1_quantity = 0;
+                    $total2_quantity = 0;
                     while ($data = mysqli_fetch_array($result)): 
-                        $total_quantity += $data['received_quantity'];
+                        $total1_quantity += $data['received_quantity1'];
+                        $total2_quantity += $data['received_quantity2'];
                     ?>
                     <tr>
                         <td><?php echo $sn; ?>.</td>
@@ -305,8 +307,8 @@ if (isset($_POST['view_entries'])) {
             <tfoot>
                     <tr>
                         <th colspan="6" style="text-align:right">Total Quantity:</th>
-                        <th><?php echo $total_quantity; ?></th>
-                        <th></th>
+                        <th><?php echo $total1_quantity; ?></th>
+                        <th><?php echo $total2_quantity; ?></th>
                     </tr>
                 </tfoot>
         </table>
