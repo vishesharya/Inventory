@@ -46,9 +46,10 @@ if ($selected_product) {
     }
 }
 
+
+
 // Check if 'View' button is clicked
 if (isset($_POST['view_entries'])) {
-    // Get selected date range
     $start_date = isset($_POST['from_date']) ? mysqli_real_escape_string($con, $_POST['from_date']) : '';
     $end_date = isset($_POST['to_date']) ? mysqli_real_escape_string($con, $_POST['to_date']) : '';
     
@@ -59,39 +60,37 @@ if (isset($_POST['view_entries'])) {
     $selected_base = isset($_POST['product_base']) ? mysqli_real_escape_string($con, $_POST['product_base']) : '';
     $selected_color = isset($_POST['product_color']) ? mysqli_real_escape_string($con, $_POST['product_color']) : '';
     
-    // Retrieve entries from database
-    $query = "SELECT * FROM kits_job_work WHERE status = 0";
     
-    // Add date range filter if provided
-    if (!empty($start_date) && !empty($end_date)) {
-        $query .= " AND date_and_time BETWEEN '$start_date' AND '$end_date'";
-    }
+   // Retrieve entries from database
+   $query = "SELECT * FROM kits_job_work WHERE status = 0";
     
-    // Add stitcher filter if provided
-    if (!empty($stitcher_name)) {
-        $query .= " AND stitcher_name = '$stitcher_name'";
-    }
-    
-    // Add challan number filter if provided
-    if (!empty($selected_challan)) {
-        $query .= " AND challan_no_issue = '$selected_challan'";
-    }
-    // Add product name filter if provided
-    if (!empty($selected_product)) {
-        $conditions[] = "product_name = '$selected_product'";
-    }
+   // Add date range filter if provided
+   if (!empty($start_date) && !empty($end_date)) {
+       $query .= " AND date_and_time BETWEEN '$start_date' AND '$end_date'";
+   }
+   
+   // Add stitcher filter if provided
+   if (!empty($stitcher_name)) {
+       $query .= " AND stitcher_name = '$stitcher_name'";
+   }
+   
+   // Add challan number filter if provided
+   if (!empty($selected_challan)) {
+       $query .= " AND challan_no_issue = '$selected_challan'";
+   }
 
-    // Add product base filter if provided
-    if (!empty($selected_base)) {
-        $conditions[] = "product_base = '$selected_base'";
-    }
-
-    // Add product color filter if provided
-    if (!empty($selected_color)) {
-        $conditions[] = "product_color = '$selected_color'";
-    }
-    
-    $result = mysqli_query($con, $query);
+   // Add product filters if provided
+   if (!empty($selected_product)) {
+       $query .= " AND product_name = '$selected_product'";
+   }
+   if (!empty($selected_base)) {
+       $query .= " AND product_base = '$selected_base'";
+   }
+   if (!empty($selected_color)) {
+       $query .= " AND product_color = '$selected_color'";
+   }
+   
+   $result = mysqli_query($con, $query);
 }
 
 ?>
