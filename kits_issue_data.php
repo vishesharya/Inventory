@@ -16,7 +16,7 @@ if (isset($_SESSION['challan_no'])) {
 $result = null;
 
 // Fetch product names
-$product_query = "SELECT DISTINCT product_name FROM kits_product ORDER BY product_name ASC";
+$product_query = "SELECT DISTINCT product_name FROM kits_issue ORDER BY product_name ASC";
 $product_result = mysqli_query($con, $product_query);
 
 // Initialize selected product, base, and color variables
@@ -39,6 +39,9 @@ if ($selected_product) {
 if (isset($_POST['view_entries'])) {
     // Get selected stitcher
     $stitcher_name = isset($_POST['stitcher_name']) ? mysqli_real_escape_string($con, $_POST['stitcher_name']) : '';
+    $selected_product = isset($_POST['product_name']) ? mysqli_real_escape_string($con, $_POST['product_name']) : '';
+    $selected_base = isset($_POST['product_base']) ? mysqli_real_escape_string($con, $_POST['product_base']) : '';
+    $selected_color = isset($_POST['product_color']) ? mysqli_real_escape_string($con, $_POST['product_color']) : '';
 
    // Initialize conditions
 $conditions = "";
