@@ -14,91 +14,78 @@ if (isset($_POST['labour_name'])) {
     $challan_result_issue = mysqli_query($con, $challan_query_issue);
 }
 
-// Fetch product names based on selected labour and challan number
-if (isset($_POST['challan_no_issue'])) {
-    $selected_challan = mysqli_real_escape_string($con, $_POST['challan_no_issue']);
-    $product_query = "SELECT DISTINCT product_name FROM seets_job_work WHERE labour_name = '$selected_labour' AND challan_no_issue = '$selected_challan'";
-    $product_result = mysqli_query($con, $product_query);
-}
-
-
+// Fetch product names
 $product_query = "SELECT DISTINCT product_name FROM sheets_product ORDER BY product_name ASC";
 $product_result = mysqli_query($con, $product_query);
 
-// Logic to fetch product bases and colors based on selected product
-$selected_product = isset($_POST['product_name']) ? $_POST['product_name'] : null;
+// Initialize selected product, base, and color variables
+$selected_product = isset($_POST['product_name']) ? mysqli_real_escape_string($con, $_POST['product_name']) : null;
+$selected_base = isset($_POST['product_base']) ? mysqli_real_escape_string($con, $_POST['product_base']) : null;
+$selected_color = isset($_POST['product_color']) ? mysqli_real_escape_string($con, $_POST['product_color']) : null;
+
+// Fetch product bases based on selected product
 if ($selected_product) {
     $product_base_query = "SELECT DISTINCT product_base FROM sheets_product WHERE product_name = '$selected_product' ORDER BY product_base ASC";
-    $product_color_query = "SELECT DISTINCT product_color FROM sheets_product WHERE product_name = '$selected_product' ORDER BY product_color ASC";
     $product_base_result = mysqli_query($con, $product_base_query);
-    $product_color_result = mysqli_query($con, $product_color_query);
-}
 
-// Logic to fetch product bases and colors based on selected product
-$selected_product = isset($_POST['product_name']) ? $_POST['product_name'] : null;
-if ($selected_product) {
-    $product_small_query = "SELECT DISTINCT small_sheet_color FROM sheets_small_stock";
-    $product_small_result = mysqli_query($con, $product_small_query);
- 
+    // Fetch product colors based on selected product and base
+    if ($selected_base) {
+        $product_color_query = "SELECT DISTINCT product_color FROM sheets_product WHERE product_name = '$selected_product' AND product_base = '$selected_base' ORDER BY product_color ASC";
+        $product_color_result = mysqli_query($con, $product_color_query);
+    }
 }
-
-// Logic to fetch product bases and colors based on selected product
-$selected_product = isset($_POST['product_name']) ? $_POST['product_name'] : null;
-$selected_base = isset($_POST['product_base']) ? $_POST['product_base'] : null;
-$selected_color = isset($_POST['product_color']) ? $_POST['product_color'] : null;
 
 // Check if 'View' button is clicked
 if (isset($_POST['view_entries'])) {
     // Get selected date range
     $start_date = isset($_POST['from_date']) ? mysqli_real_escape_string($con, $_POST['from_date']) : '';
     $end_date = isset($_POST['to_date']) ? mysqli_real_escape_string($con, $_POST['to_date']) : '';
-    
+
     // Get selected labour and challan number
     $labour_name = isset($_POST['labour_name']) ? mysqli_real_escape_string($con, $_POST['labour_name']) : '';
     $selected_challan = isset($_POST['challan_no_issue']) ? mysqli_real_escape_string($con, $_POST['challan_no_issue']) : '';
-    
-    $selected_product = isset($_POST['product_name']) ? mysqli_real_escape_string($con, $_POST['product_name']) : '';
-    $selected_base = isset($_POST['product_base']) ? mysqli_real_escape_string($con, $_POST['product_base']) : '';
-    $selected_color = isset($_POST['product_color']) ? mysqli_real_escape_string($con, $_POST['product_color']) : '';
 
-    // Retrieve entries from database
+    // Construct the query
     $query = "SELECT * FROM sheets_job_work WHERE status = 0";
-    
+    $conditions = [];
+
     // Add date range filter if provided
     if (!empty($start_date) && !empty($end_date)) {
-        $query .= " AND date_and_time BETWEEN '$start_date' AND '$end_date'";
+        $conditions[] = "date_and_time BETWEEN '$start_date' AND '$end_date'";
     }
-    
+
     // Add labour filter if provided
     if (!empty($labour_name)) {
-        $query .= " AND labour_name = '$labour_name'";
+        $conditions[] = "labour_name = '$labour_name'";
     }
-    
+
     // Add challan number filter if provided
     if (!empty($selected_challan)) {
-        $query .= " AND challan_no_issue = '$selected_challan'";
+        $conditions[] = "challan_no_issue = '$selected_challan'";
     }
 
-    // Add product condition
+    // Add product name filter if provided
     if (!empty($selected_product)) {
-        $conditions .= ($conditions == "") ? " WHERE" : " AND";
-        $conditions .= " product_name = '$selected_product'";
+        $conditions[] = "product_name = '$selected_product'";
     }
-  // Add product base condition 
-  if (!empty($selected_base)) {
-    $conditions .= ($conditions == "") ? " WHERE" : " AND";
-    $conditions .= " product_base = '$selected_base'";
-}
 
-   // Add product color condition
-   if (!empty($selected_color)) {
-    $conditions .= ($conditions == "") ? " WHERE" : " AND";
-    $conditions .= " product_color = '$selected_color'";
-}
-    
+    // Add product base filter if provided
+    if (!empty($selected_base)) {
+        $conditions[] = "product_base = '$selected_base'";
+    }
+
+    // Add product color filter if provided
+    if (!empty($selected_color)) {
+        $conditions[] = "product_color = '$selected_color'";
+    }
+
+    // Append conditions to the query
+    if (!empty($conditions)) {
+        $query .= " AND " . implode(' AND ', $conditions);
+    }
+
     $result = mysqli_query($con, $query);
 }
-
 ?>
 
 <!DOCTYPE html>
