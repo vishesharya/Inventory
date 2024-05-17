@@ -177,7 +177,42 @@ if (isset($_POST['view_entries'])) {
                                         </select>
                                     </div>
                                 </div>
-                            
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="product_name">Select Product:</label>
+                                        <select class="form-select" id="product_name" name="product_name" onchange="this.form.submit()">
+                                            <option value="" selected disabled>Select Product</option>
+                                            <?php while ($row = mysqli_fetch_assoc($product_result)) : ?>
+                                                <option value="<?php echo $row['product_name']; ?>" <?php echo $selected_product == $row['product_name'] ? 'selected' : ''; ?>><?php echo $row['product_name']; ?></option>
+                                            <?php endwhile; ?>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="product_base">Product Base:</label>
+                                        <select class="form-select" id="product_base" name="product_base">
+                                            <option value="" selected disabled>Select Product Base</option>
+                                            <?php if ($selected_product) : ?>
+                                                <?php while ($row = mysqli_fetch_assoc($product_base_result)) : ?>
+                                                    <option value="<?php echo $row['product_base']; ?>"><?php echo $row['product_base']; ?></option>
+                                                <?php endwhile; ?>
+                                            <?php endif; ?>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="product_color">Product Color:</label>
+                                        <select class="form-select" id="product_color" name="product_color">
+                                            <option value="" selected disabled>Select Product Color</option>
+                                            <?php if ($selected_product) : ?>
+                                                <?php while ($row = mysqli_fetch_assoc($product_color_result)) : ?>
+                                                    <option value="<?php echo $row['product_color']; ?>"><?php echo $row['product_color']; ?></option>
+                                                <?php endwhile; ?>
+                                            <?php endif; ?>
+                                        </select>
+                                    </div>
                                 <div id="printbtn" class="btn-group">
                                 <div>
                                 <button type="submit" class="btn btn-primary" name="view_entries">View</button>
@@ -247,7 +282,7 @@ if (isset($_POST['view_entries'])) {
    <!-- JavaScript code for fetching challan numbers based on selected labour and date range -->
  
 
-   <script>
+   <script> 
    function fetchChallanNumbers(selectedLabour) {
     var fromDate = document.getElementById("from_date").value;
     var toDate = document.getElementById("to_date").value;
