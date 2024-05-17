@@ -87,7 +87,7 @@ if (isset($_POST['view_entries'])) {
         $conditions .= ($conditions == "") ? " WHERE" : " AND";
         $conditions .= " product_name = '$selected_product'";
     }
-  // Add product base condition
+  // Add product base condition 
   if (!empty($selected_base)) {
     $conditions .= ($conditions == "") ? " WHERE" : " AND";
     $conditions .= " product_base = '$selected_base'";
