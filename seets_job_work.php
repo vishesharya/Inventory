@@ -267,6 +267,7 @@ $result = mysqli_query($con, $query);
                     <th>Plain Panel</th>
                     <th>Small Panel Color</th>
                     <th>Small Panel</th>
+                    <th>Date</th>
                 </tr>
             </thead>
             <tbody>
