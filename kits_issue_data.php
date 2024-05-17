@@ -15,6 +15,26 @@ if (isset($_SESSION['challan_no'])) {
 // Initialize $result variable
 $result = null;
 
+// Fetch product names
+$product_query = "SELECT DISTINCT product_name FROM kits_product ORDER BY product_name ASC";
+$product_result = mysqli_query($con, $product_query);
+
+// Initialize selected product, base, and color variables
+$selected_product = isset($_POST['product_name']) ? mysqli_real_escape_string($con, $_POST['product_name']) : null;
+$selected_base = isset($_POST['product_base']) ? mysqli_real_escape_string($con, $_POST['product_base']) : null;
+$selected_color = isset($_POST['product_color']) ? mysqli_real_escape_string($con, $_POST['product_color']) : null;
+
+// Fetch product bases based on selected product
+if ($selected_product) {
+    $product_base_query = "SELECT DISTINCT product_base FROM sheets_product WHERE product_name = '$selected_product' ORDER BY product_base ASC";
+    $product_base_result = mysqli_query($con, $product_base_query);
+
+    // Fetch product colors based on selected product and base
+    if ($selected_base) {
+        $product_color_query = "SELECT DISTINCT product_color FROM sheets_product WHERE product_name = '$selected_product' AND product_base = '$selected_base' ORDER BY product_color ASC";
+        $product_color_result = mysqli_query($con, $product_color_query);
+    }
+}
 // Check if 'View' button is clicked
 if (isset($_POST['view_entries'])) {
     // Get selected stitcher
@@ -39,6 +59,7 @@ if (isset($_POST['view_entries'])) {
         $conditions .= " date_and_time BETWEEN '$start_date' AND '$end_date'";
     }
 
+    
     // Add challan number condition
     if (!empty($_POST['challan_no'])) {
         // Get selected challan number
@@ -47,6 +68,21 @@ if (isset($_POST['view_entries'])) {
         // Add AND or WHERE depending on whether previous conditions exist
         $conditions .= ($conditions == "") ? " WHERE" : " AND";
         $conditions .= " challan_no = '$challan_no'";
+    }
+
+    // Add product name filter if provided
+    if (!empty($selected_product)) {
+        $conditions[] = "product_name = '$selected_product'";
+    }
+
+    // Add product base filter if provided
+    if (!empty($selected_base)) {
+        $conditions[] = "product_base = '$selected_base'";
+    }
+
+    // Add product color filter if provided
+    if (!empty($selected_color)) {
+        $conditions[] = "product_color = '$selected_color'";
     }
 
     // Construct the final query
@@ -198,6 +234,45 @@ if (isset($_POST['view_entries'])) {
                                         </select>
                                     </div>
                                 </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="product_name">Select Product:</label>
+                                        <select class="form-select" id="product_name" name="product_name" onchange="this.form.submit()">
+                                            <option value="" selected disabled>Select Product</option>
+                                            <?php while ($row = mysqli_fetch_assoc($product_result)) : ?>
+                                                <option value="<?php echo $row['product_name']; ?>" <?php echo $selected_product == $row['product_name'] ? 'selected' : ''; ?>><?php echo $row['product_name']; ?></option>
+                                            <?php endwhile; ?>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="product_base">Product Base:</label>
+                                        <select class="form-select" id="product_base" name="product_base">
+                                            <option value="" selected disabled>Select Product Base</option>
+                                            <?php if ($selected_product) : ?>
+                                                <?php while ($row = mysqli_fetch_assoc($product_base_result)) : ?>
+                                                    <option value="<?php echo $row['product_base']; ?>"><?php echo $row['product_base']; ?></option>
+                                                <?php endwhile; ?>
+                                            <?php endif; ?>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="product_color">Product Color:</label>
+                                        <select class="form-select" id="product_color" name="product_color">
+                                            <option value="" selected disabled>Select Product Color</option>
+                                            <?php if ($selected_product) : ?>
+                                                <?php while ($row = mysqli_fetch_assoc($product_color_result)) : ?>
+                                                    <option value="<?php echo $row['product_color']; ?>"><?php echo $row['product_color']; ?></option>
+                                                <?php endwhile; ?>
+                                            <?php endif; ?>
+                                        </select>
+                                    </div>
+                                </div>
+                                
                           </div>
                             
                                 <div id="printbtn" class="btn-group">

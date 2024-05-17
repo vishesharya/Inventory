@@ -391,4 +391,4 @@ handleLabourChange();
     document.getElementById('product_base').addEventListener('change', updateProductColors);
 </script>
 </body>
-</html>
+</html> 
