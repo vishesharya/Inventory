@@ -17,6 +17,28 @@ if (isset($_SESSION['challan_no'])) {
 // Initialize $result variable
 $result = null;
 
+// Fetch product names
+$product_query = "SELECT DISTINCT product_name FROM kits_product ORDER BY product_name ASC";
+$product_result = mysqli_query($con, $product_query);
+
+// Initialize selected product, base, and color variables
+$selected_product = isset($_POST['product_name']) ? mysqli_real_escape_string($con, $_POST['product_name']) : null;
+$selected_base = isset($_POST['product_base']) ? mysqli_real_escape_string($con, $_POST['product_base']) : null;
+$selected_color = isset($_POST['product_color']) ? mysqli_real_escape_string($con, $_POST['product_color']) : null;
+
+// Fetch product bases based on selected product
+if ($selected_product) {
+    $product_base_query = "SELECT DISTINCT product_base FROM sheets_product WHERE product_name = '$selected_product' ORDER BY product_base ASC";
+    $product_base_result = mysqli_query($con, $product_base_query);
+
+    // Fetch product colors based on selected product and base
+    if ($selected_base) {
+        $product_color_query = "SELECT DISTINCT product_color FROM sheets_product WHERE product_name = '$selected_product' AND product_base = '$selected_base' ORDER BY product_color ASC";
+        $product_color_result = mysqli_query($con, $product_color_query);
+    }
+}
+
+
 // Check if 'View' button is clicked
 if (isset($_POST['view_entries'])) {
     // Get selected labour
@@ -51,6 +73,21 @@ if (isset($_POST['view_entries'])) {
         $conditions .= ($conditions == "") ? " WHERE" : " AND";
         $conditions .= " challan_no = '$challan_no'";
     }
+
+    // Add product name filter if provided
+if (!empty($selected_product)) {
+    $conditions[] = "product_name = '$selected_product'";
+}
+
+// Add product base filter if provided
+if (!empty($selected_base)) {
+    $conditions[] = "product_base = '$selected_base'";
+}
+
+// Add product color filter if provided
+if (!empty($selected_color)) {
+    $conditions[] = "product_color = '$selected_color'";
+}
 
     // Construct the final query
     $query = "SELECT * FROM kits_received $conditions";
@@ -319,5 +356,37 @@ document.getElementById("to_date").addEventListener("change", handleLabourChange
 handleLabourChange();
 
     </script>
+
+<script>
+    // Function to update product colors based on selected product name and base
+    function updateProductColors() {
+        var productName = document.getElementById('product_name').value;
+        var productBase = document.getElementById('product_base').value;
+
+        // Make an AJAX request to fetch product colors based on product name and base
+        var xhr = new XMLHttpRequest(); 
+        xhr.onreadystatechange = function() {
+            if (this.readyState === 4 && this.status === 200) {
+                var colors = JSON.parse(this.responseText);
+                var productColorSelect = document.getElementById('product_color');
+                // Clear existing options
+                productColorSelect.innerHTML = '<option value="" selected disabled>Select Product Color</option>';
+                // Add fetched colors as options
+                colors.forEach(function(color) {
+                    var option = document.createElement('option');
+                    option.value = color;
+                    option.text = color;
+                    productColorSelect.appendChild(option);
+                });
+            }
+        };
+        xhr.open('GET', 'fetch_product_color.php?product_name=' + productName + '&product_base=' + productBase, true);
+        xhr.send();
+    }
+
+    // Event listeners for product name and product base change
+    document.getElementById('product_name').addEventListener('change', updateProductColors);
+    document.getElementById('product_base').addEventListener('change', updateProductColors);
+</script>
 </body>
 </html>
