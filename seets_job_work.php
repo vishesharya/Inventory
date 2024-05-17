@@ -15,7 +15,7 @@ if (isset($_POST['labour_name'])) {
 }
 
 // Fetch product names
-$product_query = "SELECT DISTINCT product_name FROM sheets_product ORDER BY product_name ASC";
+$product_query = "SELECT DISTINCT product_name FROM sheets_job_work ORDER BY product_name ASC";
 $product_result = mysqli_query($con, $product_query);
 
 // Initialize selected product, base, and color variables
@@ -46,43 +46,46 @@ if (isset($_POST['view_entries'])) {
     $selected_challan = isset($_POST['challan_no_issue']) ? mysqli_real_escape_string($con, $_POST['challan_no_issue']) : '';
 
     // Construct the query
-    $query = "SELECT * FROM sheets_job_work WHERE status = 0";
-    $conditions = [];
+$query = "SELECT * FROM sheets_job_work WHERE status = 0";
+$conditions = [];
 
-    // Add date range filter if provided
-    if (!empty($start_date) && !empty($end_date)) {
-        $conditions[] = "date_and_time BETWEEN '$start_date' AND '$end_date'";
-    }
+// Add date range filter if provided
+if (!empty($start_date) && !empty($end_date)) {
+    $conditions[] = "date_and_time BETWEEN '$start_date' AND '$end_date'";
+}
 
-    // Add labour filter if provided
-    if (!empty($labour_name)) {
-        $conditions[] = "labour_name = '$labour_name'";
-    }
+// Add labour filter if provided
+if (!empty($labour_name)) {
+    $conditions[] = "labour_name = '$labour_name'";
+}
 
-    // Add challan number filter if provided
-    if (!empty($selected_challan)) {
-        $conditions[] = "challan_no_issue = '$selected_challan'";
-    }
+// Add challan number filter if provided
+if (!empty($selected_challan)) {
+    $conditions[] = "challan_no_issue = '$selected_challan'";
+}
 
-    // Add product name filter if provided
-    if (!empty($selected_product)) {
-        $conditions[] = "product_name = '$selected_product'";
-    }
+// Add product name filter if provided
+if (!empty($selected_product)) {
+    $conditions[] = "product_name = '$selected_product'";
+}
 
-    // Add product base filter if provided
-    if (!empty($selected_base)) {
-        $conditions[] = "product_base = '$selected_base'";
-    }
+// Add product base filter if provided
+if (!empty($selected_base)) {
+    $conditions[] = "product_base = '$selected_base'";
+}
 
-    // Add product color filter if provided
-    if (!empty($selected_color)) {
-        $conditions[] = "product_color = '$selected_color'";
-    }
+// Add product color filter if provided
+if (!empty($selected_color)) {
+    $conditions[] = "product_color = '$selected_color'";
+}
 
-    // Append conditions to the query
-    if (!empty($conditions)) {
-        $query .= " AND " . implode(' AND ', $conditions);
-    }
+// Append conditions to the query
+if (!empty($conditions)) {
+    $query .= " AND " . implode(' AND ', $conditions);
+}
+
+$result = mysqli_query($con, $query);
+
 
     $result = mysqli_query($con, $query);
 }
