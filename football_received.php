@@ -38,8 +38,6 @@ function viewChallanNumber($con) {
 
 $challan_no = viewChallanNumber($con); 
 
-$date_and_time = isset($_POST['date_and_time']) ? $_POST['date_and_time'] : date('Y-m-d H:i:s');
-
 // Fetch stitcher names from the database
 $stitcher_query = "SELECT DISTINCT stitcher_name FROM kits_job_work WHERE status = 0 ORDER BY stitcher_name ASC";
 $stitcher_result = mysqli_query($con, $stitcher_query);
@@ -190,6 +188,7 @@ if (isset($_POST['add_product'])) {
                         'stitcher_iind_company_ist' => $stitcher_iind_company_ist,
                         'stitcher_ist_company_iind' => $stitcher_ist_company_iind,
                         'total' => $total,
+                        'date_and_time' => isset($_POST['date_and_time']) ? $_POST['date_and_time'] : date('Y-m-d H:i:s')
                         
                         
                     );
@@ -693,30 +692,6 @@ function fetchProductColor(selectedChallan, productName, productBase) {
     xhttp.send();
 }
 
-</script>
-<script>
-    // Function to update the date and time input field with current time if it's empty
-    function updateDateTime() {
-        var dateInput = document.getElementById("date_and_time");
-        if (!dateInput.value) { // If the date input field is empty
-            var currentDate = new Date();
-            var month = ("0" + (currentDate.getMonth() + 1)).slice(-2); // Adding leading zero if needed
-            var day = ("0" + currentDate.getDate()).slice(-2); // Adding leading zero if needed
-            var year = currentDate.getFullYear();
-            var hours = ("0" + currentDate.getHours()).slice(-2); // Adding leading zero if needed
-            var minutes = ("0" + currentDate.getMinutes()).slice(-2); // Adding leading zero if needed
-            var formattedDate = year + "-" + month + "-" + day + "T" + hours + ":" + minutes;
-            dateInput.value = formattedDate; // Update the value of the date input field
-        }
-    }
-
-    // Listen for changes in other form fields
-    document.querySelectorAll(".form-select, .form-control").forEach(function(input) {
-        input.addEventListener("change", updateDateTime);
-    });
-
-    // Call the function initially to set the default date and time
-    updateDateTime();
 </script>
 
 </body>
