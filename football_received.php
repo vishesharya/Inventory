@@ -194,6 +194,8 @@ if (isset($_POST['add_product'])) {
 
                     $_SESSION['temp_products'][] = $temp_product;
 
+                    
+                    exit();
                 } else {
                     $errors[] = "Failed to update issue quantity in the database.";
                  }
