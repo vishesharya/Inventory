@@ -324,6 +324,19 @@ if (isset($_POST['submit_form'])) {
             }
         }  
         
+        if (isset($_SESSION['selected_date'])) {
+            $selectedDate = $_SESSION['selected_date'];
+        } else {
+            // Fetch current date if no date is selected
+            $selectedDate = date('Y-m-d');
+        }
+    
+        // Handle form submission
+        if (isset($_POST['selected_date'])) {
+            $selectedDate = $_POST['selected_date'];
+            // Save the selected date to session
+            $_SESSION['selected_date'] = $selectedDate;
+        }
         // If no errors, update the Challan Number and clear session storage
         if (empty($errors)) {
            // Update Challan Number
