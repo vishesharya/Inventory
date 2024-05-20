@@ -188,7 +188,7 @@ if (isset($_POST['add_product'])) {
                         'stitcher_iind_company_ist' => $stitcher_iind_company_ist,
                         'stitcher_ist_company_iind' => $stitcher_ist_company_iind,
                         'total' => $total,
-                        'date_and_time' => isset($_POST['date_and_time']) ? $_POST['date_and_time'] : date('Y-m-d H:i:s')
+                        
                         
                         
                     );
@@ -404,12 +404,6 @@ if (isset($_POST['submit_form'])) {
                         <!-- New form to select stitcher, associated challan number, and product details -->
                         <form method="post" action="">
                             <div class="row">
-                            <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="date_and_time">Date and Time:</label>
-                                        <input type="datetime-local" class="form-control" id="date_and_time" name="date_and_time">
-                                    </div> 
-                                </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="select_stitcher">Select Stitcher:</label>
@@ -504,7 +498,12 @@ if (isset($_POST['submit_form'])) {
                                     </div>
                                 </div>
 
-                                
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="date_and_time">Date and Time:</label>
+                                        <input type="datetime-local" class="form-control" id="date_and_time" name="date_and_time">
+                                    </div> 
+                                </div>
                                
                                
                             </div>
