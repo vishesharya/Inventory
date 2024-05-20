@@ -77,23 +77,6 @@ if (isset($_POST['add_product'])) {
         $stitcher_iind_company_ist = mysqli_real_escape_string($con, $_POST['stitcher_iind_company_ist']);
         $stitcher_ist_company_iind = mysqli_real_escape_string($con, $_POST['stitcher_ist_company_iind']);
 
-         // Fetch temp_date from the database
-         $temp_date_query = "SELECT temp_date FROM date_time";
-         $temp_date_result = mysqli_query($con, $temp_date_query);
-         $temp_date_row = mysqli_fetch_assoc($temp_date_result);
-         $temp_date = $temp_date_row['temp_date'];
-         
-         // Get the new date from the form input
-         $new_date_and_time = isset($_POST['date_and_time']) ? mysqli_real_escape_string($con, $_POST['date_and_time']) : $temp_date;
-         
-         // Check if the new date is different from the existing date
-         if ($new_date_and_time != $temp_date) {
-             // Update the temp_date field in the database
-             $update_date_query = "UPDATE your_table_name SET temp_date = '$new_date_and_time' WHERE your_condition_to_identify_the_record";
-             $update_date_result = mysqli_query($con, $update_date_query);
-             
-         }
-
         $is_duplicate = false;
         foreach ($_SESSION['temp_products'] as $temp_product) {
             if ($temp_product['product_name'] === $product_name && 
@@ -515,17 +498,8 @@ if (isset($_POST['submit_form'])) {
 
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                    <?php
-                                    // Fetch temp_date from the database
-                                    $temp_date_query = "SELECT temp_date FROM date_time";
-                                    $temp_date_result = mysqli_query($con, $temp_date_query);
-                                    $temp_date_row = mysqli_fetch_assoc($temp_date_result);
-                                    $temp_date = $temp_date_row['temp_date'];
-                                    ?>
-
-                                    <!-- Input field for date and time -->
-                                    <label for="date_and_time">Date and Time:</label>
-    <input type="datetime-local" id="date_and_time" name="date_and_time" value="<?php echo $temp_date; ?>">
+                                        <label for="date_and_time">Date and Time:</label>
+                                        <input type="datetime-local" class="form-control" id="date_and_time" name="date_and_time">
                                     </div> 
                                 </div>
                                
