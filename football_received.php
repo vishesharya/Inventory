@@ -128,10 +128,36 @@ if (isset($_POST['add_product'])) {
             if ($total > $existing_issue_quantity) {
                 $errors[] = "The entered quantity exceeds the balance quantity.";
             } else {
+
+                            // Fetch existing remaining quantity for Ist Company Ist
+            $existing_remaining_quantity_ist_company_ist_query = "SELECT remaining_quantity FROM products WHERE product_name = '$product_name' AND product_base = '$product_base' AND product_color = '$product_color'";
+            $existing_remaining_quantity_ist_company_ist_result = mysqli_query($con, $existing_remaining_quantity_ist_company_ist_query);
+            $row_ist_company_ist = mysqli_fetch_assoc($existing_remaining_quantity_ist_company_ist_result);
+            $existing_remaining_quantity_ist_company_ist = $row_ist_company_ist['remaining_quantity'];
+
+            // Fetch existing remaining quantity for IInd Company IInd
+            $existing_remaining_quantity_iind_company_iind_query = "SELECT remaining_quantity FROM products WHERE product_name = '$product_name IIND' AND product_base = 'MIX COLOR' AND product_color = 'MIX COLOR'";
+            $existing_remaining_quantity_iind_company_iind_result = mysqli_query($con, $existing_remaining_quantity_iind_company_iind_query);
+            $row_iind_company_iind = mysqli_fetch_assoc($existing_remaining_quantity_iind_company_iind_result);
+            $existing_remaining_quantity_iind_company_iind = $row_iind_company_iind['remaining_quantity'];
+
+            // Calculate new remaining quantity
+            $new_remaining_quantity_ist_company_ist = $existing_remaining_quantity_ist_company_ist + $stitcher_ist_company_ist + $stitcher_iind_company_ist;
+            $new_remaining_quantity_iind_company_iind = $existing_remaining_quantity_iind_company_iind + $stitcher_iind_company_iind + $stitcher_ist_company_iind ;
+
+            // Update remaining quantity in products table for Ist Company Ist
+            $update_remaining_quantity_ist_company_ist_query = "UPDATE products SET remaining_quantity = '$new_remaining_quantity_ist_company_ist' WHERE product_name = '$product_name' AND product_base = '$product_base' AND  product_color = '$product_color'";
+            $update_remaining_quantity_ist_company_ist_result = mysqli_query($con, $update_remaining_quantity_ist_company_ist_query);
+
+            // Update remaining quantity in products table for IInd Company IInd
+            $update_remaining_quantity_iind_company_iind_query = "UPDATE products SET remaining_quantity = '$new_remaining_quantity_iind_company_iind' WHERE product_name = '$product_name IIND' AND product_base = 'MIX COLOR' AND product_color = 'MIX COLOR'";
+            $update_remaining_quantity_iind_company_iind_result = mysqli_query($con, $update_remaining_quantity_iind_company_iind_query);
+
                 // Update issue quantity in the database
                 $updated_issue_quantity = max(0, $existing_issue_quantity - $total); // Ensure issue quantity doesn't go negative
                 $update_issue_quantity_query = "UPDATE kits_job_work SET issue_quantity = '$updated_issue_quantity' WHERE challan_no_issue = '$selected_challan' AND stitcher_name = '$stitcher_name' AND product_name = '$product_name' AND product_base = '$product_base' AND product_color = '$product_color'";
                 $update_issue_quantity_result = mysqli_query($con, $update_issue_quantity_query);
+
 
                 if ($update_issue_quantity_result) {
                     // Check if issue quantity became 0 and update status accordingly
@@ -143,6 +169,11 @@ if (isset($_POST['add_product'])) {
                             $errors[] = "Failed to update status in the database.";
                         }
                     }
+
+
+            if (!$update_remaining_quantity_ist_company_ist_result || !$update_remaining_quantity_iind_company_iind_result) {
+                $errors[] = "Failed to update remaining quantity in the database.";
+            }
 
                     // Insert data into temporary session storage
                     $temp_product = array(
@@ -257,42 +288,7 @@ if (isset($_POST['submit_form'])) {
         }
 
 
-             // Update remaining quantity in products table
-             $stitcher_ist_company_ist = $product['stitcher_ist_company_ist'];
-         
-
-             $stitcher_ist_company_ist = $product['stitcher_ist_company_ist'];
-             $stitcher_iind_company_ist = $product['stitcher_iind_company_ist'];
-             $stitcher_iind_company_iind = $product['stitcher_iind_company_iind'];
-             $stitcher_ist_company_iind = $product['stitcher_ist_company_iind'];
- 
-             // Fetch existing remaining quantity for Ist Company Ist
-             $existing_remaining_quantity_ist_company_ist_query = "SELECT remaining_quantity FROM products WHERE product_name = '$product_name' AND product_base = '$product_base' AND product_color = '$product_color'";
-             $existing_remaining_quantity_ist_company_ist_result = mysqli_query($con, $existing_remaining_quantity_ist_company_ist_query);
-             $row_ist_company_ist = mysqli_fetch_assoc($existing_remaining_quantity_ist_company_ist_result);
-             $existing_remaining_quantity_ist_company_ist = $row_ist_company_ist['remaining_quantity'];
- 
-             // Fetch existing remaining quantity for IInd Company IInd
-             $existing_remaining_quantity_iind_company_iind_query = "SELECT remaining_quantity FROM products WHERE product_name = '$product_name IIND' AND product_base = 'MIX COLOR' AND product_color = 'MIX COLOR'";
-             $existing_remaining_quantity_iind_company_iind_result = mysqli_query($con, $existing_remaining_quantity_iind_company_iind_query);
-             $row_iind_company_iind = mysqli_fetch_assoc($existing_remaining_quantity_iind_company_iind_result);
-             $existing_remaining_quantity_iind_company_iind = $row_iind_company_iind['remaining_quantity'];
- 
-             // Calculate new remaining quantity
-             $new_remaining_quantity_ist_company_ist = $existing_remaining_quantity_ist_company_ist + $stitcher_ist_company_ist + $stitcher_iind_company_ist;
-             $new_remaining_quantity_iind_company_iind = $existing_remaining_quantity_iind_company_iind + $stitcher_iind_company_iind + $stitcher_ist_company_iind ;
- 
-             // Update remaining quantity in products table for Ist Company Ist
-             $update_remaining_quantity_ist_company_ist_query = "UPDATE products SET remaining_quantity = '$new_remaining_quantity_ist_company_ist' WHERE product_name = '$product_name' AND product_base = '$product_base' AND  product_color = '$product_color'";
-             $update_remaining_quantity_ist_company_ist_result = mysqli_query($con, $update_remaining_quantity_ist_company_ist_query);
- 
-             // Update remaining quantity in products table for IInd Company IInd
-             $update_remaining_quantity_iind_company_iind_query = "UPDATE products SET remaining_quantity = '$new_remaining_quantity_iind_company_iind' WHERE product_name = '$product_name IIND' AND product_base = 'MIX COLOR' AND product_color = 'MIX COLOR'";
-             $update_remaining_quantity_iind_company_iind_result = mysqli_query($con, $update_remaining_quantity_iind_company_iind_query);
- 
-             if (!$update_remaining_quantity_ist_company_ist_result || !$update_remaining_quantity_iind_company_iind_result) {
-                 $errors[] = "Failed to update remaining quantity in the database.";
-             }
+             
         
         // If no errors, update the Challan Number and clear session storage
         if (empty($errors)) {
