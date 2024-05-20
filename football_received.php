@@ -3,6 +3,11 @@ session_start();
 include_once 'include/connection.php';
 include_once 'include/admin-main.php';
 
+// Initialize selected date
+if (!isset($_SESSION['selected_date'])) {
+    $_SESSION['selected_date'] = date('Y-m-d H:i:s'); // Current date and time
+}
+
 // Function to fetch current number from the database
 function getCurrentNumber($con) {
     $result = mysqli_query($con, "SELECT football_received_temp FROM challan_temp LIMIT 1");
@@ -329,7 +334,7 @@ if (isset($_POST['submit_form'])) {
         if (empty($errors)) {
            // Update Challan Number
            $challan_no = generateChallanNumber($con);
-           
+           $_SESSION['selected_date'] = $_POST['date_and_time'];
             // Clear session storage after insertion
             unset($_SESSION['temp_products']);
 
