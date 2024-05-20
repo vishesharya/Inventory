@@ -194,9 +194,6 @@ if (isset($_POST['add_product'])) {
 
                     $_SESSION['temp_products'][] = $temp_product;
 
-                    // Redirect to the same page to reset form fields
-                    header('Location: ' . $_SERVER['PHP_SELF']);
-                    exit();
                 } else {
                     $errors[] = "Failed to update issue quantity in the database.";
                  }
