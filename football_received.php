@@ -324,19 +324,7 @@ if (isset($_POST['submit_form'])) {
             }
         }  
         
-        if (isset($_SESSION['selected_date'])) {
-            $selectedDate = $_SESSION['selected_date'];
-        } else {
-            // Fetch current date if no date is selected
-            $selectedDate = date('Y-m-d');
-        }
-    
-        // Handle form submission
-        if (isset($_POST['selected_date'])) {
-            $selectedDate = $_POST['selected_date'];
-            // Save the selected date to session
-            $_SESSION['selected_date'] = $selectedDate;
-        }
+        
         // If no errors, update the Challan Number and clear session storage
         if (empty($errors)) {
            // Update Challan Number
@@ -416,6 +404,12 @@ if (isset($_POST['submit_form'])) {
                         <!-- New form to select stitcher, associated challan number, and product details -->
                         <form method="post" action="">
                             <div class="row">
+                            <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="date_and_time">Date and Time:</label>
+                                        <input type="datetime-local" class="form-control" id="date_and_time" name="date_and_time">
+                                    </div> 
+                                </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="select_stitcher">Select Stitcher:</label>
@@ -510,12 +504,7 @@ if (isset($_POST['submit_form'])) {
                                     </div>
                                 </div>
 
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="date_and_time">Date and Time:</label>
-                                        <input type="datetime-local" class="form-control" id="date_and_time" name="date_and_time">
-                                    </div> 
-                                </div>
+                                
                                
                                
                             </div>
