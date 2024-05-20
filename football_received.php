@@ -38,6 +38,8 @@ function viewChallanNumber($con) {
 
 $challan_no = viewChallanNumber($con); 
 
+$date_and_time = isset($_POST['date_and_time']) ? $_POST['date_and_time'] : date('Y-m-d H:i:s');
+
 // Fetch stitcher names from the database
 $stitcher_query = "SELECT DISTINCT stitcher_name FROM kits_job_work WHERE status = 0 ORDER BY stitcher_name ASC";
 $stitcher_result = mysqli_query($con, $stitcher_query);
@@ -188,7 +190,6 @@ if (isset($_POST['add_product'])) {
                         'stitcher_iind_company_ist' => $stitcher_iind_company_ist,
                         'stitcher_ist_company_iind' => $stitcher_ist_company_iind,
                         'total' => $total,
-                        'date_and_time' => isset($_POST['date_and_time']) ? $_POST['date_and_time'] : date('Y-m-d H:i:s')
                         
                         
                     );
