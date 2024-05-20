@@ -2,10 +2,9 @@
 session_start();
 include_once 'include/connection.php';
 include_once 'include/admin-main.php';
-
 // Initialize selected date
 if (!isset($_SESSION['selected_date'])) {
-    $_SESSION['selected_date'] = date('Y-m-d H:i:s'); // Current date and time
+    $_SESSION['selected_date'] = date('Y-m-d\TH:i'); // Default to current date and time
 }
 
 // Function to fetch current number from the database
@@ -300,6 +299,7 @@ if (isset($_POST['delete_product'])) {
 // Store added products in the database when "Submit" button is clicked
 if (isset($_POST['submit_form'])) {
     $temp_products = isset($_SESSION['temp_products']) ? $_SESSION['temp_products'] : [];
+    $_SESSION['selected_date'] = $_POST['date_and_time'];
 
     if (empty($temp_products)) {
         $errors[] = "Please add at least one product.";
@@ -334,7 +334,7 @@ if (isset($_POST['submit_form'])) {
         if (empty($errors)) {
            // Update Challan Number
            $challan_no = generateChallanNumber($con);
-           $_SESSION['selected_date'] = $_POST['date_and_time'];
+           
             // Clear session storage after insertion
             unset($_SESSION['temp_products']);
 
