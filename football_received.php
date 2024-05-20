@@ -515,8 +515,17 @@ if (isset($_POST['submit_form'])) {
 
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="date_and_time">Date and Time:</label>
-                                        <input type="datetime-local" class="form-control" id="date_and_time" name="date_and_time">
+                                    <?php
+                                    // Fetch temp_date from the database
+                                    $temp_date_query = "SELECT temp_date FROM your_table_name WHERE your_condition_to_identify_the_record";
+                                    $temp_date_result = mysqli_query($con, $temp_date_query);
+                                    $temp_date_row = mysqli_fetch_assoc($temp_date_result);
+                                    $temp_date = $temp_date_row['temp_date'];
+                                    ?>
+
+                                    <!-- Input field for date and time -->
+                                    <label for="date_and_time">Date and Time:</label>
+    <input type="datetime-local" id="date_and_time" name="date_and_time" value="<?php echo $temp_date; ?>">
                                     </div> 
                                 </div>
                                
