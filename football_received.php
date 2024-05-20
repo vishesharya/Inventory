@@ -545,6 +545,7 @@ if (isset($_POST['submit_form'])) {
                                         <th>Stitcher IInd Company Ist</th>
                                         <th>Stitcher Ist Company IInd</th>
                                         <th>Total</th>
+                                        <th>Date</th>
                                         <th>Delete Product</th>
                                     </tr>
                                 </thead>
@@ -564,6 +565,7 @@ if (isset($_POST['submit_form'])) {
                                                 <td><?php echo $product['stitcher_iind_company_ist']; ?></td>
                                                 <td><?php echo $product['stitcher_ist_company_iind']; ?></td>
                                                 <td><?php echo $product['stitcher_ist_company_ist'] + $product['stitcher_iind_company_iind'] + $product['stitcher_iind_company_ist'] + $product['stitcher_ist_company_iind']; ?></td>
+                                                <td><?php echo $product['date_and_time']; ?></td>
                                                 <td>
                                                     <form method="post" action="">
                                                         <input type="hidden" name="delete_index" value="<?php echo $key; ?>">
