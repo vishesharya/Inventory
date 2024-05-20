@@ -78,7 +78,7 @@ if (isset($_POST['add_product'])) {
         $stitcher_ist_company_iind = mysqli_real_escape_string($con, $_POST['stitcher_ist_company_iind']);
 
          // Fetch temp_date from the database
-         $temp_date_query = "SELECT temp_date FROM your_table_name WHERE your_condition_to_identify_the_record";
+         $temp_date_query = "SELECT temp_date FROM date_time";
          $temp_date_result = mysqli_query($con, $temp_date_query);
          $temp_date_row = mysqli_fetch_assoc($temp_date_result);
          $temp_date = $temp_date_row['temp_date'];
@@ -517,7 +517,7 @@ if (isset($_POST['submit_form'])) {
                                     <div class="form-group">
                                     <?php
                                     // Fetch temp_date from the database
-                                    $temp_date_query = "SELECT temp_date FROM your_table_name WHERE your_condition_to_identify_the_record";
+                                    $temp_date_query = "SELECT temp_date FROM date_time";
                                     $temp_date_result = mysqli_query($con, $temp_date_query);
                                     $temp_date_row = mysqli_fetch_assoc($temp_date_result);
                                     $temp_date = $temp_date_row['temp_date'];
