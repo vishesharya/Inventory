@@ -210,49 +210,21 @@ if (isset($_POST['add_product'])) {
      
 
     if (isset($_POST['delete_product'])) {
-        $delete_index = $_POST['delete_index']; // Index of the product in the session array
+        $delete_index = $_POST['delete_index']; 
+
+
     
-        // Fetch product details from the session
-        if (isset($_SESSION['temp_products'][$delete_index])) {
-            $product_to_delete = $_SESSION['temp_products'][$delete_index];
-    
-            // Variables for database query
-            $challan_no_issue = $product_to_delete['challan_no_issue'];
-            $stitcher_name = $product_to_delete['stitcher_name'];
-            $product_name = $product_to_delete['product_name'];
-            $product_base = $product_to_delete['product_base'];
-            $total = $product_to_delete['total'];
-    
-            // Fetch current issue quantity from the database
-            $issue_quantity_query = "SELECT issue_quantity FROM kits_job_work WHERE challan_no_issue = '$challan_no_issue' AND stitcher_name = '$stitcher_name' AND product_name = '$product_name' AND product_base = '$product_base' AND product_color = '$product_color'";
-            $issue_quantity_result = mysqli_query($con, $issue_quantity_query);
-            if ($issue_quantity_result && mysqli_num_rows($issue_quantity_result) > 0) {
-                $issue_quantity_row = mysqli_fetch_assoc($issue_quantity_result);
-                $current_issue_quantity = $issue_quantity_row['issue_quantity'];
-                
-                // Calculate new issue quantity after adding back the deleted product's quantity
-                $updated_issue_quantity = $current_issue_quantity + $total;
-    
-                // Update the issue quantity in the database
-                $update_issue_quantity_query = "UPDATE kits_job_work SET issue_quantity = '$updated_issue_quantity' WHERE challan_no_issue = '$challan_no_issue' AND stitcher_name = '$stitcher_name' AND product_name = '$product_name' AND product_base = '$product_base' AND product_color = '$product_color'";
-                $update_issue_quantity_result = mysqli_query($con, $update_issue_quantity_query);
-    
-                // Update status if the updated issue quantity is greater than 0
-                if ($updated_issue_quantity > 0) {
-                    $update_status_query = "UPDATE kits_job_work SET status = 0 WHERE challan_no_issue = '$challan_no_issue' AND stitcher_name = '$stitcher_name' AND product_name = '$product_name' AND product_base = '$product_base' AND product_color = '$product_color'";
-                    $update_status_result = mysqli_query($con, $update_status_query);
-                }
-            }
-    
-            // Remove the product from the session
-            unset($_SESSION['temp_products'][$delete_index]);
-            $_SESSION['temp_products'] = array_values($_SESSION['temp_products']); // Re-index array
-    
-            // Redirect to avoid form resubmission issues
-            header('Location: ' . $_SERVER['PHP_SELF']);
-            exit();
-        }
-    }
+        
+    // Remove the product from the session
+    unset($_SESSION['temp_products'][$delete_index]);
+
+    // Reset array keys to maintain consecutive numbering
+    $_SESSION['temp_products'] = array_values($_SESSION['temp_products']);
+
+    // Redirect to prevent form resubmission
+    header("Location: {$_SERVER['REQUEST_URI']}");
+    exit();
+     }
     
 
 // Store added products in the database when "Submit" button is clicked
@@ -285,10 +257,7 @@ if (isset($_POST['submit_form'])) {
             if (!$insert_result) {
                 $errors[] = "Failed to store data in the database.";
             }
-        }
-
-
-             
+        }  
         
         // If no errors, update the Challan Number and clear session storage
         if (empty($errors)) {
