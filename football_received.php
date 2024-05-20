@@ -64,8 +64,6 @@ if (isset($_POST['challan_no_issue'])) {
 
 
 if (isset($_POST['add_product'])) {
-
-    $date_and_time = isset($_SESSION['temp_products']) && !empty($_SESSION['temp_products']) ? $_SESSION['temp_products'][0]['date_and_time'] : date('Y-m-d H:i:s');
     // Validate input
     if (empty($_POST['product_name']) || empty($_POST['product_base']) || empty($_POST['product_color'])) {
         $errors[] = "Please fill in all fields.";
@@ -301,8 +299,6 @@ if (isset($_POST['submit_form'])) {
     if (empty($temp_products)) {
         $errors[] = "Please add at least one product.";
     } else {
-
-        $date_and_time = isset($_POST['date_and_time']) ? mysqli_real_escape_string($con, $_POST['date_and_time']) : date('Y-m-d H:i:s');
         foreach ($temp_products as $product) {
             
             $stitcher_name = mysqli_real_escape_string($con, $product['stitcher_name']);
@@ -316,7 +312,7 @@ if (isset($_POST['submit_form'])) {
             $stitcher_iind_company_ist = mysqli_real_escape_string($con, $product['stitcher_iind_company_ist']);
             $stitcher_ist_company_ist = mysqli_real_escape_string($con, $product['stitcher_ist_company_ist']);
             $stitcher_ist_company_iind = mysqli_real_escape_string($con, $product['stitcher_ist_company_iind']);
-           
+            $date_and_time = mysqli_real_escape_string($con, $product['date_and_time']);
 
             // Insert product into the database
             $insert_query = "INSERT INTO football_received ( challan_no, stitcher_name, product_name, product_base, product_color, S_Ist_C_Ist, S_IInd_C_IInd, S_IInd_C_Ist, S_Ist_C_IInd, total, date_and_time) 
@@ -327,7 +323,6 @@ if (isset($_POST['submit_form'])) {
                 $errors[] = "Failed to store data in the database.";
             }
         }  
-        
         
         // If no errors, update the Challan Number and clear session storage
         if (empty($errors)) {
@@ -698,5 +693,30 @@ function fetchProductColor(selectedChallan, productName, productBase) {
 }
 
 </script>
+<script>
+    // Function to update the date and time input field with current time if it's empty
+    function updateDateTime() {
+        var dateInput = document.getElementById("date_and_time");
+        if (!dateInput.value) { // If the date input field is empty
+            var currentDate = new Date();
+            var month = ("0" + (currentDate.getMonth() + 1)).slice(-2); // Adding leading zero if needed
+            var day = ("0" + currentDate.getDate()).slice(-2); // Adding leading zero if needed
+            var year = currentDate.getFullYear();
+            var hours = ("0" + currentDate.getHours()).slice(-2); // Adding leading zero if needed
+            var minutes = ("0" + currentDate.getMinutes()).slice(-2); // Adding leading zero if needed
+            var formattedDate = year + "-" + month + "-" + day + "T" + hours + ":" + minutes;
+            dateInput.value = formattedDate; // Update the value of the date input field
+        }
+    }
+
+    // Listen for changes in other form fields
+    document.querySelectorAll(".form-select, .form-control").forEach(function(input) {
+        input.addEventListener("change", updateDateTime);
+    });
+
+    // Call the function initially to set the default date and time
+    updateDateTime();
+</script>
+
 </body>
 </html>
