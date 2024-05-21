@@ -5,14 +5,14 @@ include('include/connection.php');
 include_once 'include/admin-main.php';
 
 // Fetch stitcher names from the database
-$stitcher_query = "SELECT DISTINCT stitcher_name FROM football_received"; 
+$stitcher_query = "SELECT DISTINCT stitcher_name FROM football_received ORDER BY stitcher_name ASC"; 
 $stitcher_result = mysqli_query($con, $stitcher_query);
 
 $challan_no = isset($_POST['challan_no']) ? $_POST['challan_no'] : "";
 
 
 // Check if 'challan_no' is set in session
-if (isset($_SESSION['challan_no'])) {
+if (isset($_SESSION['challan_no'])) { 
     $challan_no = $_SESSION['challan_no'];
 };
 
