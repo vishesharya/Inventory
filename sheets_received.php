@@ -63,10 +63,7 @@ $challan_no = viewChallanNumber($con);
 $errors = array();
 
 if (isset($_POST['add_product'])) {
-    // Validate input
-    if (empty($_POST['product_name']) || empty($_POST['product_base']) || empty($_POST['product_color'])) {
-        $errors[] = "Please fill in all fields.";
-    } else {
+    
         // Sanitize input
         $product_name = mysqli_real_escape_string($con, $_POST['product_name']);
         $product_base = mysqli_real_escape_string($con, $_POST['product_base']);
@@ -181,7 +178,7 @@ if (isset($_POST['add_product'])) {
         );
         $_SESSION['temp_products'][] = $temp_product;
     }
-}
+
 // Check if delete button is clicked
 if (isset($_POST['delete_product'])) {
     // Get the index of the product to be deleted
