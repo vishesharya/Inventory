@@ -71,14 +71,15 @@ if (isset($_POST['add_product'])) {
     // Validate input
     if (empty($_POST['product_name']) || empty($_POST['product_base']) || empty($_POST['product_color']) || empty($_POST['date_and_time'])) {
         $errors[] = "Please fill in all fields.";
-    } else {
+    } else { 
         // Sanitize input
         $labour_name = isset($_POST['labour_name']) ? mysqli_real_escape_string($con, $_POST['labour_name']) : "";
         $product_name = mysqli_real_escape_string($con, $_POST['product_name']);
         $product_base = mysqli_real_escape_string($con, $_POST['product_base']);
         $product_color = mysqli_real_escape_string($con, $_POST['product_color']);
-        $ist_quantity = isset($_POST['ist_quantity']) ? mysqli_real_escape_string($con, $_POST['ist_quantity']) : 0;
-        $iind_quantity = isset($_POST['iind_quantity']) ? mysqli_real_escape_string($con, $_POST['iind_quantity']) : 0;
+        $ist_quantity = isset($_POST['ist_quantity']) ? (int)mysqli_real_escape_string($con, $_POST['ist_quantity']) : 0;
+        $iind_quantity = isset($_POST['iind_quantity']) ? (int)mysqli_real_escape_string($con, $_POST['iind_quantity']) : 0;
+        
 
 
         // Fetch remaining_quantity from kits_product table
