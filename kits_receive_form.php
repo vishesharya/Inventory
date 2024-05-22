@@ -77,8 +77,8 @@ if (isset($_POST['add_product'])) {
         $product_name = mysqli_real_escape_string($con, $_POST['product_name']);
         $product_base = mysqli_real_escape_string($con, $_POST['product_base']);
         $product_color = mysqli_real_escape_string($con, $_POST['product_color']);
-        $ist_quantity = isset($_POST['ist_quantity']) ? (int)mysqli_real_escape_string($con, $_POST['ist_quantity']) : 0;
-        $iind_quantity = isset($_POST['iind_quantity']) ? (int)mysqli_real_escape_string($con, $_POST['iind_quantity']) : 0;
+        $ist_quantity = isset($_POST['ist_quantity']) ? intval($_POST['ist_quantity']) : 0;
+        $iind_quantity = isset($_POST['iind_quantity']) ? intval($_POST['iind_quantity']) : 0;
         
 
 
