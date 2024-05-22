@@ -69,7 +69,7 @@ $challan_no = viewChallanNumber($con);
 $errors = array();
 if (isset($_POST['add_product'])) {
     // Validate input
-    if (empty($_POST['product_name']) || empty($_POST['product_base']) || empty($_POST['product_color']) || empty($_POST['ist_quantity']) || empty($_POST['iind_quantity'])) {
+    if (empty($_POST['product_name']) || empty($_POST['product_base']) || empty($_POST['product_color'])) {
         $errors[] = "Please fill in all fields.";
     } else {
         // Sanitize input
