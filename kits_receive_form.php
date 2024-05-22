@@ -77,11 +77,12 @@ if (isset($_POST['add_product'])) {
         $product_name = mysqli_real_escape_string($con, $_POST['product_name']);
         $product_base = mysqli_real_escape_string($con, $_POST['product_base']);
         $product_color = mysqli_real_escape_string($con, $_POST['product_color']);
+        $ist_quantity = isset($_POST['ist_quantity']) ? mysqli_real_escape_string($con, $_POST['ist_quantity']) : 0;
+        $iind_quantity = isset($_POST['iind_quantity']) ? mysqli_real_escape_string($con, $_POST['iind_quantity']) : 0;
+
+
         $ist_quantity = isset($_POST['ist_quantity']) ? intval($_POST['ist_quantity']) : 0;
         $iind_quantity = isset($_POST['iind_quantity']) ? intval($_POST['iind_quantity']) : 0;
-        
-
-
         // Fetch remaining_quantity from kits_product table
         $remaining_quantity_query = "SELECT remaining_quantity FROM kits_product WHERE product_name = '$product_name' AND product_base = '$product_base' AND product_color = '$product_color'";
         $remaining_quantity_result = mysqli_query($con, $remaining_quantity_query);
