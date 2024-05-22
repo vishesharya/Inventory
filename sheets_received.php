@@ -19,9 +19,13 @@ if ($selected_product) {
     $product_color_result = mysqli_query($con, $product_color_query);
 }
 
- $product_small_query = "SELECT DISTINCT small_sheet_color FROM sheets_small_stock";
- $product_small_result = mysqli_query($con, $product_small_query);
-
+// Logic to fetch product bases and colors based on selected product
+$selected_product = isset($_POST['product_name']) ? $_POST['product_name'] : null;
+if ($selected_product) {
+    $product_small_query = "SELECT DISTINCT small_sheet_color FROM sheets_small_stock";
+    $product_small_result = mysqli_query($con, $product_small_query);
+ 
+}
 
 
 // Function to fetch current number from the database
