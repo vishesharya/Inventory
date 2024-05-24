@@ -155,7 +155,7 @@ if (isset($_POST['delete_product'])) {
     // Fetch remaining_quantity from kits_product table for Ist Quantity
     $remaining_quantity_query = "SELECT remaining_quantity FROM kits_product WHERE product_name = '$product_name' AND product_base = '$product_base' AND product_color = '$product_color'";
     $remaining_quantity_result = mysqli_query($con, $remaining_quantity_query);
-    $row = mysqli_fetch_assoc($remaining_quantity_result);
+    $row = mysqli_fetch_assoc($remaining_quantity_result); 
     $remaining_quantity = $row['remaining_quantity'];
 
     // Calculate updated remaining_quantity for Ist Quantity
@@ -246,8 +246,7 @@ if (isset($_POST['submit_products'])) {
         }
         .form-group {
             margin-bottom: 1.5rem;
-            gap: 15px;
-        }
+            gap: 15px;}
         .btn-group {
             margin-top: 1.5rem;
             justify-content: center; 
