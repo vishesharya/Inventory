@@ -314,7 +314,7 @@ if (isset($_POST['submit_products'])) {
             <div class="col-lg-8">
                 <div class="card">
                     <div class="card-body">
-                        <h1 class="h4 text-center mb-4">Kits Issue</h1>
+                        <h1 class="h4 text-center mb-4">Kits Issue (WITHOUT PRINT)</h1>
                         <?php if (!empty($errors)) : ?>
                             <div class="alert alert-danger" role="alert">
                                 <?php foreach ($errors as $error) : ?>
