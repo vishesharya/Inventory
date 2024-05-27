@@ -313,44 +313,41 @@ if (isset($_POST['view_entries'])) {
         <p>No entries found.</p>
     <?php endif; ?>
 
+      <!-- JavaScript code for fetching challan numbers based on selected stitcher and date range -->
+      <script>
+        // Function to fetch challan numbers based on selected stitcher and date range
+        function fetchChallanNumbers() {
+            var selectedStitcher = document.getElementById("select_stitcher").value;
+            var fromDate = document.getElementById("from_date").value;
+            var toDate = document.getElementById("to_date").value;
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    var challanSelect = document.getElementById("select_challan");
+                    var challanNumbers = JSON.parse(this.responseText);
+                    challanSelect.innerHTML = "<option value='' selected disabled>Select Issue Challan No</option>";
+                    challanNumbers.forEach(function(challan) {
+                        var option = document.createElement("option");
+                        option.value = challan;
+                        option.text = challan;
+                        challanSelect.appendChild(option);
+                    });
+                }
+            };
+            xhttp.open("GET", "fatch_challan_no_print_job_work.php?stitcher=" + selectedStitcher + "&from_date=" + fromDate + "&to_date=" + toDate, true);
+            xhttp.send();
+        }
 
+        // Event listeners for stitcher selection and date inputs
+        document.getElementById("select_stitcher").addEventListener("change", fetchChallanNumbers);
+        document.getElementById("from_date").addEventListener("change", fetchChallanNumbers);
+        document.getElementById("to_date").addEventListener("change", fetchChallanNumbers);
 
-   <!-- JavaScript code for fetching challan numbers based on selected stitcher and date range -->
-   <script>
-    // Function to fetch challan numbers based on selected labour and date range
-    function fetchChallanNumbers() {
-        var selectedLabour = document.getElementById("select_labour").value;
-        var fromDate = document.getElementById("from_date").value;
-        var toDate = document.getElementById("to_date").value;
-        var xhttp = new XMLHttpRequest();
-        xhttp.onreadystatechange = function() {
-            if (this.readyState == 4 && this.status == 200) {
-                var challanSelect = document.getElementById("select_challan");
-                var challanNumbers = JSON.parse(this.responseText);
-                challanSelect.innerHTML = "<option value='' selected disabled>Select Issue Challan No</option>";
-                challanNumbers.forEach(function(challan) {
-                    var option = document.createElement("option");
-                    option.value = challan;
-                    option.text = challan;
-                    challanSelect.appendChild(option);
-                });
-            }
-        };
-        xhttp.open("GET", "fetch_challan_no_print_job_work.php?labour=" + selectedLabour + "&from_date=" + fromDate + "&to_date=" + toDate, true);
-        xhttp.send();
-    }
+        // Initial fetch of challan numbers
+        fetchChallanNumbers();
+    </script>
 
-    // Event listeners for labour selection and date inputs
-    document.getElementById("select_labour").addEventListener("change", fetchChallanNumbers);
-    document.getElementById("from_date").addEventListener("change", fetchChallanNumbers);
-    document.getElementById("to_date").addEventListener("change", fetchChallanNumbers);
-
-    // Initial fetch of challan numbers
-    fetchChallanNumbers();
-</script>
-
-
-        
+    
 <script>
     // Function to update product colors based on selected product name and base
     function updateProductColors() {
