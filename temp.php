@@ -3,49 +3,34 @@ session_start();
 include_once 'include/connection.php';
 include_once 'include/admin-main.php';
 
-$labour_name = isset($_POST['labour_name']) ? $_POST['labour_name'] : "";
-$challan_no_issue = isset($_POST['challan_no_issue']) ? $_POST['challan_no_issue'] : "";
-
-$labour_query = "SELECT DISTINCT labour_name FROM sheets_job_work WHERE status = 0 ORDER BY labour_name ASC";
-$labour_result = mysqli_query($con, $labour_query);
-
-
-// Logic to fetch product names from the database
-$product_query = "SELECT DISTINCT product_name FROM kits_product ORDER BY product_name ASC";
+// Fetch product names
+$product_query = "SELECT DISTINCT product_name FROM sheets_product ORDER BY product_name ASC";
 $product_result = mysqli_query($con, $product_query);
 
-// Fetch associated challan numbers for selected stitcher
-if (isset($_POST['labour_name'])) { 
-    $selected_stitcher = mysqli_real_escape_string($con, $_POST['labour_name']);
-    $challan_query_issue = "SELECT DISTINCT  challan_no_issue FROM sheets_job_work WHERE labour_name = '$labour_name' AND status = 0";
-    $challan_result_issue = mysqli_query($con, $challan_query_issue);
-}
-
-// Fetch product names based on selected stitcher and challan number
-if (isset($_POST['challan_no_issue'])) {
-    $selected_challan = mysqli_real_escape_string($con, $_POST['challan_no_issue']);
-    $selected_stitcher = mysqli_real_escape_string($con, $_POST['labour_name']); // Added this line
-
-    // Query to fetch products based on selected stitcher, challan number, and status = 0
-    $product_query = "SELECT DISTINCT product_name,product_base,product_color FROM sheets_job_work WHERE labour_name = '$labour_name' AND challan_no_issue = '$selected_challan' AND status = 0";
-    $product_result = mysqli_query($con, $product_query);
+// Logic to fetch product bases and colors based on selected product
+$selected_product = isset($_POST['product_name1']) ? $_POST['product_name1'] : null;
+if ($selected_product) {
+    $product_base_query = "SELECT DISTINCT product_base FROM sheets_product WHERE product_name = '$selected_product' ORDER BY product_base ASC";
+    $product_color_query = "SELECT DISTINCT product_color FROM sheets_product WHERE product_name = '$selected_product' ORDER BY product_color ASC";
+    $product_base_result = mysqli_query($con, $product_base_query);
+    $product_color_result = mysqli_query($con, $product_color_query);
 }
 
 // Function to fetch current number from the database
 function getCurrentNumber($con) {
-    $result = mysqli_query($con, "SELECT kits_received_temp FROM challan_temp LIMIT 1");
+    $result = mysqli_query($con, "SELECT football_received_temp FROM challan_temp LIMIT 1");
     $row = mysqli_fetch_assoc($result);
-    return $row['kits_received_temp'];
+    return $row['football_received_temp'];
 }
 
 // Function to update the current number in the database
 function updateCurrentNumber($con, $newNumber) {
-    mysqli_query($con, "UPDATE challan_temp SET kits_received_temp = $newNumber");
+    mysqli_query($con, "UPDATE challan_temp SET football_received_temp = $newNumber");
 }
 
 // Function to generate the code prefix
 function generateCodePrefix($number) {
-    return "KSI-KR-" . $number;
+    return "KSI-FR-" . $number;
 }
 
 // Function to generate the Challan number
@@ -57,81 +42,74 @@ function generateChallanNumber($con) {
     return $codePrefix;
 }
 
-
 function viewChallanNumber($con) {
     $currentNumber = getCurrentNumber($con);
     $codePrefix = generateCodePrefix($currentNumber);
-    return $codePrefix;
+    return $codePrefix; 
 }
 
 $challan_no = viewChallanNumber($con); 
 
-$errors = array();
+// Fetch stitcher names from the database
+$stitcher_query = "SELECT DISTINCT stitcher_name FROM print_job_work WHERE status = 0 ORDER BY stitcher_name ASC";
+$stitcher_result = mysqli_query($con, $stitcher_query);
+
+// Fetch associated challan numbers for selected stitcher
+if (isset($_POST['stitcher_name'])) {
+    $selected_stitcher = mysqli_real_escape_string($con, $_POST['stitcher_name']);
+    $challan_query_issue = "SELECT DISTINCT challan_no_issue FROM print_job_work WHERE stitcher_name = '$selected_stitcher' AND status = 0";
+    $challan_result_issue = mysqli_query($con, $challan_query_issue);
+}
+
+// Fetch product names based on selected stitcher and challan number
+if (isset($_POST['challan_no_issue'])) {
+    $selected_challan = mysqli_real_escape_string($con, $_POST['challan_no_issue']);
+    $selected_stitcher = mysqli_real_escape_string($con, $_POST['stitcher_name']); // Added this line
+
+    // Query to fetch products based on selected stitcher, challan number, and status = 0
+    $product_query = "SELECT DISTINCT product_name,product_base,product_color FROM print_job_work WHERE stitcher_name = '$selected_stitcher' AND challan_no_issue = '$selected_challan' AND status = 0";
+    $product_result = mysqli_query($con, $product_query);
+}
+
 if (isset($_POST['add_product'])) {
     // Validate input
-    if (empty($_POST['product_name']) || empty($_POST['product_base']) || empty($_POST['product_color']) || empty($_POST['ist_quantity']) || empty($_POST['iind_quantity'])) {
-        $errors[] = "Please fill in all fields.";
+    // Validate input for first set of products
+    if (empty($_POST['product_name']) || empty($_POST['product_base']) || empty($_POST['product_color']) || empty($_POST['quantity'])) {
+        $errors[] = "Please fill in all fields for the first product.";
+    }
+    // Validate input for second set of products
+    elseif (empty($_POST['product_name1']) || empty($_POST['product_base1']) || empty($_POST['product_color1'])) {
+        $errors[] = "Please fill in all fields for the second product.";
     } else {
         // Sanitize input
-        $labour_name = isset($_POST['labour_name']) ? mysqli_real_escape_string($con, $_POST['labour_name']) : "";
+        $stitcher_name = isset($_POST['stitcher_name']) ? mysqli_real_escape_string($con, $_POST['stitcher_name']) : "";
         $product_name = mysqli_real_escape_string($con, $_POST['product_name']);
         $product_base = mysqli_real_escape_string($con, $_POST['product_base']);
-        $product_color = mysqli_real_escape_string($con, $_POST['product_color']);
-        $ist_quantity = isset($_POST['ist_quantity']) ? mysqli_real_escape_string($con, $_POST['ist_quantity']) : 0;
-        $iind_quantity = isset($_POST['iind_quantity']) ? mysqli_real_escape_string($con, $_POST['iind_quantity']) : 0;
+        $product_color1 = mysqli_real_escape_string($con, $_POST['product_color']);
+        $product_color = mysqli_real_escape_string($con, $_POST['product_color1']);
+        $product_name1 = mysqli_real_escape_string($con, $_POST['product_name1']);
+        $product_base1 = mysqli_real_escape_string($con, $_POST['product_base1']);
+        
+        $quantity = mysqli_real_escape_string($con, $_POST['quantity']);
 
 
-        // Fetch remaining_quantity from kits_product table
-        $remaining_quantity_query = "SELECT remaining_quantity FROM kits_product WHERE product_name = '$product_name' AND product_base = '$product_base' AND product_color = '$product_color'";
-        $remaining_quantity_result = mysqli_query($con, $remaining_quantity_query);
-        $row = mysqli_fetch_assoc($remaining_quantity_result);
-        $remaining_quantity = $row['remaining_quantity'];
-
-        // Calculate total for Ist Quantity
-        $total = $remaining_quantity + $ist_quantity;
-
-        // Update remaining_quantity in kits_product table for Ist Quantity
-        $updated_remaining_quantity = $remaining_quantity + $ist_quantity;
-        $update_remaining_quantity_query = "UPDATE kits_product SET remaining_quantity = $updated_remaining_quantity WHERE product_name = '$product_name' AND product_base = '$product_base' AND product_color = '$product_color'";
-        mysqli_query($con, $update_remaining_quantity_query);
-
-        // Update status in sheets_job_work table for Ist Quantity
-        $update_status_query = "UPDATE sheets_job_work SET status = 1 WHERE challan_no_issue = '$challan_no_issue' AND product_name = '$product_name' AND product_base = '$product_base' AND product_color = '$product_color'";
-        mysqli_query($con, $update_status_query);
-
-        // Fetch remaining_quantity for IInd Quantity
-        $remaining_quantity_query_2 = "SELECT remaining_quantity FROM kits_product WHERE product_name = '$product_name IIND' AND product_base = 'MIX COLOR' AND product_color = 'MIX COLOR'";
-        $remaining_quantity_result_2 = mysqli_query($con, $remaining_quantity_query_2);
-        $row_2 = mysqli_fetch_assoc($remaining_quantity_result_2);
-        $remaining_quantity_2 = $row_2['remaining_quantity'];
-
-        // Calculate total for IInd Quantity
-        $total_2 = $remaining_quantity_2 + $iind_quantity;
-
-        // Update remaining_quantity in kits_product table for IInd Quantity
-        $updated_remaining_quantity_2 = $remaining_quantity_2 + $iind_quantity;
-        $update_remaining_quantity_query_2 = "UPDATE kits_product SET remaining_quantity = $updated_remaining_quantity_2 WHERE product_name = '$product_name IIND' AND product_base = 'MIX COLOR' AND product_color = 'MIX COLOR'";
-        mysqli_query($con, $update_remaining_quantity_query_2);
-
-        // Update status in sheets_job_work table
-        $update_status_query = "UPDATE sheets_job_work SET status = 1 WHERE challan_no_issue = '$challan_no_issue' AND product_name = '$product_name' AND product_base = '$product_base' AND product_color = '$product_color'";
-        mysqli_query($con, $update_status_query);
-
-        // Insert data into temporary session storage
-        $temp_product = array(
-            'challan_no' => $challan_no,
-            'challan_no_issue' => $challan_no_issue,
-            'labour_name' => $labour_name,
-            'product_name' => $product_name,
-            'product_base' => $product_base,
-            'product_color' => $product_color,
-            'ist_quantity' => $ist_quantity,
-            'iind_quantity' => $iind_quantity,
-            'total' => $total,
-            'total_2' => $total_2,
-            'date_and_time' => isset($_POST['date_and_time']) ? $_POST['date_and_time'] : date('Y-m-d H:i:s')
-        );
-        $_SESSION['temp_products'][] = $temp_product;
+            // Insert data into temporary session storage
+            $temp_product = array(
+                'challan_no' => $challan_no,
+                'challan_no_issue' => $challan_no_issue,
+                'stitcher_name' => $stitcher_name,
+                'product_name' => $product_name,
+                'product_base' => $product_base,
+                'product_color' => $product_color,
+                'product_name1' => $product_name1,
+                'product_base1' => $product_base1,
+                'product_color1' => $product_color1,
+                'received_quantity' => $quantity,
+                'total' => $total,
+                'date_and_time' => isset($_POST['date_and_time']) ? $_POST['date_and_time'] : date('Y-m-d H:i:s')
+            );
+            $_SESSION['temp_products'][] = $temp_product;
+        }
     }
 }
 
@@ -145,44 +123,17 @@ if (isset($_POST['delete_product'])) {
     $product_name = mysqli_real_escape_string($con, $deleted_product['product_name']);
     $product_base = mysqli_real_escape_string($con, $deleted_product['product_base']);
     $product_color = mysqli_real_escape_string($con, $deleted_product['product_color']);
-    $deleted_ist_quantity = mysqli_real_escape_string($con, $deleted_product['ist_quantity']);
-    $deleted_iind_quantity = mysqli_real_escape_string($con, $deleted_product['iind_quantity']);
+    $deleted_quantity = mysqli_real_escape_string($con, $deleted_product['received_quantity']);
     $deleted_total = mysqli_real_escape_string($con, $deleted_product['total']);
-    $deleted_total_2 = mysqli_real_escape_string($con, $deleted_product['total_2']);
 
-    // Fetch remaining_quantity from kits_product table for Ist Quantity
-    $remaining_quantity_query = "SELECT remaining_quantity FROM kits_product WHERE product_name = '$product_name' AND product_base = '$product_base' AND product_color = '$product_color'";
-    $remaining_quantity_result = mysqli_query($con, $remaining_quantity_query);
-    $row = mysqli_fetch_assoc($remaining_quantity_result);
-    $remaining_quantity = $row['remaining_quantity'];
-
-    // Calculate updated remaining_quantity for Ist Quantity
-    $updated_remaining_quantity = $remaining_quantity - $deleted_ist_quantity;
-
-    // Update remaining_quantity in kits_product table for Ist Quantity
-    $update_remaining_quantity_query = "UPDATE kits_product SET remaining_quantity = $updated_remaining_quantity WHERE product_name = '$product_name' AND product_base = '$product_base' AND product_color = '$product_color'";
-    mysqli_query($con, $update_remaining_quantity_query);
-
-    // Fetch remaining_quantity from kits_product table for IInd Quantity
-    $remaining_quantity_query_2 = "SELECT remaining_quantity FROM kits_product WHERE product_name = '$product_name IIND' AND product_base = 'MIX COLOR' AND product_color = 'MIX COLOR'";
-    $remaining_quantity_result_2 = mysqli_query($con, $remaining_quantity_query_2);
-    $row_2 = mysqli_fetch_assoc($remaining_quantity_result_2);
-    $remaining_quantity_2 = $row_2['remaining_quantity'];
-
-    // Calculate updated remaining_quantity for IInd Quantity
-    $updated_remaining_quantity_2 = $remaining_quantity_2 - $deleted_iind_quantity;
-
-    // Update remaining_quantity in kits_product table for IInd Quantity
-    $update_remaining_quantity_query_2 = "UPDATE kits_product SET remaining_quantity = $updated_remaining_quantity_2 WHERE product_name = '$product_name IIND' AND product_base = 'MIX COLOR' AND product_color = 'MIX COLOR'";
-    mysqli_query($con, $update_remaining_quantity_query_2);
-
-    $update_status_query = "UPDATE sheets_job_work SET status = 0 WHERE product_name = '$product_name' AND product_base = '$product_base' AND product_color = '$product_color'";
-    mysqli_query($con, $update_status_query);
-
-    // Remove the product from the temporary session storage
+    // Remove the product from the session
     unset($_SESSION['temp_products'][$delete_index]);
-    $_SESSION['temp_products'] = array_values($_SESSION['temp_products']); // Re-index the array
+
+    // Reset array keys to maintain consecutive numbering
+    $_SESSION['temp_products'] = array_values($_SESSION['temp_products']);
 }
+
+
 
 // Store added products in the database when "Submit" button is clicked
 if (isset($_POST['submit_products'])) {
@@ -193,7 +144,7 @@ if (isset($_POST['submit_products'])) {
     } else {
         foreach ($temp_products as $product) {
             $challan_no = mysqli_real_escape_string($con, $product['challan_no']);
-            $labour_name = mysqli_real_escape_string($con, $product['labour_name']);
+            $stitcher_name = mysqli_real_escape_string($con, $product['stitcher_name']);
             $product_name = mysqli_real_escape_string($con, $product['product_name']);
             $product_base = mysqli_real_escape_string($con, $product['product_base']);
             $product_color = mysqli_real_escape_string($con, $product['product_color']);
@@ -201,8 +152,8 @@ if (isset($_POST['submit_products'])) {
             $total = mysqli_real_escape_string($con, $product['total']);
             $date_and_time = mysqli_real_escape_string($con, $product['date_and_time']);
             // Insert product into the database
-            $insert_query = "INSERT INTO kits_received (challan_no, labour_name, product_name, product_base, product_color, received_quantity1, received_quantity2, total, date_and_time) 
-                            VALUES ('$challan_no', '$labour_name', '$product_name', '$product_base', '$product_color', '$ist_quantity', '$iind_quantity', '$total' ,'$date_and_time')";
+            $insert_query = "INSERT INTO kits_received (challan_no, stitcher_name, product_name, product_base, product_color, received_quantity, total, date_and_time) 
+                            VALUES ('$challan_no', '$stitcher_name', '$product_name', '$product_base', '$product_color', '$quantity', '$total' ,'$date_and_time')";
             $insert_result = mysqli_query($con, $insert_query);
 
             if (!$insert_result) {
@@ -275,13 +226,58 @@ if (isset($_POST['submit_products'])) {
                         
                         <div class="row">
                         <div class="col-md-6">
+                        <div class="form-group">
+                                           <label for="product_name1"> Select Received Product:</label>
+                                            <select class="form-select" id="product_name1" name="product_name1" onchange="this.form.submit()">
+                                              <option value="" selected disabled>Select Product</option>
+                                                   <?php while ($row = mysqli_fetch_assoc($product_result)) : ?>
+                                      <option value="<?php echo $row['product_name']; ?>" <?php echo $selected_product == $row['product_name'] ? 'selected' : ''; ?>>
+                                  <?php echo $row['product_name']; ?>
+                             </option>
+                                <?php endwhile; ?>
+                          </select>
+                         </div>
+                        </div>
+                                <div class="col-md-6">
+    <div class="form-group">
+        <label for="product_base1">Product Received Base:</label>
+        <select class="form-select" id="product_base1" name="product_base1">
+            <option value="" selected disabled>Select Product Base</option>
+            <?php if ($selected_product) : ?>
+                <?php while ($row = mysqli_fetch_assoc($product_base_result)) : ?>
+                    <option value="<?php echo $row['product_base']; ?>">
+                        <?php echo $row['product_base']; ?>
+                    </option>
+                <?php endwhile; ?>
+            <?php endif; ?>
+        </select>
+    </div>
+                        </div>
+                    <div class="col-md-6">
+                             <div class="form-group">
+                      <label for="product_color1">Product Received Color:</label>
+                         <select class="form-select" id="product_color1" name="product_color1">
+                             <option value="" selected disabled>Select Product Color</option>
+                             <?php if ($selected_product) : ?>
+                                 <?php while ($row = mysqli_fetch_assoc($product_color_result)) : ?>
+                                 <option value="<?php echo $row['product_color']; ?>">
+                        <?php echo $row['product_color']; ?>
+                           </option>
+                            <?php endwhile; ?>
+                       <?php endif; ?>
+                          </select>
+                             </div>
+                            </div>
+
+                       
+                                <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="select_labour">Select Labour:</label>
-                                        <select class="form-select" id="select_labour" name="labour_name">
+                                        <label for="select_stitcher">Select Stitcher:</label>
+                                        <select class="form-select" id="select_stitcher" name="stitcher_name">
          
-                                        <option value="">Select Labour</option>
-                                            <?php while ($row = mysqli_fetch_assoc($labour_result)) : ?>
-                                                <option value="<?php echo $row['labour_name']; ?>"><?php echo $row['labour_name']; ?></option>
+                                        <option value="">Select Stitcher</option>
+                                            <?php while ($row = mysqli_fetch_assoc($stitcher_result)) : ?>
+                                                <option value="<?php echo $row['stitcher_name']; ?>"><?php echo $row['stitcher_name']; ?></option>
                                             <?php endwhile; ?>
                                         </select>
                                     </div>
@@ -292,11 +288,17 @@ if (isset($_POST['submit_products'])) {
                                     <div class="form-group">
                                         <label for="select_challan">Select Issue Challan No:</label>
                                         <select class="form-select" id="select_challan" name="challan_no_issue">
-                                         <option value="" selected disabled>Select Issue Challan No</option>
+                                            <option value="" selected disabled>Select Issue Challan No</option>
+                                            <?php if (isset($challan_result_issue)) : ?>
+                                                <?php while ($row = mysqli_fetch_assoc($challan_result_issue)) : ?>
+                                                    <option value="<?php echo $row['challan_no_issue']; ?>"><?php echo $row['challan_no_issue']; ?></option>
+                                                <?php endwhile; ?>
+                                            <?php endif; ?>
                                         </select>
-
                                     </div>
                                 </div>
+                            
+                        
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="product_name">Select Product:</label>
@@ -313,8 +315,6 @@ if (isset($_POST['submit_products'])) {
                                         </select>
                                      </div>
                                 </div>
-                            </div>
-                            <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="product_color">Product Color:</label>
@@ -323,25 +323,20 @@ if (isset($_POST['submit_products'])) {
                                         </select>
                                     </div>
                                 </div>
-                               
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="ist_quantity" class="form-label">Ist Quantity:</label>
-                                        <input type="number" class="form-control" name="ist_quantity" id="ist_quantity" value="<?php echo isset($_POST['ist_quantity']) ? $_POST['ist_quantity'] : ''; ?>">
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="iind_quantity" class="form-label">IInd Quantity:</label>
-                                        <input type="number" class="form-control" name="iind_quantity" id="iind_quantity" value="<?php echo isset($_POST['iind_quantity']) ? $_POST['iind_quantity'] : ''; ?>">
-                                    </div>
-                                </div>
-                             
-                                
-                            </div>
+
+                              
+   
+                            
+                         </div>
+                         
                             <div class="row">
                             
-                               
+                            <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="quantity">Quantity:</label>
+                                        <input type="number" class="form-control" id="quantity" name="quantity" placeholder="Enter Quantity">
+                                    </div>
+                                </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="date_and_time">Date and Time:</label>
@@ -362,14 +357,16 @@ if (isset($_POST['submit_products'])) {
                                 <table class="table table-bordered">
                                     <thead>
                                         <tr>
+                                            <th>Received Product Name</th>
+                                            <th>Received Product Base</th>
+                                            <th>Received Product Color</th>
                                             <th>Challan No</th>
-                                            <th>Labour Name</th>
+                                            <th>Stitcher Name</th>
                                             <th>Product Name</th>
                                             <th>Product Base</th>
                                             <th>Product Color</th>
-                                            <th>Ist Quantity</th>
-                                            <th>IInd Quantity</th>
-                                            <th>Date/Time</th>
+                                            <th>Quantity</th>
+                                            
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -377,14 +374,17 @@ if (isset($_POST['submit_products'])) {
                                         <?php if (isset($_SESSION['temp_products'])) : ?>
                                             <?php foreach ($_SESSION['temp_products'] as $key => $product) : ?>
                                                 <tr>
+                                                
+                                                    <td><?php echo $product['product_name1']; ?></td>
+                                                    <td><?php echo $product['product_base1']; ?></td>
+                                                    <td><?php echo $product['product_color1']; ?></td>]
                                                     <td><?php echo $product['challan_no']; ?></td>
-                                                    <td><?php echo $product['labour_name']; ?></td>
+                                                    <td><?php echo $product['stitcher_name']; ?></td>
                                                     <td><?php echo $product['product_name']; ?></td>
                                                     <td><?php echo $product['product_base']; ?></td>
                                                     <td><?php echo $product['product_color']; ?></td>
-                                                    <td><?php echo $product['ist_quantity']; ?></td>
-                                                    <td><?php echo $product['iind_quantity']; ?></td>
-                                                    <td><?php echo $product['date_and_time']; ?></td>
+                                                    <td><?php echo $product['received_quantity']; ?></td>
+                                                   
                                                     <td>
                                                         <form method="post" action="">
                                                             <input type="hidden" name="delete_index" value="<?php echo $key; ?>">
@@ -405,140 +405,145 @@ if (isset($_POST['submit_products'])) {
     </div>
 </body>
 <script>
-   
-// Function to fetch challan numbers dynamically based on selected labour
-function fetchChallanNumbers() {
-    var labourName = document.getElementById('select_labour').value;
-    var challanSelect = document.getElementById('select_challan');
+          document.getElementById("select_stitcher").addEventListener("change", function() {
+            var selectedStitcher = this.value;
+            fetchChallanNumbers(selectedStitcher);
+        });
 
-    // Make an AJAX request to fetch challan numbers
-    var xhr = new XMLHttpRequest();
-    xhr.onreadystatechange = function() {
-        if (this.readyState === 4 && this.status === 200) {
-            // Clear existing options
-            challanSelect.innerHTML = '<option value="" selected disabled>Select Issue Challan No</option>';
-            // Parse the JSON response
-            var challanNumbers = JSON.parse(this.responseText);
-            // Add fetched challan numbers as options
-            challanNumbers.forEach(function(challan) {
-                var option = document.createElement('option');
-                option.value = challan;
-                option.text = challan;
-                challanSelect.appendChild(option);
-            });
+        function fetchChallanNumbers(selectedStitcher) {
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    var challanSelect = document.getElementById("select_challan");
+                    var challanNumbers = JSON.parse(this.responseText);
+                    challanSelect.innerHTML = "<option value='' selected disabled>Select Challan No</option>";
+                    challanNumbers.forEach(function(challan) {
+                        var option = document.createElement("option");
+                        option.value = challan;
+                        option.text = challan;
+                        challanSelect.appendChild(option);
+                    });
+                }
+            };
+            xhttp.open("GET", "fetch_challan_no_for_kits_printing_received.php?stitcher=" + selectedStitcher, true);
+            xhttp.send();
         }
-    };
-    // Make GET request to fetch_challan_numbers.php with labour_name parameter
-    xhr.open('GET', 'kits_received_challan_no_issue_fatch.php?labour_name=' + labourName, true);
-    xhr.send();
-}
+    </script>
 
-// Add event listener to call fetchChallanNumbers() when labour name is selected
-document.getElementById('select_labour').addEventListener('change', fetchChallanNumbers);
+<script>
+        document.getElementById("select_challan").addEventListener("change", function() {
+    var selectedChallan = this.value;
+    fetchProductNames(selectedChallan);
+});
 
-
-// Function to fetch product names dynamically based on selected challan_no_issue
-function fetchProductNames() {
-    var challanNo = document.getElementById('select_challan').value;
-    var productSelect = document.getElementById('product_name');
-
-    // Make an AJAX request to fetch product names
-    var xhr = new XMLHttpRequest();
-    xhr.onreadystatechange = function() {
-        if (this.readyState === 4 && this.status === 200) {
-            // Clear existing options
-            productSelect.innerHTML = '<option value="" selected disabled>Select Product</option>';
-            // Parse the JSON response
+function fetchProductNames(selectedChallan) {
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            var productSelect = document.getElementById("product_name");
             var productNames = JSON.parse(this.responseText);
-            // Add fetched product names as options
+            productSelect.innerHTML = "<option value='' selected disabled>Select Product Name</option>";
             productNames.forEach(function(product) {
-                var option = document.createElement('option');
+                var option = document.createElement("option");
                 option.value = product;
                 option.text = product;
                 productSelect.appendChild(option);
             });
         }
     };
-    // Make GET request to fetch_product_names.php with challan_no_issue parameter
-    xhr.open('GET', 'kits_received_product_name_fatch.php?challan_no_issue=' + challanNo, true);
-    xhr.send();
+    xhttp.open("GET", "product_name_kits_print.php?challan_no=" + selectedChallan, true);
+    xhttp.send();
 }
 
-// Add event listener to call fetchProductNames() when challan_no_issue is selected
-document.getElementById('select_challan').addEventListener('change', fetchProductNames);
+</script>
 
-// Function to fetch product bases dynamically based on selected challan_no_issue and product_name
-function fetchProductBases() {
-    var challanNo = document.getElementById('select_challan').value;
-    var productName = document.getElementById('product_name').value;
-    var productBaseSelect = document.getElementById('product_base');
 
-    // Make an AJAX request to fetch product bases
-    var xhr = new XMLHttpRequest();
-    xhr.onreadystatechange = function() {
-        if (this.readyState === 4 && this.status === 200) {
-            // Clear existing options
-            productBaseSelect.innerHTML = '<option value="" selected disabled>Select Product Base</option>';
-            // Parse the JSON response
-            var productBases = JSON.parse(this.responseText);
-            // Add fetched product bases as options
-            productBases.forEach(function(base) {
-                var option = document.createElement('option');
-                option.value = base;
-                option.text = base;
+<script>
+document.getElementById("product_name").addEventListener("change", function() {
+    var productName = this.value;
+    var selectedChallan = document.getElementById("select_challan").value;
+    fetchProductBase(productName, selectedChallan);
+});
+
+function fetchProductBase(productName, selectedChallan) {
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            var productBaseSelect = document.getElementById("product_base");
+            productBaseSelect.innerHTML = "<option value='' selected disabled>Select Product Base</option>"; // Clear previous options
+            var productBaseData = JSON.parse(this.responseText);
+            productBaseData.forEach(function(productBase) {
+                var option = document.createElement("option");
+                option.value = productBase;
+                option.text = productBase;
                 productBaseSelect.appendChild(option);
             });
         }
     };
-    // Make GET request to fetch_product_base.php with challan_no_issue and product_name parameters
-    xhr.open('GET', 'kits_received_product_base_fatch.php?challan_no_issue=' + challanNo + '&product_name=' + productName, true);
-    xhr.send();
+    xhttp.open("GET", "product_base_kits_print.php?product_name=" + encodeURIComponent(productName) + "&challan_no_issue=" + encodeURIComponent(selectedChallan), true);
+    xhttp.send();
 }
 
-// Add event listener to call fetchProductBases() when product name is selected
-document.getElementById('product_name').addEventListener('change', fetchProductBases);
-// Add event listener to call fetchProductBases() when challan_no_issue is selected
-document.getElementById('select_challan').addEventListener('change', fetchProductBases);
+</script>
 
-// Function to fetch product colors dynamically based on selected challan_no_issue, product_name, and product_base
-function fetchProductColors() {
-    var challanNo = document.getElementById('select_challan').value;
-    var productName = document.getElementById('product_name').value;
-    var productBase = document.getElementById('product_base').value;
-    var productColorSelect = document.getElementById('product_color');
+<script>
+document.getElementById("product_base").addEventListener("change", function() {
+    var selectedChallan = document.getElementById("select_challan").value;
+    var productName = document.getElementById("product_name").value;
+    var productBase = this.value;
+    fetchProductColor(selectedChallan, productName, productBase);
+});
 
-    // Make an AJAX request to fetch product colors
-    var xhr = new XMLHttpRequest();
-    xhr.onreadystatechange = function() {
-        if (this.readyState === 4 && this.status === 200) {
-            // Clear existing options
-            productColorSelect.innerHTML = '<option value="" selected disabled>Select Product Color</option>';
-            // Parse the JSON response
-            var productColors = JSON.parse(this.responseText);
-            // Add fetched product colors as options
-            productColors.forEach(function(color) {
-                var option = document.createElement('option');
-                option.value = color;
-                option.text = color;
+function fetchProductColor(selectedChallan, productName, productBase) {
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            var productColorSelect = document.getElementById("product_color");
+            productColorSelect.innerHTML = "<option value='' selected disabled>Select Product Color</option>"; // Clear previous options
+            var productColorData = JSON.parse(this.responseText);
+            productColorData.forEach(function(productColor) {
+                var option = document.createElement("option");
+                option.value = productColor;
+                option.text = productColor;
                 productColorSelect.appendChild(option);
             });
         }
     };
-    // Make GET request to fetch_product_color.php with challan_no_issue, product_name, and product_base parameters
-    xhr.open('GET', 'kits_received_product_color_fatch.php?challan_no_issue=' + challanNo + '&product_name=' + productName + '&product_base=' + productBase, true);
-    xhr.send();
+    xhttp.open("GET", "product_color_kit_print.php?challan_no_issue=" + encodeURIComponent(selectedChallan) + "&product_name=" + encodeURIComponent(productName) + "&product_base=" + encodeURIComponent(productBase), true);
+    xhttp.send();
 }
 
-// Add event listener to call fetchProductColors() when product base is selected
-document.getElementById('product_base').addEventListener('change', fetchProductColors);
-// Add event listener to call fetchProductColors() when product name is selected
-document.getElementById('product_name').addEventListener('change', fetchProductColors);
-// Add event listener to call fetchProductColors() when challan_no_issue is selected
-document.getElementById('select_challan').addEventListener('change', fetchProductColors);
+</script>
+<script>
+    // Function to update product colors based on selected product name and base
+    function updateProductColors() {
+        var productName = document.getElementById('product_name').value;
+        var productBase = document.getElementById('product_base').value;
+
+        // Make an AJAX request to fetch product colors based on product name and base
+        var xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function() {
+            if (this.readyState === 4 && this.status === 200) {
+                var colors = JSON.parse(this.responseText);
+                var productColorSelect = document.getElementById('product_color');
+                // Clear existing options
+                productColorSelect.innerHTML = '<option value="" selected disabled>Select Product Color</option>';
+                // Add fetched colors as options
+                colors.forEach(function(color) {
+                    var option = document.createElement('option');
+                    option.value = color;
+                    option.text = color;
+                    productColorSelect.appendChild(option);
+                });
+            }
+        };
+        xhr.open('GET', 'fetch_product_color.php?product_name=' + productName + '&product_base=' + productBase, true);
+        xhr.send();
+    }
+
+    // Event listeners for product name and product base change
+    document.getElementById('product_name').addEventListener('change', updateProductColors);
+    document.getElementById('product_base').addEventListener('change', updateProductColors);
 </script>
 
-
-
 </html>
-
-
