@@ -58,10 +58,6 @@ if ($selected_product) {
     $product_color_result = mysqli_query($con, $product_color_query);
 }
 
-// Logic to fetch bladder names from the database
-$bladder_query = "SELECT bladder_name, bladder_remaining_quantity FROM bladder ORDER BY bladder_name ASC ";
-$bladder_result = mysqli_query($con, $bladder_query);
-
 // Logic to fetch ink names from the database
 $ink_query = "SELECT ink_name, ink_remaining_quantity FROM ink ORDER BY ink_name ASC";
 $ink_result = mysqli_query($con, $ink_query);
@@ -71,7 +67,7 @@ $errors = array();
 
 if (isset($_POST['add_product'])) {
     // Validate input
-    if (empty($_POST['product_name']) || empty($_POST['product_base']) || empty($_POST['product_color']) || empty($_POST['quantity']) || empty($_POST['select_bladder']) || empty($_POST['bladder_quantity'])) {
+    if (empty($_POST['product_name']) || empty($_POST['product_base']) || empty($_POST['product_color']) || empty($_POST['quantity'])) {
         $errors[] = "Please fill in all fields.";
     } else {
         // Sanitize input
@@ -80,8 +76,6 @@ if (isset($_POST['add_product'])) {
         $product_base = mysqli_real_escape_string($con, $_POST['product_base']);
         $product_color = mysqli_real_escape_string($con, $_POST['product_color']);
         $quantity = mysqli_real_escape_string($con, $_POST['quantity']);
-        $selected_bladder = mysqli_real_escape_string($con, $_POST['select_bladder']);
-        $bladder_quantity = mysqli_real_escape_string($con, $_POST['bladder_quantity']);
         $selected_ink = mysqli_real_escape_string($con, $_POST['select_ink']);
         $ink_quantity = mysqli_real_escape_string($con, $_POST['ink_quantity']);
 
@@ -97,14 +91,8 @@ if (isset($_POST['add_product'])) {
         $row = mysqli_fetch_assoc($ink_remaining_quantity_result);
         $ink_remaining_quantity = $row['ink_remaining_quantity'];
 
-        // Validate quantities against bladder stock
-        $bladder_remaining_quantity_query = "SELECT bladder_remaining_quantity FROM bladder WHERE bladder_name = '$selected_bladder'";
-        $bladder_remaining_quantity_result = mysqli_query($con, $bladder_remaining_quantity_query);
-        $row = mysqli_fetch_assoc($bladder_remaining_quantity_result);
-        $bladder_remaining_quantity = $row['bladder_remaining_quantity'];
-
         // Check if available stock is sufficient
-        if ($remaining_quantity < $quantity || $bladder_remaining_quantity < $bladder_quantity || $ink_remaining_quantity < $ink_quantity) {
+        if ($remaining_quantity < $quantity || $ink_remaining_quantity < $ink_quantity) {
             $errors[] = "Stock is not available for the selected quantities.";
         } else {
             // Check if the product already exists in the session
@@ -136,11 +124,6 @@ if (isset($_POST['add_product'])) {
                 $update_ink_remaining_quantity_query = "UPDATE ink SET ink_remaining_quantity = $updated_ink_remaining_quantity WHERE ink_name = '$selected_ink'";
                 mysqli_query($con, $update_ink_remaining_quantity_query);
 
-                // Update ink_remaining_quantity in ink table
-                $updated_bladder_remaining_quantity = $bladder_remaining_quantity - $bladder_quantity;
-                $update_bladder_remaining_quantity_query = "UPDATE bladder SET bladder_remaining_quantity = $updated_bladder_remaining_quantity WHERE bladder_name = '$selected_bladder'";
-                mysqli_query($con, $update_bladder_remaining_quantity_query);
-
                 // Insert data into temporary session storage
                 $temp_product = array(
                     'challan_no' => $challan_no,
@@ -150,8 +133,6 @@ if (isset($_POST['add_product'])) {
                     'product_color' => $product_color,
                     'issue_quantity' => $quantity,
                     'total' => $total,
-                    'bladder_name' => $selected_bladder,
-                    'bladder_quantity' => $bladder_quantity,
                     'btemp_total' => $btemp_total,
                     'ink_name' => $selected_ink,
                     'ink_quantity' => $ink_quantity,
@@ -193,12 +174,6 @@ if (isset($_POST['delete_product'])) {
     $update_remaining_quantity_query = "UPDATE kits_product SET remaining_quantity = $updated_remaining_quantity WHERE product_name = '$product_name' AND product_base = '$product_base' AND product_color = '$product_color'";
     mysqli_query($con, $update_remaining_quantity_query);
 
-    // Update bladder quantity
-    $bladder_name = mysqli_real_escape_string($con, $deleted_product['bladder_name']);
-    $bladder_quantity = mysqli_real_escape_string($con, $deleted_product['bladder_quantity']);
-    $update_bladder_quantity_query = "UPDATE bladder SET bladder_remaining_quantity = bladder_remaining_quantity + $bladder_quantity WHERE bladder_name = '$bladder_name'";
-    mysqli_query($con, $update_bladder_quantity_query);
-
     // Update ink quantity
     $ink_name = mysqli_real_escape_string($con, $deleted_product['ink_name']);
     $ink_quantity = mysqli_real_escape_string($con, $deleted_product['ink_quantity']);
@@ -227,8 +202,6 @@ if (isset($_POST['submit_products'])) {
             $product_color = mysqli_real_escape_string($con, $product['product_color']);
             $quantity = mysqli_real_escape_string($con, $product['issue_quantity']);
             $total = mysqli_real_escape_string($con, $product['total']);
-            $bladder_name = mysqli_real_escape_string($con, $product['bladder_name']);
-            $bladder_quantity = mysqli_real_escape_string($con, $product['bladder_quantity']);
             $ink_name = mysqli_real_escape_string($con, $product['ink_name']);
             $ink_quantity = mysqli_real_escape_string($con, $product['ink_quantity']);
             $date_and_time = mysqli_real_escape_string($con, $product['date_and_time']);
@@ -377,25 +350,7 @@ if (isset($_POST['submit_products'])) {
                                     </div>
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="select_bladder">Select Bladder:</label>
-                                        <select class="form-select" id="select_bladder" name="select_bladder">
-                                            <option value="" selected disabled>Select Bladder</option>
-                                            <?php while ($row = mysqli_fetch_assoc($bladder_result)) : ?>
-                                                <option value="<?php echo $row['bladder_name']; ?>"><?php echo $row['bladder_name']; ?></option>
-                                            <?php endwhile; ?>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="bladder_quantity">Bladder Quantity:</label>
-                                        <input type="number" class="form-control" id="bladder_quantity" name="bladder_quantity" placeholder="Enter Bladder Quantity">
-                                    </div>
-                                </div>
-                            </div>
+                    
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
