@@ -163,25 +163,7 @@ if (isset($_POST['delete_product'])) {
     $deleted_quantity = mysqli_real_escape_string($con, $deleted_product['received_quantity']);
     $deleted_total = mysqli_real_escape_string($con, $deleted_product['total']);
 
-    // Fetch remaining_quantity from kits_product table
-    $remaining_quantity_query = "SELECT remaining_quantity FROM kits_product WHERE product_name = '$product_name' AND product_base = '$product_base' AND product_color = '$product_color'";
-    $remaining_quantity_result = mysqli_query($con, $remaining_quantity_query);
-    $row = mysqli_fetch_assoc($remaining_quantity_result);
-    $remaining_quantity = $row['remaining_quantity'];
-
-    // Calculate updated remaining_quantity
-    $updated_remaining_quantity = $remaining_quantity - $deleted_quantity;
-
-    // Update remaining_quantity in kits_product table
-    $update_remaining_quantity_query = "UPDATE kits_product SET remaining_quantity = $updated_remaining_quantity WHERE product_name = '$product_name' AND product_base = '$product_base' AND product_color = '$product_color'";
-    mysqli_query($con, $update_remaining_quantity_query);
-
-    $update_status_query = "UPDATE sheets_job_work SET status = 0 WHERE product_name = '$product_name' AND product_base = '$product_base' AND product_color = '$product_color'";
-    mysqli_query($con, $update_status_query);
-    
-
-    // Update the total in the session data
-    $_SESSION['temp_products'][$delete_index]['total'] -= $deleted_total;
+   
 
     // Remove the product from the session
     unset($_SESSION['temp_products'][$delete_index]);
