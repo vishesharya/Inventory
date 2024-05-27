@@ -282,7 +282,7 @@ if (isset($_POST['submit_products'])) {
                         <div class="row">
                         <div class="col-md-6">
                         <div class="form-group">
-                                           <label for="product_name1">Select Product:</label>
+                                           <label for="product_name1"> Select Received Product:</label>
                                             <select class="form-select" id="product_name1" name="product_name1" onchange="this.form.submit()">
                                               <option value="" selected disabled>Select Product</option>
                                                    <?php while ($row = mysqli_fetch_assoc($product_result)) : ?>
@@ -295,7 +295,7 @@ if (isset($_POST['submit_products'])) {
                         </div>
                                 <div class="col-md-6">
     <div class="form-group">
-        <label for="product_base1">Product Base:</label>
+        <label for="product_base1">Product Received Base:</label>
         <select class="form-select" id="product_base1" name="product_base1">
             <option value="" selected disabled>Select Product Base</option>
             <?php if ($selected_product) : ?>
@@ -310,7 +310,7 @@ if (isset($_POST['submit_products'])) {
                         </div>
                     <div class="col-md-6">
                              <div class="form-group">
-                      <label for="product_color1">Product Color:</label>
+                      <label for="product_color1">Product Received Color:</label>
                          <select class="form-select" id="product_color1" name="product_color1">
                              <option value="" selected disabled>Select Product Color</option>
                              <?php if ($selected_product) : ?>
