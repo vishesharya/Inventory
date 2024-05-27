@@ -2,24 +2,22 @@
 session_start();
 include_once 'include/connection.php';
 include_once 'include/admin-main.php';
+// Fetch stitcher names from the database
+$stitcher_query = "SELECT DISTINCT stitcher_name FROM print_job_work WHERE status = 0 ORDER BY stitcher_name ASC";
+$stitcher_result = mysqli_query($con, $stitcher_query);
 
-$labour_name = isset($_POST['labour_name']) ? $_POST['labour_name'] : "";
 $challan_no_issue = isset($_POST['challan_no_issue']) ? $_POST['challan_no_issue'] : "";
 
-$labour_query = "SELECT DISTINCT labour_name FROM sheets_job_work WHERE status = 0 ORDER BY labour_name ASC";
-$labour_result = mysqli_query($con, $labour_query);
 
-
+if (isset($_POST['stitcher_name'])) {
+    $selected_stitcher = mysqli_real_escape_string($con, $_POST['stitcher_name']);
+    $challan_query_issue = "SELECT DISTINCT  challan_no_issue FROM print_job_work WHERE stitcher_name = '$selected_stitcher' AND status = 0";
+    $challan_result_issue = mysqli_query($con, $challan_query_issue);
+}
 // Logic to fetch product names from the database
 $product_query = "SELECT DISTINCT product_name FROM kits_product ORDER BY product_name ASC";
 $product_result = mysqli_query($con, $product_query);
 
-// Fetch associated challan numbers for selected stitcher
-if (isset($_POST['labour_name'])) {
-    $selected_stitcher = mysqli_real_escape_string($con, $_POST['labour_name']);
-    $challan_query_issue = "SELECT DISTINCT  challan_no_issue FROM sheets_job_work WHERE labour_name = '$labour_name' AND status = 0";
-    $challan_result_issue = mysqli_query($con, $challan_query_issue);
-}
 
 // Fetch product names based on selected stitcher and challan number
 if (isset($_POST['challan_no_issue'])) {
