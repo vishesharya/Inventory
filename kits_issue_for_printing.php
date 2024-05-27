@@ -410,7 +410,7 @@ if (isset($_POST['submit_products'])) {
                                     <thead>
                                         <tr>
                                             <th>Challan No</th>
-                                            <th>stitcher Name</th>
+                                            <th>Stitcher Name</th>
                                             <th>Product Name</th>
                                             <th>Product Base</th>
                                             <th>Product Color</th>
