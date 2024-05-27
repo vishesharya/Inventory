@@ -16,7 +16,7 @@ if (isset($_POST['add_ink'])) {
 
     if ($rowCount > 0) {
         // If ink already exists, update the quantity
-        $updateInkQuery = "UPDATE ink SET ink_remaining = ink_remaining_quantity + $quantity WHERE ink_name = '$ink_name'";
+        $updateInkQuery = "UPDATE ink SET ink_remaining_quantity = ink_remaining_quantity + $quantity WHERE ink_name = '$ink_name'";
         if (mysqli_query($con, $updateInkQuery)) {
             $addInkMsg = "<p id='addInkMsg' style='color: green;font-size: medium;text-align: center;'>Ink quantity updated successfully</p>";
         } else {
