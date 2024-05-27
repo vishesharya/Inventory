@@ -280,7 +280,8 @@ if (isset($_POST['submit_products'])) {
                         <form method="post" action="">
                         
                         <div class="row">
-                             <div class="form-group">
+
+                        <div class="form-group">
         <label for="product_name1">Select Product:</label>
         <select class="form-select" id="product_name1" name="product_name1" onchange="this.form.submit()">
             <option value="" selected disabled>Select Product</option>
@@ -322,6 +323,7 @@ if (isset($_POST['submit_products'])) {
         </select>
     </div>
 </div>
+
                        
                                 <div class="col-md-6">
                                     <div class="form-group">
@@ -379,7 +381,6 @@ if (isset($_POST['submit_products'])) {
 
                                 <div class="col-md-6">
    
-
                             
                          </div>
                          
