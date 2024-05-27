@@ -3,16 +3,16 @@
 include_once 'include/connection.php';
 
 // Fetch parameters from the AJAX request
-$selectedStitcher = $_GET['labour'];
+$selectedLabour = $_GET['labour'];
 $fromDate = $_GET['from_date'];
 $toDate = $_GET['to_date'];
 
 // Sanitize inputs
-$selectedStitcher = mysqli_real_escape_string($con, $selectedLabour);
+$selectedLabour = mysqli_real_escape_string($con, $selectedLabour);
 $fromDate = mysqli_real_escape_string($con, $fromDate);
 $toDate = mysqli_real_escape_string($con, $toDate);
 
-// Construct the query to fetch challan numbers based on stitcher and date range
+// Construct the query to fetch challan numbers based on labour and date range
 $query = "SELECT DISTINCT challan_no_issue FROM print_job_work WHERE labour_name = '$selectedLabour' AND date_and_time >= '$fromDate' AND date_and_time <= '$toDate'";
 $result = mysqli_query($con, $query);
 

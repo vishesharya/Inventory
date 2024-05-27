@@ -317,37 +317,50 @@ if (isset($_POST['view_entries'])) {
 
    <!-- JavaScript code for fetching challan numbers based on selected labour and date range -->
    <script>
-        // Function to fetch challan numbers based on selected labour and date range
-        function fetchChallanNumbers() {
-            var selectedlabour = document.getElementById("select_labour").value;
-            var fromDate = document.getElementById("from_date").value;
-            var toDate = document.getElementById("to_date").value;
-            var xhttp = new XMLHttpRequest();
-            xhttp.onreadystatechange = function() {
-                if (this.readyState == 4 && this.status == 200) {
-                    var challanSelect = document.getElementById("select_challan");
-                    var challanNumbers = JSON.parse(this.responseText);
-                    challanSelect.innerHTML = "<option value='' selected disabled>Select Issue Challan No</option>";
-                    challanNumbers.forEach(function(challan) {
-                        var option = document.createElement("option");
-                        option.value = challan;
-                        option.text = challan;
-                        challanSelect.appendChild(option);
-                    });
-                }
-            };
-            xhttp.open("GET", "fatch_challan_no_print_job_work.php?labour=" + selectedlabour + "&from_date=" + fromDate + "&to_date=" + toDate, true);
-            xhttp.send();
-        }
+    // Function to fetch challan numbers based on selected labour and date range
+    function fetchChallanNumbers() {
+        var selectedLabour = document.getElementById("select_labour").value;
+        var fromDate = document.getElementById("from_date").value;
+        var toDate = document.getElementById("to_date").value;
 
-        // Event listeners for labour selection and date inputs
-        document.getElementById("select_labour").addEventListener("change", fetchChallanNumbers);
-        document.getElementById("from_date").addEventListener("change", fetchChallanNumbers);
-        document.getElementById("to_date").addEventListener("change", fetchChallanNumbers);
+        // Create a new XMLHttpRequest object
+        var xhttp = new XMLHttpRequest();
 
-        // Initial fetch of challan numbers
-        fetchChallanNumbers();
-    </script>
+        // Define a callback function to handle the response
+        xhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                var challanSelect = document.getElementById("select_challan");
+                var challanNumbers = JSON.parse(this.responseText);
+                
+                // Clear the previous options
+                challanSelect.innerHTML = "<option value='' selected disabled>Select Issue Challan No</option>";
+                
+                // Populate the dropdown with new options
+                challanNumbers.forEach(function(challan) {
+                    var option = document.createElement("option");
+                    option.value = challan;
+                    option.text = challan;
+                    challanSelect.appendChild(option);
+                });
+            }
+        };
+
+        // Open a new GET request
+        xhttp.open("GET", "fetch_challan_no_print_job_work.php?labour=" + selectedLabour + "&from_date=" + fromDate + "&to_date=" + toDate, true);
+        
+        // Send the request
+        xhttp.send();
+    }
+
+    // Event listeners for labour selection and date inputs
+    document.getElementById("select_labour").addEventListener("change", fetchChallanNumbers);
+    document.getElementById("from_date").addEventListener("change", fetchChallanNumbers);
+    document.getElementById("to_date").addEventListener("change", fetchChallanNumbers);
+
+    // Initial fetch of challan numbers when the page loads
+    window.onload = fetchChallanNumbers;
+</script>
+
 
         
 <script>
