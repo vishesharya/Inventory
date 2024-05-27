@@ -236,7 +236,7 @@ if (isset($_POST['submit_products'])) {
                         <?php endif; ?>
                         <form method="post" action="">
                         
-                        <div class="row">
+                    
                         <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
