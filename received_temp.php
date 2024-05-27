@@ -280,19 +280,19 @@ if (isset($_POST['submit_products'])) {
                         <form method="post" action="">
                         
                         <div class="row">
-
+                        <div class="col-md-6">
                         <div class="form-group">
-        <label for="product_name1">Select Product:</label>
-        <select class="form-select" id="product_name1" name="product_name1" onchange="this.form.submit()">
-            <option value="" selected disabled>Select Product</option>
-            <?php while ($row = mysqli_fetch_assoc($product_result)) : ?>
-                <option value="<?php echo $row['product_name']; ?>" <?php echo $selected_product == $row['product_name'] ? 'selected' : ''; ?>>
-                    <?php echo $row['product_name']; ?>
-                </option>
-            <?php endwhile; ?>
-        </select>
-    </div>
-</div>
+                                           <label for="product_name1">Select Product:</label>
+                                            <select class="form-select" id="product_name1" name="product_name1" onchange="this.form.submit()">
+                                              <option value="" selected disabled>Select Product</option>
+                                                   <?php while ($row = mysqli_fetch_assoc($product_result)) : ?>
+                                      <option value="<?php echo $row['product_name']; ?>" <?php echo $selected_product == $row['product_name'] ? 'selected' : ''; ?>>
+                                  <?php echo $row['product_name']; ?>
+                             </option>
+                                <?php endwhile; ?>
+                          </select>
+                         </div>
+                        </div>
 <div class="col-md-6">
     <div class="form-group">
         <label for="product_base1">Product Base:</label>
