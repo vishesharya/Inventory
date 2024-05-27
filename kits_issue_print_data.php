@@ -292,8 +292,6 @@ $result = mysqli_query($con, $query);
             </div>
         </div>
 
-
-
         <?php 
         if (isset($_POST['view_entries']) && mysqli_num_rows($result) > 0): ?>
         <table class="table datatable-multi-sorting">
@@ -313,15 +311,17 @@ $result = mysqli_query($con, $query);
             </thead>
             <tbody>
             <?php 
-// Initialize variables to hold totals
-$total_issue_quantity = 0;
-$total_ink_quantity = 0;
-
-?>
-                <?php $sn = 1; ?>
-                <?php while ($data = mysqli_fetch_array($result)): ?>
-                    <tr>
-                        <td><?php echo $sn; ?>.</td>
+            $sn = 1;
+            $total_issue_quantity = 0;
+            $total_ink_quantity = 0;
+         
+            while ($data = mysqli_fetch_array($result)) {
+                $total_issue_quantity += $data['issue_quantity'];
+                $total_ink_quantity += $data['ink_quantity'];
+               
+                ?>
+                <tr>
+                <td><?php echo $sn; ?>.</td>
                         <td><?php echo $data['challan_no']; ?></td>
                         <td><?php echo $data['stitcher_name']; ?></td>
                         <td><?php echo $data['product_name']; ?></td>
@@ -332,30 +332,28 @@ $total_ink_quantity = 0;
                         <td><?php echo $data['ink_quantity']; ?></td>
                         <td><?php echo date('d/m/Y', strtotime($data['date_and_time'])); ?></td>
 
-                    </tr>
-                    <?php $sn++; ?>
-                    <?php 
-                  $total_issue_quantity += $data['issue_quantity'];
-                  $total_ink_quantity += $data['ink_quantity'];
-                
-    ?>
-                <?php endwhile; ?>
-                <tr>
-                    
+                </tr>
+                <?php $sn++; ?>
+            <?php } ?>
+        </tbody>
+            <tfoot>
+            <tr>
+                                   
     <td colspan="5"></td> <!-- Colspan to span across columns -->
     <td><b>Total : </b></td>
     <td><?php echo $total_issue_quantity; ?></td>
     <td></td> <!-- Empty cell for bladder name -->
     <td><?php echo $total_ink_quantity; ?></td>
    
-    <td colspan="1"></td> <!-- Colspan to span across date column -->
-</tr>
-            </tbody>
+            </tr>
+        </tfoot>
         </table>
     <?php elseif (isset($_POST['view_entries'])): ?>
         <p>No entries found.</p>
     <?php endif; ?>
 
+
+        
 
 
    <!-- JavaScript code for fetching challan numbers based on selected stitcher and date range -->
