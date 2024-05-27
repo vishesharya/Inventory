@@ -352,8 +352,8 @@ if (isset($_POST['submit_products'])) {
                                         <label for="product_base">Product Base:</label>
                                         <select class="form-select" id="product_base1" name="product_base1" >
                                             <option value="" selected disabled>Select Product Base</option>
-                                            <?php if (isset($product_base_result1)) : ?>
-                                                <?php while ($row = mysqli_fetch_assoc($product_base_result1)) : ?>
+                                            <?php if (isset($product_base_result)) : ?>
+                                                <?php while ($row = mysqli_fetch_assoc($product_base_result)) : ?>
                                                     <option value="<?php echo $row['product_base']; ?>"><?php echo $row['product_base']; ?></option>
                                                 <?php endwhile; ?>
                                             <?php endif; ?>
