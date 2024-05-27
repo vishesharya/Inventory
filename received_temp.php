@@ -79,7 +79,7 @@ if (isset($_POST['add_product'])) {
         $errors[] = "Please fill in all fields for the first product.";
     }
     // Validate input for second set of products
-    elseif (empty($_POST['product_name1']) || empty($_POST['product_base1']) || empty($_POST['product_color1']) || empty($_POST['quantity1'])) {
+    elseif (empty($_POST['product_name1']) || empty($_POST['product_base1']) || empty($_POST['product_color1'])) {
         $errors[] = "Please fill in all fields for the second product.";
     } else {
         // Sanitize input
