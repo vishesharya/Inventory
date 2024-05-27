@@ -128,7 +128,7 @@ if (isset($_POST['add_product'])) {
                 $errors[] = "The entered quantity exceeds the balance quantity.";
             } else {
 
-                            // Fetch existing remaining quantity for Ist Company Ist
+             // Fetch existing remaining quantity for Ist Company Ist
             $existing_remaining_quantity_ist_company_ist_query = "SELECT remaining_quantity FROM products WHERE product_name = '$product_name' AND product_base = '$product_base' AND product_color = '$product_color'";
             $existing_remaining_quantity_ist_company_ist_result = mysqli_query($con, $existing_remaining_quantity_ist_company_ist_query);
             $row_ist_company_ist = mysqli_fetch_assoc($existing_remaining_quantity_ist_company_ist_result);

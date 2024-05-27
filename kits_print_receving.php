@@ -69,6 +69,7 @@ if (isset($_POST['add_product'])) {
         $product_name = mysqli_real_escape_string($con, $_POST['product_name']);
         $product_base = mysqli_real_escape_string($con, $_POST['product_base']);
         $product_color = mysqli_real_escape_string($con, $_POST['product_color']);
+        $received_quantity = mysqli_real_escape_string($con, $_POST['received_quantity']);
        
 
         $is_duplicate = false;
@@ -80,7 +81,6 @@ if (isset($_POST['add_product'])) {
                 break;
             }
         }
-        // Check for duplicate product
 
         if ($is_duplicate) {
             $errors[] = "This product already exists in the list.";
@@ -95,9 +95,10 @@ if (isset($_POST['add_product'])) {
             $existing_issue_quantity = $issue_quantity_row['issue_quantity'];
 
             // Check if total exceeds existing issue quantity
-            if ($total > $existing_issue_quantity) {
+            if ($received_quantity > $existing_issue_quantity) {
                 $errors[] = "The entered quantity exceeds the balance quantity.";
             } else {
+
 
                 if ($update_issue_quantity_result) {
                     // Check if issue quantity became 0 and update status accordingly
@@ -109,7 +110,6 @@ if (isset($_POST['add_product'])) {
                             $errors[] = "Failed to update status in the database.";
                         }
                     }
-
 
             if (!$update_remaining_quantity_ist_company_ist_result || !$update_remaining_quantity_iind_company_iind_result) {
                 $errors[] = "Failed to update remaining quantity in the database.";
