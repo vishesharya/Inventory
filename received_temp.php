@@ -236,37 +236,9 @@ if (isset($_POST['submit_products'])) {
                         <?php endif; ?>
                         <form method="post" action="">
                         
-                    
-                        < class="row">
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="select_stitcher">Select Stitcher:</label>
-                                        <select class="form-select" id="select_stitcher" name="stitcher_name">
-         
-                                        <option value="">Select Stitcher</option>
-                                            <?php while ($row = mysqli_fetch_assoc($stitcher_result)) : ?>
-                                                <option value="<?php echo $row['stitcher_name']; ?>"><?php echo $row['stitcher_name']; ?></option>
-                                            <?php endwhile; ?>
-                                        </select>
-                                    </div>
-                                </div>
-                            
-                          
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="select_challan">Select Issue Challan No:</label>
-                                        <select class="form-select" id="select_challan" name="challan_no_issue">
-                                            <option value="" selected disabled>Select Issue Challan No</option>
-                                            <?php if (isset($challan_result_issue)) : ?>
-                                                <?php while ($row = mysqli_fetch_assoc($challan_result_issue)) : ?>
-                                                    <option value="<?php echo $row['challan_no_issue']; ?>"><?php echo $row['challan_no_issue']; ?></option>
-                                                <?php endwhile; ?>
-                                            <?php endif; ?>
-                                        </select>
-                                    </div>
-                                </div>
-                    
-                                </div>
+                        <div class="row">
+                       
+                        
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="product_name">Select Product:</label>
