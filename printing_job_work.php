@@ -5,23 +5,23 @@ include_once 'include/admin-main.php';
 
 
 
-// Fetch labour names from the database
-$labour_query = "SELECT DISTINCT labour_name FROM labour";
-$labour_result = mysqli_query($con, $labour_query);
+// Fetch stitcher names from the database
+$stitcher_query = "SELECT DISTINCT stitcher_name FROM stitcher";
+$stitcher_result = mysqli_query($con, $stitcher_query);
 
 
 
-// Fetch associated challan numbers for selected labour
-if (isset($_POST['labour_name'])) {
-    $selected_labour = mysqli_real_escape_string($con, $_POST['labour_name']);
-    $challan_query_issue = "SELECT DISTINCT  challan_no_issue FROM print_job_work WHERE labour_name = '$selected_labour' AND status = 0";
+// Fetch associated challan numbers for selected stitcher
+if (isset($_POST['stitcher_name'])) {
+    $selected_stitcher = mysqli_real_escape_string($con, $_POST['stitcher_name']);
+    $challan_query_issue = "SELECT DISTINCT  challan_no_issue FROM print_job_work WHERE stitcher_name = '$selected_stitcher' AND status = 0";
     $challan_result_issue = mysqli_query($con, $challan_query_issue);
 }
 
-// Fetch product names based on selected labour and challan number
+// Fetch product names based on selected stitcher and challan number
 if (isset($_POST['challan_no_issue'])) {
     $selected_challan = mysqli_real_escape_string($con, $_POST['challan_no_issue']);
-    $product_query = "SELECT DISTINCT product_name FROM print_job_work  WHERE labour_name = '$selected_labour' AND challan_no_issue = '$selected_challan'";
+    $product_query = "SELECT DISTINCT product_name FROM print_job_work WHERE stitcher_name = '$selected_stitcher' AND challan_no_issue = '$selected_challan'";
     $product_result = mysqli_query($con, $product_query);
 }
 
@@ -53,8 +53,8 @@ if (isset($_POST['view_entries'])) {
     $start_date = isset($_POST['from_date']) ? mysqli_real_escape_string($con, $_POST['from_date']) : '';
     $end_date = isset($_POST['to_date']) ? mysqli_real_escape_string($con, $_POST['to_date']) : '';
     
-    // Get selected labour and challan number
-    $labour_name = isset($_POST['labour_name']) ? mysqli_real_escape_string($con, $_POST['labour_name']) : '';
+    // Get selected stitcher and challan number
+    $stitcher_name = isset($_POST['stitcher_name']) ? mysqli_real_escape_string($con, $_POST['stitcher_name']) : '';
     $selected_challan = isset($_POST['challan_no_issue']) ? mysqli_real_escape_string($con, $_POST['challan_no_issue']) : '';
    // Retrieve entries from database
    $query = "SELECT * FROM print_job_work WHERE status = 0";
@@ -64,9 +64,9 @@ if (isset($_POST['view_entries'])) {
        $query .= " AND date_and_time BETWEEN '$start_date' AND '$end_date'";
    }
    
-   // Add labour filter if provided
-   if (!empty($labour_name)) {
-       $query .= " AND labour_name = '$labour_name'";
+   // Add stitcher filter if provided
+   if (!empty($stitcher_name)) {
+       $query .= " AND stitcher_name = '$stitcher_name'";
    }
    
    // Add challan number filter if provided
@@ -142,7 +142,7 @@ if (isset($_POST['view_entries'])) {
 <body>
 <?php include('include/kits_nav.php'); ?>
     <div class="container-fluid mt-5">
-          <h1 class="h4 text-center mb-4">KITS JOB WORK (WITHOUT PRINT) </h1> <!-- Changed container to container-fluid -->
+          <h1 class="h4 text-center mb-4">KITS JOB WORK </h1> <!-- Changed container to container-fluid -->
         <div id="form" class="row justify-content-center">
             <div class="col-lg-8">
                 <div class="card">
@@ -155,7 +155,7 @@ if (isset($_POST['view_entries'])) {
                                 <?php endforeach; ?>
                             </div>
                         <?php endif; ?>
-                        <!-- New form to select labour, associated challan number, and product details -->
+                        <!-- New form to select stitcher, associated challan number, and product details -->
                         <form method="post" action="">
 
 
@@ -180,12 +180,12 @@ if (isset($_POST['view_entries'])) {
                             <div id="input_field" class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="select_labour">Select labour:</label>
-                                        <select class="form-select" id="select_labour" name="labour_name">
+                                        <label for="select_stitcher">Select Stitcher:</label>
+                                        <select class="form-select" id="select_stitcher" name="stitcher_name">
          
-                                        <option value="">Select labour</option>
-                                            <?php while ($row = mysqli_fetch_assoc($labour_result)) : ?>
-                                                <option value="<?php echo $row['labour_name']; ?>"><?php echo $row['labour_name']; ?></option>
+                                        <option value="">Select Stitcher</option>
+                                            <?php while ($row = mysqli_fetch_assoc($stitcher_result)) : ?>
+                                                <option value="<?php echo $row['stitcher_name']; ?>"><?php echo $row['stitcher_name']; ?></option>
                                             <?php endwhile; ?>
                                         </select>
                                     </div>
@@ -274,7 +274,7 @@ if (isset($_POST['view_entries'])) {
                 <tr>
                     <th>Sn.</th>
                     <th>Challan No.</th>
-                    <th>labour Name</th>
+                    <th>Stitcher Name</th>
                     <th>Product Name</th>
                     <th>Product Base</th>
                     <th>Product Color</th>
@@ -289,7 +289,7 @@ if (isset($_POST['view_entries'])) {
                     <tr>
                         <td><?php echo $sn; ?>.</td>
                         <td><?php echo $data['challan_no_issue']; ?></td>
-                        <td><?php echo $data['labour_name']; ?></td>
+                        <td><?php echo $data['stitcher_name']; ?></td>
                         <td><?php echo $data['product_name']; ?></td>
                         <td><?php echo ucfirst($data['product_base']); ?></td>
                         <td><?php echo ucfirst($data['product_color']); ?></td>
@@ -315,27 +315,19 @@ if (isset($_POST['view_entries'])) {
 
 
 
-   <!-- JavaScript code for fetching challan numbers based on selected labour and date range -->
+   <!-- JavaScript code for fetching challan numbers based on selected stitcher and date range -->
    <script>
     // Function to fetch challan numbers based on selected labour and date range
     function fetchChallanNumbers() {
         var selectedLabour = document.getElementById("select_labour").value;
         var fromDate = document.getElementById("from_date").value;
         var toDate = document.getElementById("to_date").value;
-
-        // Create a new XMLHttpRequest object
         var xhttp = new XMLHttpRequest();
-
-        // Define a callback function to handle the response
         xhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
                 var challanSelect = document.getElementById("select_challan");
                 var challanNumbers = JSON.parse(this.responseText);
-                
-                // Clear the previous options
                 challanSelect.innerHTML = "<option value='' selected disabled>Select Issue Challan No</option>";
-                
-                // Populate the dropdown with new options
                 challanNumbers.forEach(function(challan) {
                     var option = document.createElement("option");
                     option.value = challan;
@@ -344,21 +336,17 @@ if (isset($_POST['view_entries'])) {
                 });
             }
         };
-
-        // Open a new GET request
         xhttp.open("GET", "fetch_challan_no_print_job_work.php?labour=" + selectedLabour + "&from_date=" + fromDate + "&to_date=" + toDate, true);
-        
-        // Send the request
         xhttp.send();
     }
- 
+
     // Event listeners for labour selection and date inputs
     document.getElementById("select_labour").addEventListener("change", fetchChallanNumbers);
     document.getElementById("from_date").addEventListener("change", fetchChallanNumbers);
     document.getElementById("to_date").addEventListener("change", fetchChallanNumbers);
 
-    // Initial fetch of challan numbers when the page loads
-    window.onload = fetchChallanNumbers;
+    // Initial fetch of challan numbers
+    fetchChallanNumbers();
 </script>
 
 
