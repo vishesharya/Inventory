@@ -106,7 +106,7 @@ include_once 'include/admin-main.php';
                                 <a href="delete_ink.php" style='color:white'>
                                      <div class="col-lg-4">
                                         <div class="panel bg-pink-400">
-                                            <p style="margin: 10px; font-size: large;">Delete Bladder</p>
+                                            <p style="margin: 10px; font-size: large;">Delete Ink</p>
                                         </div>
                                     </div>
                                 </a>
