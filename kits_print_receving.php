@@ -55,7 +55,7 @@ if (isset($_POST['challan_no_issue'])) {
     $selected_stitcher = mysqli_real_escape_string($con, $_POST['stitcher_name']); // Added this line
 
     // Query to fetch products based on selected stitcher, challan number, and status = 0
-    $product_query = "SELECT DISTINCT product_name,product_base,product_color FROM kits_job_work WHERE stitcher_name = '$selected_stitcher' AND challan_no_issue = '$selected_challan' AND status = 0";
+    $product_query = "SELECT DISTINCT product_name,product_base,product_color FROM print_job_work WHERE stitcher_name = '$selected_stitcher' AND challan_no_issue = '$selected_challan' AND status = 0";
     $product_result = mysqli_query($con, $product_query);
 }
 
@@ -88,7 +88,7 @@ if (isset($_POST['add_product'])) {
 
 
         // Fetch existing issue quantity
-        $issue_quantity_query = "SELECT issue_quantity FROM kits_job_work WHERE challan_no_issue = '$selected_challan' AND stitcher_name = '$stitcher_name' AND product_name = '$product_name' AND product_base = '$product_base' AND product_color = '$product_color'";
+        $issue_quantity_query = "SELECT issue_quantity FROM print_job_work WHERE challan_no_issue = '$selected_challan' AND stitcher_name = '$stitcher_name' AND product_name = '$product_name' AND product_base = '$product_base' AND product_color = '$product_color'";
         $issue_quantity_result = mysqli_query($con, $issue_quantity_query);
         if ($issue_quantity_result && mysqli_num_rows($issue_quantity_result) > 0) {
             $issue_quantity_row = mysqli_fetch_assoc($issue_quantity_result);
@@ -103,7 +103,7 @@ if (isset($_POST['add_product'])) {
                 if ($update_issue_quantity_result) {
                     // Check if issue quantity became 0 and update status accordingly
                     if ($updated_issue_quantity == 0) {
-                        $update_status_query = "UPDATE kits_job_work SET status = 1 WHERE challan_no_issue = '$selected_challan' AND stitcher_name = '$stitcher_name' AND product_name = '$product_name' AND product_base = '$product_base' AND product_color = '$product_color'";
+                        $update_status_query = "UPDATE print_job_work SET status = 1 WHERE challan_no_issue = '$selected_challan' AND stitcher_name = '$stitcher_name' AND product_name = '$product_name' AND product_base = '$product_base' AND product_color = '$product_color'";
                         $update_status_result = mysqli_query($con, $update_status_query);
 
                         if (!$update_status_result) {
@@ -173,7 +173,7 @@ if (isset($_POST['delete_product'])) {
 
         if ($update_remaining_quantity_ist_company_ist_result && $update_remaining_quantity_iind_company_iind_result) {
             // Fetch existing issue quantity
-            $issue_quantity_query = "SELECT issue_quantity FROM kits_job_work WHERE challan_no_issue = '{$temp_product['challan_no_issue']}' AND stitcher_name = '$stitcher_name' AND product_name = '$product_name' AND product_base = '$product_base' AND product_color = '$product_color'";
+            $issue_quantity_query = "SELECT issue_quantity FROM print_job_work WHERE challan_no_issue = '{$temp_product['challan_no_issue']}' AND stitcher_name = '$stitcher_name' AND product_name = '$product_name' AND product_base = '$product_base' AND product_color = '$product_color'";
             $issue_quantity_result = mysqli_query($con, $issue_quantity_query);
             if ($issue_quantity_result && mysqli_num_rows($issue_quantity_result) > 0) {
                 $issue_quantity_row = mysqli_fetch_assoc($issue_quantity_result);
@@ -181,13 +181,13 @@ if (isset($_POST['delete_product'])) {
 
                 // Update issue quantity in the database
                 $updated_issue_quantity = $existing_issue_quantity + $total;
-                $update_issue_quantity_query = "UPDATE kits_job_work SET issue_quantity = '$updated_issue_quantity' WHERE challan_no_issue = '{$temp_product['challan_no_issue']}' AND stitcher_name = '$stitcher_name' AND product_name = '$product_name' AND product_base = '$product_base' AND product_color = '$product_color'";
+                $update_issue_quantity_query = "UPDATE print_job_work SET issue_quantity = '$updated_issue_quantity' WHERE challan_no_issue = '{$temp_product['challan_no_issue']}' AND stitcher_name = '$stitcher_name' AND product_name = '$product_name' AND product_base = '$product_base' AND product_color = '$product_color'";
                 $update_issue_quantity_result = mysqli_query($con, $update_issue_quantity_query);
 
                 if ($update_issue_quantity_result) {
                     // Check if issue quantity is now more than 0 and update status accordingly
                     if ($updated_issue_quantity > 0) {
-                        $update_status_query = "UPDATE kits_job_work SET status = 0 WHERE challan_no_issue = '{$temp_product['challan_no_issue']}' AND stitcher_name = '$stitcher_name' AND product_name = '$product_name' AND product_base = '$product_base' AND product_color = '$product_color'";
+                        $update_status_query = "UPDATE print_job_work SET status = 0 WHERE challan_no_issue = '{$temp_product['challan_no_issue']}' AND stitcher_name = '$stitcher_name' AND product_name = '$product_name' AND product_base = '$product_base' AND product_color = '$product_color'";
                         $update_status_result = mysqli_query($con, $update_status_query);
 
                         if (!$update_status_result) {
