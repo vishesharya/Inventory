@@ -15,7 +15,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $value = mysqli_real_escape_string($con, $value);
 
         // Update database
-        $query = "UPDATE threads SET $field = '$value' WHERE id = $id";
+        $query = "UPDATE ink SET $field = '$value' WHERE id = $id";
         $result = mysqli_query($con, $query);
 
         if (!$result) {

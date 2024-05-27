@@ -18,7 +18,7 @@ if (isset($_POST['check_quantity'])) {
 
     // Display the remaining balance
     $updateQuantityMsg = "<p style='color: green; font-size: medium; text-align: center;'>Remaining Thread Balance for $thread_name: $remaining_thread_balance</p>";
-}
+} 
 
 // Update Quantity Handling
 if (isset($_POST['update_thread_balance'])) {
@@ -81,6 +81,99 @@ if (isset($_POST['update_thread_balance'])) {
                                 <input type="number" name="new_quantity" id="new_quantity" class="form-control" required>
                             </div>
                             <button type="submit" class="btn btn-primary" name="update_thread_balance">Update Balance</button>
+                        </form>
+                        <?php endif; ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
+<?php
+session_start();
+include './include/connection.php';
+include_once 'include/admin-main.php';
+
+$updateQuantityMsg = '';
+
+// Update Quantity Form Handling
+if (isset($_POST['check_quantity'])) {
+    $ink_name = $_POST['ink_name'];
+
+    // Retrieve ink_remaining_quantity from the ink_product table
+    $inkQuery = mysqli_query($con, "SELECT ink_remaining_quantity FROM ink_product WHERE ink_name = '$ink_name'");
+    $ink_row = mysqli_fetch_assoc($inkQuery);
+
+    // Determine the remaining quantity for the selected ink
+    $remaining_ink_balance = isset($ink_row['ink_remaining_quantity']) ? $ink_row['ink_remaining_quantity'] : 0;
+
+    // Display the remaining balance
+    $updateQuantityMsg = "<p style='color: green; font-size: medium; text-align: center;'>Remaining Ink Balance for $ink_name: $remaining_ink_balance</p>";
+} 
+
+// Update Quantity Handling
+if (isset($_POST['update_ink_balance'])) {
+    $new_quantity = $_POST['new_quantity'];
+    $ink_name = $_POST['ink_name'];
+
+    // Update ink_remaining_quantity in ink_product table
+    $updateInkQuery = "UPDATE ink_product SET ink_remaining_quantity = '$new_quantity' WHERE ink_name = '$ink_name'";
+    mysqli_query($con, $updateInkQuery);
+
+    $updateQuantityMsg = "<p style='color: green; font-size: medium; text-align: center;'>Ink balance updated successfully for $ink_name</p>";
+}
+?>
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ink Management</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+
+<body>
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h2>Check & Update Ink Balance</h2>
+                    </div>
+                    <div class="card-body">
+                        <form action="" method="post">
+                            <div class="form-group">
+                                <label for="ink_name">Select Ink</label>
+                                <select name="ink_name" id="ink_name" class="form-control" required>
+                                    <option value="">Select Ink</option>
+                                    <?php
+                                    // Fetch ink names from the database
+                                    $inkQuery = mysqli_query($con, "SELECT ink_name FROM ink_product ORDER BY ink_name ASC");
+                                    while ($row = mysqli_fetch_assoc($inkQuery)) {
+                                        echo "<option value='" . $row['ink_name'] . "'>" . $row['ink_name'] . "</option>";
+                                    }
+                                    ?>
+                                </select>
+                            </div>
+                            <button type="submit" class="btn btn-primary" name="check_quantity">Check Balance</button>
+                        </form>
+                        <div class="mt-4">
+                            <?php echo $updateQuantityMsg; ?>
+                        </div>
+                        <!-- Form to update ink balance -->
+                        <?php if (!empty($updateQuantityMsg)): ?>
+                        <form action="" method="post">
+                            <input type="hidden" name="ink_name" value="<?php echo $ink_name; ?>">
+                            <div class="form-group">
+                                <label for="new_quantity">Update Ink Balance</label>
+                                <input type="number" name="new_quantity" id="new_quantity" class="form-control" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary" name="update_ink_balance">Update Balance</button>
                         </form>
                         <?php endif; ?>
                     </div>
