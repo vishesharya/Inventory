@@ -349,9 +349,8 @@ $total_ink_quantity = 0;
     <td><b>Total : </b></td>
     <td><?php echo $total_issue_quantity; ?></td>
     <td></td> <!-- Empty cell for bladder name -->
-    <td><?php echo $total_bladder_quantity; ?></td>
-    <td></td> <!-- Empty cell for thread name -->
-    <td><?php echo $total_thread_quantity; ?></td>
+    <td><?php echo $total_ink_quantity; ?></td>
+   
     <td colspan="1"></td> <!-- Colspan to span across date column -->
 </tr>
             </tbody>
