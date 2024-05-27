@@ -9,7 +9,7 @@ if (isset($_GET['product_name']) && isset($_GET['challan_no_issue'])) {
     $selectedChallan = mysqli_real_escape_string($con, $_GET['challan_no_issue']);
     
     // Query to fetch associated unique product bases for the selected product name and challan_no_issue
-    $query = "SELECT DISTINCT product_base FROM kits_job_work WHERE product_name = '$productName' AND challan_no_issue = '$selectedChallan' AND status = 0 ORDER BY product_base ASC";
+    $query = "SELECT DISTINCT product_base FROM print_job_work WHERE product_name = '$productName' AND challan_no_issue = '$selectedChallan' AND status = 0 ORDER BY product_base ASC";
     $result = mysqli_query($con, $query);
 
     // Fetch the unique product bases and store them in an array

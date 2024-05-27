@@ -10,7 +10,7 @@ if (isset($_GET['challan_no_issue']) && isset($_GET['product_name']) && isset($_
     $productBase = mysqli_real_escape_string($con, $_GET['product_base']);
     
     // Query to fetch associated unique product colors for the selected challan_no_issue, product_name, and product_base
-    $query = "SELECT DISTINCT product_color FROM kits_job_work WHERE challan_no_issue = '$selectedChallan' AND product_name = '$productName' AND product_base = '$productBase' AND status = 0 ORDER BY product_color ASC";
+    $query = "SELECT DISTINCT product_color FROM print_job_work WHERE challan_no_issue = '$selectedChallan' AND product_name = '$productName' AND product_base = '$productBase' AND status = 0 ORDER BY product_color ASC";
     $result = mysqli_query($con, $query);
 
     // Fetch the unique product colors and store them in an array

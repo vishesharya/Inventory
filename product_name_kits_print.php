@@ -8,7 +8,7 @@ if (isset($_GET['challan_no'])) {
     $selectedChallan = mysqli_real_escape_string($con, $_GET['challan_no']);
     
     // Query to fetch associated unique product names for the selected Challan No
-    $query = "SELECT DISTINCT product_name FROM kits_job_work WHERE challan_no_issue = '$selectedChallan' AND status = 0 ORDER BY product_name ASC";
+    $query = "SELECT DISTINCT product_name FROM print_job_work WHERE challan_no_issue = '$selectedChallan' AND status = 0 ORDER BY product_name ASC";
     $result = mysqli_query($con, $query);
 
     // Fetch the unique product names and store them in an array
