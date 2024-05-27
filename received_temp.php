@@ -9,8 +9,8 @@ $product_result1 = mysqli_query($con, $product_query1);
 // Logic to fetch product bases and colors based on selected product
 $selected_product1 = isset($_POST['product_name1']) ? $_POST['product_name1'] : null;
 if ($selected_product1) {
-    $product_base_query1 = "SELECT DISTINCT product_base FROM kits_product WHERE product_name = '$selected_product1' ORDER BY product_base ASC";
-    $product_color_query1 = "SELECT DISTINCT product_color FROM kits_product WHERE product_name = '$selected_product1' ORDER BY product_color ASC";
+    $product_base_query1 = "SELECT DISTINCT product_base FROM sheets_product WHERE product_name = '$selected_product1' ORDER BY product_base ASC";
+    $product_color_query1 = "SELECT DISTINCT product_color FROM sheets_product WHERE product_name = '$selected_product1' ORDER BY product_color ASC";
     $product_base_result1 = mysqli_query($con, $product_base_query1);
     $product_color_result1 = mysqli_query($con, $product_color_query1);
 }
