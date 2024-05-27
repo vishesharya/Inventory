@@ -412,6 +412,9 @@ if (isset($_POST['submit_products'])) {
                                 <table class="table table-bordered">
                                     <thead>
                                         <tr>
+                                            <th>Received Product Name</th>
+                                            <th>Received Product Base</th>
+                                            <th>Received Product Color</th>
                                             <th>Challan No</th>
                                             <th>Stitcher Name</th>
                                             <th>Product Name</th>
@@ -426,6 +429,10 @@ if (isset($_POST['submit_products'])) {
                                         <?php if (isset($_SESSION['temp_products'])) : ?>
                                             <?php foreach ($_SESSION['temp_products'] as $key => $product) : ?>
                                                 <tr>
+                                                
+                                                    <td><?php echo $product['product_name1']; ?></td>
+                                                    <td><?php echo $product['product_base1']; ?></td>
+                                                    <td><?php echo $product['product_color1']; ?></td>]
                                                     <td><?php echo $product['challan_no']; ?></td>
                                                     <td><?php echo $product['stitcher_name']; ?></td>
                                                     <td><?php echo $product['product_name']; ?></td>
