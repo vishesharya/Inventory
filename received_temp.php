@@ -351,7 +351,7 @@ if (isset($_POST['submit_products'])) {
                                             <option value="" selected disabled>Select Product Base</option>
                                             <?php if ($selected_product) : ?>
                                                 <?php while ($row = mysqli_fetch_assoc($product_base_result)) : ?>
-                                                    <option value="<?php echo $row['product_base']; ?>"><?php echo $row['product_base']; ?></option>
+                                                    <option value="<?php echo $row['product_base']; ?>"><?php echo $row['product_base1']; ?></option>
                                                 <?php endwhile; ?>
                                             <?php endif; ?>
                                         </select>
