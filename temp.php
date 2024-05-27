@@ -111,7 +111,6 @@ if (isset($_POST['add_product'])) {
             $_SESSION['temp_products'][] = $temp_product;
         }
     }
-}
 
 // Check if delete button is clicked
 if (isset($_POST['delete_product'])) {
