@@ -2,16 +2,17 @@
 session_start();
 include_once 'include/connection.php';
 include_once 'include/admin-main.php';
+$product_query = "SELECT DISTINCT product_name FROM sheets_product ORDER BY product_name ASC";
+$product_result = mysqli_query($con, $product_query);
 
-$product_query1 = "SELECT DISTINCT product_name FROM kits_product ORDER BY product_name ASC";
-$product_result1 = mysqli_query($con, $product_query1);
-
-$product_base_query1 = "SELECT DISTINCT product_base FROM kits_product ORDER BY product_base ASC";
-$product_base_result1 = mysqli_query($con, $product_base_query1);
-
-$product_color_query1 = "SELECT DISTINCT product_color FROM kits_product ORDER BY product_color ASC";
-$product_color_result1 = mysqli_query($con, $product_color_query1);
 // Logic to fetch product bases and colors based on selected product
+$selected_product = isset($_POST['product_name']) ? $_POST['product_name'] : null;
+if ($selected_product) {
+    $product_base_query = "SELECT DISTINCT product_base FROM sheets_product WHERE product_name = '$selected_product' ORDER BY product_base ASC";
+    $product_color_query = "SELECT DISTINCT product_color FROM sheets_product WHERE product_name = '$selected_product' ORDER BY product_color ASC";
+    $product_base_result = mysqli_query($con, $product_base_query);
+    $product_color_result = mysqli_query($con, $product_color_query);
+}
 
 // Function to fetch current number from the database
 function getCurrentNumber($con) {
@@ -332,7 +333,7 @@ if (isset($_POST['submit_products'])) {
                                     </div>
                                 </div>
 
-                                <div class="col-md-6">
+                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="product_name">Select Product:</label>
                                         <select class="form-select" id="product_name" name="product_name" onchange="this.form.submit()">
@@ -367,7 +368,6 @@ if (isset($_POST['submit_products'])) {
                                                 <?php endwhile; ?>
                                             <?php endif; ?>
                                         </select>
-                                    </div>
                                     </div>
                          </div>
                             <div class="row">

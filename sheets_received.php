@@ -26,7 +26,7 @@ if ($selected_product) {
     $product_small_result = mysqli_query($con, $product_small_query);
  
 }
- 
+
 
 // Function to fetch current number from the database
 function getCurrentNumber($con) {
