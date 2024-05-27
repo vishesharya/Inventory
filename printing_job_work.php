@@ -351,7 +351,7 @@ if (isset($_POST['view_entries'])) {
         // Send the request
         xhttp.send();
     }
-
+ 
     // Event listeners for labour selection and date inputs
     document.getElementById("select_labour").addEventListener("change", fetchChallanNumbers);
     document.getElementById("from_date").addEventListener("change", fetchChallanNumbers);
