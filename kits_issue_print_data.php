@@ -26,12 +26,12 @@ $selected_color = isset($_POST['product_color']) ? mysqli_real_escape_string($co
 
 // Fetch product bases based on selected product
 if ($selected_product) {
-    $product_base_query = "SELECT DISTINCT product_base FROM sheets_product WHERE product_name = '$selected_product' ORDER BY product_base ASC";
+    $product_base_query = "SELECT DISTINCT product_base FROM kits_product WHERE product_name = '$selected_product' ORDER BY product_base ASC";
     $product_base_result = mysqli_query($con, $product_base_query);
 
     // Fetch product colors based on selected product and base
     if ($selected_base) {
-        $product_color_query = "SELECT DISTINCT product_color FROM sheets_product WHERE product_name = '$selected_product' AND product_base = '$selected_base' ORDER BY product_color ASC";
+        $product_color_query = "SELECT DISTINCT product_color FROM kits_product WHERE product_name = '$selected_product' AND product_base = '$selected_base' ORDER BY product_color ASC";
         $product_color_result = mysqli_query($con, $product_color_query);
     }
 }
@@ -318,8 +318,8 @@ $result = mysqli_query($con, $query);
             <?php 
 // Initialize variables to hold totals
 $total_issue_quantity = 0;
-$total_bladder_quantity = 0;
-$total_thread_quantity = 0;
+$total_ink_quantity = 0;
+
 ?>
                 <?php $sn = 1; ?>
                 <?php while ($data = mysqli_fetch_array($result)): ?>
@@ -339,8 +339,8 @@ $total_thread_quantity = 0;
                     <?php $sn++; ?>
                     <?php 
                   $total_issue_quantity += $data['issue_quantity'];
-                  $total_bladder_quantity += $data['bladder_quantity'];
-                  $total_thread_quantity += $data['thread_quantity'];
+                  $total_ink_quantity += $data['ink_quantity'];
+                
     ?>
                 <?php endwhile; ?>
                 <tr>
