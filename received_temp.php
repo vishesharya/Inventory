@@ -372,7 +372,7 @@ if (isset($_POST['submit_products'])) {
                                                 <?php endwhile; ?>
                                             <?php endif; ?>
                                         </select>
-                                    </div> </div>
+                                    </div> 
                                 
                             </div>
                             <div class="row">
