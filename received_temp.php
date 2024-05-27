@@ -269,40 +269,27 @@ if (isset($_POST['submit_products'])) {
                         
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="product_name">Product Name:</label>
+                                        <label for="product_name">Select Product:</label>
                                         <select class="form-select" id="product_name" name="product_name">
-                                            <option value="" selected disabled>Select Product Name</option>
-                                            <?php if (isset($product_result)) : ?>
-                                                <?php while ($row = mysqli_fetch_assoc($product_result)) : ?>
-                                                    <option value="<?php echo $row['product_name']; ?>"><?php echo $row['product_name']; ?></option>
-                                                <?php endwhile; ?>
-                                            <?php endif; ?>
+                                         <option value="" selected disabled>Select Product</option>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="product_base">Product Base:</label>
-                                        <select class="form-select" id="product_base" name="product_base" >
-                                            <option value="" selected disabled>Select Product Base</option>
-                                            <?php if (isset($product_base_result)) : ?>
-                                                <?php while ($row = mysqli_fetch_assoc($product_base_result)) : ?>
-                                                    <option value="<?php echo $row['product_base']; ?>"><?php echo $row['product_base']; ?></option>
-                                                <?php endwhile; ?>
-                                            <?php endif; ?>
+                                        <select class="form-select" id="product_base" name="product_base">
+                                         <option value="" selected disabled>Select Product Base</option>
                                         </select>
-                                    </div>
+                                     </div>
                                 </div>
+                            </div>
+                            <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="product_color">Product Color:</label>
-                                        <select class="form-select" id="product_color" name="product_color" >
-                                            <option value="" selected disabled>Select Product Color</option>
-                                            <?php if (isset($product_color_result)) : ?>
-                                                <?php while ($row = mysqli_fetch_assoc($product_color_result)) : ?>
-                                                    <option value="<?php echo $row['product_color']; ?>"><?php echo $row['product_color']; ?></option>
-                                                <?php endwhile; ?>
-                                            <?php endif; ?>
+                                        <select class="form-select" id="product_color" name="product_color">
+                                         <option value="" selected disabled>Select Product Color</option>
                                         </select>
                                     </div>
                                 </div>
@@ -423,7 +410,7 @@ function fetchProductNames(selectedChallan) {
             });
         }
     };
-    xhttp.open("GET", "fetch_product_name_football.php?challan_no=" + selectedChallan, true);
+    xhttp.open("GET", "product_name_kits_print.php?challan_no=" + selectedChallan, true);
     xhttp.send();
 }
 
@@ -452,7 +439,7 @@ function fetchProductBase(productName, selectedChallan) {
             });
         }
     };
-    xhttp.open("GET", "fetch-product_base_football.php?product_name=" + encodeURIComponent(productName) + "&challan_no_issue=" + encodeURIComponent(selectedChallan), true);
+    xhttp.open("GET", "product_base_kits_print.php?product_name=" + encodeURIComponent(productName) + "&challan_no_issue=" + encodeURIComponent(selectedChallan), true);
     xhttp.send();
 }
 
@@ -481,9 +468,10 @@ function fetchProductColor(selectedChallan, productName, productBase) {
             });
         }
     };
-    xhttp.open("GET", "fetch_product_color_football.php?challan_no_issue=" + encodeURIComponent(selectedChallan) + "&product_name=" + encodeURIComponent(productName) + "&product_base=" + encodeURIComponent(productBase), true);
+    xhttp.open("GET", "product_color_kit_print.php?challan_no_issue=" + encodeURIComponent(selectedChallan) + "&product_name=" + encodeURIComponent(productName) + "&product_base=" + encodeURIComponent(productBase), true);
     xhttp.send();
 }
 
 </script>
+
 </html>
