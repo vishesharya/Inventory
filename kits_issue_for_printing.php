@@ -1,18 +1,18 @@
 <?php
 session_start();
 include_once 'include/connection.php';
-include_once 'include/admin-main.php';
+include_once 'include/admin-main.php'; 
 
 // Function to fetch current number from the database
 function getCurrentNumber($con) {
-    $result = mysqli_query($con, "SELECT kits_issue_temp FROM challan_temp LIMIT 1");
+    $result = mysqli_query($con, "SELECT kits_printing_issue_temp FROM challan_temp LIMIT 1");
     $row = mysqli_fetch_assoc($result);
-    return $row['kits_issue_temp'];
+    return $row['kits_printing_issue_temp'];
 }
 
 // Function to update the current number in the database
 function updateCurrentNumber($con, $newNumber) {
-    mysqli_query($con, "UPDATE challan_temp SET kits_issue_temp = $newNumber");
+    mysqli_query($con, "UPDATE challan_temp SET kits_printing_issue_temp = $newNumber");
 }
 
 // Function to generate the code prefix
@@ -38,8 +38,9 @@ function viewChallanNumber($con) {
 
 $challan_no = viewChallanNumber($con); 
 
-// Default value for Stitcher Name
-$stitcher_name = isset($_POST['stitcher_name']) ? $_POST['stitcher_name'] : "";
+$labour_query = "SELECT DISTINCT labour_name FROM labour ORDER BY labour_name ASC";
+$labour_result = mysqli_query($con, $labour_query);
+
 $thread_name = isset($_POST['thread_name']) ? $_POST['thread_name'] : "";
 
 
