@@ -81,7 +81,7 @@ if (isset($_POST['add_product'])) {
         $quantity = mysqli_real_escape_string($con, $_POST['quantity']);
 
         // Fetch remaining_quantity from kits_product table
-        $remaining_quantity_query = "SELECT remaining_quantity FROM kits_product WHERE product_name = '$product_name' AND product_base = '$product_base' AND product_color = '$product_color'";
+        $remaining_quantity_query = "SELECT remaining_quantity FROM kits_product WHERE product_name = '$product_name1' AND product_base = '$product_base1' AND product_color = '$product_color1'";
         $remaining_quantity_result = mysqli_query($con, $remaining_quantity_query);
         $row = mysqli_fetch_assoc($remaining_quantity_result);
         $remaining_quantity = $row['remaining_quantity'];
@@ -107,7 +107,7 @@ if (isset($_POST['add_product'])) {
             $updated_remaining_quantity = $remaining_quantity + $quantity;
 
             // Update remaining_quantity in kits_product table
-            $update_remaining_quantity_query = "UPDATE kits_product SET remaining_quantity = $updated_remaining_quantity WHERE product_name = '$product_name' AND product_base = '$product_base' AND product_color = '$product_color'";
+            $update_remaining_quantity_query = "UPDATE kits_product SET remaining_quantity = $updated_remaining_quantity WHERE product_name = '$product_name1' AND product_base = '$product_base1' AND product_color = '$product_color1'";
             mysqli_query($con, $update_remaining_quantity_query);
 
             // Update status if issue quantity becomes 0
@@ -124,6 +124,9 @@ if (isset($_POST['add_product'])) {
                 'product_name' => $product_name,
                 'product_base' => $product_base,
                 'product_color' => $product_color,
+                'product_name1' => $product_name1,
+                'product_base1' => $product_base1,
+                'product_color1' => $product_color1,
                 'received_quantity' => $quantity,
                 'total' => $total,
                 'date_and_time' => isset($_POST['date_and_time']) ? $_POST['date_and_time'] : date('Y-m-d H:i:s')
