@@ -2,11 +2,12 @@
 session_start();
 include_once 'include/connection.php';
 include_once 'include/admin-main.php';
+// Fetch product names
 $product_query = "SELECT DISTINCT product_name FROM sheets_product ORDER BY product_name ASC";
 $product_result = mysqli_query($con, $product_query);
 
 // Logic to fetch product bases and colors based on selected product
-$selected_product = isset($_POST['product_name']) ? $_POST['product_name'] : null;
+$selected_product = isset($_POST['product_name1']) ? $_POST['product_name1'] : null;
 if ($selected_product) {
     $product_base_query = "SELECT DISTINCT product_base FROM sheets_product WHERE product_name = '$selected_product' ORDER BY product_base ASC";
     $product_color_query = "SELECT DISTINCT product_color FROM sheets_product WHERE product_name = '$selected_product' ORDER BY product_color ASC";
