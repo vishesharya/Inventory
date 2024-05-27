@@ -307,7 +307,6 @@ $result = mysqli_query($con, $query);
                     <th>Issue Quantity</th>
                     <th>Ink Name</th>
                     <th>Ink Quantity</th>
-                    
                     <th>Date</th>
                 </tr>
             </thead>
