@@ -195,7 +195,7 @@ if (isset($_POST['submit_products'])) {
     } else {
         foreach ($temp_products as $product) {
             $challan_no = mysqli_real_escape_string($con, $product['challan_no']);
-            $stitcher_name= mysqli_real_escape_string($con, $product['stitcher_name']);
+            $stitcher_name = mysqli_real_escape_string($con, $product['stitcher_name']);
             $product_name = mysqli_real_escape_string($con, $product['product_name']);
             $product_base = mysqli_real_escape_string($con, $product['product_base']);
             $product_color = mysqli_real_escape_string($con, $product['product_color']);
@@ -370,15 +370,15 @@ if (isset($_POST['submit_products'])) {
                                 </div>
                             </div>
                             <div class="row">
-                               
-                                <div class="col-md-6">
+                              
+                            <div class="col-md-6">
                                 <div class="form-group">
-                                <label for="select_stitcher">Select stitcher:</label>
+                                <label for="select_stitcher">Select Stitcher:</label>
                                 <select class="form-select" id="select_stitcher" name="stitcher_name">
-                                <option value="" selected disabled>Select stitcher</option>
+                                <option value="" selected disabled>Select Stitcher</option>
                                   <?php 
                                   // Fetch stitcher names from the database
-                                  $stitcher_query = "SELECT stitcher_nameFROM stitcher";
+                                  $stitcher_query = "SELECT stitcher_name FROM stitcher";
                                   $stitcher_result = mysqli_query($con, $stitcher_query);
                                   while ($row = mysqli_fetch_assoc($stitcher_result)) : ?>
                                    <option value="<?php echo $row['stitcher_name']; ?>"><?php echo $row['stitcher_name']; ?></option>
