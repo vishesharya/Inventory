@@ -373,16 +373,16 @@ if (isset($_POST['submit_products'])) {
                                             <?php endif; ?>
                                         </select>
                                     </div> </div>
-                                <div class="col-md-6">
+                                
+                            </div>
+                            <div class="row">
+                            
+                            <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="quantity">Quantity:</label>
                                         <input type="number" class="form-control" id="quantity" name="quantity" placeholder="Enter Quantity">
                                     </div>
                                 </div>
-                            </div>
-                            <div class="row">
-                            
-                               
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="date_and_time">Date and Time:</label>
