@@ -62,14 +62,22 @@ if (isset($_POST['challan_no_issue'])) {
 
 if (isset($_POST['add_product'])) {
     // Validate input
+    // Validate input for first set of products
     if (empty($_POST['product_name']) || empty($_POST['product_base']) || empty($_POST['product_color']) || empty($_POST['quantity'])) {
-        $errors[] = "Please fill in all fields.";
+        $errors[] = "Please fill in all fields for the first product.";
+    }
+    // Validate input for second set of products
+    elseif (empty($_POST['product_name1']) || empty($_POST['product_base1']) || empty($_POST['product_color1']) || empty($_POST['quantity1'])) {
+        $errors[] = "Please fill in all fields for the second product.";
     } else {
         // Sanitize input
         $stitcher_name = isset($_POST['stitcher_name']) ? mysqli_real_escape_string($con, $_POST['stitcher_name']) : "";
         $product_name = mysqli_real_escape_string($con, $_POST['product_name']);
         $product_base = mysqli_real_escape_string($con, $_POST['product_base']);
-        $product_color = mysqli_real_escape_string($con, $_POST['product_color']);
+        $product_color = mysqli_real_escape_string($con, $_POST['product_color1']);
+        $product_name1 = mysqli_real_escape_string($con, $_POST['product_name1']);
+        $product_base1 = mysqli_real_escape_string($con, $_POST['product_base1']);
+        $product_color1 = mysqli_real_escape_string($con, $_POST['product_color']);
         $quantity = mysqli_real_escape_string($con, $_POST['quantity']);
 
         // Fetch remaining_quantity from kits_product table
@@ -78,34 +86,53 @@ if (isset($_POST['add_product'])) {
         $row = mysqli_fetch_assoc($remaining_quantity_result);
         $remaining_quantity = $row['remaining_quantity'];
 
-        // Calculate total
-        $total = $remaining_quantity + $quantity;
+        // Fetch issue_quantity from print_job_work table
+        $issue_quantity_query = "SELECT issue_quantity FROM print_job_work WHERE challan_no_issue = '$selected_challan' AND product_name = '$product_name' AND product_base = '$product_base' AND product_color = '$product_color'";
+        $issue_quantity_result = mysqli_query($con, $issue_quantity_query);
+        $row = mysqli_fetch_assoc($issue_quantity_result);
+        $issue_quantity = $row['issue_quantity'];
 
-        // Update remaining_quantity in kits_product table
-        $updated_remaining_quantity = $remaining_quantity + $quantity;
-        $update_remaining_quantity_query = "UPDATE kits_product SET remaining_quantity = $updated_remaining_quantity WHERE product_name = '$product_name' AND product_base = '$product_base' AND product_color = '$product_color'";
-        mysqli_query($con, $update_remaining_quantity_query);
+        // Check if entered quantity exceeds issue quantity
+        if ($quantity > $issue_quantity) {
+            $errors[] = "Stock is not available.";
+        } else {
+            // Calculate updated issue quantity
+            $updated_issue_quantity = $issue_quantity - $quantity;
 
-        // Update status in sheets_job_work table
-        $update_status_query = "UPDATE print_job_work SET status = 1 WHERE challan_no_issue = '$challan_no_issue' AND product_name = '$product_name' AND product_base = '$product_base' AND product_color = '$product_color'";
-        mysqli_query($con, $update_status_query);
-        
-        // Insert data into temporary session storage
-        $temp_product = array(
-            'challan_no' => $challan_no,
-            'challan_no_issue' => $challan_no_issue,
-            'stitcher_name' => $stitcher_name,
-            'product_name' => $product_name,
-            'product_base' => $product_base,
-            'product_color' => $product_color,
-            'received_quantity' => $quantity,
-            'total' => $total,
-            'date_and_time' => isset($_POST['date_and_time']) ? $_POST['date_and_time'] : date('Y-m-d H:i:s')
-        );
-        $_SESSION['temp_products'][] = $temp_product;
+            // Update issue_quantity in print_job_work table
+            $update_issue_quantity_query = "UPDATE print_job_work SET issue_quantity = $updated_issue_quantity WHERE challan_no_issue = '$selected_challan' AND product_name = '$product_name' AND product_base = '$product_base' AND product_color = '$product_color'";
+            mysqli_query($con, $update_issue_quantity_query);
+
+            // Calculate updated remaining_quantity
+            $updated_remaining_quantity = $remaining_quantity + $quantity;
+
+            // Update remaining_quantity in kits_product table
+            $update_remaining_quantity_query = "UPDATE kits_product SET remaining_quantity = $updated_remaining_quantity WHERE product_name = '$product_name' AND product_base = '$product_base' AND product_color = '$product_color'";
+            mysqli_query($con, $update_remaining_quantity_query);
+
+            // Update status if issue quantity becomes 0
+            if ($updated_issue_quantity == 0) {
+                $update_status_query = "UPDATE print_job_work SET status = 1 WHERE challan_no_issue = '$selected_challan' AND product_name = '$product_name' AND product_base = '$product_base' AND product_color = '$product_color'";
+                mysqli_query($con, $update_status_query);
+            }
+
+            // Insert data into temporary session storage
+            $temp_product = array(
+                'challan_no' => $challan_no,
+                'challan_no_issue' => $challan_no_issue,
+                'stitcher_name' => $stitcher_name,
+                'product_name' => $product_name,
+                'product_base' => $product_base,
+                'product_color' => $product_color,
+                'received_quantity' => $quantity,
+                'total' => $total,
+                'date_and_time' => isset($_POST['date_and_time']) ? $_POST['date_and_time'] : date('Y-m-d H:i:s')
+            );
+            $_SESSION['temp_products'][] = $temp_product;
+        }
     }
-
 }
+
 
 // Check if delete button is clicked
 if (isset($_POST['delete_product'])) {
