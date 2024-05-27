@@ -12,7 +12,7 @@ if (isset($_POST['delete_ink'])) {
     $deleteInkQuery = "DELETE FROM ink WHERE ink_name = '$ink_name'";
     mysqli_query($con, $deleteInkQuery);
 
-    // Check if deletion was successful
+    // Check if deletion was successful 
     if (mysqli_affected_rows($con) > 0) {
         $deleteInkMsg = "<p style='color: green;font-size: medium;text-align: center;'>Ink deleted successfully</p>";
     } else {
