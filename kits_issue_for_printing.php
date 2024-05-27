@@ -63,7 +63,7 @@ $bladder_query = "SELECT bladder_name, bladder_remaining_quantity FROM bladder O
 $bladder_result = mysqli_query($con, $bladder_query);
 
 // Logic to fetch ink names from the database
-$ink_query = "SELECT ink_name, ink_remaining_quantity FROM inks ORDER BY ink_name ASC";
+$ink_query = "SELECT ink_name, ink_remaining_quantity FROM ink ORDER BY ink_name ASC";
 $ink_result = mysqli_query($con, $ink_query);
 
 $errors = array();
