@@ -294,7 +294,8 @@ $result = mysqli_query($con, $query);
 
 
 
-        <?php if (isset($_POST['view_entries']) && mysqli_num_rows($result) > 0): ?>
+        <?php 
+        if (isset($_POST['view_entries']) && mysqli_num_rows($result) > 0): ?>
         <table class="table datatable-multi-sorting">
             <thead>
                 <tr>
