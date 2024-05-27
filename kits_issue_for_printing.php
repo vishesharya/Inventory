@@ -415,13 +415,11 @@ if (isset($_POST['submit_products'])) {
                                     <thead>
                                         <tr>
                                             <th>Challan No</th>
-                                            <th>labour Name</th>
+                                            <th>Labour Name</th>
                                             <th>Product Name</th>
                                             <th>Product Base</th>
                                             <th>Product Color</th>
                                             <th>Product Quantity</th>
-                                            <th>Bladder Type</th>
-                                            <th>Bladder Quantity</th>
                                             <th>ink Type</th>
                                             <th>ink Quantity</th>
                                             <th>Delete Product</th>
@@ -437,8 +435,6 @@ if (isset($_POST['submit_products'])) {
                                                     <td><?php echo $product['product_base']; ?></td>
                                                     <td><?php echo $product['product_color']; ?></td>
                                                     <td><?php echo $product['issue_quantity']; ?></td>
-                                                    <td><?php echo $product['bladder_name']; ?></td>
-                                                    <td><?php echo $product['bladder_quantity']; ?></td>
                                                     <td><?php echo $product['ink_name']; ?></td>
                                                     <td><?php echo $product['ink_quantity']; ?></td>
                                                     <td>
