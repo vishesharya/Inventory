@@ -369,6 +369,7 @@ if (isset($_POST['submit_products'])) {
                                             <?php endif; ?>
                                         </select>
                                     </div>
+                                </div>
                          </div>
                             <div class="row">
                             
