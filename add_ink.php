@@ -24,7 +24,7 @@ if (isset($_POST['add_ink'])) {
         }
     } else {
         // If ink doesn't exist, insert a new record
-        $insertInkQuery = "INSERT INTO ink (ink_name, ink_remaining) VALUES ('$ink_name', $quantity)";
+        $insertInkQuery = "INSERT INTO ink (ink_name, ink_remaining_quantity) VALUES ('$ink_name', $quantity)";
         if (mysqli_query($con, $insertInkQuery)) {
             $addInkMsg = "<p id='addInkMsg' style='color: green;font-size: medium;text-align: center;'>Ink added successfully</p>";
         } else {
