@@ -11,10 +11,10 @@ if (isset($_GET['stitcher'])) {
         $fromDate = mysqli_real_escape_string($con, $_GET['from_date']);
         $toDate = mysqli_real_escape_string($con, $_GET['to_date']);
         // Fetch the distinct challan numbers based on the selected stitcher and date range
-        $query = "SELECT DISTINCT challan_no FROM kits_issue WHERE stitcher_name = '$selectedStitcher' AND date_and_time BETWEEN '$fromDate' AND '$toDate'";
+        $query = "SELECT DISTINCT challan_no FROM print_issue WHERE stitcher_name = '$selectedStitcher' AND date_and_time BETWEEN '$fromDate' AND '$toDate'";
     } else {
         // Fetch the distinct challan numbers based on the selected stitcher without considering date range
-        $query = "SELECT DISTINCT challan_no FROM kits_issue WHERE stitcher_name = '$selectedStitcher'";
+        $query = "SELECT DISTINCT challan_no FROM print_issue WHERE stitcher_name = '$selectedStitcher'";
     }
 
     $result = mysqli_query($con, $query);

@@ -133,6 +133,13 @@ include_once 'include/admin-main.php';
                                         </div>
                                     </div>
                                 </a>
+                                <a href="kits_issue_print_data.php" style='color:white'>
+                                    <div class="col-lg-4">
+                                        <div class="panel bg-teal-400">
+                                            <p style="margin: 10px; font-size: large;">Kits Issue Print Data</p>
+                                        </div>
+                                    </div>
+                                </a>
 
                                 <a href="kits_issue_all_data_slip.php" style='color:white'>
                                     <div class="col-lg-4">
