@@ -2,6 +2,7 @@
 session_start();
 include_once 'include/connection.php';
 include_once 'include/admin-main.php';
+
 // Fetch product names
 $product_query = "SELECT DISTINCT product_name FROM sheets_product ORDER BY product_name ASC";
 $product_result = mysqli_query($con, $product_query);
@@ -41,7 +42,6 @@ function generateChallanNumber($con) {
     return $codePrefix;
 }
 
-
 function viewChallanNumber($con) {
     $currentNumber = getCurrentNumber($con);
     $codePrefix = generateCodePrefix($currentNumber);
@@ -57,7 +57,7 @@ $stitcher_result = mysqli_query($con, $stitcher_query);
 // Fetch associated challan numbers for selected stitcher
 if (isset($_POST['stitcher_name'])) {
     $selected_stitcher = mysqli_real_escape_string($con, $_POST['stitcher_name']);
-    $challan_query_issue = "SELECT DISTINCT  challan_no_issue FROM print_job_work WHERE stitcher_name = '$selected_stitcher' AND status = 0";
+    $challan_query_issue = "SELECT DISTINCT challan_no_issue FROM print_job_work WHERE stitcher_name = '$selected_stitcher' AND status = 0";
     $challan_result_issue = mysqli_query($con, $challan_query_issue);
 }
 
@@ -70,7 +70,6 @@ if (isset($_POST['challan_no_issue'])) {
     $product_query = "SELECT DISTINCT product_name,product_base,product_color FROM print_job_work WHERE stitcher_name = '$selected_stitcher' AND challan_no_issue = '$selected_challan' AND status = 0";
     $product_result = mysqli_query($con, $product_query);
 }
-
 
 if (isset($_POST['add_product'])) {
     // Validate input
@@ -149,7 +148,6 @@ if (isset($_POST['add_product'])) {
     }
 }
 
-
 // Check if delete button is clicked
 if (isset($_POST['delete_product'])) {
     // Get the index of the product to be deleted
@@ -163,14 +161,14 @@ if (isset($_POST['delete_product'])) {
     $deleted_quantity = mysqli_real_escape_string($con, $deleted_product['received_quantity']);
     $deleted_total = mysqli_real_escape_string($con, $deleted_product['total']);
 
-   
-
     // Remove the product from the session
     unset($_SESSION['temp_products'][$delete_index]);
 
     // Reset array keys to maintain consecutive numbering
     $_SESSION['temp_products'] = array_values($_SESSION['temp_products']);
 }
+
+
 
 // Store added products in the database when "Submit" button is clicked
 if (isset($_POST['submit_products'])) {
