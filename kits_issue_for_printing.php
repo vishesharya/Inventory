@@ -38,8 +38,7 @@ function viewChallanNumber($con) {
 
 $challan_no = viewChallanNumber($con); 
 
-$stitcher_query = "SELECT DISTINCT stitcher_name FROM stitcher ORDER BY stitcher_name ASC";
-$stitcher_result = mysqli_query($con, $stitcher_query);
+$stitcher_name = isset($_POST['stitcher_name']) ? $_POST['stitcher_name'] : "";
 
 $ink_name = isset($_POST['ink_name']) ? $_POST['ink_name'] : "";
 
