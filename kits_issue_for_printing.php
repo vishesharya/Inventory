@@ -92,7 +92,7 @@ if (isset($_POST['add_product'])) {
         $remaining_quantity = $row['remaining_quantity'];
 
         // Validate quantities against ink stock
-        $ink_remaining_quantity_query = "SELECT ink_remaining_quantity FROM inks WHERE ink_name = '$selected_ink'";
+        $ink_remaining_quantity_query = "SELECT ink_remaining_quantity FROM ink WHERE ink_name = '$selected_ink'";
         $ink_remaining_quantity_result = mysqli_query($con, $ink_remaining_quantity_query);
         $row = mysqli_fetch_assoc($ink_remaining_quantity_result);
         $ink_remaining_quantity = $row['ink_remaining_quantity'];
@@ -131,12 +131,12 @@ if (isset($_POST['add_product'])) {
                 $update_remaining_quantity_query = "UPDATE kits_product SET remaining_quantity = $updated_remaining_quantity WHERE product_name = '$product_name' AND product_base = '$product_base' AND product_color = '$product_color'";
                 mysqli_query($con, $update_remaining_quantity_query);
 
-                // Update ink_remaining_quantity in inks table
+                // Update ink_remaining_quantity in ink table
                 $updated_ink_remaining_quantity = $ink_remaining_quantity - $ink_quantity;
-                $update_ink_remaining_quantity_query = "UPDATE inks SET ink_remaining_quantity = $updated_ink_remaining_quantity WHERE ink_name = '$selected_ink'";
+                $update_ink_remaining_quantity_query = "UPDATE ink SET ink_remaining_quantity = $updated_ink_remaining_quantity WHERE ink_name = '$selected_ink'";
                 mysqli_query($con, $update_ink_remaining_quantity_query);
 
-                // Update ink_remaining_quantity in inks table
+                // Update ink_remaining_quantity in ink table
                 $updated_bladder_remaining_quantity = $bladder_remaining_quantity - $bladder_quantity;
                 $update_bladder_remaining_quantity_query = "UPDATE bladder SET bladder_remaining_quantity = $updated_bladder_remaining_quantity WHERE bladder_name = '$selected_bladder'";
                 mysqli_query($con, $update_bladder_remaining_quantity_query);
@@ -202,7 +202,7 @@ if (isset($_POST['delete_product'])) {
     // Update ink quantity
     $ink_name = mysqli_real_escape_string($con, $deleted_product['ink_name']);
     $ink_quantity = mysqli_real_escape_string($con, $deleted_product['ink_quantity']);
-    $update_ink_quantity_query = "UPDATE inks SET ink_remaining_quantity = ink_remaining_quantity + $ink_quantity WHERE ink_name = '$ink_name'";
+    $update_ink_quantity_query = "UPDATE ink SET ink_remaining_quantity = ink_remaining_quantity + $ink_quantity WHERE ink_name = '$ink_name'";
     mysqli_query($con, $update_ink_quantity_query);
 
     // Remove the product from the session
