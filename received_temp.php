@@ -66,7 +66,7 @@ if (isset($_POST['add_product'])) {
         $errors[] = "Please fill in all fields.";
     } else {
         // Sanitize input
-        $labour_name = isset($_POST['labour_name']) ? mysqli_real_escape_string($con, $_POST['labour_name']) : "";
+        $stitcher_name = isset($_POST['stitcher_name']) ? mysqli_real_escape_string($con, $_POST['stitcher_name']) : "";
         $product_name = mysqli_real_escape_string($con, $_POST['product_name']);
         $product_base = mysqli_real_escape_string($con, $_POST['product_base']);
         $product_color = mysqli_real_escape_string($con, $_POST['product_color']);
@@ -94,7 +94,7 @@ if (isset($_POST['add_product'])) {
         $temp_product = array(
             'challan_no' => $challan_no,
             'challan_no_issue' => $challan_no_issue,
-            'labour_name' => $labour_name,
+            'stitcher_name' => $stitcher_name,
             'product_name' => $product_name,
             'product_base' => $product_base,
             'product_color' => $product_color,
@@ -156,7 +156,7 @@ if (isset($_POST['submit_products'])) {
     } else {
         foreach ($temp_products as $product) {
             $challan_no = mysqli_real_escape_string($con, $product['challan_no']);
-            $labour_name = mysqli_real_escape_string($con, $product['labour_name']);
+            $stitcher_name = mysqli_real_escape_string($con, $product['stitcher_name']);
             $product_name = mysqli_real_escape_string($con, $product['product_name']);
             $product_base = mysqli_real_escape_string($con, $product['product_base']);
             $product_color = mysqli_real_escape_string($con, $product['product_color']);
@@ -164,8 +164,8 @@ if (isset($_POST['submit_products'])) {
             $total = mysqli_real_escape_string($con, $product['total']);
             $date_and_time = mysqli_real_escape_string($con, $product['date_and_time']);
             // Insert product into the database
-            $insert_query = "INSERT INTO kits_received (challan_no, labour_name, product_name, product_base, product_color, received_quantity, total, date_and_time) 
-                            VALUES ('$challan_no', '$labour_name', '$product_name', '$product_base', '$product_color', '$quantity', '$total' ,'$date_and_time')";
+            $insert_query = "INSERT INTO kits_received (challan_no, stitcher_name, product_name, product_base, product_color, received_quantity, total, date_and_time) 
+                            VALUES ('$challan_no', '$stitcher_name', '$product_name', '$product_base', '$product_color', '$quantity', '$total' ,'$date_and_time')";
             $insert_result = mysqli_query($con, $insert_query);
 
             if (!$insert_result) {
@@ -324,7 +324,7 @@ if (isset($_POST['submit_products'])) {
                                     <thead>
                                         <tr>
                                             <th>Challan No</th>
-                                            <th>Labour Name</th>
+                                            <th>Stitcher Name</th>
                                             <th>Product Name</th>
                                             <th>Product Base</th>
                                             <th>Product Color</th>
@@ -338,7 +338,7 @@ if (isset($_POST['submit_products'])) {
                                             <?php foreach ($_SESSION['temp_products'] as $key => $product) : ?>
                                                 <tr>
                                                     <td><?php echo $product['challan_no']; ?></td>
-                                                    <td><?php echo $product['labour_name']; ?></td>
+                                                    <td><?php echo $product['stitcher_name']; ?></td>
                                                     <td><?php echo $product['product_name']; ?></td>
                                                     <td><?php echo $product['product_base']; ?></td>
                                                     <td><?php echo $product['product_color']; ?></td>
