@@ -39,13 +39,13 @@ function viewChallanNumber($con) {
 $challan_no = viewChallanNumber($con); 
 
 // Fetch stitcher names from the database
-$stitcher_query = "SELECT DISTINCT stitcher_name FROM kits_job_work WHERE status = 0 ORDER BY stitcher_name ASC";
+$stitcher_query = "SELECT DISTINCT stitcher_name FROM print_job_work WHERE status = 0 ORDER BY stitcher_name ASC";
 $stitcher_result = mysqli_query($con, $stitcher_query);
 
 // Fetch associated challan numbers for selected stitcher
 if (isset($_POST['stitcher_name'])) {
     $selected_stitcher = mysqli_real_escape_string($con, $_POST['stitcher_name']);
-    $challan_query_issue = "SELECT DISTINCT  challan_no_issue FROM kits_job_work WHERE stitcher_name = '$selected_stitcher' AND status = 0";
+    $challan_query_issue = "SELECT DISTINCT  challan_no_issue FROM print_job_work WHERE stitcher_name = '$selected_stitcher' AND status = 0";
     $challan_result_issue = mysqli_query($con, $challan_query_issue);
 }
 
