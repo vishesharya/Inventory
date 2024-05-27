@@ -237,7 +237,7 @@ if (isset($_POST['submit_products'])) {
                         <form method="post" action="">
                         
                     
-                        <div class="row">
+                        < class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="select_stitcher">Select Stitcher:</label>
@@ -265,7 +265,7 @@ if (isset($_POST['submit_products'])) {
                                         </select>
                                     </div>
                                 </div>
-                            </div>
+                    
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
