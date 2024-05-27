@@ -25,7 +25,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 } 
 
 // Fetch data alphabetically
-$result = mysqli_query($con, "SELECT id, ink_name, ink_price, ink_remaining_quantity FROM ink_product ORDER BY ink_name ASC");
+$result = mysqli_query($con, "SELECT id, ink_name, ink_price, ink_remaining_quantity FROM ink ORDER BY ink_name ASC");
 
 ?>
 <!DOCTYPE html>
