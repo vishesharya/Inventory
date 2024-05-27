@@ -293,7 +293,7 @@ if (isset($_POST['submit_products'])) {
                           </select>
                          </div>
                         </div>
-<div class="col-md-6">
+                                <div class="col-md-6">
     <div class="form-group">
         <label for="product_base1">Product Base:</label>
         <select class="form-select" id="product_base1" name="product_base1">
@@ -307,22 +307,22 @@ if (isset($_POST['submit_products'])) {
             <?php endif; ?>
         </select>
     </div>
-</div>
-<div class="col-md-6">
-    <div class="form-group">
-        <label for="product_color1">Product Color:</label>
-        <select class="form-select" id="product_color1" name="product_color1">
-            <option value="" selected disabled>Select Product Color</option>
-            <?php if ($selected_product) : ?>
-                <?php while ($row = mysqli_fetch_assoc($product_color_result)) : ?>
-                    <option value="<?php echo $row['product_color']; ?>">
+                        </div>
+                    <div class="col-md-6">
+                             <div class="form-group">
+                      <label for="product_color1">Product Color:</label>
+                         <select class="form-select" id="product_color1" name="product_color1">
+                             <option value="" selected disabled>Select Product Color</option>
+                             <?php if ($selected_product) : ?>
+                                 <?php while ($row = mysqli_fetch_assoc($product_color_result)) : ?>
+                                 <option value="<?php echo $row['product_color']; ?>">
                         <?php echo $row['product_color']; ?>
-                    </option>
-                <?php endwhile; ?>
-            <?php endif; ?>
-        </select>
-    </div>
-</div>
+                           </option>
+                            <?php endwhile; ?>
+                       <?php endif; ?>
+                          </select>
+                             </div>
+                            </div>
 
                        
                                 <div class="col-md-6">
@@ -379,7 +379,7 @@ if (isset($_POST['submit_products'])) {
                                     </div>
                                 </div>
 
-                                <div class="col-md-6">
+                              
    
                             
                          </div>
