@@ -2,48 +2,22 @@
 session_start();
 include_once 'include/connection.php';
 include_once 'include/admin-main.php';
-// Fetch stitcher names from the database
-$stitcher_query = "SELECT DISTINCT stitcher_name FROM print_job_work WHERE status = 0 ORDER BY stitcher_name ASC";
-$stitcher_result = mysqli_query($con, $stitcher_query);
-
-$challan_no_issue = isset($_POST['challan_no_issue']) ? $_POST['challan_no_issue'] : "";
-
-
-if (isset($_POST['stitcher_name'])) {
-    $selected_stitcher = mysqli_real_escape_string($con, $_POST['stitcher_name']);
-    $challan_query_issue = "SELECT DISTINCT  challan_no_issue FROM print_job_work WHERE stitcher_name = '$selected_stitcher' AND status = 0";
-    $challan_result_issue = mysqli_query($con, $challan_query_issue);
-}
-// Logic to fetch product names from the database
-$product_query = "SELECT DISTINCT product_name FROM kits_product ORDER BY product_name ASC";
-$product_result = mysqli_query($con, $product_query);
-
-
-// Fetch product names based on selected stitcher and challan number
-if (isset($_POST['challan_no_issue'])) {
-    $selected_challan = mysqli_real_escape_string($con, $_POST['challan_no_issue']);
-    $selected_stitcher = mysqli_real_escape_string($con, $_POST['labour_name']); // Added this line
-
-    // Query to fetch products based on selected stitcher, challan number, and status = 0
-    $product_query = "SELECT DISTINCT product_name,product_base,product_color FROM sheets_job_work WHERE labour_name = '$labour_name' AND challan_no_issue = '$selected_challan' AND status = 0";
-    $product_result = mysqli_query($con, $product_query);
-}
 
 // Function to fetch current number from the database
 function getCurrentNumber($con) {
-    $result = mysqli_query($con, "SELECT kits_received_temp FROM challan_temp LIMIT 1");
+    $result = mysqli_query($con, "SELECT football_received_temp FROM challan_temp LIMIT 1");
     $row = mysqli_fetch_assoc($result);
-    return $row['kits_received_temp'];
+    return $row['football_received_temp'];
 }
 
 // Function to update the current number in the database
 function updateCurrentNumber($con, $newNumber) {
-    mysqli_query($con, "UPDATE challan_temp SET kits_received_temp = $newNumber");
+    mysqli_query($con, "UPDATE challan_temp SET football_received_temp = $newNumber");
 }
 
 // Function to generate the code prefix
 function generateCodePrefix($number) {
-    return "KSI-KR-" . $number;
+    return "KSI-FR-" . $number;
 }
 
 // Function to generate the Challan number
@@ -64,7 +38,27 @@ function viewChallanNumber($con) {
 
 $challan_no = viewChallanNumber($con); 
 
-$errors = array();
+// Fetch stitcher names from the database
+$stitcher_query = "SELECT DISTINCT stitcher_name FROM print_job_work WHERE status = 0 ORDER BY stitcher_name ASC";
+$stitcher_result = mysqli_query($con, $stitcher_query);
+
+// Fetch associated challan numbers for selected stitcher
+if (isset($_POST['stitcher_name'])) {
+    $selected_stitcher = mysqli_real_escape_string($con, $_POST['stitcher_name']);
+    $challan_query_issue = "SELECT DISTINCT  challan_no_issue FROM print_job_work WHERE stitcher_name = '$selected_stitcher' AND status = 0";
+    $challan_result_issue = mysqli_query($con, $challan_query_issue);
+}
+
+// Fetch product names based on selected stitcher and challan number
+if (isset($_POST['challan_no_issue'])) {
+    $selected_challan = mysqli_real_escape_string($con, $_POST['challan_no_issue']);
+    $selected_stitcher = mysqli_real_escape_string($con, $_POST['stitcher_name']); // Added this line
+
+    // Query to fetch products based on selected stitcher, challan number, and status = 0
+    $product_query = "SELECT DISTINCT product_name,product_base,product_color FROM print_job_work WHERE stitcher_name = '$selected_stitcher' AND challan_no_issue = '$selected_challan' AND status = 0";
+    $product_result = mysqli_query($con, $product_query);
+}
+
 
 if (isset($_POST['add_product'])) {
     // Validate input
@@ -363,136 +357,114 @@ if (isset($_POST['submit_products'])) {
     </div>
 </body>
 <script>
-   
-// Function to fetch challan numbers dynamically based on selected labour
-function fetchChallanNumbers() {
-    var labourName = document.getElementById('select_labour').value;
-    var challanSelect = document.getElementById('select_challan');
+          document.getElementById("select_stitcher").addEventListener("change", function() {
+            var selectedStitcher = this.value;
+            fetchChallanNumbers(selectedStitcher);
+        });
 
-    // Make an AJAX request to fetch challan numbers
-    var xhr = new XMLHttpRequest();
-    xhr.onreadystatechange = function() {
-        if (this.readyState === 4 && this.status === 200) {
-            // Clear existing options
-            challanSelect.innerHTML = '<option value="" selected disabled>Select Issue Challan No</option>';
-            // Parse the JSON response
-            var challanNumbers = JSON.parse(this.responseText);
-            // Add fetched challan numbers as options
-            challanNumbers.forEach(function(challan) {
-                var option = document.createElement('option');
-                option.value = challan;
-                option.text = challan;
-                challanSelect.appendChild(option);
-            });
+        function fetchChallanNumbers(selectedStitcher) {
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    var challanSelect = document.getElementById("select_challan");
+                    var challanNumbers = JSON.parse(this.responseText);
+                    challanSelect.innerHTML = "<option value='' selected disabled>Select Challan No</option>";
+                    challanNumbers.forEach(function(challan) {
+                        var option = document.createElement("option");
+                        option.value = challan;
+                        option.text = challan;
+                        challanSelect.appendChild(option);
+                    });
+                }
+            };
+            xhttp.open("GET", "fetch_challan_no_for_kits_printing_received.php?stitcher=" + selectedStitcher, true);
+            xhttp.send();
         }
-    };
-    // Make GET request to fetch_challan_numbers.php with labour_name parameter
-    xhr.open('GET', 'kits_received_challan_no_issue_fatch.php?labour_name=' + labourName, true);
-    xhr.send();
-}
+    </script>
 
-// Add event listener to call fetchChallanNumbers() when labour name is selected
-document.getElementById('select_labour').addEventListener('change', fetchChallanNumbers);
+<script>
+        document.getElementById("select_challan").addEventListener("change", function() {
+    var selectedChallan = this.value;
+    fetchProductNames(selectedChallan);
+});
 
-
-// Function to fetch product names dynamically based on selected challan_no_issue
-function fetchProductNames() {
-    var challanNo = document.getElementById('select_challan').value;
-    var productSelect = document.getElementById('product_name');
-
-    // Make an AJAX request to fetch product names
-    var xhr = new XMLHttpRequest();
-    xhr.onreadystatechange = function() {
-        if (this.readyState === 4 && this.status === 200) {
-            // Clear existing options
-            productSelect.innerHTML = '<option value="" selected disabled>Select Product</option>';
-            // Parse the JSON response
+function fetchProductNames(selectedChallan) {
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            var productSelect = document.getElementById("product_name");
             var productNames = JSON.parse(this.responseText);
-            // Add fetched product names as options
+            productSelect.innerHTML = "<option value='' selected disabled>Select Product Name</option>";
             productNames.forEach(function(product) {
-                var option = document.createElement('option');
+                var option = document.createElement("option");
                 option.value = product;
                 option.text = product;
                 productSelect.appendChild(option);
             });
         }
     };
-    // Make GET request to fetch_product_names.php with challan_no_issue parameter
-    xhr.open('GET', 'kits_received_product_name_fatch.php?challan_no_issue=' + challanNo, true);
-    xhr.send();
+    xhttp.open("GET", "fetch_product_name_football.php?challan_no=" + selectedChallan, true);
+    xhttp.send();
 }
 
-// Add event listener to call fetchProductNames() when challan_no_issue is selected
-document.getElementById('select_challan').addEventListener('change', fetchProductNames);
+</script>
 
-// Function to fetch product bases dynamically based on selected challan_no_issue and product_name
-function fetchProductBases() {
-    var challanNo = document.getElementById('select_challan').value;
-    var productName = document.getElementById('product_name').value;
-    var productBaseSelect = document.getElementById('product_base');
 
-    // Make an AJAX request to fetch product bases
-    var xhr = new XMLHttpRequest();
-    xhr.onreadystatechange = function() {
-        if (this.readyState === 4 && this.status === 200) {
-            // Clear existing options
-            productBaseSelect.innerHTML = '<option value="" selected disabled>Select Product Base</option>';
-            // Parse the JSON response
-            var productBases = JSON.parse(this.responseText);
-            // Add fetched product bases as options
-            productBases.forEach(function(base) {
-                var option = document.createElement('option');
-                option.value = base;
-                option.text = base;
+<script>
+document.getElementById("product_name").addEventListener("change", function() {
+    var productName = this.value;
+    var selectedChallan = document.getElementById("select_challan").value;
+    fetchProductBase(productName, selectedChallan);
+});
+
+function fetchProductBase(productName, selectedChallan) {
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            var productBaseSelect = document.getElementById("product_base");
+            productBaseSelect.innerHTML = "<option value='' selected disabled>Select Product Base</option>"; // Clear previous options
+            var productBaseData = JSON.parse(this.responseText);
+            productBaseData.forEach(function(productBase) {
+                var option = document.createElement("option");
+                option.value = productBase;
+                option.text = productBase;
                 productBaseSelect.appendChild(option);
             });
         }
     };
-    // Make GET request to fetch_product_base.php with challan_no_issue and product_name parameters
-    xhr.open('GET', 'kits_received_product_base_fatch.php?challan_no_issue=' + challanNo + '&product_name=' + productName, true);
-    xhr.send();
+    xhttp.open("GET", "fetch-product_base_football.php?product_name=" + encodeURIComponent(productName) + "&challan_no_issue=" + encodeURIComponent(selectedChallan), true);
+    xhttp.send();
 }
 
-// Add event listener to call fetchProductBases() when product name is selected
-document.getElementById('product_name').addEventListener('change', fetchProductBases);
-// Add event listener to call fetchProductBases() when challan_no_issue is selected
-document.getElementById('select_challan').addEventListener('change', fetchProductBases);
+</script>
 
-// Function to fetch product colors dynamically based on selected challan_no_issue, product_name, and product_base
-function fetchProductColors() {
-    var challanNo = document.getElementById('select_challan').value;
-    var productName = document.getElementById('product_name').value;
-    var productBase = document.getElementById('product_base').value;
-    var productColorSelect = document.getElementById('product_color');
+<script>
+document.getElementById("product_base").addEventListener("change", function() {
+    var selectedChallan = document.getElementById("select_challan").value;
+    var productName = document.getElementById("product_name").value;
+    var productBase = this.value;
+    fetchProductColor(selectedChallan, productName, productBase);
+});
 
-    // Make an AJAX request to fetch product colors
-    var xhr = new XMLHttpRequest();
-    xhr.onreadystatechange = function() {
-        if (this.readyState === 4 && this.status === 200) {
-            // Clear existing options
-            productColorSelect.innerHTML = '<option value="" selected disabled>Select Product Color</option>';
-            // Parse the JSON response
-            var productColors = JSON.parse(this.responseText);
-            // Add fetched product colors as options
-            productColors.forEach(function(color) {
-                var option = document.createElement('option');
-                option.value = color;
-                option.text = color;
+function fetchProductColor(selectedChallan, productName, productBase) {
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            var productColorSelect = document.getElementById("product_color");
+            productColorSelect.innerHTML = "<option value='' selected disabled>Select Product Color</option>"; // Clear previous options
+            var productColorData = JSON.parse(this.responseText);
+            productColorData.forEach(function(productColor) {
+                var option = document.createElement("option");
+                option.value = productColor;
+                option.text = productColor;
                 productColorSelect.appendChild(option);
             });
         }
     };
-    // Make GET request to fetch_product_color.php with challan_no_issue, product_name, and product_base parameters
-    xhr.open('GET', 'kits_received_product_color_fatch.php?challan_no_issue=' + challanNo + '&product_name=' + productName + '&product_base=' + productBase, true);
-    xhr.send();
+    xhttp.open("GET", "fetch_product_color_football.php?challan_no_issue=" + encodeURIComponent(selectedChallan) + "&product_name=" + encodeURIComponent(productName) + "&product_base=" + encodeURIComponent(productBase), true);
+    xhttp.send();
 }
 
-// Add event listener to call fetchProductColors() when product base is selected
-document.getElementById('product_base').addEventListener('change', fetchProductColors);
-// Add event listener to call fetchProductColors() when product name is selected
-document.getElementById('product_name').addEventListener('change', fetchProductColors);
-// Add event listener to call fetchProductColors() when challan_no_issue is selected
-document.getElementById('select_challan').addEventListener('change', fetchProductColors);
 </script>
 
 
