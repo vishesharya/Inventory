@@ -41,7 +41,7 @@ $challan_no = viewChallanNumber($con);
 $labour_query = "SELECT DISTINCT labour_name FROM labour ORDER BY labour_name ASC";
 $labour_result = mysqli_query($con, $labour_query);
 
-$thread_name = isset($_POST['thread_name']) ? $_POST['thread_name'] : "";
+$ink_name = isset($_POST['ink_name']) ? $_POST['ink_name'] : "";
 
 
 
@@ -62,9 +62,9 @@ if ($selected_product) {
 $bladder_query = "SELECT bladder_name, bladder_remaining_quantity FROM bladder ORDER BY bladder_name ASC ";
 $bladder_result = mysqli_query($con, $bladder_query);
 
-// Logic to fetch thread names from the database
-$thread_query = "SELECT thread_name, thread_remaining_quantity FROM threads ORDER BY thread_name ASC";
-$thread_result = mysqli_query($con, $thread_query);
+// Logic to fetch ink names from the database
+$ink_query = "SELECT ink_name, ink_remaining_quantity FROM inks ORDER BY ink_name ASC";
+$ink_result = mysqli_query($con, $ink_query);
 
 $errors = array();
 
@@ -82,8 +82,8 @@ if (isset($_POST['add_product'])) {
         $quantity = mysqli_real_escape_string($con, $_POST['quantity']);
         $selected_bladder = mysqli_real_escape_string($con, $_POST['select_bladder']);
         $bladder_quantity = mysqli_real_escape_string($con, $_POST['bladder_quantity']);
-        $selected_thread = mysqli_real_escape_string($con, $_POST['select_thread']);
-        $thread_quantity = mysqli_real_escape_string($con, $_POST['thread_quantity']);
+        $selected_ink = mysqli_real_escape_string($con, $_POST['select_ink']);
+        $ink_quantity = mysqli_real_escape_string($con, $_POST['ink_quantity']);
 
         // Validate quantities against remaining stock
         $remaining_quantity_query = "SELECT remaining_quantity FROM kits_product WHERE product_name = '$product_name' AND product_base = '$product_base' AND product_color = '$product_color'";
@@ -91,11 +91,11 @@ if (isset($_POST['add_product'])) {
         $row = mysqli_fetch_assoc($remaining_quantity_result);
         $remaining_quantity = $row['remaining_quantity'];
 
-        // Validate quantities against thread stock
-        $thread_remaining_quantity_query = "SELECT thread_remaining_quantity FROM threads WHERE thread_name = '$selected_thread'";
-        $thread_remaining_quantity_result = mysqli_query($con, $thread_remaining_quantity_query);
-        $row = mysqli_fetch_assoc($thread_remaining_quantity_result);
-        $thread_remaining_quantity = $row['thread_remaining_quantity'];
+        // Validate quantities against ink stock
+        $ink_remaining_quantity_query = "SELECT ink_remaining_quantity FROM inks WHERE ink_name = '$selected_ink'";
+        $ink_remaining_quantity_result = mysqli_query($con, $ink_remaining_quantity_query);
+        $row = mysqli_fetch_assoc($ink_remaining_quantity_result);
+        $ink_remaining_quantity = $row['ink_remaining_quantity'];
 
         // Validate quantities against bladder stock
         $bladder_remaining_quantity_query = "SELECT bladder_remaining_quantity FROM bladder WHERE bladder_name = '$selected_bladder'";
@@ -104,7 +104,7 @@ if (isset($_POST['add_product'])) {
         $bladder_remaining_quantity = $row['bladder_remaining_quantity'];
 
         // Check if available stock is sufficient
-        if ($remaining_quantity < $quantity || $bladder_remaining_quantity < $bladder_quantity || $thread_remaining_quantity < $thread_quantity) {
+        if ($remaining_quantity < $quantity || $bladder_remaining_quantity < $bladder_quantity || $ink_remaining_quantity < $ink_quantity) {
             $errors[] = "Stock is not available for the selected quantities.";
         } else {
             // Check if the product already exists in the session
@@ -123,7 +123,7 @@ if (isset($_POST['add_product'])) {
             } else {
                 // Calculate total
                 $total = $remaining_quantity - $quantity;
-                $ttemp_total = $thread_remaining_quantity - $thread_quantity;
+                $ttemp_total = $ink_remaining_quantity - $ink_quantity;
                 $btemp_total = $bladder_remaining_quantity - $bladder_quantity;
 
                 // Update remaining_quantity in kits_product table
@@ -131,12 +131,12 @@ if (isset($_POST['add_product'])) {
                 $update_remaining_quantity_query = "UPDATE kits_product SET remaining_quantity = $updated_remaining_quantity WHERE product_name = '$product_name' AND product_base = '$product_base' AND product_color = '$product_color'";
                 mysqli_query($con, $update_remaining_quantity_query);
 
-                // Update thread_remaining_quantity in threads table
-                $updated_thread_remaining_quantity = $thread_remaining_quantity - $thread_quantity;
-                $update_thread_remaining_quantity_query = "UPDATE threads SET thread_remaining_quantity = $updated_thread_remaining_quantity WHERE thread_name = '$selected_thread'";
-                mysqli_query($con, $update_thread_remaining_quantity_query);
+                // Update ink_remaining_quantity in inks table
+                $updated_ink_remaining_quantity = $ink_remaining_quantity - $ink_quantity;
+                $update_ink_remaining_quantity_query = "UPDATE inks SET ink_remaining_quantity = $updated_ink_remaining_quantity WHERE ink_name = '$selected_ink'";
+                mysqli_query($con, $update_ink_remaining_quantity_query);
 
-                // Update thread_remaining_quantity in threads table
+                // Update ink_remaining_quantity in inks table
                 $updated_bladder_remaining_quantity = $bladder_remaining_quantity - $bladder_quantity;
                 $update_bladder_remaining_quantity_query = "UPDATE bladder SET bladder_remaining_quantity = $updated_bladder_remaining_quantity WHERE bladder_name = '$selected_bladder'";
                 mysqli_query($con, $update_bladder_remaining_quantity_query);
@@ -153,8 +153,8 @@ if (isset($_POST['add_product'])) {
                     'bladder_name' => $selected_bladder,
                     'bladder_quantity' => $bladder_quantity,
                     'btemp_total' => $btemp_total,
-                    'thread_name' => $selected_thread,
-                    'thread_quantity' => $thread_quantity,
+                    'ink_name' => $selected_ink,
+                    'ink_quantity' => $ink_quantity,
                     'ttemp_total' => $ttemp_total,
                     'date_and_time' => isset($_POST['date_and_time']) ? $_POST['date_and_time'] : date('Y-m-d H:i:s')
                 );
@@ -199,11 +199,11 @@ if (isset($_POST['delete_product'])) {
     $update_bladder_quantity_query = "UPDATE bladder SET bladder_remaining_quantity = bladder_remaining_quantity + $bladder_quantity WHERE bladder_name = '$bladder_name'";
     mysqli_query($con, $update_bladder_quantity_query);
 
-    // Update thread quantity
-    $thread_name = mysqli_real_escape_string($con, $deleted_product['thread_name']);
-    $thread_quantity = mysqli_real_escape_string($con, $deleted_product['thread_quantity']);
-    $update_thread_quantity_query = "UPDATE threads SET thread_remaining_quantity = thread_remaining_quantity + $thread_quantity WHERE thread_name = '$thread_name'";
-    mysqli_query($con, $update_thread_quantity_query);
+    // Update ink quantity
+    $ink_name = mysqli_real_escape_string($con, $deleted_product['ink_name']);
+    $ink_quantity = mysqli_real_escape_string($con, $deleted_product['ink_quantity']);
+    $update_ink_quantity_query = "UPDATE inks SET ink_remaining_quantity = ink_remaining_quantity + $ink_quantity WHERE ink_name = '$ink_name'";
+    mysqli_query($con, $update_ink_quantity_query);
 
     // Remove the product from the session
     unset($_SESSION['temp_products'][$delete_index]);
@@ -229,18 +229,18 @@ if (isset($_POST['submit_products'])) {
             $total = mysqli_real_escape_string($con, $product['total']);
             $bladder_name = mysqli_real_escape_string($con, $product['bladder_name']);
             $bladder_quantity = mysqli_real_escape_string($con, $product['bladder_quantity']);
-            $thread_name = mysqli_real_escape_string($con, $product['thread_name']);
-            $thread_quantity = mysqli_real_escape_string($con, $product['thread_quantity']);
+            $ink_name = mysqli_real_escape_string($con, $product['ink_name']);
+            $ink_quantity = mysqli_real_escape_string($con, $product['ink_quantity']);
             $date_and_time = mysqli_real_escape_string($con, $product['date_and_time']);
 
             // Insert product into the database
-            $insert_query = "INSERT INTO kits_issue (challan_no, labour_name, product_name, product_base, product_color, issue_quantity, total, bladder_name, bladder_quantity, thread_name, thread_quantity, date_and_time) 
-            VALUES ('$challan_no', '$labour_name', '$product_name', '$product_base', '$product_color', '$quantity', '$total', '$bladder_name', '$bladder_quantity', '$thread_name', '$thread_quantity', '$date_and_time')";
+            $insert_query = "INSERT INTO kits_issue (challan_no, labour_name, product_name, product_base, product_color, issue_quantity, total, bladder_name, bladder_quantity, ink_name, ink_quantity, date_and_time) 
+            VALUES ('$challan_no', '$labour_name', '$product_name', '$product_base', '$product_color', '$quantity', '$total', '$bladder_name', '$bladder_quantity', '$ink_name', '$ink_quantity', '$date_and_time')";
              $insert_result = mysqli_query($con, $insert_query);
 
             // Insert product into the kits_job_work table
-            $insert_job_work_query = "INSERT INTO kits_job_work (challan_no_issue, labour_name, product_name, product_base, product_color, issue_quantity, bladder_name, bladder_quantity, thread_name, thread_quantity, date_and_time) 
-            VALUES ('$challan_no', '$labour_name', '$product_name', '$product_base', '$product_color', '$quantity', '$bladder_name', '$bladder_quantity', '$thread_name', '$thread_quantity', '$date_and_time')";
+            $insert_job_work_query = "INSERT INTO kits_job_work (challan_no_issue, labour_name, product_name, product_base, product_color, issue_quantity, bladder_name, bladder_quantity, ink_name, ink_quantity, date_and_time) 
+            VALUES ('$challan_no', '$labour_name', '$product_name', '$product_base', '$product_color', '$quantity', '$bladder_name', '$bladder_quantity', '$ink_name', '$ink_quantity', '$date_and_time')";
             $insert_job_work_result = mysqli_query($con, $insert_job_work_query);
     
 
@@ -399,19 +399,19 @@ if (isset($_POST['submit_products'])) {
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="select_thread">Select Thread:</label>
-                                        <select class="form-select" id="select_thread" name="select_thread">
-                                            <option value="" selected disabled>Select Thread</option>
-                                            <?php while ($row = mysqli_fetch_assoc($thread_result)) : ?>
-                                                <option value="<?php echo $row['thread_name']; ?>"><?php echo $row['thread_name']; ?></option>
+                                        <label for="select_ink">Select ink:</label>
+                                        <select class="form-select" id="select_ink" name="select_ink">
+                                            <option value="" selected disabled>Select ink</option>
+                                            <?php while ($row = mysqli_fetch_assoc($ink_result)) : ?>
+                                                <option value="<?php echo $row['ink_name']; ?>"><?php echo $row['ink_name']; ?></option>
                                             <?php endwhile; ?>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="thread_quantity">Thread Quantity:</label>
-                                        <input type="number" class="form-control" id="thread_quantity" name="thread_quantity" placeholder="Enter Thread Quantity">
+                                        <label for="ink_quantity">ink Quantity:</label>
+                                        <input type="number" class="form-control" id="ink_quantity" name="ink_quantity" placeholder="Enter ink Quantity">
                                     </div>
                                 </div>
                             </div>
@@ -467,8 +467,8 @@ if (isset($_POST['submit_products'])) {
                                             <th>Product Quantity</th>
                                             <th>Bladder Type</th>
                                             <th>Bladder Quantity</th>
-                                            <th>Thread Type</th>
-                                            <th>Thread Quantity</th>
+                                            <th>ink Type</th>
+                                            <th>ink Quantity</th>
                                             <th>Delete Product</th>
                                         </tr>
                                     </thead>
@@ -484,8 +484,8 @@ if (isset($_POST['submit_products'])) {
                                                     <td><?php echo $product['issue_quantity']; ?></td>
                                                     <td><?php echo $product['bladder_name']; ?></td>
                                                     <td><?php echo $product['bladder_quantity']; ?></td>
-                                                    <td><?php echo $product['thread_name']; ?></td>
-                                                    <td><?php echo $product['thread_quantity']; ?></td>
+                                                    <td><?php echo $product['ink_name']; ?></td>
+                                                    <td><?php echo $product['ink_quantity']; ?></td>
                                                     <td>
                                                         <form method="post" action="">
                                                             <input type="hidden" name="delete_index" value="<?php echo $key; ?>">
@@ -514,8 +514,8 @@ if (isset($_POST['submit_products'])) {
             quantity.value = this.options[this.selectedIndex].getAttribute("data-quantity");
         });
 
-        document.getElementById("select_thread").addEventListener("change", function() {
-            var quantity = document.getElementById("thread_quantity");
+        document.getElementById("select_ink").addEventListener("change", function() {
+            var quantity = document.getElementById("ink_quantity");
             quantity.value = this.options[this.selectedIndex].getAttribute("data-quantity");
         });
     </script>
