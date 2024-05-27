@@ -38,8 +38,8 @@ function viewChallanNumber($con) {
 
 $challan_no = viewChallanNumber($con); 
 
-$labour_query = "SELECT DISTINCT labour_name FROM labour ORDER BY labour_name ASC";
-$labour_result = mysqli_query($con, $labour_query);
+$stitcher_query = "SELECT DISTINCT stitcher_nameFROM stitcher ORDER BY stitcher_nameASC";
+$stitcher_result = mysqli_query($con, $stitcher_query);
 
 $ink_name = isset($_POST['ink_name']) ? $_POST['ink_name'] : "";
 
@@ -71,7 +71,7 @@ if (isset($_POST['add_product'])) {
         $errors[] = "Please fill in all fields.";
     } else {
         // Sanitize input
-        $labour_name = isset($_POST['labour_name']) ? mysqli_real_escape_string($con, $_POST['labour_name']) : "";
+        $stitcher_name= isset($_POST['stitcher_name']) ? mysqli_real_escape_string($con, $_POST['stitcher_name']) : "";
         $product_name = mysqli_real_escape_string($con, $_POST['product_name']);
         $product_base = mysqli_real_escape_string($con, $_POST['product_base']);
         $product_color = mysqli_real_escape_string($con, $_POST['product_color']);
@@ -127,7 +127,7 @@ if (isset($_POST['add_product'])) {
                 // Insert data into temporary session storage
                 $temp_product = array(
                     'challan_no' => $challan_no,
-                    'labour_name' => $labour_name,
+                    'stitcher_name' => $stitcher_name,
                     'product_name' => $product_name,
                     'product_base' => $product_base,
                     'product_color' => $product_color,
@@ -187,7 +187,7 @@ if (isset($_POST['delete_product'])) {
     $_SESSION['temp_products'] = array_values($_SESSION['temp_products']);
 }
 
-// Store added products in the database when "Submit" button is clicked
+// Store added products in the database when "Submit" button is clicked 
 if (isset($_POST['submit_products'])) {
     $temp_products = isset($_SESSION['temp_products']) ? $_SESSION['temp_products'] : [];
 
@@ -196,7 +196,7 @@ if (isset($_POST['submit_products'])) {
     } else {
         foreach ($temp_products as $product) {
             $challan_no = mysqli_real_escape_string($con, $product['challan_no']);
-            $labour_name = mysqli_real_escape_string($con, $product['labour_name']);
+            $stitcher_name= mysqli_real_escape_string($con, $product['stitcher_name']);
             $product_name = mysqli_real_escape_string($con, $product['product_name']);
             $product_base = mysqli_real_escape_string($con, $product['product_base']);
             $product_color = mysqli_real_escape_string($con, $product['product_color']);
@@ -207,13 +207,13 @@ if (isset($_POST['submit_products'])) {
             $date_and_time = mysqli_real_escape_string($con, $product['date_and_time']);
 
             // Insert product into the database
-            $insert_query = "INSERT INTO print_issue (challan_no, labour_name, product_name, product_base, product_color, issue_quantity, total, ink_name, ink_quantity, date_and_time) 
-            VALUES ('$challan_no', '$labour_name', '$product_name', '$product_base', '$product_color', '$quantity', '$total','$ink_name', '$ink_quantity', '$date_and_time')";
+            $insert_query = "INSERT INTO print_issue (challan_no, stitcher_name, product_name, product_base, product_color, issue_quantity, total, ink_name, ink_quantity, date_and_time) 
+            VALUES ('$challan_no', '$stitcher_name', '$product_name', '$product_base', '$product_color', '$quantity', '$total','$ink_name', '$ink_quantity', '$date_and_time')";
              $insert_result = mysqli_query($con, $insert_query);
 
             // Insert product into the kits_job_work table
-            $insert_job_work_query = "INSERT INTO print_job_work (challan_no_issue, labour_name, product_name, product_base, product_color, issue_quantity,ink_name, ink_quantity, date_and_time) 
-            VALUES ('$challan_no', '$labour_name', '$product_name', '$product_base', '$product_color', '$quantity','$ink_name', '$ink_quantity', '$date_and_time')";
+            $insert_job_work_query = "INSERT INTO print_job_work (challan_no_issue, stitcher_name, product_name, product_base, product_color, issue_quantity,ink_name, ink_quantity, date_and_time) 
+            VALUES ('$challan_no', '$stitcher_name', '$product_name', '$product_base', '$product_color', '$quantity','$ink_name', '$ink_quantity', '$date_and_time')";
             $insert_job_work_result = mysqli_query($con, $insert_job_work_query);
     
 
@@ -374,15 +374,15 @@ if (isset($_POST['submit_products'])) {
                                
                                 <div class="col-md-6">
                                 <div class="form-group">
-                                <label for="select_labour">Select labour:</label>
-                                <select class="form-select" id="select_labour" name="labour_name">
-                                <option value="" selected disabled>Select labour</option>
+                                <label for="select_stitcher">Select stitcher:</label>
+                                <select class="form-select" id="select_stitcher" name="stitcher_name">
+                                <option value="" selected disabled>Select stitcher</option>
                                   <?php 
-                                  // Fetch labour names from the database
-                                  $labour_query = "SELECT labour_name FROM labour";
-                                  $labour_result = mysqli_query($con, $labour_query);
-                                  while ($row = mysqli_fetch_assoc($labour_result)) : ?>
-                                   <option value="<?php echo $row['labour_name']; ?>"><?php echo $row['labour_name']; ?></option>
+                                  // Fetch stitcher names from the database
+                                  $stitcher_query = "SELECT stitcher_nameFROM stitcher";
+                                  $stitcher_result = mysqli_query($con, $stitcher_query);
+                                  while ($row = mysqli_fetch_assoc($stitcher_result)) : ?>
+                                   <option value="<?php echo $row['stitcher_name']; ?>"><?php echo $row['stitcher_name']; ?></option>
                                    <?php endwhile; ?>
                                 </select>
                                 </div>
@@ -411,7 +411,7 @@ if (isset($_POST['submit_products'])) {
                                     <thead>
                                         <tr>
                                             <th>Challan No</th>
-                                            <th>Labour Name</th>
+                                            <th>stitcher Name</th>
                                             <th>Product Name</th>
                                             <th>Product Base</th>
                                             <th>Product Color</th>
@@ -426,7 +426,7 @@ if (isset($_POST['submit_products'])) {
                                             <?php foreach ($_SESSION['temp_products'] as $key => $product) : ?>
                                                 <tr>
                                                     <td><?php echo $product['challan_no']; ?></td>
-                                                    <td><?php echo $product['labour_name']; ?></td>
+                                                    <td><?php echo $product['stitcher_name']; ?></td>
                                                     <td><?php echo $product['product_name']; ?></td>
                                                     <td><?php echo $product['product_base']; ?></td>
                                                     <td><?php echo $product['product_color']; ?></td>
