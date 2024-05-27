@@ -355,7 +355,7 @@ if (isset($_POST['submit_products'])) {
                                             <?php endif; ?>
                                         </select>
                                     </div>
-                                </div>
+                                
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="product_color">Product Color:</label>
