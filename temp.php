@@ -74,13 +74,9 @@ if (isset($_POST['challan_no_issue'])) {
 if (isset($_POST['add_product'])) {
     // Validate input
     // Validate input for first set of products
-    if (empty($_POST['product_name']) || empty($_POST['product_base']) || empty($_POST['product_color']) || empty($_POST['quantity'])) {
+    if (empty($_POST['product_name']) || empty($_POST['product_base']) || empty($_POST['product_color']) || empty($_POST['quantity']) ||empty($_POST['product_name1']) || empty($_POST['product_base1']) || empty($_POST['product_color1'])) {
         $errors[] = "Please fill in all fields for the first product.";
-    }
-    // Validate input for second set of products
-    elseif (empty($_POST['product_name1']) || empty($_POST['product_base1']) || empty($_POST['product_color1'])) {
-        $errors[] = "Please fill in all fields for the second product.";
-    } else {
+    }else {
         // Sanitize input
         $stitcher_name = isset($_POST['stitcher_name']) ? mysqli_real_escape_string($con, $_POST['stitcher_name']) : "";
         $product_name = mysqli_real_escape_string($con, $_POST['product_name']);
