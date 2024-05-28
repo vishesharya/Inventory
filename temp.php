@@ -18,14 +18,14 @@ if ($selected_product) {
  
 // Function to fetch current number from the database
 function getCurrentNumber($con) {
-    $result = mysqli_query($con, "SELECT football_received_temp FROM challan_temp LIMIT 1");
+    $result = mysqli_query($con, "SELECT kits_printing_received_temp FROM challan_temp LIMIT 1");
     $row = mysqli_fetch_assoc($result);
-    return $row['football_received_temp'];
+    return $row['kits_printing_received_temp'];
 }
 
 // Function to update the current number in the database
 function updateCurrentNumber($con, $newNumber) {
-    mysqli_query($con, "UPDATE challan_temp SET football_received_temp = $newNumber");
+    mysqli_query($con, "UPDATE challan_temp SET kits_printing_received_temp = $newNumber");
 }
 
 // Function to generate the code prefix
@@ -190,7 +190,7 @@ if (isset($_POST['submit_products'])) {
             // Insert product into the database
             $insert_query = "INSERT INTO print_received (challan_no, sticher_name, product_name1, product_base1, product_color1, product_name, product_base, product_color, received_quantity, date_and_time) 
                 VALUES ('$challan_no', '$stitcher_name', '$product_name1', '$product_base1', '$product_color1','$product_name', '$product_base', '$product_color', '$quantity','$date_and_time')";
-                
+
             $insert_result = mysqli_query($con, $insert_query);
             if (!$insert_result) {
                 $errors[] = "Failed to store data in the database.";
