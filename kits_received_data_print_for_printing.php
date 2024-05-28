@@ -202,11 +202,11 @@ if (isset($_POST['view_entries'])) {
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="select_Stitcher">Select Stitcher:</label>
-                                        <select class="form-select" id="select_Stitcher" name="Stitcher_name" required>
+                                        <select class="form-select" id="select_stitcher" name="stitcher_name" required>
          
                                         <option value="">Select Stitcher</option>
-                                            <?php while ($row = mysqli_fetch_assoc($Stitcher_result)) : ?>
-                                                <option value="<?php echo $row['Stitcher_name']; ?>"><?php echo $row['Stitcher_name']; ?></option>
+                                            <?php while ($row = mysqli_fetch_assoc($stitcher_result)) : ?>
+                                                <option value="<?php echo $row['stitcher_name']; ?>"><?php echo $row['stitcher_name']; ?></option>
                                             <?php endwhile; ?>
                                         </select>
                                     </div>
@@ -322,10 +322,6 @@ while ($product = mysqli_fetch_assoc($result)) {
 <?php endif; ?>
 
    <!-- JavaScript code for fetching challan numbers based on selected Stitcher and date range -->
- 
-
-   
-    
 
      <script>
           document.getElementById("select_stitcher").addEventListener("change", function() {
