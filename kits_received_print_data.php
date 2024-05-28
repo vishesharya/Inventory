@@ -4,7 +4,7 @@ include_once 'include/connection.php';
 include_once 'include/admin-main.php';
 
 // Fetch stitcher names from the database
-$stitcher_query = "SELECT DISTINCT stitcher_name FROM print_issue ORDER BY stitcher_name ASC"; 
+$stitcher_query = "SELECT DISTINCT stitcher_name FROM print_received ORDER BY stitcher_name ASC"; 
 $stitcher_result = mysqli_query($con, $stitcher_query);
 
 // Check if 'challan_no' is set in session
@@ -16,7 +16,7 @@ if (isset($_SESSION['challan_no'])) {
 $result = null;
 
 // Fetch product names
-$product_query = "SELECT DISTINCT product_name FROM print_issue ORDER BY product_name ASC";
+$product_query = "SELECT DISTINCT product_name FROM print_received ORDER BY product_name ASC";
 $product_result = mysqli_query($con, $product_query);
 
 // Initialize selected product, base, and color variables
@@ -85,7 +85,7 @@ if (!empty($selected_color)) {
 }
 
 // Construct the final query
-$query = "SELECT * FROM print_issue $conditions";
+$query = "SELECT * FROM print_received $conditions";
 $result = mysqli_query($con, $query);
 }
 ?>
@@ -168,7 +168,7 @@ $result = mysqli_query($con, $query);
 <body>
     <?php include('include/kits_nav.php'); ?>
     <div class="container-fluid mt-5">
-          <h1 class="h4 text-center mb-4">KITS ISSUE DETAILS (WITHOUT PRINT) </h1> <!-- Changed container to container-fluid -->
+          <h1 class="h4 text-center mb-4">KITS RECEIVED DETAILS (PRINT) </h1> <!-- Changed container to container-fluid -->
         <div id="form" class="row justify-content-center">
             <div class="col-lg-8">
                 <div class="card">
@@ -300,36 +300,38 @@ $result = mysqli_query($con, $query);
                     <th>Sn.</th>
                     <th>Challan No.</th>
                     <th>Stitcher Name</th>
+                    <th>Received Product Name</th>
+                    <th>Received Product Base</th>
+                    <th>Received Product Color</th>
+        
                     <th>Product Name</th>
                     <th>Product Base</th>
                     <th>Product Color</th>
-                    <th>Issue Quantity</th>
-                    <th>Ink Name</th>
-                    <th>Ink Quantity</th>
+                    <th>Received Quantity</th>
                     <th>Date</th>
                 </tr>
             </thead>
             <tbody>
             <?php 
             $sn = 1;
-            $total_issue_quantity = 0;
-            $total_ink_quantity = 0;
-         
+            $total_received_quantity = 0;
+           
             while ($data = mysqli_fetch_array($result)) {
                 $total_issue_quantity += $data['issue_quantity'];
-                $total_ink_quantity += $data['ink_quantity'];
+               
                
                 ?>
                 <tr>
                 <td><?php echo $sn; ?>.</td>
                         <td><?php echo $data['challan_no']; ?></td>
                         <td><?php echo $data['stitcher_name']; ?></td>
+                        <td><?php echo $data['product_name1']; ?></td>
+                        <td><?php echo ucfirst($data['product_base1']); ?></td>
+                        <td><?php echo ucfirst($data['product_color1']); ?></td>
                         <td><?php echo $data['product_name']; ?></td>
                         <td><?php echo ucfirst($data['product_base']); ?></td>
                         <td><?php echo ucfirst($data['product_color']); ?></td>
-                        <td><?php echo $data['issue_quantity']; ?></td>
-                        <td><?php echo $data['ink_name']; ?></td>
-                        <td><?php echo $data['ink_quantity']; ?></td>
+                        <td><?php echo $data['received_quantity']; ?></td>
                         <td><?php echo date('d/m/Y', strtotime($data['date_and_time'])); ?></td>
 
                 </tr>
@@ -342,8 +344,7 @@ $result = mysqli_query($con, $query);
     <td colspan="5"></td> <!-- Colspan to span across columns -->
     <td><b>Total : </b></td>
     <td><?php echo $total_issue_quantity; ?></td>
-    <td></td> <!-- Empty cell for bladder name -->
-    <td><?php echo $total_ink_quantity; ?></td>
+   
    
             </tr>
         </tfoot>
@@ -373,9 +374,9 @@ $result = mysqli_query($con, $query);
                         option.text = challan;
                         challanSelect.appendChild(option);
                     });
-                } 
+                }
             };
-            xhttp.open("GET", "fetch_challan_no_for_kits_print_issue.php?stitcher=" + selectedStitcher + "&from_date=" + fromDate + "&to_date=" + toDate, true);
+            xhttp.open("GET", "fetch_challan_no_for_kits_issue.php?stitcher=" + selectedStitcher + "&from_date=" + fromDate + "&to_date=" + toDate, true);
             xhttp.send();
         }
 
