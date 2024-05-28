@@ -286,14 +286,19 @@ if (!empty($selected_challan)) {
       
        
         <div id="head_details">
-            <div>
-            <p class="fw-bold" >Stitcher : <?php echo $Stitcher_name; ?></p>
-            </div>
-            <div>
+                <div>
+                    <p id="stitcher_name" >Stitcher : <?php echo $stitcher_name; ?></p>
+                     <p>Stitcher Contact : <?php echo $stitcher_contact; ?></p>
+                     <p>Stitcher Aadhar : <?php echo $stitcher_aadhar; ?></p>
+                     <p>Stitcher Pan : <?php echo $stitcher_pan; ?></p>
+                     <p>Stitcher Address : <?php echo $stitcher_address; ?></p>
+                    <!-- Add other details as needed -->
+                </div>
+                <div>
                     <p><br/><br/>Challan No: <?php echo $challan_no; ?></p>
                     <p>Date: <?php echo date('d-m-Y', strtotime($date_and_time)); ?></p>
+                </div>
             </div>
-        </div>
     
 
         </div>
