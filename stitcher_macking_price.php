@@ -12,7 +12,6 @@ $result = null;
 $total_ist_price = 0;
 $total_iind_price = 0;
 $total_thread_price = 0;
-$thread_price = 0;
 
 // Check if 'View' button is clicked
 if (isset($_POST['view_entries'])) { 
