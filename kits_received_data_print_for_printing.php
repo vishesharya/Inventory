@@ -360,19 +360,16 @@ while ($product = mysqli_fetch_assoc($result)) {
 
    <!-- JavaScript code for fetching challan numbers based on selected Stitcher and date range -->
 
-     <script>
-          document.getElementById("select_stitcher").addEventListener("change", function() {
-            var selectedStitcher = this.value;
-            fetchChallanNumbers(selectedStitcher);
-        });
+ 
 
-        function fetchChallanNumbers(selectedStitcher) {
+<script>
+        function fetchChallanNumbers(selectedStitcher, fromDate, toDate) {
             var xhttp = new XMLHttpRequest();
             xhttp.onreadystatechange = function() {
                 if (this.readyState == 4 && this.status == 200) {
                     var challanSelect = document.getElementById("select_challan");
                     var challanNumbers = JSON.parse(this.responseText);
-                    challanSelect.innerHTML = "<option value='' selected disabled>Select Challan No</option>";
+                    challanSelect.innerHTML = "<option value='' selected disabled>Select Issue Challan No</option>";
                     challanNumbers.forEach(function(challan) {
                         var option = document.createElement("option");
                         option.value = challan;
@@ -381,25 +378,25 @@ while ($product = mysqli_fetch_assoc($result)) {
                     });
                 }
             };
-            xhttp.open("GET", "fetch_challan_no_for_kits_printing_received.php?stitcher=" + selectedStitcher, true);
+            xhttp.open("GET", "fetch_challan_no_for_kits_printing_received.php?stitcher=" + selectedStitcher + "&from_date=" + fromDate + "&to_date=" + toDate, true);
             xhttp.send();
         }
-  
 
-function handleStitcherChange() {
-    var selectedStitcher = document.getElementById("select_Stitcher").value;
-    if (selectedStitcher) {
-        fetchChallanNumbers(selectedStitcher);
-    }
-}
+        function handleDateRangeChange() {
+            var selectedStitcher = document.getElementById("select_stitcher").value;
+            var fromDate = document.getElementById("from_date").value;
+            var toDate = document.getElementById("to_date").value;
+            if (selectedStitcher && fromDate && toDate) {
+                fetchChallanNumbers(selectedStitcher, fromDate, toDate);
+            }
+        }
 
-document.getElementById("select_stitcher").addEventListener("change", handleStitcherChange);
-document.getElementById("from_date").addEventListener("change", handleStitcherChange);
-document.getElementById("to_date").addEventListener("change", handleStitcherChange);
+        document.getElementById("from_date").addEventListener("change", handleDateRangeChange);
+        document.getElementById("to_date").addEventListener("change", handleDateRangeChange);
 
-// Trigger initial fetch when page loads
-handleStitcherChange();
-
+        document.getElementById("select_stitcher").addEventListener("change", function() {
+            handleDateRangeChange();
+        });
     </script>
 </body>
 </html>
