@@ -206,7 +206,7 @@ if (!empty($selected_challan)) {
                         <form method="post" action="">
 
 
-                         <div class="date_input">
+                        <div class="date_input">
                                       <!-- From date -->
                                 <div class="col-md-6">
                                     <div class="form-group">
