@@ -399,7 +399,6 @@ if (isset($_POST['submit_products'])) {
                                             <th>Product Base</th>
                                             <th>Product Color</th>
                                             <th>Quantity</th>
-                                            
                                             <th>Action</th>
                                         </tr>
                                     </thead>
