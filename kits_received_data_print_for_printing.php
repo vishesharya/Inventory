@@ -190,7 +190,7 @@ if (!empty($selected_challan)) {
     <div class="container-fluid mt-5">
           
         <div id="form" class="row justify-content-center">
-        <h1 class="h4 text-center mb-4">KITS RECEIVING SLIP</h1> <!-- Changed container to container-fluid -->
+        <h1 class="h4 text-center mb-4">KITS RECEIVING SLIP (PRINT)</h1> <!-- Changed container to container-fluid -->
             <div class="col-lg-8">
                 <div class="card">
                     <div class="card-body">

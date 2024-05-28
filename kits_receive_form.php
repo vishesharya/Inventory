@@ -199,7 +199,8 @@ if (isset($_POST['submit_products'])) {
             $product_name = mysqli_real_escape_string($con, $product['product_name']);
             $product_base = mysqli_real_escape_string($con, $product['product_base']);
             $product_color = mysqli_real_escape_string($con, $product['product_color']);
-            $quantity = mysqli_real_escape_string($con, $product['received_quantity']);
+            $ist_quantity = mysqli_real_escape_string($con, $product['received_quantity1']);
+            $iind_quantity = mysqli_real_escape_string($con, $product['received_quantity2']);
          
             $date_and_time = mysqli_real_escape_string($con, $product['date_and_time']);
             // Insert product into the database
