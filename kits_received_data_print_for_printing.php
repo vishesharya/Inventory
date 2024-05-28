@@ -287,7 +287,7 @@ if (!empty($selected_challan)) {
        
         <div id="head_details">
                 <div>
-                    <p id="stitcher_name" >Stitcher : <?php echo $stitcher_name; ?></p>
+                    <p id="stitcher_name">Stitcher : <?php echo $stitcher_name; ?></p>
                      <p>Stitcher Contact : <?php echo $stitcher_contact; ?></p>
                      <p>Stitcher Aadhar : <?php echo $stitcher_aadhar; ?></p>
                      <p>Stitcher Pan : <?php echo $stitcher_pan; ?></p>
@@ -342,7 +342,7 @@ while ($product = mysqli_fetch_assoc($result)) {
 // Display total quantity row
 ?>
 <tr>
-    <td colspan="3" class="text-end">Total</td>
+    <td colspan="6" class="text-end">Total</td>
     <td><?php echo $total_quantity; ?></td>
 </tr>
 
