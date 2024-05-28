@@ -145,9 +145,19 @@ if (isset($_POST['delete_product'])) {
     $update_issue_quantity_query = "UPDATE print_job_work SET issue_quantity = issue_quantity + $deleted_quantity WHERE challan_no_issue = '{$deleted_product['challan_no_issue']}' AND product_name = '$product_name' AND product_base = '$product_base' AND product_color = '$product_color' AND stitcher_name = '{$deleted_product['stitcher_name']}'";
     mysqli_query($con, $update_issue_quantity_query);
 
+    // Check if the status is 1 and update it to 0
+    $check_status_query = "SELECT status FROM print_job_work WHERE challan_no_issue = '{$deleted_product['challan_no_issue']}' AND product_name = '$product_name' AND product_base = '$product_base' AND product_color = '$product_color' AND stitcher_name = '{$deleted_product['stitcher_name']}'";
+    $status_result = mysqli_query($con, $check_status_query);
+    $status_row = mysqli_fetch_assoc($status_result);
+    if ($status_row['status'] == 1) {
+        $update_status_query = "UPDATE print_job_work SET status = 0 WHERE challan_no_issue = '{$deleted_product['challan_no_issue']}' AND product_name = '$product_name' AND product_base = '$product_base' AND product_color = '$product_color' AND stitcher_name = '{$deleted_product['stitcher_name']}'";
+        mysqli_query($con, $update_status_query);
+    }
+
     // Update the remaining_quantity in kits_product
     $update_remaining_quantity_query = "UPDATE kits_product SET remaining_quantity = remaining_quantity - $deleted_quantity WHERE product_name = '{$deleted_product['product_name1']}' AND product_base = '{$deleted_product['product_base1']}' AND product_color = '{$deleted_product['product_color1']}'";
     mysqli_query($con, $update_remaining_quantity_query);
+    
 
     // Remove the product from the session
     unset($_SESSION['temp_products'][$delete_index]);
