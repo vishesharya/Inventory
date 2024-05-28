@@ -1,4 +1,4 @@
-<?php
+2<?php
 session_start();
 include_once 'include/connection.php';
 include_once 'include/admin-main.php';
@@ -325,7 +325,7 @@ while ($product = mysqli_fetch_assoc($result)) {
  
 
    
-     // ajax_script.js
+    
 
      <script>
           document.getElementById("select_stitcher").addEventListener("change", function() {
