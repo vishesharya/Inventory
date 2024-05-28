@@ -390,11 +390,12 @@ if (isset($_POST['submit_products'])) {
                                 <table class="table table-bordered">
                                     <thead>
                                         <tr>
+                                             <th>Challan No</th>
+                                            <th>Stitcher Name</th>
                                             <th>Received Product Name</th>
                                             <th>Received Product Base</th>
                                             <th>Received Product Color</th>
-                                            <th>Challan No</th>
-                                            <th>Stitcher Name</th>
+                                            
                                             <th>Product Name</th>
                                             <th>Product Base</th>
                                             <th>Product Color</th>
