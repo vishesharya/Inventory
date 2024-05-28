@@ -185,8 +185,8 @@ if (isset($_POST['submit_products'])) {
             $product_base1 = mysqli_real_escape_string($con, $product['product_base1']);
             $product_color1 = mysqli_real_escape_string($con, $product['product_color1']);
             $quantity = mysqli_real_escape_string($con, $product['received_quantity']);
-           
             $date_and_time = mysqli_real_escape_string($con, $product['date_and_time']);
+            
             // Insert product into the database
             $insert_query = "INSERT INTO print_received (challan_no, stitcher_name, product_name1, product_base1, product_color1, product_name, product_base, product_color, received_quantity, date_and_time) 
                             VALUES ('$challan_no', '$stitcher_name', '$product_name1', '$product_base1', '$product_color1','$product_name', '$product_base', '$product_color', '$quantity','$date_and_time')";
@@ -211,6 +211,8 @@ if (isset($_POST['submit_products'])) {
         }
     }
 }
+
+   
 ?>
 
 <!DOCTYPE html>
