@@ -343,7 +343,7 @@ $result = mysqli_query($con, $query);
                                    
     <td colspan="5"></td> <!-- Colspan to span across columns -->
     <td><b>Total : </b></td>
-    <td><?php echo $total_issue_quantity; ?></td>
+    <td><?php echo $total_received_quantity; ?></td>
    
    
             </tr>
