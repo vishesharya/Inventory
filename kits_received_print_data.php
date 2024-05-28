@@ -317,7 +317,7 @@ $result = mysqli_query($con, $query);
             $total_received_quantity = 0;
            
             while ($data = mysqli_fetch_array($result)) {
-                $total_issue_quantity += $data['issue_quantity'];
+                $total_received_quantity += $data['received_quantity'];
                
                
                 ?>
