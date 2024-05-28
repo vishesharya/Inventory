@@ -12,6 +12,13 @@ $selected_product = isset($_POST['product_name']) ? mysqli_real_escape_string($c
 $selected_base = isset($_POST['product_base']) ? mysqli_real_escape_string($con, $_POST['product_base']) : null;
 $selected_color = isset($_POST['product_color']) ? mysqli_real_escape_string($con, $_POST['product_color']) : null;
 
+
+
+// Fetch product names
+$product_query = "SELECT DISTINCT product_name FROM kits_product ORDER BY product_name ASC";
+$product_result = mysqli_query($con, $product_query);
+
+
 // Logic to fetch product bases and colors based on selected product
 if ($selected_product) {
     $product_base_query = "SELECT DISTINCT product_base FROM sheets_product WHERE product_name = '$selected_product' ORDER BY product_base ASC";
@@ -47,11 +54,13 @@ if (isset($_POST['view_entries'])) {
     if (!empty($selected_product)) {
         $conditions[] = "product_name = '$selected_product'";
     }
-
+    
+    // Add product base filter if provided
     if (!empty($selected_base)) {
         $conditions[] = "product_base = '$selected_base'";
     }
-
+    
+    // Add product color filter if provided
     if (!empty($selected_color)) {
         $conditions[] = "product_color = '$selected_color'";
     }
@@ -209,43 +218,45 @@ if (isset($_POST['view_entries'])) {
                                     </div>
                                 </div>
 
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="product_name">Select Product:</label>
-                                        <select class="form-select" id="product_name" name="product_name" onchange="this.form.submit()">
-                                            <option value="" selected disabled>Select Product</option>
-                                            <?php while ($row = mysqli_fetch_assoc($product_result)) : ?>
-                                                <option value="<?php echo $row['product_name']; ?>" <?php echo $selected_product == $row['product_name'] ? 'selected' : ''; ?>><?php echo $row['product_name']; ?></option>
-                                            <?php endwhile; ?>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="product_base">Product Base:</label>
-                                        <select class="form-select" id="product_base" name="product_base">
-                                            <option value="" selected disabled>Select Product Base</option>
-                                            <?php if ($selected_product) : ?>
-                                                <?php while ($row = mysqli_fetch_assoc($product_base_result)) : ?>
-                                                    <option value="<?php echo $row['product_base']; ?>"><?php echo $row['product_base']; ?></option>
-                                                <?php endwhile; ?>
-                                            <?php endif; ?>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="product_color">Product Color:</label>
-                                        <select class="form-select" id="product_color" name="product_color">
-                                            <option value="" selected disabled>Select Product Color</option>
-                                            <?php if ($selected_product) : ?>
-                                                <?php while ($row = mysqli_fetch_assoc($product_color_result)) : ?>
-                                                    <option value="<?php echo $row['product_color']; ?>"><?php echo $row['product_color']; ?></option>
-                                                <?php endwhile; ?>
-                                            <?php endif; ?>
-                                        </select>
-                                    </div>
-                                </div>
+                                <!-- Inside the form -->
+<div class="col-md-6">
+    <div class="form-group">
+        <label for="product_name">Select Product:</label>
+        <select class="form-select" id="product_name" name="product_name" onchange="this.form.submit()">
+            <option value="" selected disabled>Select Product</option>
+            <?php while ($row = mysqli_fetch_assoc($product_result)) : ?>
+                <option value="<?php echo $row['product_name']; ?>" <?php echo $selected_product == $row['product_name'] ? 'selected' : ''; ?>><?php echo $row['product_name']; ?></option>
+            <?php endwhile; ?>
+        </select>
+    </div>
+</div>
+<div class="col-md-6">
+    <div class="form-group">
+        <label for="product_base">Product Base:</label>
+        <select class="form-select" id="product_base" name="product_base">
+            <option value="" selected disabled>Select Product Base</option>
+            <?php if ($selected_product) : ?>
+                <?php while ($row = mysqli_fetch_assoc($product_base_result)) : ?>
+                    <option value="<?php echo $row['product_base']; ?>"><?php echo $row['product_base']; ?></option>
+                <?php endwhile; ?>
+            <?php endif; ?>
+        </select>
+    </div>
+</div>
+<div class="col-md-6">
+    <div class="form-group">
+        <label for="product_color">Product Color:</label>
+        <select class="form-select" id="product_color" name="product_color">
+            <option value="" selected disabled>Select Product Color</option>
+            <?php if ($selected_product) : ?>
+                <?php while ($row = mysqli_fetch_assoc($product_color_result)) : ?>
+                    <option value="<?php echo $row['product_color']; ?>"><?php echo $row['product_color']; ?></option>
+                <?php endwhile; ?>
+            <?php endif; ?>
+        </select>
+    </div>
+</div>
+
 
                           </div>
                             
