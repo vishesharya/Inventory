@@ -19,7 +19,7 @@ if (isset($_GET['stitcher'])) {
 
     $result = mysqli_query($con, $query);
 
-    if ($result) {
+    if ($result) { 
         $challanNumbers = array();
         while ($row = mysqli_fetch_assoc($result)) {
             $challanNumbers[] = $row['challan_no'];
