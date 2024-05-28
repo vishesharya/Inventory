@@ -7,86 +7,61 @@ include_once 'include/admin-main.php';
 $stitcher_query = "SELECT DISTINCT stitcher_name FROM print_received ORDER BY stitcher_name ASC"; 
 $stitcher_result = mysqli_query($con, $stitcher_query);
 
-// Check if 'challan_no' is set in session
-if (isset($_SESSION['challan_no'])) {
-    $challan_no = $_SESSION['challan_no'];
-}
-
-// Initialize $result variable
-$result = null;
-
-// Fetch product names
-$product_query = "SELECT DISTINCT product_name FROM print_received ORDER BY product_name ASC";
-$product_result = mysqli_query($con, $product_query);
-
 // Initialize selected product, base, and color variables
 $selected_product = isset($_POST['product_name']) ? mysqli_real_escape_string($con, $_POST['product_name']) : null;
 $selected_base = isset($_POST['product_base']) ? mysqli_real_escape_string($con, $_POST['product_base']) : null;
 $selected_color = isset($_POST['product_color']) ? mysqli_real_escape_string($con, $_POST['product_color']) : null;
 
 // Logic to fetch product bases and colors based on selected product
-$selected_product = isset($_POST['product_name']) ? $_POST['product_name'] : null;
 if ($selected_product) {
     $product_base_query = "SELECT DISTINCT product_base FROM sheets_product WHERE product_name = '$selected_product' ORDER BY product_base ASC";
     $product_color_query = "SELECT DISTINCT product_color FROM sheets_product WHERE product_name = '$selected_product' ORDER BY product_color ASC";
     $product_base_result = mysqli_query($con, $product_base_query);
     $product_color_result = mysqli_query($con, $product_color_query);
 }
+
 // Check if 'View' button is clicked
 if (isset($_POST['view_entries'])) {
-    // Get selected stitcher
-    $stitcher_name = isset($_POST['stitcher_name']) ? mysqli_real_escape_string($con, $_POST['stitcher_name']) : '';
-    $selected_product = isset($_POST['product_name']) ? mysqli_real_escape_string($con, $_POST['product_name']) : '';
-    $selected_base = isset($_POST['product_base']) ? mysqli_real_escape_string($con, $_POST['product_base']) : '';
-    $selected_color = isset($_POST['product_color']) ? mysqli_real_escape_string($con, $_POST['product_color']) : '';
+    // Fetch data based on form inputs
+    $query = "SELECT * FROM print_received";
 
-   // Initialize conditions
-$conditions = "";
+    // Add conditions based on form inputs
+    $conditions = array();
 
-// Add stitcher condition
-if (!empty($stitcher_name)) {
-    $conditions .= " WHERE stitcher_name = '$stitcher_name'";
-}
+    if (!empty($_POST['stitcher_name'])) {
+        $stitcher_name = mysqli_real_escape_string($con, $_POST['stitcher_name']);
+        $conditions[] = "stitcher_name = '$stitcher_name'";
+    }
 
-// Add date range condition
-if (!empty($_POST['from_date']) && !empty($_POST['to_date'])) {
-    // Get selected date range
-    $start_date = mysqli_real_escape_string($con, $_POST['from_date']);
-    $end_date = mysqli_real_escape_string($con, $_POST['to_date']);
+    if (!empty($_POST['from_date']) && !empty($_POST['to_date'])) {
+        $start_date = mysqli_real_escape_string($con, $_POST['from_date']);
+        $end_date = mysqli_real_escape_string($con, $_POST['to_date']);
+        $conditions[] = "date_and_time BETWEEN '$start_date' AND '$end_date'";
+    }
 
-    // Add AND or WHERE depending on whether previous conditions exist
-    $conditions .= ($conditions == "") ? " WHERE" : " AND";
-    $conditions .= " date_and_time BETWEEN '$start_date' AND '$end_date'";
-}
+    if (!empty($_POST['challan_no'])) {
+        $challan_no = mysqli_real_escape_string($con, $_POST['challan_no']);
+        $conditions[] = "challan_no = '$challan_no'";
+    }
 
-// Add challan number condition
-if (!empty($_POST['challan_no'])) {
-    // Get selected challan number
-    $challan_no = mysqli_real_escape_string($con, $_POST['challan_no']);
-    
-    // Add AND or WHERE depending on whether previous conditions exist
-    $conditions .= ($conditions == "") ? " WHERE" : " AND";
-    $conditions .= " challan_no = '$challan_no'";
-}
+    if (!empty($selected_product)) {
+        $conditions[] = "product_name = '$selected_product'";
+    }
 
-// Add product name filter if provided
-if (!empty($selected_product)) {
-    $conditions .= " AND product_name = '$selected_product'";
-}
+    if (!empty($selected_base)) {
+        $conditions[] = "product_base = '$selected_base'";
+    }
 
-// Add product base filter if provided
-if (!empty($selected_base)) {
-    $conditions .= " AND product_base = '$selected_base'";
-}
+    if (!empty($selected_color)) {
+        $conditions[] = "product_color = '$selected_color'";
+    }
 
-// Add product color filter if provided
-if (!empty($selected_color)) {
-    $conditions .= " AND product_color = '$selected_color'";
-}
+    // Combine conditions
+    if (!empty($conditions)) {
+        $query .= " WHERE " . implode(" AND ", $conditions);
+    }
 
-// Construct the final query
-$query = "SELECT * FROM print_received $conditions";
-$result = mysqli_query($con, $query);
+    $result = mysqli_query($con, $query);
 }
 ?>
 
