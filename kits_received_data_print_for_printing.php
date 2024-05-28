@@ -1,4 +1,4 @@
-2<?php
+<?php
 session_start();
 include_once 'include/connection.php';
 include_once 'include/admin-main.php';
@@ -276,11 +276,13 @@ if (isset($_POST['view_entries'])) {
                 <table class="table table-bordered">
                     <thead>
                         <tr>
-                            <th>Product Name</th>
-                            <th>Product Base</th>
-                            <th>Product Color</th>
-                            <th>Ist Quantity</th>
-                            <th>IInd Quantity</th>
+                            <th>Receive Product Name</th>
+                            <th>Receive Product Base</th>
+                            <th>Receive Product Color</th>
+                            <th>Issue Product Name</th>
+                            <th>Issue Product Base</th>
+                            <th>Issue Product Color</th>
+                            <th>Quantity</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -293,11 +295,15 @@ while ($product = mysqli_fetch_assoc($result)) {
     $total_quantity += $product['received_quantity']; // Add received quantity to total
     ?>
     <tr>
+    <td><?php echo $product['product_name1']; ?></td>
+        <td><?php echo ucfirst($product['product_base1']); ?></td>
+        <td><?php echo ucfirst($product['product_color1']); ?></td>
         <td><?php echo $product['product_name']; ?></td>
         <td><?php echo ucfirst($product['product_base']); ?></td>
         <td><?php echo ucfirst($product['product_color']); ?></td>
-        <td><?php echo $product['received_quantity1']; ?></td>
-        <td><?php echo $product['received_quantity2']; ?></td>
+
+        <td><?php echo $product['received_quantity']; ?></td>
+
     </tr>
     <?php
 }
