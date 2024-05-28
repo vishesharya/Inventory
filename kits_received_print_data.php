@@ -222,7 +222,7 @@ $result = mysqli_query($con, $query);
                           
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="select_challan">Select Issue Challan No:</label>
+                                        <label for="select_challan">Select Received Challan No:</label>
                                         <select class="form-select" id="select_challan" name="challan_no">
                                             <option value="" selected disabled>Select Issue Challan No</option>
                                             <?php if (isset($challan_result_issue)) : ?>
@@ -376,7 +376,7 @@ $result = mysqli_query($con, $query);
                     });
                 }
             };
-            xhttp.open("GET", "fetch_challan_no_for_kits_issue.php?stitcher=" + selectedStitcher + "&from_date=" + fromDate + "&to_date=" + toDate, true);
+            xhttp.open("GET", "fetch_challan_no_for_kits_print_received.php?stitcher=" + selectedStitcher + "&from_date=" + fromDate + "&to_date=" + toDate, true);
             xhttp.send();
         }
 
