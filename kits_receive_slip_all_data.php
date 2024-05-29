@@ -14,7 +14,7 @@ $date_and_time_result = mysqli_query($con, $date_and_time_query);
 $date_and_time_row = mysqli_fetch_assoc($date_and_time_result);
 $date_and_time = isset($date_and_time_row['date_and_time']) ? $date_and_time_row['date_and_time'] : "";
 
-
+ 
 
 // Check if 'challan_no' is set in session
 if (isset($_SESSION['challan_no'])) {
@@ -299,8 +299,8 @@ while ($product = mysqli_fetch_assoc($result)) {
         <td><?php echo $product['product_name']; ?></td>
         <td><?php echo ucfirst($product['product_base']); ?></td>
         <td><?php echo ucfirst($product['product_color']); ?></td>
-        <td><?php echo $product['received_quantity1']; ?></td>
-        <td><?php echo $product['received_quantity2']; ?></td>
+        <td><?php echo $product['ist_quantity']; ?></td>
+        <td><?php echo $product['iind_quantity']; ?></td>
     </tr>
     <?php
 }

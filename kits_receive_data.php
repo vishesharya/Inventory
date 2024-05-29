@@ -14,7 +14,7 @@ if (isset($_SESSION['challan_no'])) {
 }
 
 // Initialize $result variable
-$result = null;
+$result = null; 
 
 // Fetch product names
 $product_query = "SELECT DISTINCT product_name FROM kits_product ORDER BY product_name ASC";
@@ -287,8 +287,8 @@ if (isset($_POST['view_entries'])) {
                     $total1_quantity = 0;
                     $total2_quantity = 0;
                     while ($data = mysqli_fetch_array($result)): 
-                        $total1_quantity += $data['received_quantity1'];
-                        $total2_quantity += $data['received_quantity2'];
+                        $total1_quantity += $data['ist_quantity'];
+                        $total2_quantity += $data['iind_quantity'];
                     ?>
                     <tr>
                         <td><?php echo $sn; ?>.</td>
@@ -297,8 +297,8 @@ if (isset($_POST['view_entries'])) {
                          <td><?php echo $data['product_name']; ?></td>
                         <td><?php echo ucfirst($data['product_base']); ?></td>
                         <td><?php echo ucfirst($data['product_color']); ?></td>
-                        <td><?php echo $data['received_quantity1']; ?></td>
-                        <td><?php echo $data['received_quantity2']; ?></td>
+                        <td><?php echo $data['ist_quantity']; ?></td>
+                        <td><?php echo $data['iind_quantity']; ?></td>
                         <td><?php echo date('d/m/Y', strtotime($data['date_and_time'])); ?></td>
 
                     </tr>
