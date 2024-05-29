@@ -199,14 +199,14 @@ if (isset($_POST['submit_products'])) {
             $product_name = mysqli_real_escape_string($con, $product['product_name']);
             $product_base = mysqli_real_escape_string($con, $product['product_base']);
             $product_color = mysqli_real_escape_string($con, $product['product_color']);
-            $ist_quantity = mysqli_real_escape_string($con, $product['ist_quantity']);
-            $iind_quantity = mysqli_real_escape_string($con, $product['iind_quantity']);
+            $ist_quantity = intval($product['ist_quantity']);
+            $iind_quantity = intval($product['iind_quantity']);
             $date_and_time = mysqli_real_escape_string($con, $product['date_and_time']);
-     
+
             // Insert product into the database
-            $insert_query = "INSERT INTO kits_received (challan_no, labour_name, product_name, product_base, product_color,ist_quantity,iind_quantity,date_and_time) 
-            VALUES ('$challan_no', '$labour_name', '$product_name', '$product_base', '$product_color', '$ist_quantity','$iind_quantity' '$date_and_time')";
-             $insert_result = mysqli_query($con, $insert_query);
+            $insert_query = "INSERT INTO kits_received (challan_no, labour_name, product_name, product_base, product_color, ist_quantity, iind_quantity, date_and_time) 
+                             VALUES ('$challan_no', '$labour_name', '$product_name', '$product_base', '$product_color', $ist_quantity, $iind_quantity, '$date_and_time')";
+            $insert_result = mysqli_query($con, $insert_query);
 
             if (!$insert_result) {
                 $errors[] = "Failed to store data in the database.";
@@ -216,7 +216,7 @@ if (isset($_POST['submit_products'])) {
         if (empty($errors)) {
             // Update Challan Number
             $challan_no = generateChallanNumber($con);
-            
+
             // Clear session storage after insertion
             unset($_SESSION['temp_products']);
 
@@ -225,8 +225,7 @@ if (isset($_POST['submit_products'])) {
             exit();
         }
     }
-} 
-
+}
 ?>
 
 <!DOCTYPE html>
