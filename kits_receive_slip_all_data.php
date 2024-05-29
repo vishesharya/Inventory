@@ -289,11 +289,13 @@ if (isset($_POST['view_entries'])) {
                     <tbody>
                     <?php
 // Initialize total quantity
-$total_quantity = 0;
+$total_quantity1 = 0;
+$total_quantity2 = 0;
 
 // Fetch and display product details
 while ($product = mysqli_fetch_assoc($result)) {
-    $total_quantity += $product['received_quantity']; // Add received quantity to total
+    $total_quantity1 += $product['ist_quantity'];
+    $total_quantity2 += $product['iind_quantity']; // Add received quantity to total
     ?>
     <tr>
         <td><?php echo $product['product_name']; ?></td>
@@ -309,7 +311,8 @@ while ($product = mysqli_fetch_assoc($result)) {
 ?>
 <tr>
     <td colspan="3" class="text-end">Total</td>
-    <td><?php echo $total_quantity; ?></td>
+    <td><?php echo $total_quantity1; ?></td>
+    <td><?php echo $total_quantity2; ?></td>
 </tr>
 
                     </tbody>
