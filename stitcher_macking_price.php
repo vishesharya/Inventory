@@ -264,10 +264,8 @@ if (isset($_POST['view_entries'])) {
         <tr>
             <td><?php echo $sn; ?>.</td>
             <?php
-                    $ist_price = 0;
-                    $iind_price = 0;
-// Fetch Ist Price if result set is not empty
-if ($ist_price_result && mysqli_num_rows($ist_price_result) > 0) {
+               // Fetch Ist Price if result set is not empty
+if (isset($ist_price_result) && $ist_price_result && mysqli_num_rows($ist_price_result) > 0) {
     $ist_price_row = mysqli_fetch_assoc($ist_price_result);
     $ist_price = ($data['S_Ist_C_Ist'] + $data['S_Ist_C_IInd']) * $ist_price_row['per_pice_price'];
 } else {
@@ -276,13 +274,14 @@ if ($ist_price_result && mysqli_num_rows($ist_price_result) > 0) {
 }
 
 // Fetch IInd Price if result set is not empty
-if ($iind_price_result && mysqli_num_rows($iind_price_result) > 0) {
+if (isset($iind_price_result) && $iind_price_result && mysqli_num_rows($iind_price_result) > 0) {
     $iind_price_row = mysqli_fetch_assoc($iind_price_result);
     $iind_price = ($data['S_IInd_C_Ist'] + $data['S_IInd_C_IInd']) * $iind_price_row['2nd_price'];
 } else {
     // Set default price if no rows are returned
     $iind_price = 0;
 }
+
 
             $total_ist_price += $ist_price;
             $total_iind_price += $iind_price;
