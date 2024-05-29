@@ -289,18 +289,27 @@ if (isset($_POST['view_entries'])) {
                 $thread_result = mysqli_query($con, $thread_query);
         
                 // Calculate total thread price for each row
+              // Calculate total thread price for each row
                 while ($thread_data = mysqli_fetch_array($thread_result)) {
-                    // Fetch thread price from 'threads' table
-                    $thread_name = $thread_data['thread_name'];
-                    $thread_quantity = $thread_data['thread_quantity'];
-                    $thread_price_query = "SELECT thread_price FROM threads WHERE thread_name = '$thread_name'";
-                    $thread_price_result = mysqli_query($con, $thread_price_query);
-                    $thread_price_row = mysqli_fetch_assoc($thread_price_result);
-                    $thread_price = $thread_price_row['thread_price'];
-        
-                    // Calculate total thread price
-                    $total_thread_price += ($thread_quantity * $thread_price);
+                  // Fetch thread price from 'threads' table
+                 $thread_name = $thread_data['thread_name'];
+                $thread_quantity = $thread_data['thread_quantity'];
+                 $thread_price_query = "SELECT thread_price FROM threads WHERE thread_name = '$thread_name'";
+                 $thread_price_result = mysqli_query($con, $thread_price_query);
+    
+                  // Check if the query returned any rows
+                  if ($thread_price_result && mysqli_num_rows($thread_price_result) > 0) {
+                       $thread_price_row = mysqli_fetch_assoc($thread_price_result);
+                      $thread_price = $thread_price_row['thread_price'];
+                 } else {
+                      // Set $thread_price to 0 if $thread_price_row is null
+                     $thread_price = 0;
+                      }
+
+                     // Calculate total thread price
+                 $total_thread_price += ($thread_quantity * $thread_price);
                 }
+
             
 
             ?>
