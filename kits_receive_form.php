@@ -186,7 +186,6 @@ if (isset($_POST['delete_product'])) {
     $_SESSION['temp_products'] = array_values($_SESSION['temp_products']); // Re-index the array
 }
 
-// Store added products in the database when "Submit" button is clicked
 if (isset($_POST['submit_products'])) {
     $temp_products = isset($_SESSION['temp_products']) ? $_SESSION['temp_products'] : [];
 
@@ -199,32 +198,18 @@ if (isset($_POST['submit_products'])) {
             $product_name = mysqli_real_escape_string($con, $product['product_name']);
             $product_base = mysqli_real_escape_string($con, $product['product_base']);
             $product_color = mysqli_real_escape_string($con, $product['product_color']);
-            $ist_quantity = mysqli_real_escape_string($con, $product['received_quantity1']);
-            $iind_quantity = mysqli_real_escape_string($con, $product['received_quantity2']);
-         
+            $ist_quantity = intval($product['ist_quantity']);
+            $iind_quantity = intval($product['iind_quantity']);
             $date_and_time = mysqli_real_escape_string($con, $product['date_and_time']);
-            // Insert product into the database
-            $insert_query = "INSERT INTO kits_received (challan_no, labour_name, product_name, product_base, product_color, received_quantity1, received_quantity2, date_and_time) 
-                            VALUES ('$challan_no', '$labour_name', '$product_name', '$product_base', '$product_color', '$ist_quantity', '$iind_quantity','$date_and_time')";
-            $insert_result = mysqli_query($con, $insert_query);
 
-            if (!$insert_result) {
-                $errors[] = "Failed to store data in the database.";
-            }
+            $sql = "INSERT INTO sheets_kits_received (challan_no, labour_name, product_name, product_base, product_color, ist_quantity, iind_quantity, date_and_time) VALUES ('$challan_no', '$labour_name', '$product_name', '$product_base', '$product_color', $ist_quantity, $iind_quantity, '$date_and_time')";
+            mysqli_query($con, $sql);
         }
 
-        // If no errors, update the Challan Number and clear session storage
-        if (empty($errors)) {
-            // Update Challan Number
-            $challan_no = generateChallanNumber($con);
-            
-            // Clear session storage after insertion
-            unset($_SESSION['temp_products']);
-
-            // Redirect to the same page to prevent form resubmission
-            header("Location: {$_SERVER['REQUEST_URI']}");
-            exit();
-        }
+        $_SESSION['temp_products'] = array();
+        $challan_no = generateChallanNumber($con); 
+        header('Location: success.php');
+        exit;
     }
 }
 ?>
