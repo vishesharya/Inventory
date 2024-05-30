@@ -152,36 +152,61 @@ $stitcher_pan = $stitcher_row['stitcher_pan'];
         </div>
         <div class="row">
             <div class="col-md-12">
-                <table class="table table-bordered">
-                    <thead>
-                        <tr>
-                            <th>Product Name</th>
-                            <th>Product Base</th>
-                            <th>Product Color</th>
-                            <th>Stitcher Ist Company Ist</th>
-                            <th>Stitcher Ist Company IInd</th>
-                            <th>Stitcher IInd Company Ist</th>
-                            <th>Stitcher IInd Company IInd</th>
-                            <th>Total</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php while ($product = mysqli_fetch_assoc($product_result)) : ?>
-                            <tr>
-                                <td><?php echo $product['product_name']; ?></td>
-                                <td><?php echo $product['product_base']; ?></td>
-                                <td><?php echo $product['product_color']; ?></td>
-                                <td><?php echo $product['S_Ist_C_Ist']; ?></td>
-                                <td><?php echo $product['S_Ist_C_IInd']; ?></td>
-                                <td><?php echo $product['S_IInd_C_Ist']; ?></td>
-                                <td><?php echo $product['S_IInd_C_IInd']; ?></td>
-                                <td><?php echo $product['total']; ?></td>
-                                
-                               
-                            </tr>
-                        <?php endwhile; ?>
-                    </tbody>
-                </table>
+            <?php
+// Initialize totals
+$total_S_Ist_C_Ist = 0;
+$total_S_Ist_C_IInd = 0;
+$total_S_IInd_C_Ist = 0;
+$total_S_IInd_C_IInd = 0;
+$total_total = 0;
+?>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Product Name</th>
+            <th>Product Base</th>
+            <th>Product Color</th>
+            <th>Stitcher Ist Company Ist</th>
+            <th>Stitcher Ist Company IInd</th>
+            <th>Stitcher IInd Company Ist</th>
+            <th>Stitcher IInd Company IInd</th>
+            <th>Total</th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php while ($product = mysqli_fetch_assoc($product_result)) : 
+            // Accumulate totals
+            $total_S_Ist_C_Ist += $product['S_Ist_C_Ist'];
+            $total_S_Ist_C_IInd += $product['S_Ist_C_IInd'];
+            $total_S_IInd_C_Ist += $product['S_IInd_C_Ist'];
+            $total_S_IInd_C_IInd += $product['S_IInd_C_IInd'];
+            $total_total += $product['total'];
+        ?>
+            <tr>
+                <td><?php echo $product['product_name']; ?></td>
+                <td><?php echo $product['product_base']; ?></td>
+                <td><?php echo $product['product_color']; ?></td>
+                <td><?php echo $product['S_Ist_C_Ist']; ?></td>
+                <td><?php echo $product['S_Ist_C_IInd']; ?></td>
+                <td><?php echo $product['S_IInd_C_Ist']; ?></td>
+                <td><?php echo $product['S_IInd_C_IInd']; ?></td>
+                <td><?php echo $product['total']; ?></td>
+            </tr>
+        <?php endwhile; ?>
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="3">Total</td>
+            <td><?php echo $total_S_Ist_C_Ist; ?></td>
+            <td><?php echo $total_S_Ist_C_IInd; ?></td>
+            <td><?php echo $total_S_IInd_C_Ist; ?></td>
+            <td><?php echo $total_S_IInd_C_IInd; ?></td>
+            <td><?php echo $total_total; ?></td>
+        </tr>
+    </tfoot>
+</table>
+
             </div>
         </div>
         <div class="footer">
