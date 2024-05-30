@@ -84,7 +84,20 @@ if (isset($_POST['add_product'])) {
         $quantity2 = isset($_POST['quantity2']) ? intval($_POST['quantity2']) : 0;
         $quantity3 = isset($_POST['quantity3']) ? intval($_POST['quantity3']) : 0;
 
-        
+        $is_duplicate = false;
+        foreach ($_SESSION['temp_products'] as $temp_product) {
+            if ($temp_product['product_name'] === $product_name && 
+            $temp_product['product_base'] === $product_base && 
+            $temp_product['product_color'] === $product_color) {
+                $is_duplicate = true;
+                break;
+            }
+        }
+        // Check for duplicate product
+
+        if ($is_duplicate) {
+            $errors[] = "This product already exists in the list.";
+        } else {
         // Fetch remaining_big_panel from sheets_product table
         $remaining_big_panel_query = "SELECT remaining_big_panel FROM sheets_product WHERE product_name = '$product_name' AND product_base = '$product_base' AND product_color = '$product_color'";
         $remaining_big_panel_result = mysqli_query($con, $remaining_big_panel_query);
@@ -165,8 +178,8 @@ if (isset($_POST['add_product'])) {
             $_SESSION['temp_products'][] = $temp_product;
         }
     }
+  }
 }
-
 // Check if delete button is clicked
 if (isset($_POST['delete_product'])) {
     // Get the index of the product to be deleted
