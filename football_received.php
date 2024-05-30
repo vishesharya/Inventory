@@ -77,20 +77,7 @@ if (isset($_POST['add_product'])) {
         $stitcher_iind_company_ist = mysqli_real_escape_string($con, $_POST['stitcher_iind_company_ist']);
         $stitcher_ist_company_iind = mysqli_real_escape_string($con, $_POST['stitcher_ist_company_iind']);
 
-        $is_duplicate = false;
-        foreach ($_SESSION['temp_products'] as $temp_product) {
-            if ($temp_product['product_name'] === $product_name && 
-            $temp_product['product_base'] === $product_base && 
-            $temp_product['product_color'] === $product_color) {
-                $is_duplicate = true;
-                break;
-            }
-        }
-        // Check for duplicate product
-
-        if ($is_duplicate) {
-            $errors[] = "This product already exists in the list.";
-        } else {
+        
 
         $stitcher_ist_company_ist = isset($_POST['stitcher_ist_company_ist']) ? intval($_POST['stitcher_ist_company_ist']) : 0;
         $stitcher_iind_company_iind = isset($_POST['stitcher_iind_company_iind']) ? intval($_POST['stitcher_iind_company_iind']) : 0;
@@ -205,7 +192,7 @@ if (isset($_POST['add_product'])) {
      }
   }
 
-}
+
      
 
 if (isset($_POST['delete_product'])) {
