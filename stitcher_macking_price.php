@@ -158,7 +158,6 @@ if (isset($_POST['view_entries'])) {
 <body>
   
     <div class="container-fluid mt-5">
-        <hr>
           <h1 class="h4 text-center">STITCHING PAYMENT SLIP </h1> <!-- Changed container to container-fluid -->
         <div id="form" class="row justify-content-center">
             <div class="col-lg-8">
