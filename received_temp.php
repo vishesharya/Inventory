@@ -52,20 +52,20 @@ if (isset($_POST['view_entries'])) {
         $conditions .= " WHERE stitcher_name = '$stitcher_name'";
     }
 
-    // Add product name filter if provided
-    if (!empty($selected_product)) {
-        $conditions .= " AND product_name = '$selected_product'";
-    }
+  // Add product name filter if provided
+if (!empty($selected_product)) {
+    $conditions .= " AND product_name = '$selected_product'";
+}
 
-    // Add product base filter if provided
-    if (!empty($selected_base)) {
-        $conditions .= " AND product_base = '$selected_base'";
-    }
+// Add product base filter if provided
+if (!empty($selected_base)) {
+    $conditions .= " AND product_base = '$selected_base'";
+}
 
-    // Add product color filter if provided
-    if (!empty($selected_color)) {
-        $conditions .= " AND product_color = '$selected_color'";
-    }
+// Add product color filter if provided
+if (!empty($selected_color)) {
+    $conditions .= " AND product_color = '$selected_color'";
+}
 
     // Add date range condition
     if (!empty($_POST['from_date']) && !empty($_POST['to_date'])) {
