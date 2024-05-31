@@ -159,6 +159,9 @@ if (isset($_POST['view_entries'])) {
         #stitcher_name{
             font-weight: bold;
         }
+        .bank_details{
+            border: 2px solid black;
+        }
     </style>
 </head>
 <body>
@@ -230,7 +233,7 @@ if (isset($_POST['view_entries'])) {
                 <p class="heading"> <b>Contact :</b> <?php echo $stitcher_contact; ?> &nbsp; <b>Aadhar No : </b>  <?php echo $stitcher_aadhar; ?> &nbsp; <b>Pan No :</b>  <?php echo $stitcher_pan; ?></p>
             </div>
             <div id="head_details">
-                <div>
+                <div class="bank_details" >
                      <p>Bank Name : <?php echo $stitcher_details['bank_name']; ?></p>
                      <p>Bank Account Number : <?php echo $stitcher_details['bank_no']; ?></p>
                      <p>IFSC Code : <?php echo $stitcher_details['ifsc_code']; ?></p>
