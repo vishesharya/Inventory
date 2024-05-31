@@ -169,7 +169,7 @@ if (isset($_POST['view_entries'])) {
             padding: 5px;
             margin: 10px;
         }
-        .bill_details{
+        .bill_details {
             display: flex;
             align-items: flex-start;
             justify-content: space-between;
@@ -259,6 +259,7 @@ if (isset($_POST['view_entries'])) {
                     </div>
                 <div>
                 </div>
+                   </div>
                 <hr>
                 <h2 id="company_heading" class="heading">KHANNA SPORTS INDUSTRIES PVT. LTD</h2>
                 <p class="heading"> A-7, Sports Complex Delhi Road Meerut Uttar Pradesh 250002</p>
