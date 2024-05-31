@@ -12,8 +12,9 @@ $result = null;
 $total_ist_price = 0;
 $total_iind_price = 0;
 $total_thread_price = 0;
-$total_ist_stitches = 0; // Variable to store total Ist quality stitches
+$total_ist_stitches = 0;
 $total_iind_stitches = 0;
+$total_all_quantity = 0;
 
 // Check if 'View' button is clicked
 if (isset($_POST['view_entries'])) { 
@@ -284,9 +285,10 @@ if (isset($_POST['view_entries'])) {
             $total_iind_price += $iind_price;
             $total_ist_stitches += $data['S_Ist_C_Ist'] + $data['S_Ist_C_IInd']; 
             $total_iind_stitches += $data['S_IInd_C_Ist'] + $data['S_IInd_C_IInd'];
-
+            $total_all_quantity += $total;
             // Reset total thread price for each row
             $total_thread_price = 0;
+           
            
                 // Fetch thread data for the selected stitcher and date range
                 $thread_query = "SELECT thread_name, thread_quantity FROM kits_issue WHERE stitcher_name = '$stitcher_name' AND date_and_time BETWEEN '$start_date' AND '$end_date'";
@@ -345,6 +347,9 @@ if (isset($_POST['view_entries'])) {
         <td><?php echo $total_ist_stitches; ?></td>
         <td colspan="1"></td>
         <td><?php echo $total_iind_stitches; ?></td>
+        <td colspan="1"></td>
+        <td><?php echo $total_all_quantity; ?></td>
+        
         <td colspan="7"></td>
     </tr>
 </tfoot>
