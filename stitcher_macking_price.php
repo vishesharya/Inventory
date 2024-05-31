@@ -257,11 +257,12 @@ if (isset($_POST['view_entries'])) {
                      <p>Bill Date : ___ /____ /______</p>
                     </div>
                 <div>
+                </div>
                 <hr>
                 <h2 id="company_heading" class="heading">KHANNA SPORTS INDUSTRIES PVT. LTD</h2>
                 <p class="heading"> A-7, Sports Complex Delhi Road Meerut Uttar Pradesh 250002</p>
                 <p class="heading">Contact : 8449441387,98378427750 &nbsp;  GST : 09AAACK9669A1ZD </p>
-            </div>
+            
             </div>
         </div>
             <table class="table datatable-multi-sorting">
