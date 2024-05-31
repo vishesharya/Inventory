@@ -163,7 +163,7 @@ if (isset($_POST['view_entries'])) {
             border: 2px solid black;
             padding: auto;
             width: fit-content;
-            background-color: chartreuse;
+            
         }
         .bank_main_details{
             padding: 5px;
@@ -247,6 +247,10 @@ if (isset($_POST['view_entries'])) {
                      <p>IFSC Code : <?php echo $stitcher_details['ifsc_code']; ?></p>
                     </div>
                 </div>
+                <div>
+                     <p>Bill No : _ _ _ _ _ _</p>
+                     <p>Bill Date : ___/____/______</p>
+                    </div>
                 <div>
                 <hr>
                 <h2 id="company_heading" class="heading">KHANNA SPORTS INDUSTRIES PVT. LTD</h2>
