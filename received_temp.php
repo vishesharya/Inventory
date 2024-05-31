@@ -42,7 +42,7 @@ if (isset($_POST['view_entries'])) {
     $stitcher_name = isset($_POST['stitcher_name']) ? mysqli_real_escape_string($con, $_POST['stitcher_name']) : '';
 
     // Initialize conditions
-    $conditions = [];
+    $conditions = "";
 
     // Add labour condition
     if (!empty($stitcher_name)) {
