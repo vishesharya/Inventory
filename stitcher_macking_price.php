@@ -223,18 +223,15 @@ if (isset($_POST['view_entries'])) {
             <div>
                 <hr>
                 <h2 id="company_heading" class="heading"><?php echo $stitcher_name; ?> AND COMPANY</h2>
-                <p class="heading"> A-7, Sports Complex Delhi Road Meerut Uttar Pradesh 250002</p>
-                <p class="heading">Contact : 8449441387,98378427750 &nbsp;  GST : 09AAACK9669A1ZD </p>
+                <p class="heading"><?php echo $stitcher_address; ?></p>
+                <p class="heading">Contact : <?php echo $stitcher_contact; ?> &nbsp;  Aadhar No: <?php echo $stitcher_aadhar; ?> &nbsp; Pan No : <?php echo $stitcher_pan; ?></p>
             </div>
             <div id="head_details">
                 <div>
-                    <p id="stitcher_name" >Stitcher : <?php echo $stitcher_name; ?></p>
-                     <p>Stitcher Contact : <?php echo $stitcher_contact; ?></p>
-                     <p>Stitcher Aadhar : <?php echo $stitcher_aadhar; ?></p>
+                     <p>Stitcher </p>
                      <p>Stitcher Pan : <?php echo $stitcher_pan; ?></p>
-                     <p>Stitcher Address : <?php echo $stitcher_address; ?></p>
                      <p>Bank Name : <?php echo $stitcher_details['bank_name']; ?></p>
-                    <p>Bank Account Number : <?php echo $stitcher_details['bank_no']; ?></p>
+                     <p>Bank Account Number : <?php echo $stitcher_details['bank_no']; ?></p>
                      <p>IFSC Code : <?php echo $stitcher_details['ifsc_code']; ?></p>
                     
                 </div>
