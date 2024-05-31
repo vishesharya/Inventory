@@ -172,7 +172,7 @@ if (isset($_POST['view_entries'])) {
         .bill_details {
             display: flex;
             align-items: flex-start;
-            justify-content: space-around;
+            justify-content: space-between;
            
         }
     </style>
