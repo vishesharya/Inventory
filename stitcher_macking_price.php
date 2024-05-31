@@ -285,7 +285,7 @@ if (isset($_POST['view_entries'])) {
             $total_iind_price += $iind_price;
             $total_ist_stitches += $data['S_Ist_C_Ist'] + $data['S_Ist_C_IInd']; 
             $total_iind_stitches += $data['S_IInd_C_Ist'] + $data['S_IInd_C_IInd'];
-            $total_all_quantity += $total;
+            $total_all_quantity +=  $data['total'];
             // Reset total thread price for each row
             $total_thread_price = 0;
            
