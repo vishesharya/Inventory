@@ -24,16 +24,13 @@ $selected_product = isset($_POST['product_name']) ? mysqli_real_escape_string($c
 $selected_base = isset($_POST['product_base']) ? mysqli_real_escape_string($con, $_POST['product_base']) : null;
 $selected_color = isset($_POST['product_color']) ? mysqli_real_escape_string($con, $_POST['product_color']) : null;
 
-// Fetch product bases based on selected product
+// Logic to fetch product bases and colors based on selected product
+$selected_product = isset($_POST['product_name']) ? $_POST['product_name'] : null;
 if ($selected_product) {
-    $product_base_query = "SELECT DISTINCT product_base FROM sheets_product WHERE product_name = '$selected_product' ORDER BY product_base ASC";
+    $product_base_query = "SELECT DISTINCT product_base FROM kits_product WHERE product_name = '$selected_product' ORDER BY product_base ASC";
+    $product_color_query = "SELECT DISTINCT product_color FROM kits_product WHERE product_name = '$selected_product' ORDER BY product_color ASC";
     $product_base_result = mysqli_query($con, $product_base_query);
-
-    // Fetch product colors based on selected product and base
-    if ($selected_base) {
-        $product_color_query = "SELECT DISTINCT product_color FROM sheets_product WHERE product_name = '$selected_product' AND product_base = '$selected_base' ORDER BY product_color ASC";
-        $product_color_result = mysqli_query($con, $product_color_query);
-    }
+    $product_color_result = mysqli_query($con, $product_color_query);
 }
 // Check if 'View' button is clicked
 if (isset($_POST['view_entries'])) {
@@ -71,6 +68,7 @@ if (!empty($_POST['challan_no'])) {
     $conditions .= ($conditions == "") ? " WHERE" : " AND";
     $conditions .= " challan_no = '$challan_no'";
 }
+
 
 // Add product name filter if provided
 if (!empty($selected_product)) {
