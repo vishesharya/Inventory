@@ -163,7 +163,7 @@ if (isset($_POST['view_entries'])) {
             border: 2px solid black;
             padding: auto;
             width: fit-content;
-            color: aqua;
+            background-color: chartreuse;
         }
         .bank_main_details{
             padding: 5px;
