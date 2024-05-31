@@ -299,13 +299,7 @@ $result = mysqli_query($con, $query);
             </div>
         </div>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
-</body>
-</html>
- 
-
-<script>
+    <script>
         function fetchChallanNumbers(selectedStitcher, fromDate, toDate) {
             var xhttp = new XMLHttpRequest();
             xhttp.onreadystatechange = function() {
@@ -373,3 +367,10 @@ $result = mysqli_query($con, $query);
     document.getElementById('product_name').addEventListener('change', updateProductColors);
     document.getElementById('product_base').addEventListener('change', updateProductColors);
 </script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+</body>
+</html>
+ 
+
+
