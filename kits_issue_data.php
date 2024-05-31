@@ -358,7 +358,7 @@ $total_thread_quantity = 0;
 </tr>
             </tbody>
         </table>
-    <?php elseif (isset($_POST['view_entries'])): ?>
+        <?php elseif (isset($_POST['view_entries'])): ?>
         <p>No entries found.</p>
     <?php endif; ?>
 
