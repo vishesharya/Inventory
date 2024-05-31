@@ -296,34 +296,47 @@ $result = mysqli_query($con, $query);
         </div>
 
 
+        <?php
+// Assuming you have already established a connection to the database
 
-        <?php if (isset($_POST['view_entries']) && mysqli_num_rows($result) > 0): ?>
-        <table class="table datatable-multi-sorting">
-            <thead>
-                <tr>
-                    <th>Sn.</th>
-                    <th>Challan No.</th>
-                    <th>Stitcher Name</th>
-                    <th>Product Name</th>
-                    <th>Product Base</th>
-                    <th>Product Color</th>
-                    <th>Issue Quantity</th>
-                    <th>Bladder Name</th>
-                    <th>Bladder Quantity</th>
-                    <th>Thread Name</th>
-                    <th>Thread Quantity</th>
-                    <th>Date</th>
-                </tr>
-            </thead>
-            <tbody>
-            <?php 
-// Initialize variables to hold totals
-$total_issue_quantity = 0;
-$total_bladder_quantity = 0;
-$total_thread_quantity = 0;
-?>
-                <?php $sn = 1; ?>
-                <?php while ($data = mysqli_fetch_array($result)): ?>
+// Check if the form has been submitted
+if (isset($_POST['view_entries'])) {
+    // Execute your query here, e.g.,
+    $query = "SELECT * FROM kits_issue"; // Replace with your actual query
+    $result = mysqli_query($conn, $query);
+
+    // Check if the query was successful
+    if ($result) {
+        // Check if there are any rows returned
+        if (mysqli_num_rows($result) > 0) {
+            ?>
+            <table class="table datatable-multi-sorting">
+                <thead>
+                    <tr>
+                        <th>Sn.</th>
+                        <th>Challan No.</th>
+                        <th>Stitcher Name</th>
+                        <th>Product Name</th>
+                        <th>Product Base</th>
+                        <th>Product Color</th>
+                        <th>Issue Quantity</th>
+                        <th>Bladder Name</th>
+                        <th>Bladder Quantity</th>
+                        <th>Thread Name</th>
+                        <th>Thread Quantity</th>
+                        <th>Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                <?php 
+                // Initialize variables to hold totals
+                $total_issue_quantity = 0;
+                $total_bladder_quantity = 0;
+                $total_thread_quantity = 0;
+                $sn = 1; 
+
+                while ($data = mysqli_fetch_array($result)) {
+                    ?>
                     <tr>
                         <td><?php echo $sn; ?>.</td>
                         <td><?php echo $data['challan_no']; ?></td>
@@ -337,32 +350,37 @@ $total_thread_quantity = 0;
                         <td><?php echo $data['thread_name']; ?></td>
                         <td><?php echo $data['thread_quantity']; ?></td>
                         <td><?php echo date('d/m/Y', strtotime($data['date_and_time'])); ?></td>
-
                     </tr>
-                    <?php $sn++; ?>
                     <?php 
-                  $total_issue_quantity += $data['issue_quantity'];
-                  $total_bladder_quantity += $data['bladder_quantity'];
-                  $total_thread_quantity += $data['thread_quantity'];
-    ?>
-                <?php endwhile; ?>
+                    $sn++;
+                    $total_issue_quantity += $data['issue_quantity'];
+                    $total_bladder_quantity += $data['bladder_quantity'];
+                    $total_thread_quantity += $data['thread_quantity'];
+                }
+                ?>
                 <tr>
-                    
-    <td colspan="5"></td> <!-- Colspan to span across columns -->
-    <td><b>Total : </b></td>
-    <td><?php echo $total_issue_quantity; ?></td>
-    <td></td> <!-- Empty cell for bladder name -->
-    <td><?php echo $total_bladder_quantity; ?></td>
-    <td></td> <!-- Empty cell for thread name -->
-    <td><?php echo $total_thread_quantity; ?></td>
-    <td colspan="1"></td> <!-- Colspan to span across date column -->
-</tr>
-            </tbody>
-        </table>
-    <?php elseif (isset($_POST['view_entries'])): ?>
-        <p>No entries found.</p>
-    <?php endif; ?>
-
+                    <td colspan="5"></td> <!-- Colspan to span across columns -->
+                    <td><b>Total : </b></td>
+                    <td><?php echo $total_issue_quantity; ?></td>
+                    <td></td> <!-- Empty cell for bladder name -->
+                    <td><?php echo $total_bladder_quantity; ?></td>
+                    <td></td> <!-- Empty cell for thread name -->
+                    <td><?php echo $total_thread_quantity; ?></td>
+                    <td colspan="1"></td> <!-- Colspan to span across date column -->
+                </tr>
+                </tbody>
+            </table>
+            <?php
+        } else {
+            // No entries found
+            echo '<p>No entries found.</p>';
+        }
+    } else {
+        // Query failed, display an error message
+        echo '<p>Error executing query: ' . mysqli_error($conn) . '</p>';
+    }
+}
+?>
 
 
    <!-- JavaScript code for fetching challan numbers based on selected stitcher and date range -->
