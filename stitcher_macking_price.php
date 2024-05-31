@@ -12,6 +12,8 @@ $result = null;
 $total_ist_price = 0;
 $total_iind_price = 0;
 $total_thread_price = 0;
+$total_ist_stitches = 0; // Variable to store total Ist quality stitches
+$total_iind_stitches = 0;
 
 // Check if 'View' button is clicked
 if (isset($_POST['view_entries'])) { 
@@ -280,6 +282,8 @@ if (isset($_POST['view_entries'])) {
 
             $total_ist_price += $ist_price;
             $total_iind_price += $iind_price;
+            $total_ist_stitches += $ist_quality_stitch;
+            $total_iind_stitches += $iind_quality_stitch;
 
             // Reset total thread price for each row
             $total_thread_price = 0;
@@ -338,6 +342,9 @@ if (isset($_POST['view_entries'])) {
         <td class="tablefoot">Total Thread Price: <?php echo $total_thread_price; ?></td>
         <td class="tablefoot">Total Stitching Amount: <?php echo $total_ist_price + $total_iind_price; ?></td>
         <td class="tablefoot">Total Payable Amount: <?php echo ($total_ist_price + $total_iind_price) - $total_thread_price; ?></td>
+        <td><?php echo $total_ist_stitches; ?></td>
+        <td colspan="1"></td>
+        <td><?php echo $total_iind_stitches; ?></td>
         <td colspan="7"></td>
     </tr>
 </tfoot>
