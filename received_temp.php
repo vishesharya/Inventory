@@ -49,15 +49,16 @@ if (isset($_POST['view_entries'])) {
         $conditions .= " WHERE stitcher_name = '$stitcher_name'";
     }
 
-    // Add date range condition
-    if (!empty($_POST['from_date']) && !empty($_POST['to_date'])) {
-        // Get selected date range
-        $start_date = mysqli_real_escape_string($con, $_POST['from_date']);
-        $end_date = mysqli_real_escape_string($con, $_POST['to_date']);
+ // Add date range condition
+if (!empty($_POST['from_date']) && !empty($_POST['to_date'])) {
+    // Get selected date range
+    $start_date = mysqli_real_escape_string($con, $_POST['from_date']);
+    $end_date = mysqli_real_escape_string($con, $_POST['to_date']);
 
-        // Add date range condition
-        $conditions[] = "date_and_time BETWEEN '$start_date' AND '$end_date'";
-    }
+    // Add AND or WHERE depending on whether previous conditions exist
+    $conditions .= ($conditions == "") ? " WHERE" : " AND";
+    $conditions .= " date_and_time BETWEEN '$start_date' AND '$end_date'";
+}
 
     // Add challan number condition
     if (!empty($_POST['challan_no'])) {
