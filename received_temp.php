@@ -263,9 +263,7 @@ $result = mysqli_query($con, $query);
         </div>
 
 
-    <?php if (isset($_POST['view_entries']) && $result): ?>
-    <?php if (mysqli_num_rows($result) > 0): ?>
-        <table class="table datatable-multi-sorting">
+        <?php if (isset($_POST['view_entries']) && mysqli_num_rows($result) > 0): ?>
         <table class="table datatable-multi-sorting">
             <thead>
             <tr>
@@ -328,11 +326,10 @@ $result = mysqli_query($con, $query);
                 </tr>
                 </tfoot>
         </table>
-        </table>
-    <?php else: ?>
+    <?php elseif (isset($_POST['view_entries'])): ?>
         <p>No entries found.</p>
     <?php endif; ?>
-<?php endif; ?>
+
 
    <!-- JavaScript code for fetching challan numbers based on selected labour and date range -->
  
