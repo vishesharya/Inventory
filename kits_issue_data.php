@@ -378,7 +378,7 @@ if (isset($_POST['view_entries'])) {
 
 
    <!-- JavaScript code for fetching challan numbers based on selected stitcher and date range -->
- 
+  
 
 <script>
         function fetchChallanNumbers(selectedStitcher, fromDate, toDate) {
