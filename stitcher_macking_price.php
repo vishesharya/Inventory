@@ -146,6 +146,9 @@ if (isset($_POST['view_entries'])) {
         #company_heading{
             line-height: 5px;
         }
+        #company_heading1{
+            line-height: 5px;
+        }
         #stitcher_name{
             font-weight: bold;
         }
@@ -222,7 +225,7 @@ if (isset($_POST['view_entries'])) {
             <div class="invoice-header">
             <div>
                 <hr>
-                <h2 id="company_heading" class="heading"><?php echo $stitcher_name; ?> AND COMPANY</h2>
+                <h2 id="company_heading1" class="heading"><?php echo $stitcher_name; ?> AND COMPANY</h2>
                 <p class="heading"><?php echo $stitcher_address; ?></p>
                 <p class="heading">Contact : <?php echo $stitcher_contact; ?> &nbsp;  Aadhar No: <?php echo $stitcher_aadhar; ?> &nbsp; Pan No : <?php echo $stitcher_pan; ?></p>
             </div>
