@@ -303,7 +303,7 @@ $result = mysqli_query($con, $query);
 if (isset($_POST['view_entries'])) {
     // Execute your query here, e.g.,
     $query = "SELECT * FROM kits_issue"; // Replace with your actual query
-    $result = mysqli_query($conn, $query);
+    $result = mysqli_query($con, $query);
 
     // Check if the query was successful
     if ($result) {
@@ -377,7 +377,7 @@ if (isset($_POST['view_entries'])) {
         }
     } else {
         // Query failed, display an error message
-        echo '<p>Error executing query: ' . mysqli_error($conn) . '</p>';
+        echo '<p>Error executing query: ' . mysqli_error($con) . '</p>';
     }
 }
 ?>
