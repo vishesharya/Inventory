@@ -84,12 +84,9 @@ if (!empty($selected_color)) {
     $conditions .= " AND product_color = '$selected_color'";
 }
 
-    // Construct the final query
-    $query = "SELECT * FROM kits_issue";
-    if (!empty($conditions)) {
-        $query .= " WHERE " . implode(" AND ", $conditions);
-    }
-    $result = mysqli_query($con, $query);
+// Construct the final query
+$query = "SELECT * FROM kits_issue $conditions";
+$result = mysqli_query($con, $query);
 }
 ?>
 
