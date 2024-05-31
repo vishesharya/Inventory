@@ -173,6 +173,7 @@ if (isset($_POST['view_entries'])) {
             display: flex;
             align-items: flex-start;
             justify-content: space-evenly;
+            align-content: flex-end;
         }
     </style>
 </head>
