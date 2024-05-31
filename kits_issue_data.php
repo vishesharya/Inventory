@@ -301,9 +301,6 @@ $result = mysqli_query($con, $query);
 
 // Check if the form has been submitted
 if (isset($_POST['view_entries'])) {
-    // Execute your query here, e.g.,
-    $query = "SELECT * FROM kits_issue"; // Replace with your actual query
-    $result = mysqli_query($con, $query);
 
     // Check if the query was successful
     if ($result) {
