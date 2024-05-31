@@ -162,11 +162,11 @@ if (isset($_POST['view_entries'])) {
         .bank_details{
             border: 2px solid black;
             padding: auto;
+            width: fit-content;
         }
         .bank_main_details{
             padding: 5px;
             margin: 10px;
-            width: 100px;
         }
     </style>
 </head>
