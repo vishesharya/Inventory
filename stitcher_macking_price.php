@@ -228,12 +228,9 @@ if (isset($_POST['view_entries'])) {
             </div>
             <div id="head_details">
                 <div>
-                     <p>Stitcher </p>
-                     <p>Stitcher Pan : <?php echo $stitcher_pan; ?></p>
                      <p>Bank Name : <?php echo $stitcher_details['bank_name']; ?></p>
                      <p>Bank Account Number : <?php echo $stitcher_details['bank_no']; ?></p>
                      <p>IFSC Code : <?php echo $stitcher_details['ifsc_code']; ?></p>
-                    
                 </div>
                 <div>
                 <hr>
