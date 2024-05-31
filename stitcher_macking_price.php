@@ -223,7 +223,7 @@ if (isset($_POST['view_entries'])) {
             <div>
                 <hr>
                 <h2 id="company_heading" class="heading"><?php echo $stitcher_name; ?> AND COMPANY</h2>
-                <p class="heading">Address : <?php echo $stitcher_address; ?></p>
+                <p class="heading"><?php echo $stitcher_address; ?></p>
                 <p class="heading">Contact : <?php echo $stitcher_contact; ?> &nbsp;  Aadhar No: <?php echo $stitcher_aadhar; ?> &nbsp; Pan No : <?php echo $stitcher_pan; ?></p>
             </div>
             <div id="head_details">
