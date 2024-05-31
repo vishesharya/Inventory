@@ -159,22 +159,8 @@ if (isset($_POST['view_entries'])) {
         #stitcher_name{
             font-weight: bold;
         }
-        .bank_details{
-            border: 2px solid black;
-            padding: auto;
-            width: fit-content;
-            
-        }
-        .bank_main_details{
-            padding: 5px;
-            margin: 10px;
-        }
-        .bill_details {
-            display: flex;
-            align-items: flex-end;
-            justify-content: space-between;
-            width: 100%;
-        }
+        
+       
     </style>
 </head>
 <body>
