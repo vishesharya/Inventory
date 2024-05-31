@@ -372,10 +372,7 @@ if (isset($_POST['view_entries'])) {
             // No entries found
             echo '<p>No entries found.</p>';
         }
-    } else {
-        // Query failed, display an error message
-        echo '<p>Error executing query: ' . mysqli_error($con) . '</p>';
-    }
+    } 
 }
 ?>
 
