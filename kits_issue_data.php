@@ -98,7 +98,6 @@ $result = mysqli_query($con, $query);
     <title>KITS ISSUE DETAILS</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
-       
         body {
             background-color: #f8f9fc;
             font-family: Arial, sans-serif;
@@ -163,17 +162,15 @@ $result = mysqli_query($con, $query);
             background: #555;
         }
     </style>
-    
 </head>
 <body>
     <?php include('include/kits_nav.php'); ?>
     <div class="container-fluid mt-5">
-          <h1 class="h4 text-center mb-4">KITS ISSUE DETAILS </h1> <!-- Changed container to container-fluid -->
+        <h1 class="h4 text-center mb-4">KITS ISSUE DETAILS</h1>
         <div id="form" class="row justify-content-center">
             <div class="col-lg-8">
                 <div class="card">
                     <div class="card-body">
-                      
                         <?php if (!empty($errors)) : ?>
                             <div class="alert alert-danger" role="alert">
                                 <?php foreach ($errors as $error) : ?>
@@ -181,45 +178,33 @@ $result = mysqli_query($con, $query);
                                 <?php endforeach; ?>
                             </div>
                         <?php endif; ?>
-                        <!-- New form to select stitcher, associated challan number, and product details -->
                         <form method="post" action="">
-
-
-                         <div class="date_input">
-                                      <!-- From date -->
+                            <div class="date_input">
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="from_date">From Date:</label>
                                         <input type="date" class="form-control" id="from_date" name="from_date">
                                     </div>
                                 </div>
-                                <!-- To date -->
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="to_date">To Date:</label>
                                         <input type="date" class="form-control" id="to_date" name="to_date">
                                     </div>
                                 </div>
-
-
-                                </div>
+                            </div>
                             <div id="input_field" class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="select_stitcher">Select Stitcher:</label>
                                         <select class="form-select" id="select_stitcher" name="stitcher_name">
-         
-                                        <option value="">Select Stitcher</option>
+                                            <option value="">Select Stitcher</option>
                                             <?php while ($row = mysqli_fetch_assoc($stitcher_result)) : ?>
                                                 <option value="<?php echo $row['stitcher_name']; ?>"><?php echo $row['stitcher_name']; ?></option>
                                             <?php endwhile; ?>
                                         </select>
                                     </div>
                                 </div>
-                       
-                              
-                            
-                          
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="select_challan">Select Issue Challan No:</label>
@@ -233,24 +218,23 @@ $result = mysqli_query($con, $query);
                                         </select>
                                     </div>
                                 </div>
-
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="product_name">Select Product:</label>
                                         <select class="form-select" id="product_name" name="product_name" onchange="this.form.submit()">
-                                            <option value="" selected disabled>Select Product</option>
+                                            <option value="" selected>Select Product</option>
                                             <?php while ($row = mysqli_fetch_assoc($product_result)) : ?>
-                                                <option value="<?php echo $row['product_name']; ?>" <?php echo $selected_product == $row['product_name'] ? 'selected' : ''; ?>><?php echo $row['product_name']; ?></option>
+                                                <option value="<?php echo $row['product_name']; ?>"><?php echo $row['product_name']; ?></option>
                                             <?php endwhile; ?>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="product_base">Product Base:</label>
+                                        <label for="product_base">Select Product Base:</label>
                                         <select class="form-select" id="product_base" name="product_base">
-                                            <option value="" selected disabled>Select Product Base</option>
-                                            <?php if ($selected_product) : ?>
+                                            <option value="" selected>Select Product Base</option>
+                                            <?php if (isset($product_base_result)) : ?>
                                                 <?php while ($row = mysqli_fetch_assoc($product_base_result)) : ?>
                                                     <option value="<?php echo $row['product_base']; ?>"><?php echo $row['product_base']; ?></option>
                                                 <?php endwhile; ?>
@@ -260,110 +244,65 @@ $result = mysqli_query($con, $query);
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="product_color">Product Color:</label>
+                                        <label for="product_color">Select Product Color:</label>
                                         <select class="form-select" id="product_color" name="product_color">
-                                            <option value="" selected disabled>Select Product Color</option>
-                                            <?php if ($selected_product) : ?>
+                                            <option value="" selected>Select Product Color</option>
+                                            <?php if (isset($product_color_result)) : ?>
                                                 <?php while ($row = mysqli_fetch_assoc($product_color_result)) : ?>
                                                     <option value="<?php echo $row['product_color']; ?>"><?php echo $row['product_color']; ?></option>
                                                 <?php endwhile; ?>
                                             <?php endif; ?>
                                         </select>
-                                    </div> 
+                                    </div>
                                 </div>
-
-                          </div>
-                            
-                                <div id="printbtn" class="btn-group">
-                                <div>
-                                <button type="submit" class="btn btn-primary" name="view_entries">View</button>
-                                <button type="button" class="btn btn-primary" onclick="window.print()">Print</button>
+                            </div>
+                            <div class="btn-group row">
+                                <div class="col-md-12">
+                                    <button type="submit" name="view_entries" class="btn btn-primary">View</button>
                                 </div>
-                               
                             </div>
-                            </div>
-                          
-                       
-                           
-                           
                         </form>
                     </div>
                 </div>
             </div>
         </div>
-
-
-
-        <?php 
-        if (isset($_POST['view_entries']) && mysqli_num_rows($result) > 0): ?>
-        <table class="table datatable-multi-sorting">
-            <thead>
-                <tr>
-                    <th>Sn.</th>
-                    <th>Challan No.</th>
-                    <th>Stitcher Name</th>
-                    <th>Product Name</th>
-                    <th>Product Base</th>
-                    <th>Product Color</th>
-                    <th>Issue Quantity</th>
-                    <th>Bladder Name</th>
-                    <th>Bladder Quantity</th>
-                    <th>Thread Name</th>
-                    <th>Thread Quantity</th>
-                    <th>Date</th>
-                </tr>
-            </thead>
-            <tbody>
-            <?php 
-// Initialize variables to hold totals
-$total_issue_quantity = 0;
-$total_bladder_quantity = 0;
-$total_thread_quantity = 0;
-?>
-                <?php $sn = 1; ?>
-                <?php while ($data = mysqli_fetch_array($result)): ?>
-                    <tr>
-                        <td><?php echo $sn; ?>.</td>
-                        <td><?php echo $data['challan_no']; ?></td>
-                        <td><?php echo $data['stitcher_name']; ?></td>
-                        <td><?php echo $data['product_name']; ?></td>
-                        <td><?php echo ucfirst($data['product_base']); ?></td>
-                        <td><?php echo ucfirst($data['product_color']); ?></td>
-                        <td><?php echo $data['issue_quantity']; ?></td>
-                        <td><?php echo $data['bladder_name']; ?></td>
-                        <td><?php echo $data['bladder_quantity']; ?></td>
-                        <td><?php echo $data['thread_name']; ?></td>
-                        <td><?php echo $data['thread_quantity']; ?></td>
-                        <td><?php echo date('d/m/Y', strtotime($data['date_and_time'])); ?></td>
-
-                    </tr>
-                    <?php $sn++; ?>
-                    <?php 
-                  $total_issue_quantity += $data['issue_quantity'];
-                  $total_bladder_quantity += $data['bladder_quantity'];
-                  $total_thread_quantity += $data['thread_quantity'];
-    ?>
-                <?php endwhile; ?>
-                <tr>
-                    
-    <td colspan="5"></td> <!-- Colspan to span across columns -->
-    <td><b>Total : </b></td>
-    <td><?php echo $total_issue_quantity; ?></td>
-    <td></td> <!-- Empty cell for bladder name -->
-    <td><?php echo $total_bladder_quantity; ?></td>
-    <td></td> <!-- Empty cell for thread name -->
-    <td><?php echo $total_thread_quantity; ?></td>
-    <td colspan="1"></td> <!-- Colspan to span across date column -->
-</tr>
-            </tbody>
-        </table>
-<?php elseif (isset($_POST['view_entries'])): ?>
-        <p>No entries found.</p>
-    <?php endif; ?>
-
-
-
-   <!-- JavaScript code for fetching challan numbers based on selected stitcher and date range -->
+        <div class="table-container">
+            <div class="table-responsive">
+                <?php if (isset($result) && $result && mysqli_num_rows($result) > 0) : ?>
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Stitcher Name</th>
+                                <th>Date and Time</th>
+                                <th>Product Name</th>
+                                <th>Product Base</th>
+                                <th>Product Color</th>
+                                <th>Issue Challan No</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php while ($row = mysqli_fetch_assoc($result)) : ?>
+                                <tr>
+                                    <td><?php echo $row['stitcher_name']; ?></td>
+                                    <td><?php echo $row['date_and_time']; ?></td>
+                                    <td><?php echo $row['product_name']; ?></td>
+                                    <td><?php echo $row['product_base']; ?></td>
+                                    <td><?php echo $row['product_color']; ?></td>
+                                    <td><?php echo $row['challan_no']; ?></td>
+                                </tr>
+                            <?php endwhile; ?>
+                        </tbody>
+                    </table>
+                <?php else : ?>
+                    <div class="alert alert-info" role="alert">No entries found.</div>
+                <?php endif; ?>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+</body>
+</html>
  
 
 <script>
@@ -434,6 +373,3 @@ $total_thread_quantity = 0;
     document.getElementById('product_name').addEventListener('change', updateProductColors);
     document.getElementById('product_base').addEventListener('change', updateProductColors);
 </script>
-    
-</body>
-</html>
