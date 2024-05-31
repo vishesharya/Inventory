@@ -165,6 +165,7 @@ if (isset($_POST['view_entries'])) {
         }
         .bank_main_details{
             padding: 5px;
+            margin: 10px;
         }
     </style>
 </head>
