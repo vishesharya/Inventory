@@ -60,29 +60,29 @@ if (!empty($_POST['from_date']) && !empty($_POST['to_date'])) {
     $conditions .= " date_and_time BETWEEN '$start_date' AND '$end_date'";
 }
 
-    // Add challan number condition
-    if (!empty($_POST['challan_no'])) {
-        // Get selected challan number
-        $challan_no = mysqli_real_escape_string($con, $_POST['challan_no']);
-        
-        // Add challan number condition
-        $conditions[] = "challan_no = '$challan_no'";
-    }
+if (!empty($_POST['challan_no'])) {
+    // Get selected challan number
+    $challan_no = mysqli_real_escape_string($con, $_POST['challan_no']);
+    
+    // Add AND or WHERE depending on whether previous conditions exist
+    $conditions .= ($conditions == "") ? " WHERE" : " AND";
+    $conditions .= " challan_no = '$challan_no'";
+}
 
-    // Add product name filter if provided
-    if (!empty($selected_product)) {
-        $conditions[] = "product_name = '$selected_product'";
-    }
+// Add product name filter if provided
+if (!empty($selected_product)) {
+    $conditions .= " AND product_name = '$selected_product'";
+}
 
-    // Add product base filter if provided
-    if (!empty($selected_base)) {
-        $conditions[] = "product_base = '$selected_base'";
-    }
+// Add product base filter if provided
+if (!empty($selected_base)) {
+    $conditions .= " AND product_base = '$selected_base'";
+}
 
-    // Add product color filter if provided
-    if (!empty($selected_color)) {
-        $conditions[] = "product_color = '$selected_color'";
-    }
+// Add product color filter if provided
+if (!empty($selected_color)) {
+    $conditions .= " AND product_color = '$selected_color'";
+}
 
     // Construct the final query
     $query = "SELECT * FROM kits_issue";
