@@ -13,8 +13,8 @@ if (isset($_SESSION['challan_no'])) {
 }
 
 // Initialize $result variable
-$result = null;
- 
+$result = null; 
+
 // Fetch product names
 $product_query = "SELECT DISTINCT product_name FROM kits_issue ORDER BY product_name ASC";
 $product_result = mysqli_query($con, $product_query);
@@ -27,8 +27,8 @@ $selected_color = isset($_POST['product_color']) ? mysqli_real_escape_string($co
 // Logic to fetch product bases and colors based on selected product
 $selected_product = isset($_POST['product_name']) ? $_POST['product_name'] : null;
 if ($selected_product) {
-    $product_base_query = "SELECT DISTINCT product_base FROM kits_product WHERE product_name = '$selected_product' ORDER BY product_base ASC";
-    $product_color_query = "SELECT DISTINCT product_color FROM kits_product WHERE product_name = '$selected_product' ORDER BY product_color ASC";
+    $product_base_query = "SELECT DISTINCT product_base FROM sheets_product WHERE product_name = '$selected_product' ORDER BY product_base ASC";
+    $product_color_query = "SELECT DISTINCT product_color FROM sheets_product WHERE product_name = '$selected_product' ORDER BY product_color ASC";
     $product_base_result = mysqli_query($con, $product_base_query);
     $product_color_result = mysqli_query($con, $product_color_query);
 }
@@ -68,7 +68,6 @@ if (!empty($_POST['challan_no'])) {
     $conditions .= ($conditions == "") ? " WHERE" : " AND";
     $conditions .= " challan_no = '$challan_no'";
 }
-
 
 // Add product name filter if provided
 if (!empty($selected_product)) {
@@ -270,7 +269,7 @@ $result = mysqli_query($con, $query);
                                                 <?php endwhile; ?>
                                             <?php endif; ?>
                                         </select>
-                                    </div>
+                                    </div> 
                                 </div>
 
                           </div>
@@ -358,7 +357,7 @@ $total_thread_quantity = 0;
 </tr>
             </tbody>
         </table>
-        <?php elseif (isset($_POST['view_entries'])): ?>
+<?php elseif (isset($_POST['view_entries'])): ?>
         <p>No entries found.</p>
     <?php endif; ?>
 

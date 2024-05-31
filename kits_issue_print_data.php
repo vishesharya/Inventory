@@ -13,7 +13,7 @@ if (isset($_SESSION['challan_no'])) {
 }
 
 // Initialize $result variable
-$result = null;
+$result = null; 
 
 // Fetch product names
 $product_query = "SELECT DISTINCT product_name FROM print_issue ORDER BY product_name ASC";
