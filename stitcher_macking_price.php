@@ -159,7 +159,12 @@ if (isset($_POST['view_entries'])) {
         #stitcher_name{
             font-weight: bold;
         }
-        
+        .bank_details{
+            border: 2px solid black;
+            padding: auto;
+            width: fit-content;
+            
+        }
        
     </style>
 </head>
@@ -231,7 +236,7 @@ if (isset($_POST['view_entries'])) {
                 <p class="heading"><?php echo $stitcher_address; ?></p>
                 <p class="heading"> <b>Contact :</b> <?php echo $stitcher_contact; ?> &nbsp; <b>Aadhar No : </b>  <?php echo $stitcher_aadhar; ?> &nbsp; <b>Pan No :</b>  <?php echo $stitcher_pan; ?></p>
             </div>
-            <div id="border border-2 border-black">
+            <div id="head_details">
     <div class="bill_details d-flex justify-content-between">
         <div class="bank_details">
             <div class="bank_main_details">
