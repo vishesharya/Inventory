@@ -14,7 +14,7 @@ if (isset($_SESSION['challan_no'])) {
 
 // Initialize $result variable
 $result = null;
-
+ 
 // Fetch product names
 $product_query = "SELECT DISTINCT product_name FROM kits_issue ORDER BY product_name ASC";
 $product_result = mysqli_query($con, $product_query);
@@ -405,6 +405,37 @@ $total_thread_quantity = 0;
         });
     </script>
 
+<script>
+    // Function to update product colors based on selected product name and base
+    function updateProductColors() {
+        var productName = document.getElementById('product_name').value;
+        var productBase = document.getElementById('product_base').value;
+
+        // Make an AJAX request to fetch product colors based on product name and base
+        var xhr = new XMLHttpRequest(); 
+        xhr.onreadystatechange = function() {
+            if (this.readyState === 4 && this.status === 200) {
+                var colors = JSON.parse(this.responseText);
+                var productColorSelect = document.getElementById('product_color');
+                // Clear existing options
+                productColorSelect.innerHTML = '<option value="" selected disabled>Select Product Color</option>';
+                // Add fetched colors as options
+                colors.forEach(function(color) {
+                    var option = document.createElement('option');
+                    option.value = color;
+                    option.text = color;
+                    productColorSelect.appendChild(option);
+                });
+            }
+        };
+        xhr.open('GET', 'fetch_product_color.php?product_name=' + productName + '&product_base=' + productBase, true);
+        xhr.send();
+    }
+
+    // Event listeners for product name and product base change
+    document.getElementById('product_name').addEventListener('change', updateProductColors);
+    document.getElementById('product_base').addEventListener('change', updateProductColors);
+</script>
     
 </body>
 </html>
