@@ -299,9 +299,7 @@ if (!empty($selected_color)) {
 
 
         <?php
-// Assuming you have already established a connection to the database
-<?php
-// Assuming you have already established a connection to the database
+
 
 // Check if the form has been submitted
 if (isset($_POST['view_entries'])) {
