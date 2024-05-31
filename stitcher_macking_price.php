@@ -246,20 +246,25 @@ if (isset($_POST['view_entries'])) {
                 <p class="heading"> <b>Contact :</b> <?php echo $stitcher_contact; ?> &nbsp; <b>Aadhar No : </b>  <?php echo $stitcher_aadhar; ?> &nbsp; <b>Pan No :</b>  <?php echo $stitcher_pan; ?></p>
             </div>
             <div id="head_details">
-                <div class="bill_details" >
-                <div class="bank_details" >
-                    <div class="bank_main_details">
-                     <p>Bank Name : <?php echo $stitcher_details['bank_name']; ?></p>
-                     <p>Bank Account Number : <?php echo $stitcher_details['bank_no']; ?></p>
-                     <p>IFSC Code : <?php echo $stitcher_details['ifsc_code']; ?></p>
-                    </div>
-                </div>
-                    <div>
-                     <p>Bill No : _ _ _ _ _ _</p>
-                     <p>Bill Date : ___ /____ /______</p>
-                    </div>
-                <div>
-                </div>
+    <div class="bill_details d-flex justify-content-between">
+        <div class="bank_details">
+            <div class="bank_main_details">
+                <p>Bank Name: <?php echo $stitcher_details['bank_name']; ?></p>
+                <p>Bank Account Number: <?php echo $stitcher_details['bank_no']; ?></p>
+                <p>IFSC Code: <?php echo $stitcher_details['ifsc_code']; ?></p>
+            </div>
+        </div>
+        <div class="text-end">
+            <p>Bill No: _ _ _ _ _ _</p>
+            <p>Bill Date: ___ /____ /______</p>
+        </div>
+    </div>
+    <hr>
+    <h2 id="company_heading" class="heading">KHANNA SPORTS INDUSTRIES PVT. LTD</h2>
+    <p class="heading">A-7, Sports Complex Delhi Road Meerut Uttar Pradesh 250002</p>
+    <p class="heading">Contact: 8449441387,98378427750 &nbsp;  GST: 09AAACK9669A1ZD</p>
+</div>
+
                    </div>
                 <hr>
                 <h2 id="company_heading" class="heading">KHANNA SPORTS INDUSTRIES PVT. LTD</h2>
