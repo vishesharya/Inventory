@@ -171,7 +171,7 @@ if (isset($_POST['view_entries'])) {
         }
         .bill_details {
             display: flex;
-            align-items: flex-start;
+            align-items: flex-end;
             justify-content: space-between;
            
         }
