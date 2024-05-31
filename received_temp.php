@@ -336,42 +336,41 @@ if (isset($_POST['view_entries'])) {
    <!-- JavaScript code for fetching challan numbers based on selected labour and date range -->
  
 
-   <script> 
-   function fetchChallanNumbers(selectedLabour) {
-    var fromDate = document.getElementById("from_date").value;
-    var toDate = document.getElementById("to_date").value;
-    var xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status == 200) {
-            var challanSelect = document.getElementById("select_challan");
-            var challanNumbers = JSON.parse(this.responseText);
-            challanSelect.innerHTML = "<option value='' selected disabled>Select Received Challan No</option>";
-            challanNumbers.forEach(function(challan) {
-                var option = document.createElement("option");
-                option.value = challan;
-                option.text = challan;
-                challanSelect.appendChild(option);
-            });
+   <script>
+        function fetchChallanNumbers(selectedStitcher, fromDate, toDate) {
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    var challanSelect = document.getElementById("select_challan");
+                    var challanNumbers = JSON.parse(this.responseText);
+                    challanSelect.innerHTML = "<option value='' selected disabled>Select Issue Challan No</option>";
+                    challanNumbers.forEach(function(challan) {
+                        var option = document.createElement("option");
+                        option.value = challan;
+                        option.text = challan;
+                        challanSelect.appendChild(option);
+                    });
+                }
+            };
+            xhttp.open("GET", "fatch_challan_no_for_kits_issue.php?stitcher=" + selectedStitcher + "&from_date=" + fromDate + "&to_date=" + toDate, true);
+            xhttp.send();
         }
-    };
-    xhttp.open("GET", "fatch_challan_no_for_kits_receive.php?labour=" + encodeURIComponent(selectedLabour) + "&from_date=" + encodeURIComponent(fromDate) + "&to_date=" + encodeURIComponent(toDate), true);
-    xhttp.send();
-}
 
-function handleLabourChange() {
-    var selectedLabour = document.getElementById("select_labour").value;
-    if (selectedLabour) {
-        fetchChallanNumbers(selectedLabour);
-    }
-}
+        function handleDateRangeChange() {
+            var selectedStitcher = document.getElementById("select_stitcher").value;
+            var fromDate = document.getElementById("from_date").value;
+            var toDate = document.getElementById("to_date").value;
+            if (selectedStitcher && fromDate && toDate) {
+                fetchChallanNumbers(selectedStitcher, fromDate, toDate);
+            }
+        }
 
-document.getElementById("select_labour").addEventListener("change", handleLabourChange);
-document.getElementById("from_date").addEventListener("change", handleLabourChange);
-document.getElementById("to_date").addEventListener("change", handleLabourChange);
+        document.getElementById("from_date").addEventListener("change", handleDateRangeChange);
+        document.getElementById("to_date").addEventListener("change", handleDateRangeChange);
 
-// Trigger initial fetch when page loads
-handleLabourChange();
-
+        document.getElementById("select_stitcher").addEventListener("change", function() {
+            handleDateRangeChange();
+        });
     </script>
 
 <script>
