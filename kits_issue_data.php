@@ -3,95 +3,87 @@ session_start();
 include_once 'include/connection.php';
 include_once 'include/admin-main.php';
 
+// Initialize variables
+$errors = array();
+
 // Fetch stitcher names from the database
 $stitcher_query = "SELECT DISTINCT stitcher_name FROM kits_issue ORDER BY stitcher_name ASC"; 
 $stitcher_result = mysqli_query($con, $stitcher_query);
 
 // Check if 'challan_no' is set in session
-if (isset($_SESSION['challan_no'])) {
-    $challan_no = $_SESSION['challan_no'];
-}
-
-// Initialize $result variable
-$result = null;
+$challan_no = isset($_SESSION['challan_no']) ? $_SESSION['challan_no'] : '';
 
 // Fetch product names
 $product_query = "SELECT DISTINCT product_name FROM kits_issue ORDER BY product_name ASC";
 $product_result = mysqli_query($con, $product_query);
 
 // Initialize selected product, base, and color variables
-$selected_product = isset($_POST['product_name']) ? mysqli_real_escape_string($con, $_POST['product_name']) : null;
-$selected_base = isset($_POST['product_base']) ? mysqli_real_escape_string($con, $_POST['product_base']) : null;
-$selected_color = isset($_POST['product_color']) ? mysqli_real_escape_string($con, $_POST['product_color']) : null;
+$selected_product = isset($_POST['product_name']) ? mysqli_real_escape_string($con, $_POST['product_name']) : '';
+$selected_base = isset($_POST['product_base']) ? mysqli_real_escape_string($con, $_POST['product_base']) : '';
+$selected_color = isset($_POST['product_color']) ? mysqli_real_escape_string($con, $_POST['product_color']) : '';
 
 // Fetch product bases based on selected product
 if ($selected_product) {
-    $product_base_query = "SELECT DISTINCT product_base FROM sheets_product WHERE product_name = '$selected_product' ORDER BY product_base ASC";
+    $product_base_query = "SELECT DISTINCT product_base FROM kits_issue WHERE product_name = '$selected_product' ORDER BY product_base ASC";
     $product_base_result = mysqli_query($con, $product_base_query);
 
     // Fetch product colors based on selected product and base
     if ($selected_base) {
-        $product_color_query = "SELECT DISTINCT product_color FROM sheets_product WHERE product_name = '$selected_product' AND product_base = '$selected_base' ORDER BY product_color ASC";
+        $product_color_query = "SELECT DISTINCT product_color FROM kits_issue WHERE product_name = '$selected_product' AND product_base = '$selected_base' ORDER BY product_color ASC";
         $product_color_result = mysqli_query($con, $product_color_query);
     }
 }
+
 // Check if 'View' button is clicked
 if (isset($_POST['view_entries'])) {
-    // Get selected stitcher
+    // Retrieve form data
     $stitcher_name = isset($_POST['stitcher_name']) ? mysqli_real_escape_string($con, $_POST['stitcher_name']) : '';
     $selected_product = isset($_POST['product_name']) ? mysqli_real_escape_string($con, $_POST['product_name']) : '';
     $selected_base = isset($_POST['product_base']) ? mysqli_real_escape_string($con, $_POST['product_base']) : '';
     $selected_color = isset($_POST['product_color']) ? mysqli_real_escape_string($con, $_POST['product_color']) : '';
 
-   // Initialize conditions
-$conditions = "";
+    // Construct conditions for SQL query
+    $conditions = "1"; // Default condition
 
-// Add stitcher condition
-if (!empty($stitcher_name)) {
-    $conditions .= " WHERE stitcher_name = '$stitcher_name'";
-}
+    // Add stitcher condition
+    if (!empty($stitcher_name)) {
+        $conditions .= " AND stitcher_name = '$stitcher_name'";
+    }
 
-// Add date range condition
-if (!empty($_POST['from_date']) && !empty($_POST['to_date'])) {
-    // Get selected date range
-    $start_date = mysqli_real_escape_string($con, $_POST['from_date']);
-    $end_date = mysqli_real_escape_string($con, $_POST['to_date']);
+    // Add product name filter if provided
+    if (!empty($selected_product)) {
+        $conditions .= " AND product_name = '$selected_product'";
+    }
 
-    // Add AND or WHERE depending on whether previous conditions exist
-    $conditions .= ($conditions == "") ? " WHERE" : " AND";
-    $conditions .= " date_and_time BETWEEN '$start_date' AND '$end_date'";
-}
+    // Add product base filter if provided
+    if (!empty($selected_base)) {
+        $conditions .= " AND product_base = '$selected_base'";
+    }
 
-// Add challan number condition
-if (!empty($_POST['challan_no'])) {
-    // Get selected challan number
-    $challan_no = mysqli_real_escape_string($con, $_POST['challan_no']);
-    
-    // Add AND or WHERE depending on whether previous conditions exist
-    $conditions .= ($conditions == "") ? " WHERE" : " AND";
-    $conditions .= " challan_no = '$challan_no'";
-}
+    // Add product color filter if provided
+    if (!empty($selected_color)) {
+        $conditions .= " AND product_color = '$selected_color'";
+    }
 
-// Add product name filter if provided
-if (!empty($selected_product)) {
-    $conditions .= " AND product_name = '$selected_product'";
-}
+    // Add date range condition
+    if (!empty($_POST['from_date']) && !empty($_POST['to_date'])) {
+        $start_date = mysqli_real_escape_string($con, $_POST['from_date']);
+        $end_date = mysqli_real_escape_string($con, $_POST['to_date']);
+        $conditions .= " AND date_and_time BETWEEN '$start_date' AND '$end_date'";
+    }
 
-// Add product base filter if provided
-if (!empty($selected_base)) {
-    $conditions .= " AND product_base = '$selected_base'";
-}
+    // Add challan number condition
+    if (!empty($_POST['challan_no'])) {
+        $challan_no = mysqli_real_escape_string($con, $_POST['challan_no']);
+        $conditions .= " AND challan_no = '$challan_no'";
+    }
 
-// Add product color filter if provided
-if (!empty($selected_color)) {
-    $conditions .= " AND product_color = '$selected_color'";
-}
-
-// Construct the final query
-$query = "SELECT * FROM kits_issue $conditions";
-$result = mysqli_query($con, $query);
+    // Construct the final query
+    $query = "SELECT * FROM kits_issue WHERE $conditions";
+    $result = mysqli_query($con, $query);
 }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -297,7 +289,7 @@ $result = mysqli_query($con, $query);
 
 
         <?php
-// Assuming you have already established a connection to the database
+
 
 // Check if the form has been submitted
 if (isset($_POST['view_entries'])) {
@@ -397,7 +389,7 @@ if (isset($_POST['view_entries'])) {
                 }
             };
             xhttp.open("GET", "fatch_challan_no_for_kits_issue.php?stitcher=" + selectedStitcher + "&from_date=" + fromDate + "&to_date=" + toDate, true);
-            xhttp.send();
+            xhttp.send(); 
         }
 
         function handleDateRangeChange() {
@@ -416,6 +408,38 @@ if (isset($_POST['view_entries'])) {
             handleDateRangeChange();
         });
     </script>
+
+<script>
+    // Function to update product colors based on selected product name and base
+    function updateProductColors() {
+        var productName = document.getElementById('product_name').value;
+        var productBase = document.getElementById('product_base').value;
+
+        // Make an AJAX request to fetch product colors based on product name and base
+        var xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function() {
+            if (this.readyState === 4 && this.status === 200) {
+                var colors = JSON.parse(this.responseText);
+                var productColorSelect = document.getElementById('product_color');
+                // Clear existing options
+                productColorSelect.innerHTML = '<option value="" selected disabled>Select Product Color</option>';
+                // Add fetched colors as options
+                colors.forEach(function(color) {
+                    var option = document.createElement('option');
+                    option.value = color;
+                    option.text = color;
+                    productColorSelect.appendChild(option);
+                });
+            }
+        };
+        xhr.open('GET', 'fetch_product_color.php?product_name=' + productName + '&product_base=' + productBase, true);
+        xhr.send();
+    }
+
+    // Event listeners for product name and product base change
+    document.getElementById('product_name').addEventListener('change', updateProductColors);
+    document.getElementById('product_base').addEventListener('change', updateProductColors);
+</script>
 
     
 </body>
