@@ -251,7 +251,7 @@ if (isset($_POST['view_entries'])) {
             </div>
         </div>
         <div class="text-end">
-            <p>Bill No: _ _ _ _ _ _ _ _ _ _ _ _ _ _ </p>
+            <p>Bill No: _ _ _ _ _ _ _ _ _ _ _ _ _ __ </p>
             <p>Bill Date: _____ /_____ /________</p>
         </div>
     </div>
