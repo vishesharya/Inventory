@@ -165,6 +165,9 @@ if (isset($_POST['view_entries'])) {
             width: fit-content;
             
         }
+        .bank_main_details{
+            padding: 5px;
+        }
        
     </style>
 </head>
