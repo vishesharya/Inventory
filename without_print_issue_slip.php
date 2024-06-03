@@ -293,7 +293,7 @@ if (isset($_POST['view_entries'])) {
         <!-- Add your HTML structure here to display kits issue details -->
         <div class="invoice-header">
            <div>
-                <p class="issue_heading" >KITS ISSUE SLIP</p>
+                <p class="issue_heading" >KITS ISSUE SLIP (WITHOUT PRINT)</p>
                 <hr>
                 <h2 id="company_heading" class="heading">KHANNA SPORTS INDUSTRIES PVT. LTD</h2>
                 <p class="heading"> A-7, Sports Complex Delhi Road Meerut Uttar Pradesh 250002</p>
