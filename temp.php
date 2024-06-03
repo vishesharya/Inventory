@@ -308,12 +308,17 @@ if (isset($_POST['view_entries'])) {
             $ist_one_price_row = mysqli_fetch_assoc($ist_one_price_result);
             $ist_one_price = $ist_one_price_row['per_pice_price'];
 
+            if (($data['S_IInd_C_Ist'] + $data['S_IInd_C_IInd']) > ($total_ist_stitches + $total_iind_stitches) * 0.1) {
+                // Fetch the price from the kits_product table field 2nd_price_10
+                $iind_price_query = "SELECT 2nd_price_10 FROM kits_product WHERE product_name = '" . $data['product_name'] . "' AND product_base = '" . $data['product_base'] . "' AND product_color = '" . $data['product_color'] . "'";
+            } else {
+                // Fetch the price from the kits_product table
+                $iind_price_query = "SELECT 2nd_price FROM kits_product WHERE product_name = '" . $data['product_name'] . "' AND product_base = '" . $data['product_base'] . "' AND product_color = '" . $data['product_color'] . "'";
+            }
 
-            // Calculate IInd Price
-            $iind_price_query = "SELECT 2nd_price FROM kits_product WHERE product_name = '" . $data['product_name'] . "' AND product_base = '" . $data['product_base'] . "' AND product_color = '" . $data['product_color'] . "'";
             $iind_price_result = mysqli_query($con, $iind_price_query);
             $iind_price_row = mysqli_fetch_assoc($iind_price_result);
-            $iind_price = ($data['S_IInd_C_Ist'] + $data['S_IInd_C_IInd']) * $iind_price_row['2nd_price'];
+            $iind_price = $iind_price_row['2nd_price_10'] ?? $iind_price_row['2nd_price'];
 
             // Calculate IInd Price
             $iind_one_price_query = "SELECT 2nd_price FROM kits_product WHERE product_name = '" . $data['product_name'] . "' AND product_base = '" . $data['product_base'] . "' AND product_color = '" . $data['product_color'] . "'";

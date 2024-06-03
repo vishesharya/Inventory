@@ -169,6 +169,7 @@ if (isset($_POST['view_entries'])) {
             padding-top: 10px;
             padding-left: 5px;
             padding-right: 5px;
+            
         }
        
     </style>
@@ -250,7 +251,7 @@ if (isset($_POST['view_entries'])) {
                 <p>IFSC Code: <?php echo $stitcher_details['ifsc_code']; ?></p>
             </div>
         </div>
-        <div class="text-end">
+        <div class="text-end justify-content-end">
             <p>Bill No: _ _ _ _ _ _ _ _ _ _ _ _ _ _.</p>
             <p>Bill Date: _____ /_____ /________</p>
         </div>
@@ -273,8 +274,10 @@ if (isset($_POST['view_entries'])) {
         <th>Product Base</th>
         <th>Product Color</th>
         <th>Ist Quality Stitches</th>
+        <th>Ist Price (Per Piece)</th>
         <th>Ist Price</th>
         <th>IInd Quality Stitches</th>
+        <th>IInd Price (Per Piece)</th>
         <th>IInd Price</th>
         <th>Total</th>
         
@@ -290,18 +293,33 @@ if (isset($_POST['view_entries'])) {
             <td><?php echo $sn; ?>.</td>
             <?php
                     $ist_price = 0;
+                    $ist_one_price = 0;
                     $iind_price = 0;
+                    $iind_one_price = 0;
             // Calculate Ist Price
             $ist_price_query = "SELECT per_pice_price FROM kits_product WHERE product_name = '" . $data['product_name'] . "' AND product_base = '" . $data['product_base'] . "' AND product_color = '" . $data['product_color'] . "'";
             $ist_price_result = mysqli_query($con, $ist_price_query);
             $ist_price_row = mysqli_fetch_assoc($ist_price_result);
             $ist_price = ($data['S_Ist_C_Ist'] + $data['S_Ist_C_IInd']) * $ist_price_row['per_pice_price'];
 
+            // Calculate Ist Price
+            $ist_one_price_query = "SELECT per_pice_price FROM kits_product WHERE product_name = '" . $data['product_name'] . "' AND product_base = '" . $data['product_base'] . "' AND product_color = '" . $data['product_color'] . "'";
+            $ist_one_price_result = mysqli_query($con, $ist_one_price_query);
+            $ist_one_price_row = mysqli_fetch_assoc($ist_one_price_result);
+            $ist_one_price = $ist_one_price_row['per_pice_price'];
+
+
             // Calculate IInd Price
             $iind_price_query = "SELECT 2nd_price FROM kits_product WHERE product_name = '" . $data['product_name'] . "' AND product_base = '" . $data['product_base'] . "' AND product_color = '" . $data['product_color'] . "'";
             $iind_price_result = mysqli_query($con, $iind_price_query);
             $iind_price_row = mysqli_fetch_assoc($iind_price_result);
             $iind_price = ($data['S_IInd_C_Ist'] + $data['S_IInd_C_IInd']) * $iind_price_row['2nd_price'];
+
+            // Calculate IInd Price
+            $iind_one_price_query = "SELECT 2nd_price FROM kits_product WHERE product_name = '" . $data['product_name'] . "' AND product_base = '" . $data['product_base'] . "' AND product_color = '" . $data['product_color'] . "'";
+            $iind_one_price_result = mysqli_query($con, $iind_one_price_query);
+            $iind_one_price_row = mysqli_fetch_assoc($iind_one_price_result);
+            $iind_one_price = $iind_one_price_row['2nd_price'];
 
             $total_ist_price += $ist_price;
             $total_iind_price += $iind_price;
@@ -347,8 +365,10 @@ if (isset($_POST['view_entries'])) {
             <td><?php echo ucfirst($data['product_base']); ?></td>
             <td><?php echo ucfirst($data['product_color']); ?></td>
             <td><?php echo $data['S_Ist_C_Ist'] + $data['S_Ist_C_IInd']; ?></td>
+            <td><?php echo $ist_one_price; ?></td>
             <td><?php echo $ist_price; ?></td>
             <td><?php echo $data['S_IInd_C_Ist'] + $data['S_IInd_C_IInd']; ?></td>
+            <td><?php echo $iind_one_price; ?></td>
             <td><?php echo $iind_price; ?></td>
             <td><?php echo $data['total']; ?></td>
             
@@ -367,9 +387,9 @@ if (isset($_POST['view_entries'])) {
         <td class="tablefoot">Total Stitching Amount: <?php echo $total_ist_price + $total_iind_price; ?></td>
         <td class="tablefoot">Total Payable Amount: <?php echo ($total_ist_price + $total_iind_price) - $total_thread_price; ?></td>
         <td><?php echo $total_ist_stitches; ?></td>
-        <td colspan="1"></td>
+        <td colspan="2"></td>
         <td><?php echo $total_iind_stitches; ?></td>
-        <td colspan="1"></td>
+        <td colspan="2"></td>
         <td><?php echo $total_all_quantity; ?></td>
         
         <td colspan="7"></td>
