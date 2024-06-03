@@ -71,8 +71,8 @@ include_once 'include/admin-main.php';
 
                     <div class="breadcrumb-line">
                         <ul class="breadcrumb">
-                            <li><a href="dashboard.php"><i class="icon-home2 position-left"></i> Home</a></li>
-                            <li class="active">Kits Inventory</li>
+                            <li><a href="Kits_inventory.php"><i class="icon-home2 position-left"></i>GO Back</a></li>
+                            <li class="active">Kits Inventory (WITHOUT PRINT)</li>
                         </ul>
                     </div>
                 </div>
@@ -87,87 +87,67 @@ include_once 'include/admin-main.php';
                             <!-- Quick stats boxes -->
                             <div class="row">
                                 
-                                   <a href="kits_receive_form.php" style='color:white'>
+                                <a href="kits_issue_for_printing.php" style='color:white'>
                                     <div class="col-lg-4">
                                         <div class="panel bg-teal-400">
-                                            <p style="margin: 10px; font-size: large;">Receive Form</p>
+                                            <p style="margin: 10px; font-size: large;">Issue Form (WITHOUT PRINT)</p>
                                         </div>
                                     </div>
                                 </a>
-                                <a href="kits_issue_form.php" style='color:white'>
+                                <a href="kits_received_for_printing.php" style='color:white'>
                                     <div class="col-lg-4">
                                         <div class="panel bg-teal-400">
-                                            <p style="margin: 10px; font-size: large;">Issue Form</p>
+                                            <p style="margin: 10px; font-size: large;">Receive Form (WITHOUT PRINT)</p>
                                         </div>
                                     </div>
                                 </a>
-                                <a href="kits_inventory_without_print.php" style='color:white'>
+                                <a href="without_print_issue_slip.php" style='color:white'>
                                     <div class="col-lg-4">
                                         <div class="panel bg-teal-400">
-                                            <p style="margin: 10px; font-size: large;">Without Print</p>
+                                            <p style="margin: 10px; font-size: large;">Kits Issue Slip (WITHOUT PRINT)</p>
+                                        </div>
+                                    </div>
+                                </a>
+                                <a href="without_print_received_slip.php" style='color:white'>
+                                    <div class="col-lg-4">
+                                        <div class="panel bg-teal-400">
+                                            <p style="margin: 10px; font-size: large;">Kits Received Slip (WITHOUT PRINT)</p>
                                         </div>
                                     </div>
                                 </a>
 
-                                <a href="kits_receive_slip_all_data.php" style='color:white'>
+                                <a href="kits_issue_print_data.php" style='color:white'>
                                     <div class="col-lg-4">
                                         <div class="panel bg-teal-400">
-                                            <p style="margin: 10px; font-size: large;">Kits Receive Slip</p>
+                                            <p style="margin: 10px; font-size: large;">Kits Issue Data (WITHOUT PRINT)</p>
                                         </div>
                                     </div>
                                 </a>
-
-                                <a href="kits_issue_all_data_slip.php" style='color:white'>
+                                <a href="kits_received_print_data.php" style='color:white'>
                                     <div class="col-lg-4">
                                         <div class="panel bg-teal-400">
-                                            <p style="margin: 10px; font-size: large;">Kits Issue Slip</p>
+                                            <p style="margin: 10px; font-size: large;">Kits Received Data (WITHOUT PRINT)</p>
                                         </div>
                                     </div>
                                 </a>
                                 
-                                <a href="kits_receive_data.php" style='color:white'>
-                                    <div class="col-lg-4">
-                                        <div class="panel bg-teal-400">
-                                            <p style="margin: 10px; font-size: large;">Kits Receive Data</p>
-                                        </div>
-                                    </div>
-                                </a>
-                              
-                                 <a href="kits_issue_data.php" style='color:white'>
-                                    <div class="col-lg-4">
-                                        <div class="panel bg-teal-400">
-                                            <p style="margin: 10px; font-size: large;">Kits Issue Data</p>
-                                        </div>
-                                    </div>
-                                </a>
-                               
-                              
 
-                                   <a href="kits_job_work.php" style='color:white'>
+                                <a href="printing_job_work.php" style='color:white'>
                                     <div class="col-lg-4">
                                         <div class="panel bg-teal-400">
-                                            <p style="margin: 10px; font-size: large;">Kits Job Work</p>
-                                        </div>
-                                    </div>
-                                </a>
-                               
-                                <a href="thread_inventory.php" style='color:white'>
-                                    <div class="col-lg-4">
-                                        <div class="panel bg-teal-400">
-                                            <p style="margin: 10px; font-size: large;">Thread Inventory Status</p>
+                                            <p style="margin: 10px; font-size: large;">Kits Job Work (WITHOUT PRINT)</p>
                                         </div>
                                     </div>
                                 </a>
 
-                                <a href="kits_product_list.php" style='color:white'>
+                                <a href="ink_inventory.php" style='color:white'>
                                     <div class="col-lg-4">
                                         <div class="panel bg-teal-400">
-                                            <p style="margin: 10px; font-size: large;">Kits Inventory Status</p>
+                                            <p style="margin: 10px; font-size: large;">Ink Inventory Status</p>
                                         </div>
                                     </div>
                                 </a>
-                            
-                                
+                       
                             </div>
                         </div>
                     </div>
