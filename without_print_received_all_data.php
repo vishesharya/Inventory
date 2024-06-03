@@ -60,7 +60,7 @@ if (isset($_POST['view_entries'])) {
         $conditions .= " AND product_base = '$selected_base'";
     }
 
-    // Add product color filter if provided
+    // Add product color filter if provided 
     if (!empty($selected_color)) {
         $conditions .= " AND product_color = '$selected_color'";
     }

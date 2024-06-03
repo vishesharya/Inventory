@@ -84,7 +84,7 @@ if (!empty($selected_challan)) {
             margin-top: 2rem;
             border-collapse:collapse;
            
-        }
+        } 
         #printbtn {
             display: flex;
             justify-content: space-between;
