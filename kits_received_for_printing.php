@@ -565,37 +565,6 @@ function fetchProductColor(selectedChallan, productName, productBase) {
 }
 
 </script>
-<script>
-    // Function to update product colors based on selected product name and base
-    function updateProductColors() {
-        var productName = document.getElementById('product_name').value;
-        var productBase = document.getElementById('product_base').value;
-
-        // Make an AJAX request to fetch product colors based on product name and base
-        var xhr = new XMLHttpRequest();
-        xhr.onreadystatechange = function() {
-            if (this.readyState === 4 && this.status === 200) {
-                var colors = JSON.parse(this.responseText);
-                var productColorSelect = document.getElementById('product_color');
-                // Clear existing options
-                productColorSelect.innerHTML = '<option value="" selected disabled>Select Product Color</option>';
-                // Add fetched colors as options
-                colors.forEach(function(color) {
-                    var option = document.createElement('option');
-                    option.value = color;
-                    option.text = color;
-                    productColorSelect.appendChild(option);
-                });
-            }
-        };
-        xhr.open('GET', 'fetch_product_color.php?product_name=' + productName + '&product_base=' + productBase, true);
-        xhr.send();
-    }
-
-    // Event listeners for product name and product base change
-    document.getElementById('product_name').addEventListener('change', updateProductColors);
-    document.getElementById('product_base').addEventListener('change', updateProductColors);
-</script>
 
 <script>
     // Function to update product colors based on selected product name1 and base1
@@ -620,7 +589,7 @@ function fetchProductColor(selectedChallan, productName, productBase) {
                 });
             }
         };
-        xhr.open('GET', 'fetch_product_color.php?product_name1=' + productName1 + '&product_base1=' + productBase1, true);
+        xhr.open('GET', 'fetch_product_color1.php?product_name1=' + productName1 + '&product_base1=' + productBase1, true);
         xhr.send();
     }
 
