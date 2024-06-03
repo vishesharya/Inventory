@@ -620,7 +620,7 @@ function fetchProductColor(selectedChallan, productName, productBase) {
                 });
             }
         };
-        xhr.open('GET', 'fetch_product_color1.php?product_name1=' + productName1 + '&product_base1=' + productBase1, true);
+        xhr.open('GET', 'fetch_product_color.php?product_name1=' + productName1 + '&product_base1=' + productBase1, true);
         xhr.send();
     }
 
