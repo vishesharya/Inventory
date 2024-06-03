@@ -251,7 +251,7 @@ if (isset($_POST['view_entries'])) {
                 <p>IFSC Code: <?php echo $stitcher_details['ifsc_code']; ?></p>
             </div>
         </div>
-        <div class="text-end flex-end mt-10">
+        <div class="text-end flex-end mt-10 pt-20">
             <p>Bill No: _ _ _ _ _ _ _ _ _ _ _ _ _ _.</p>
             <p>Bill Date: _____ /_____ /________</p>
         </div>
