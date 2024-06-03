@@ -566,37 +566,6 @@ function fetchProductColor(selectedChallan, productName, productBase) {
 
 </script>
 
-<script>
-    // Function to update product colors based on selected product name1 and base1
-    function updateProductColors1() {
-        var productName1 = document.getElementById('product_name1').value;
-        var productBase1 = document.getElementById('product_base1').value;
-
-        // Make an AJAX request to fetch product colors based on product name1 and base1
-        var xhr = new XMLHttpRequest();
-        xhr.onreadystatechange = function() {
-            if (this.readyState === 4 && this.status === 200) {
-                var colors = JSON.parse(this.responseText);
-                var productColorSelect1 = document.getElementById('product_color1');
-                // Clear existing options
-                productColorSelect1.innerHTML = '<option value="" selected disabled>Select Product Color</option>';
-                // Add fetched colors as options
-                colors.forEach(function(color) {
-                    var option = document.createElement('option');
-                    option.value = color;
-                    option.text = color;
-                    productColorSelect1.appendChild(option);
-                });
-            }
-        };
-        xhr.open('GET', 'fetch_product_color1.php?product_name1=' + productName1 + '&product_base1=' + productBase1, true);
-        xhr.send();
-    }
-
-    // Event listeners for product name1 and product base1 change
-    document.getElementById('product_name1').addEventListener('change', updateProductColors1);
-    document.getElementById('product_base1').addEventListener('change', updateProductColors1);
-</script>
 
 
 
