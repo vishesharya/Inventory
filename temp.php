@@ -318,7 +318,7 @@ if (isset($_POST['view_entries'])) {
 
             $iind_price_result = mysqli_query($con, $iind_price_query);
             $iind_price_row = mysqli_fetch_assoc($iind_price_result);
-            $iind_price = ($data['S_IInd_C_Ist'] + $data['S_IInd_C_IInd']) * $iind_price_row['2nd_price_10'] ?? $iind_price_row['2nd_price'];
+            $iind_price =$iind_price_row['2nd_price_10'] ?? $iind_price_row['2nd_price'];
 
             
 
@@ -376,7 +376,7 @@ if (isset($_POST['view_entries'])) {
             <td><?php echo $ist_price; ?></td>
             <td><?php echo $data['S_IInd_C_Ist'] + $data['S_IInd_C_IInd']; ?></td>
             <td><?php echo $iind_one_price; ?></td>
-            <td><?php echo $iind_price; ?></td>
+            <td><?php echo  ($data['S_IInd_C_Ist'] + $data['S_IInd_C_IInd']) *  $iind_price; ?></td>
             <td><?php echo $data['total']; ?></td>
             
             <td><?php echo date('d/m/Y', strtotime($data['date_and_time'])); ?></td>
