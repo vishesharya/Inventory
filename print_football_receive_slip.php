@@ -53,28 +53,61 @@ $stitcher_pan = $stitcher_row['stitcher_pan'];
     <title>Khanna Sports Football Receiving Slip</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        @page {
-            size: A4;
-        
-        }
-        body {
+      body {
+            background-color: #f8f9fc;
             font-family: Arial, sans-serif;
         }
-        
-        .heading {
-            text-align: center;
-            margin-bottom: 20px;
-            color: #333;
-            line-height: 5px;
+        .card {
+            border-radius: 1rem;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
         }
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        .btn-group {
+            margin-top: 1.5rem;
+            justify-content: center;
+        }
+        
+        #printbtn {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+        }
+        .error-input {
+            border: 1px solid red;
+        }
+        .date_input {
+            display: flex;
+        }
+        #input_field {
+            margin: 0.1rem;
+        }
+        @media print {
+            #form {
+                display: none;
+            .container_slip{
+                background-color: aqua;
+
+            }
+            }
+        }
+        .container_slip {
+            margin-top: 50px;
+            background-color: #f8f9fc;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+       
         .table {
             margin-top: 0px;
         }
-        .footer {
-            margin-top: 30px;
+        .signature {
+            margin-top: 20px;
             display: flex;
             justify-content: space-between;
-            gap: 8.2rem;
+            gap: 9rem;
             align-items: flex-end;
             color: #555;
         }
@@ -99,24 +132,30 @@ $stitcher_pan = $stitcher_row['stitcher_pan'];
         #head_details{
             display: flex;
             margin-top: 0px;
-            padding-top: 0px; 
+            padding-top: 0px;
             flex-direction: row;
             align-items: flex-end;
             justify-content: space-between;
+            
         }
-        @media print {
-            .print-btn {
-                display: none !important;
-            }
-        }
-        p{
-            line-height: 7px;
-        }
-        .stitcher_bold{
-            font-weight: bold;
+        .heading {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+          
         }
         .issue_heading{
             text-align: center;
+            justify-content: center;
+        }
+        .invoice-header{
+            line-height: 7px;
+        }
+        #company_heading{
+            line-height: 5px;
+        }
+        #stitcher_name{
+            font-weight: bold;
         }
     </style>
 </head>
