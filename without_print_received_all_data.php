@@ -401,38 +401,43 @@ if (isset($_POST['view_entries'])) {
             handleDateRangeChange();
         });
     </script>
-
 <script>
     // Function to update product colors based on selected product name and base
     function updateProductColors() {
         var productName = document.getElementById('product_name1').value;
         var productBase = document.getElementById('product_base1').value;
 
-        // Make an AJAX request to fetch product colors based on product name and base
-        var xhr = new XMLHttpRequest();
-        xhr.onreadystatechange = function() {
-            if (this.readyState === 4 && this.status === 200) {
-                var colors = JSON.parse(this.responseText);
-                var productColorSelect = document.getElementById('product_color1');
-                // Clear existing options
-                productColorSelect.innerHTML = '<option value="" selected disabled>Select Product Color</option>';
-                // Add fetched colors as options
-                colors.forEach(function(color) {
-                    var option = document.createElement('option');
-                    option.value = color;
-                    option.text = color;
-                    productColorSelect.appendChild(option);
-                });
-            }
-        };
-        xhr.open('GET', 'fetch_product_color1.php?product_name1=' + productName + '&product_base1=' + productBase, true);
-        xhr.send();
+        if (productName && productBase) {
+            // Make an AJAX request to fetch product colors based on product name and base
+            var xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function() {
+                if (this.readyState === 4 && this.status === 200) {
+                    var colors = JSON.parse(this.responseText);
+                    var productColorSelect = document.getElementById('product_color1');
+                    // Clear existing options
+                    productColorSelect.innerHTML = '<option value="" selected disabled>Select Product Color</option>';
+                    // Add fetched colors as options
+                    colors.forEach(function(color) {
+                        var option = document.createElement('option');
+                        option.value = color;
+                        option.text = color;
+                        productColorSelect.appendChild(option);
+                    });
+                }
+            };
+            xhr.open('GET', 'fetch_product_color1.php?product_name1=' + encodeURIComponent(productName) + '&product_base1=' + encodeURIComponent(productBase), true);
+            xhr.send();
+        } else {
+            // If either productName or productBase is not selected, clear the product color options
+            document.getElementById('product_color1').innerHTML = '<option value="" selected disabled>Select Product Color</option>';
+        }
     }
 
     // Event listeners for product name and product base change
     document.getElementById('product_name1').addEventListener('change', updateProductColors);
     document.getElementById('product_base1').addEventListener('change', updateProductColors);
 </script>
+
 
     
 </body>
