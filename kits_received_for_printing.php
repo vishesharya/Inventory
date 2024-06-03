@@ -392,7 +392,7 @@ if (isset($_POST['submit_products'])) {
                            
 
                             <div id="printbtn" class="btn-group">
-                            <div">
+                            <div>
                                 <button type="submit" class="btn btn-primary me-2" name="add_product">Add</button>
                                 <button type="submit" class="btn btn-success" name="submit_products">Submit</button>
                             </div>
