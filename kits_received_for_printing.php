@@ -421,7 +421,7 @@ if (isset($_POST['submit_products'])) {
                                             <th>Quantity</th>
                                             <th>Action</th>
                                         </tr>
-                                    </thead>
+                                    </thead> 
                                     <tbody>
                                         <?php if (isset($_SESSION['temp_products'])) : ?>
                                             <?php foreach ($_SESSION['temp_products'] as $key => $product) : ?>

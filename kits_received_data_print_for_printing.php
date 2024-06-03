@@ -16,7 +16,7 @@ if (isset($_SESSION['challan_no'])) {
     $challan_no = $_SESSION['challan_no'];
 };
 
-// Initialize $result variable
+// Initialize $result variabl e
 $result = null;
 
 // Check if 'View' button is clicked
