@@ -424,7 +424,7 @@ if (isset($_POST['view_entries'])) {
                 });
             }
         };
-        xhr.open('GET', 'fetch_product_color.php?product_name=' + productName + '&product_base=' + productBase, true);
+        xhr.open('GET', 'wethout_print_received_color_fetch.php?product_name=' + productName + '&product_base=' + productBase, true);
         xhr.send();
     }
 
