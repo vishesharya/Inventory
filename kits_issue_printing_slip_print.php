@@ -153,8 +153,10 @@ $stitcher_contact = $stitcher_contact_row['stitcher_contact'];
                     <tbody>
                         <?php 
                         $total_issue_quantity = 0;
+                        $total_ink_quantity = 0;
                         while ($product = mysqli_fetch_assoc($product_result)) : 
                             $total_issue_quantity += $product['issue_quantity'];
+                            $total_ink_quantity += $product['ink_quantity'];
                             ?>
                             <tr>
                                 <td><?php echo $product['product_name']; ?></td>
@@ -172,6 +174,8 @@ $stitcher_contact = $stitcher_contact_row['stitcher_contact'];
                         <tr>
                             <td colspan="3">Total</td>
                             <td><?php echo $total_issue_quantity; ?></td>
+                            <td></td>
+                            <td><?php echo $total_ink_quantity; ?></td>
                         </tr>
                     </tfoot>
                 </table>
