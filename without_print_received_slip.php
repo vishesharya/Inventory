@@ -4,7 +4,7 @@ include_once 'include/connection.php';
 include_once 'include/admin-main.php';
 
 // Fetch stitcher names from the database
-$stitcher_query = "SELECT DISTINCT stitcher_name FROM print_issue ORDER BY stitcher_name ASC"; 
+$stitcher_query = "SELECT DISTINCT stitcher_name FROM print_received ORDER BY stitcher_name ASC"; 
 $stitcher_result = mysqli_query($con, $stitcher_query);
 $challan_no = isset($_POST['challan_no']) ? $_POST['challan_no'] : "";
 $stitcher_contact = isset($_POST['stitcher_contact']) ? $_POST['stitcher_contact'] : "";
@@ -46,7 +46,7 @@ if (isset($_POST['view_entries'])) {
         $stitcher_address = $stitcher_address_row['stitcher_address'];
 
         // Fetch the date and time 
-        $date_and_time_query = "SELECT date_and_time FROM print_issue WHERE challan_no = '$challan_no' LIMIT 1";
+        $date_and_time_query = "SELECT date_and_time FROM print_received WHERE challan_no = '$challan_no' LIMIT 1";
         $date_and_time_result = mysqli_query($con, $date_and_time_query);
         $date_and_time_row = mysqli_fetch_assoc($date_and_time_result);
         $date_and_time = $date_and_time_row['date_and_time'];
@@ -82,7 +82,7 @@ if (isset($_POST['view_entries'])) {
     }
 
     // Construct the final query
-    $query = "SELECT * FROM print_issue $conditions";
+    $query = "SELECT * FROM print_received $conditions";
     $result = mysqli_query($con, $query);
 }
 ?>
@@ -293,7 +293,7 @@ if (isset($_POST['view_entries'])) {
         <!-- Add your HTML structure here to display kits issue details -->
         <div class="invoice-header">
            <div>
-                <p class="issue_heading" >KITS ISSUE SLIP (WITHOUT PRINT)</p>
+                <p class="issue_heading" >KITS RECEIVED SLIP (WITHOUT PRINT)</p>
                 <hr>
                 <h2 id="company_heading" class="heading">KHANNA SPORTS INDUSTRIES PVT. LTD</h2>
                 <p class="heading"> A-7, Sports Complex Delhi Road Meerut Uttar Pradesh 250002</p>
