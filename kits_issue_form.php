@@ -444,7 +444,7 @@ if (isset($_POST['submit_products'])) {
                                      <button type="submit" class="btn btn-success" name="submit_products">Submit</button>
                                 </div>
                                   <div>
-                                      <a  href="kits_issue_slip_print.php" >Print Issue  Slip </a>
+                                      <a  href="kits_issue_slip_print.php" >Print Slip </a>
                                   </div>
                             
                             </div>

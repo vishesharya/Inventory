@@ -255,6 +255,12 @@ if (isset($_POST['submit_products'])) {
         .table {
             margin-top: 2rem;
         }
+        #printbtn{
+            display:flex;
+            justify-content:space-between;
+            align-items: flex-end;
+            
+        }
     </style>
 </head>
 <body> 
@@ -351,12 +357,18 @@ if (isset($_POST['submit_products'])) {
                                 </div>
                             </div>
                             
-                            <div class="btn-group">
+                            
+                           
+
+                            <div id="printbtn" class="btn-group">
+                                 <div>
                                 <button type="submit" class="btn btn-primary me-2" name="add_product">Add</button>
                                 <button type="submit" class="btn btn-success" name="submit_products">Submit</button>
-                            </div>
-                            <div>
-                                 <a  href="kits_received_slip_print.php" >Print Issue  Slip </a>
+                                 </div>
+                                <div>
+                                 <a  href="kits_received_slip_print.php" >Print Slip </a>
+                                </div>
+                            
                             </div>
                         </form>
                         <hr>
