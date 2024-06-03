@@ -318,7 +318,9 @@ if (isset($_POST['view_entries'])) {
 
             $iind_price_result = mysqli_query($con, $iind_price_query);
             $iind_price_row = mysqli_fetch_assoc($iind_price_result);
-            $iind_price = $iind_price_row['2nd_price_10'] ?? $iind_price_row['2nd_price'];
+            $iind_price = ($data['S_IInd_C_Ist'] + $data['S_IInd_C_IInd']) * $iind_price_row['2nd_price_10'] ?? $iind_price_row['2nd_price'];
+
+            
 
             // Calculate IInd Price
             $iind_one_price_query = "SELECT 2nd_price FROM kits_product WHERE product_name = '" . $data['product_name'] . "' AND product_base = '" . $data['product_base'] . "' AND product_color = '" . $data['product_color'] . "'";
