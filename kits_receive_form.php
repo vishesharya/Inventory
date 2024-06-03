@@ -355,6 +355,9 @@ if (isset($_POST['submit_products'])) {
                                 <button type="submit" class="btn btn-primary me-2" name="add_product">Add</button>
                                 <button type="submit" class="btn btn-success" name="submit_products">Submit</button>
                             </div>
+                            <div>
+                                 <a  href="kits_received_slip_print.php" >Print Issue  Slip </a>
+                            </div>
                         </form>
                         <hr>
                         <div class="added-products">
@@ -391,9 +394,6 @@ if (isset($_POST['submit_products'])) {
                                                             <input type="hidden" name="delete_index" value="<?php echo $key; ?>">
                                                             <button type="submit" class="btn btn-danger" name="delete_product">Delete</button>
                                                          </form>
-                                                         <div>
-                                                              <a  href="kits_received_slip_print.php" >Print Issue  Slip </a>
-                                                         </div>
                                                     </td>
                                                 </tr>
                                             <?php endforeach; ?>
