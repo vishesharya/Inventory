@@ -113,7 +113,7 @@ $labour_name = $labour_row['labour_name'];
             </div>
             <div id="head_details">
                 <div>
-                <p> <b>labour : <?php echo $labour_name; ?></b></p>
+                <p> <b>Labour : <?php echo $labour_name; ?></b></p>
               
                 </div>
                 <div>
