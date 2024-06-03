@@ -3,92 +3,87 @@ session_start();
 include_once 'include/connection.php';
 include_once 'include/admin-main.php';
 
+// Initialize variables
+$errors = array();
+
 // Fetch stitcher names from the database
 $stitcher_query = "SELECT DISTINCT stitcher_name FROM print_issue ORDER BY stitcher_name ASC"; 
 $stitcher_result = mysqli_query($con, $stitcher_query);
 
 // Check if 'challan_no' is set in session
-if (isset($_SESSION['challan_no'])) {
-    $challan_no = $_SESSION['challan_no'];
-}
-
-// Initialize $result variable 
-$result = null; 
+$challan_no = isset($_SESSION['challan_no']) ? $_SESSION['challan_no'] : '';
 
 // Fetch product names
 $product_query = "SELECT DISTINCT product_name FROM print_issue ORDER BY product_name ASC";
 $product_result = mysqli_query($con, $product_query);
 
 // Initialize selected product, base, and color variables
-$selected_product = isset($_POST['product_name']) ? mysqli_real_escape_string($con, $_POST['product_name']) : null;
-$selected_base = isset($_POST['product_base']) ? mysqli_real_escape_string($con, $_POST['product_base']) : null;
-$selected_color = isset($_POST['product_color']) ? mysqli_real_escape_string($con, $_POST['product_color']) : null;
+$selected_product = isset($_POST['product_name']) ? mysqli_real_escape_string($con, $_POST['product_name']) : '';
+$selected_base = isset($_POST['product_base']) ? mysqli_real_escape_string($con, $_POST['product_base']) : '';
+$selected_color = isset($_POST['product_color']) ? mysqli_real_escape_string($con, $_POST['product_color']) : '';
 
-// Logic to fetch product bases and colors based on selected product
-$selected_product = isset($_POST['product_name']) ? $_POST['product_name'] : null;
+// Fetch product bases based on selected product
 if ($selected_product) {
-    $product_base_query = "SELECT DISTINCT product_base FROM sheets_product WHERE product_name = '$selected_product' ORDER BY product_base ASC";
-    $product_color_query = "SELECT DISTINCT product_color FROM sheets_product WHERE product_name = '$selected_product' ORDER BY product_color ASC";
+    $product_base_query = "SELECT DISTINCT product_base FROM print_issue WHERE product_name = '$selected_product' ORDER BY product_base ASC";
     $product_base_result = mysqli_query($con, $product_base_query);
-    $product_color_result = mysqli_query($con, $product_color_query);
+
+    // Fetch product colors based on selected product and base
+    if ($selected_base) {
+        $product_color_query = "SELECT DISTINCT product_color FROM print_issue WHERE product_name = '$selected_product' AND product_base = '$selected_base' ORDER BY product_color ASC";
+        $product_color_result = mysqli_query($con, $product_color_query);
+    }
 }
+
 // Check if 'View' button is clicked
 if (isset($_POST['view_entries'])) {
-    // Get selected stitcher
+    // Retrieve form data
     $stitcher_name = isset($_POST['stitcher_name']) ? mysqli_real_escape_string($con, $_POST['stitcher_name']) : '';
     $selected_product = isset($_POST['product_name']) ? mysqli_real_escape_string($con, $_POST['product_name']) : '';
     $selected_base = isset($_POST['product_base']) ? mysqli_real_escape_string($con, $_POST['product_base']) : '';
     $selected_color = isset($_POST['product_color']) ? mysqli_real_escape_string($con, $_POST['product_color']) : '';
 
-   // Initialize conditions
-$conditions = "";
+    // Construct conditions for SQL query
+    $conditions = "1"; // Default condition
 
-// Add stitcher condition
-if (!empty($stitcher_name)) {
-    $conditions .= " WHERE stitcher_name = '$stitcher_name'";
-}
+    // Add stitcher condition
+    if (!empty($stitcher_name)) {
+        $conditions .= " AND stitcher_name = '$stitcher_name'";
+    }
 
-// Add date range condition
-if (!empty($_POST['from_date']) && !empty($_POST['to_date'])) {
-    // Get selected date range
-    $start_date = mysqli_real_escape_string($con, $_POST['from_date']);
-    $end_date = mysqli_real_escape_string($con, $_POST['to_date']);
+    // Add product name filter if provided
+    if (!empty($selected_product)) {
+        $conditions .= " AND product_name = '$selected_product'";
+    }
 
-    // Add AND or WHERE depending on whether previous conditions exist
-    $conditions .= ($conditions == "") ? " WHERE" : " AND";
-    $conditions .= " date_and_time BETWEEN '$start_date' AND '$end_date'";
-}
+    // Add product base filter if provided
+    if (!empty($selected_base)) {
+        $conditions .= " AND product_base = '$selected_base'";
+    }
 
-// Add challan number condition
-if (!empty($_POST['challan_no'])) {
-    // Get selected challan number
-    $challan_no = mysqli_real_escape_string($con, $_POST['challan_no']);
-    
-    // Add AND or WHERE depending on whether previous conditions exist
-    $conditions .= ($conditions == "") ? " WHERE" : " AND";
-    $conditions .= " challan_no = '$challan_no'";
-}
+    // Add product color filter if provided
+    if (!empty($selected_color)) {
+        $conditions .= " AND product_color = '$selected_color'";
+    }
 
-// Add product name filter if provided
-if (!empty($selected_product)) {
-    $conditions .= " AND product_name = '$selected_product'";
-}
+    // Add date range condition
+    if (!empty($_POST['from_date']) && !empty($_POST['to_date'])) {
+        $start_date = mysqli_real_escape_string($con, $_POST['from_date']);
+        $end_date = mysqli_real_escape_string($con, $_POST['to_date']);
+        $conditions .= " AND date_and_time BETWEEN '$start_date' AND '$end_date'";
+    }
 
-// Add product base filter if provided
-if (!empty($selected_base)) {
-    $conditions .= " AND product_base = '$selected_base'";
-}
+    // Add challan number condition
+    if (!empty($_POST['challan_no'])) {
+        $challan_no = mysqli_real_escape_string($con, $_POST['challan_no']);
+        $conditions .= " AND challan_no = '$challan_no'";
+    }
 
-// Add product color filter if provided
-if (!empty($selected_color)) {
-    $conditions .= " AND product_color = '$selected_color'";
-}
-
-// Construct the final query
-$query = "SELECT * FROM print_issue $conditions";
-$result = mysqli_query($con, $query);
+    // Construct the final query
+    $query = "SELECT * FROM print_issue WHERE $conditions";
+    $result = mysqli_query($con, $query);
 }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -168,7 +163,7 @@ $result = mysqli_query($con, $query);
 <body>
     <?php include('include/kits_nav.php'); ?>
     <div class="container-fluid mt-5">
-          <h1 class="h4 text-center mb-4">KITS ISSUE DETAILS (WITHOUT PRINT) </h1> <!-- Changed container to container-fluid -->
+          <h1 class="h4 text-center mb-4">KITS ISSUE DETAILS (WITHOUT PRINT)</h1> <!-- Changed container to container-fluid -->
         <div id="form" class="row justify-content-center">
             <div class="col-lg-8">
                 <div class="card">
@@ -269,7 +264,7 @@ $result = mysqli_query($con, $query);
                                                 <?php endwhile; ?>
                                             <?php endif; ?>
                                         </select>
-                                    </div> 
+                                    </div>
                                 </div>
 
                           </div>
@@ -292,11 +287,21 @@ $result = mysqli_query($con, $query);
             </div>
         </div>
 
-        <?php 
-        if (isset($_POST['view_entries']) && mysqli_num_rows($result) > 0): ?>
-        <table class="table datatable-multi-sorting">
-            <thead>
-                <tr>
+
+        <?php
+
+
+// Check if the form has been submitted
+if (isset($_POST['view_entries'])) {
+
+    // Check if the query was successful
+    if ($result) {
+        // Check if there are any rows returned
+        if (mysqli_num_rows($result) > 0) {
+            ?>
+            <table class="table datatable-multi-sorting">
+                <thead>
+                    <tr>
                     <th>Sn.</th>
                     <th>Challan No.</th>
                     <th>Stitcher Name</th>
@@ -307,21 +312,19 @@ $result = mysqli_query($con, $query);
                     <th>Ink Name</th>
                     <th>Ink Quantity</th>
                     <th>Date</th>
-                </tr>
-            </thead>
-            <tbody>
-            <?php 
-            $sn = 1;
-            $total_issue_quantity = 0;
-            $total_ink_quantity = 0;
-         
-            while ($data = mysqli_fetch_array($result)) {
-                $total_issue_quantity += $data['issue_quantity'];
-                $total_ink_quantity += $data['ink_quantity'];
-               
-                ?>
-                <tr>
-                <td><?php echo $sn; ?>.</td>
+                    </tr>
+                </thead>
+                <tbody>
+                <?php 
+                $sn = 1;
+                $total_issue_quantity = 0;
+                $total_ink_quantity = 0;
+
+                while ($data = mysqli_fetch_array($result)) {
+                    
+                    ?>
+                    <tr>
+                        <td><?php echo $sn; ?>.</td>
                         <td><?php echo $data['challan_no']; ?></td>
                         <td><?php echo $data['stitcher_name']; ?></td>
                         <td><?php echo $data['product_name']; ?></td>
@@ -331,33 +334,35 @@ $result = mysqli_query($con, $query);
                         <td><?php echo $data['ink_name']; ?></td>
                         <td><?php echo $data['ink_quantity']; ?></td>
                         <td><?php echo date('d/m/Y', strtotime($data['date_and_time'])); ?></td>
-
+                        <td><?php echo date('d/m/Y', strtotime($data['date_and_time'])); ?></td>
+                    </tr>
+                    <?php 
+                    $sn++;
+                    $total_issue_quantity += $data['issue_quantity'];
+                    $total_ink_quantity += $data['ink_quantity'];
+                }
+                ?>
+                <tr>
+                <td colspan="5"></td> <!-- Colspan to span across columns -->
+                <td><b>Total : </b></td>
+                <td><?php echo $total_issue_quantity; ?></td>
+                <td></td> <!-- Empty cell for bladder name -->
+                <td><?php echo $total_ink_quantity; ?></td>
                 </tr>
-                <?php $sn++; ?>
-            <?php } ?>
-        </tbody>
-            <tfoot>
-            <tr>
-                                   
-    <td colspan="5"></td> <!-- Colspan to span across columns -->
-    <td><b>Total : </b></td>
-    <td><?php echo $total_issue_quantity; ?></td>
-    <td></td> <!-- Empty cell for bladder name -->
-    <td><?php echo $total_ink_quantity; ?></td>
-   
-            </tr>
-        </tfoot>
-        </table>
-    <?php elseif (isset($_POST['view_entries'])): ?>
-        <p>No entries found.</p>
-    <?php endif; ?>
-
-
-        
+                </tbody>
+            </table>
+            <?php
+        } else {
+            // No entries found
+            echo '<p>No entries found.</p>';
+        }
+    } 
+}
+?>
 
 
    <!-- JavaScript code for fetching challan numbers based on selected stitcher and date range -->
- 
+  
 
 <script>
         function fetchChallanNumbers(selectedStitcher, fromDate, toDate) {
@@ -373,10 +378,10 @@ $result = mysqli_query($con, $query);
                         option.text = challan;
                         challanSelect.appendChild(option);
                     });
-                } 
+                }
             };
             xhttp.open("GET", "fetch_challan_no_for_kits_print_issue.php?stitcher=" + selectedStitcher + "&from_date=" + fromDate + "&to_date=" + toDate, true);
-            xhttp.send();
+            xhttp.send(); 
         }
 
         function handleDateRangeChange() {
@@ -403,7 +408,7 @@ $result = mysqli_query($con, $query);
         var productBase = document.getElementById('product_base').value;
 
         // Make an AJAX request to fetch product colors based on product name and base
-        var xhr = new XMLHttpRequest(); 
+        var xhr = new XMLHttpRequest();
         xhr.onreadystatechange = function() {
             if (this.readyState === 4 && this.status === 200) {
                 var colors = JSON.parse(this.responseText);
