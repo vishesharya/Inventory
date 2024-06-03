@@ -474,12 +474,12 @@ if (isset($_POST['submit_products'])) {
                         option.text = challan;
                         challanSelect.appendChild(option);
                     });
-                }
+                } 
             };
-            xhttp.open("GET", "fetch_challan_no_for_kits_printing_received.php?stitcher=" + selectedStitcher, true);
+            xhttp.open("GET", "fetch_challan_no_for_without_print_received.php?stitcher=" + selectedStitcher, true);
             xhttp.send();
         }
-    </script>
+    </script> 
 
 <script>
         document.getElementById("select_challan").addEventListener("change", function() {

@@ -6,7 +6,7 @@ include_once 'include/connection.php';
 if (isset($_GET['stitcher'])) {
     $selectedStitcher = mysqli_real_escape_string($con, $_GET['stitcher']);
 
-    // Check if the date range is provided
+    // Check if the date range is provided 
     if (isset($_GET['from_date'], $_GET['to_date'])) {
         $fromDate = mysqli_real_escape_string($con, $_GET['from_date']);
         $toDate = mysqli_real_escape_string($con, $_GET['to_date']);
