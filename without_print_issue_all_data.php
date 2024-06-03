@@ -334,7 +334,7 @@ if (isset($_POST['view_entries'])) {
                         <td><?php echo $data['ink_name']; ?></td>
                         <td><?php echo $data['ink_quantity']; ?></td>
                         <td><?php echo date('d/m/Y', strtotime($data['date_and_time'])); ?></td>
-                        <td><?php echo date('d/m/Y', strtotime($data['date_and_time'])); ?></td>
+                       
                     </tr>
                     <?php 
                     $sn++;
