@@ -388,7 +388,7 @@ if (isset($_POST['view_entries'])) {
         <td><?php echo $total_ist_stitches; ?></td>
         <td colspan="2"></td>
         <td><?php echo $total_iind_stitches; ?></td>
-        <td colspan="1"></td>
+        <td colspan="2"></td>
         <td><?php echo $total_all_quantity; ?></td>
         
         <td colspan="7"></td>
