@@ -392,7 +392,7 @@ if (isset($_POST['submit_products'])) {
                                                             <button type="submit" class="btn btn-danger" name="delete_product">Delete</button>
                                                          </form>
                                                          <div>
-                                                             <a  href="kits_received_slip_print.php" >Print Issue  Slip </a>
+                                                              <a  href="kits_received_slip_print.php" >Print Issue  Slip </a>
                                                          </div>
                                                     </td>
                                                 </tr>
