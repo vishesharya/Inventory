@@ -45,7 +45,7 @@ function generateChallanNumber($con) {
 function viewChallanNumber($con) {
     $currentNumber = getCurrentNumber($con);
     $codePrefix = generateCodePrefix($currentNumber);
-    return $codePrefix; 
+    return $codePrefix;
 }
 
 $challan_no = viewChallanNumber($con); 
@@ -67,7 +67,7 @@ if (isset($_POST['challan_no_issue'])) {
     $selected_stitcher = mysqli_real_escape_string($con, $_POST['stitcher_name']); // Added this line
 
     // Query to fetch products based on selected stitcher, challan number, and status = 0
-    $product_query = "SELECT DISTINCT product_name,product_base,product_color FROM print_job_work WHERE stitcher_name = '$selected_stitcher' AND challan_no_issue = '$selected_challan' AND status = 0";
+    $product_query = "SELECT DISTINCT product_name, product_base, product_color FROM print_job_work WHERE stitcher_name = '$selected_stitcher' AND challan_no_issue = '$selected_challan' AND status = 0";
     $product_result = mysqli_query($con, $product_query);
 }
  
