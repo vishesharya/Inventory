@@ -446,7 +446,7 @@ if (isset($_POST['submit_products'])) {
                                 
                                
                                   <div>
-                                      <a  href="https://khannasports.co.in/kits_issue_slip_print.php" >Print Issue  Slip </a>
+                                      <a  href="kits_issue_slip_print.php" >Print Issue  Slip </a>
                                   </div>
                             
                             </div>

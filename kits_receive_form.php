@@ -390,7 +390,10 @@ if (isset($_POST['submit_products'])) {
                                                         <form method="post" action="">
                                                             <input type="hidden" name="delete_index" value="<?php echo $key; ?>">
                                                             <button type="submit" class="btn btn-danger" name="delete_product">Delete</button>
-                                                        </form>
+                                                         </form>
+                                                         <div>
+                                                             <a  href="kits_received_slip_print.php" >Print Issue  Slip </a>
+                                                         </div>
                                                     </td>
                                                 </tr>
                                             <?php endforeach; ?>
