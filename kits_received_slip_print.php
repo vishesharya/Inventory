@@ -117,9 +117,11 @@ $labour_name = $labour_row['labour_name'];
               
                 </div>
                 <div>
-                    <p><br/><br/>Challan No : <?php echo $entry['challan_no']; ?></p>
-                    <p>Date: <?php echo date('d-m-Y', strtotime($date_and_time)); ?></p>
+                <p><br/><br/>Challan No : <?php echo $entry['challan_no']; ?></p>
+                <p>Date : <?php echo date("d-m-Y"); ?></p>
                 </div>
+               
+                
             </div>
         </div>
         <div class="row">
