@@ -90,15 +90,26 @@ $labour_name = $labour_row['labour_name'];
                 display: none !important;
             }
         }
+        .issue_heading{
+            text-align: center;
+        }
+        .heading {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+            line-height: 5px;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="invoice-header">
-            <div>
-                <h2 class="heading">KHANNA SPORTS KITS RECEIVE SLIP</h2>
-                <p> Sports Complex, A-7,Delhi Road, Phase 1,<br/> Industrial Area, Mohkam Pur, Meerut,<br/> Uttar Pradesh 250002 (India)</p>
-                <p>Contact : 8449441387,98378427750</p>
+        <div>
+                <p class="issue_heading" >KITS ISSUE SLIP</p>
+                <hr>
+                <h2 class="heading">KHANNA SPORTS INDUSTRIES PVT. LTD</h2>
+                <p class="heading"> A-7, Sports Complex Delhi Road Meerut Uttar Pradesh 250002</p>
+                <p class="heading">Contact : 8449441387,98378427750 &nbsp;  GST : 09AAACK9669A1ZD </p>
             </div>
             <div id="head_details">
                 <div>
