@@ -70,7 +70,7 @@ if (isset($_POST['challan_no_issue'])) {
     $product_query = "SELECT DISTINCT product_name,product_base,product_color FROM print_job_work WHERE stitcher_name = '$selected_stitcher' AND challan_no_issue = '$selected_challan' AND status = 0";
     $product_result = mysqli_query($con, $product_query);
 }
-
+ 
 if (isset($_POST['add_product'])) {
     // Validate input
     if (empty($_POST['product_name']) || empty($_POST['product_base']) || empty($_POST['product_color']) || empty($_POST['quantity']) || empty($_POST['product_name1']) || empty($_POST['product_base1']) || empty($_POST['product_color1'])) {
@@ -243,6 +243,12 @@ if (isset($_POST['submit_products'])) {
         .table {
             margin-top: 2rem;
         }
+        #printbtn{
+            display:flex;
+            justify-content:space-between;
+            align-items: flex-end;
+            
+        }
     </style>
 </head>
 <body> 
@@ -383,10 +389,18 @@ if (isset($_POST['submit_products'])) {
                                 </div>
                             </div>
                             
-                            <div class="btn-group">
+                           
+
+                            <div id="printbtn" class="btn-group">
+                            <div">
                                 <button type="submit" class="btn btn-primary me-2" name="add_product">Add</button>
                                 <button type="submit" class="btn btn-success" name="submit_products">Submit</button>
                             </div>
+                                 <div>
+                                  <a  href="kits_received_slip_print.php" >Print Slip</a>
+                                 </div>
+                             
+                             </div>
                         </form>
                         <hr>
                         <div class="added-products">
