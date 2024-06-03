@@ -55,7 +55,7 @@ $stitcher_pan = $stitcher_row['stitcher_pan'];
     <style>
         @page {
             size: A4;
-            margin: 1cm;
+        
         }
         body {
             font-family: Arial, sans-serif;
