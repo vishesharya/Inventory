@@ -3,7 +3,7 @@ session_start();
 include_once 'include/connection.php';
 
 // Fetch the last submitted entry
-$query = "SELECT * FROM print_received ORDER BY id DESC LIMIT 1";
+$query = "SELECT * FROM print_issue ORDER BY id DESC LIMIT 1";
 $result = mysqli_query($con, $query);
 $entry = mysqli_fetch_assoc($result);
 
