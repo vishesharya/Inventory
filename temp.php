@@ -169,8 +169,7 @@ if (isset($_POST['view_entries'])) {
             padding-top: 10px;
             padding-left: 5px;
             padding-right: 5px;
-            justify-content: flex-end;
-            align-items: flex-end;
+            
         }
        
     </style>
@@ -252,7 +251,7 @@ if (isset($_POST['view_entries'])) {
                 <p>IFSC Code: <?php echo $stitcher_details['ifsc_code']; ?></p>
             </div>
         </div>
-        <div class="text-end">
+        <div class="text-end flex-end">
             <p>Bill No: _ _ _ _ _ _ _ _ _ _ _ _ _ _.</p>
             <p>Bill Date: _____ /_____ /________</p>
         </div>
