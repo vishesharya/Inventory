@@ -170,6 +170,7 @@ if (isset($_POST['view_entries'])) {
             padding-left: 5px;
             padding-right: 5px;
             justify-content: flex-end;
+            align-items: flex-end;
         }
        
     </style>
