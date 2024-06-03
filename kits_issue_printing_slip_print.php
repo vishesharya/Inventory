@@ -145,23 +145,25 @@ $stitcher_contact = $stitcher_contact_row['stitcher_contact'];
                             <th>Product Name</th>
                             <th>Product Base</th>
                             <th>Product Color</th>
-                            <th>Received Quantity</th>
+                            <th>Issue Quantity</th>
+                            <th>Ink Name</th>
+                            <th>InK Quantity</th>
                         </tr>
                     </thead>
                     <tbody>
                         <?php 
-                        $total_quantity = 0;
-                        
+                        $total_issue_quantity = 0;
                         while ($product = mysqli_fetch_assoc($product_result)) : 
-                            $total_quantity += $product['received_quantity'];
-                          
-                           
+                            $total_issue_quantity += $product['issue_quantity'];
                             ?>
                             <tr>
-                                <td><?php echo $product['product_name1']; ?></td>
-                                <td><?php echo $product['product_base1']; ?></td>
-                                <td><?php echo $product['product_color1']; ?></td>
-                                <td><?php echo $product['received_quantity']; ?></td>
+                                <td><?php echo $product['product_name']; ?></td>
+                                <td><?php echo $product['product_base']; ?></td>
+                                <td><?php echo $product['product_color']; ?></td>
+                                <td><?php echo $product['issue_quantity']; ?></td>
+                                <td><?php echo $product['ink_name']; ?></td>
+                                <td><?php echo $product['ink_quantity']; ?></td>
+                                
                       
                             </tr>
                         <?php endwhile; ?>
@@ -169,7 +171,7 @@ $stitcher_contact = $stitcher_contact_row['stitcher_contact'];
                     <tfoot>
                         <tr>
                             <td colspan="3">Total</td>
-                            <td><?php echo $total_quantity; ?></td>
+                            <td><?php echo $total_issue_quantity; ?></td>
                         </tr>
                     </tfoot>
                 </table>
