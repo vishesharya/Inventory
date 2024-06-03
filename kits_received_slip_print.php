@@ -105,7 +105,7 @@ $labour_name = $labour_row['labour_name'];
     <div class="container">
         <div class="invoice-header">
         <div>
-                <p class="issue_heading" >KITS ISSUE SLIP</p>
+                <p class="issue_heading" >KITS RECEIVED SLIP</p>
                 <hr>
                 <h2 class="heading">KHANNA SPORTS INDUSTRIES PVT. LTD</h2>
                 <p class="heading"> A-7, Sports Complex Delhi Road Meerut Uttar Pradesh 250002</p>
