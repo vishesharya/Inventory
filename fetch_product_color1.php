@@ -1,26 +1,18 @@
 <?php
-// Include the database connection
 include_once 'include/connection.php';
 
-// Get the product name1 and base1 from the query parameters
-$product_name1 = mysqli_real_escape_string($con, $_GET['product_name1']);
-$product_base1 = mysqli_real_escape_string($con, $_GET['product_base1']);
+if (isset($_GET['product_name1']) && isset($_GET['product_base1'])) {
+    $product_name = $_GET['product_name1'];
+    $product_base = $_GET['product_base1'];
 
-// Query to fetch distinct product colors based on the product name1 and base1
-$query = "SELECT DISTINCT product_color FROM sheets_product WHERE product_name = '$product_name1' AND product_base = '$product_base1' ORDER BY product_color ASC";
-$result = mysqli_query($con, $query);
+    $product_color_query = "SELECT DISTINCT product_color1 FROM print_received WHERE product_name1 = '$product_name' AND product_base1 = '$product_base'";
+    $product_color_result = mysqli_query($con, $product_color_query);
 
-// Initialize an array to hold the colors
-$colors = array();
+    $colors = array();
+    while ($row = mysqli_fetch_assoc($product_color_result)) {
+        $colors[] = $row['product_color1'];
+    }
 
-// Fetch the colors and add them to the array
-while ($row = mysqli_fetch_assoc($result)) {
-    $colors[] = $row['product_color'];
+    echo json_encode($colors);
 }
-
-// Return the colors as a JSON response
-echo json_encode($colors);
-
-// Close the database connection
-mysqli_close($con);
 ?>
