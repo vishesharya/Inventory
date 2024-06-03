@@ -318,7 +318,7 @@ if (isset($_POST['view_entries'])) {
 
             $iind_price_result = mysqli_query($con, $iind_price_query);
             $iind_price_row = mysqli_fetch_assoc($iind_price_result);
-            $iind_price = $iind_price_row['2nd_price'] ?? $iind_price_row['2nd_price_10']; 
+            $iind_price =  $iind_price_row['2nd_price_10']; ?? $iind_price_row['2nd_price']; 
 
             
 
