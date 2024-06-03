@@ -353,7 +353,7 @@ if (isset($_POST['view_entries'])) {
                 }
                 ?>
                 <tr>
-                <td colspan="3"></td> <!-- Colspan to span across columns -->
+                <td colspan="4"></td> <!-- Colspan to span across columns -->
                  <td><b>Total : </b></td>
                  <td><?php echo $total_S_Ist_C_Ist; ?></td>
                  <td><?php echo $total_S_Ist_C_IInd; ?></td>
