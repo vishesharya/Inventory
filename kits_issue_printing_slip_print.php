@@ -169,7 +169,7 @@ $stitcher_contact = $stitcher_contact_row['stitcher_contact'];
                       
                             </tr>
                         <?php endwhile; ?>
-                    </tbody>
+                    </tbody> 
                     <tfoot>
                         <tr>
                             <td colspan="3">Total</td>
