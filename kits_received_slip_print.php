@@ -10,7 +10,7 @@ $entry = mysqli_fetch_assoc($result);
 if (!$entry) {
     echo "No entries found.";
     exit();
-}
+} 
 
 // Fetch all added products corresponding to the last submitted entry's challan_no
 $challan_no = $entry['challan_no'];
@@ -121,21 +121,37 @@ $labour_name = $labour_row['labour_name'];
                             <th>Product Name</th>
                             <th>Product Base</th>
                             <th>Product Color</th>
-                            <th>Product Quantity</th>
-                        
+                            <th>Ist Quantity</th>
+                            <th>IInd Quantity</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <?php while ($product = mysqli_fetch_assoc($product_result)) : ?>
+                        <?php 
+                        $total_quantity_ist = 0;
+                        $total_quantity_iind = 0;
+                        while ($product = mysqli_fetch_assoc($product_result)) : 
+                            $total_quantity_ist += $product['ist_quantity'];
+                            $total_quantity_iind += $product['iind_quantity'];
+                           
+                            ?>
                             <tr>
                                 <td><?php echo $product['product_name']; ?></td>
                                 <td><?php echo $product['product_base']; ?></td>
                                 <td><?php echo $product['product_color']; ?></td>
-                                <td><?php echo $product['issue_quantity']; ?></td>
+                                <td><?php echo $product['ist_quantity']; ?></td>
+                                <td><?php echo $product['iind_quantity']; ?></td>
                       
                             </tr>
                         <?php endwhile; ?>
                     </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="3">Total</td>
+                            <td><?php echo $total_quantity_ist; ?></td>
+                            <td colspan="1"></td> <!-- Add empty cells for other columns -->
+                            <td><?php echo $total_quantity_iind; ?></td>
+                        </tr>
+                    </tfoot>
                 </table>
             </div>
         </div>
