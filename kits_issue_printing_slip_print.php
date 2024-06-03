@@ -14,7 +14,7 @@ if (!$entry) {
 
 // Fetch all added products corresponding to the last submitted entry's challan_no
 $challan_no = $entry['challan_no'];
-$product_query = "SELECT * FROM print_received WHERE challan_no = '$challan_no'";
+$product_query = "SELECT * FROM print_issue WHERE challan_no = '$challan_no'";
 $product_result = mysqli_query($con, $product_query);
 
 // Fetch the stitcher name for the invoice
@@ -147,7 +147,7 @@ $stitcher_contact = $stitcher_contact_row['stitcher_contact'];
                             <th>Product Color</th>
                             <th>Issue Quantity</th>
                             <th>Ink Name</th>
-                            <th>InK Quantity</th>
+                            <th>Ink Quantity</th>
                         </tr>
                     </thead>
                     <tbody>
