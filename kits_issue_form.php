@@ -295,7 +295,7 @@ if (isset($_POST['submit_products'])) {
             margin-top: 1.5rem;
             justify-content: center;
             gap: 15px;
-        }
+        } 
         .table {
             margin-top: 2rem;
         }
