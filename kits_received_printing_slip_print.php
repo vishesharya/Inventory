@@ -17,7 +17,7 @@ $challan_no = $entry['challan_no'];
 $product_query = "SELECT * FROM print_received WHERE challan_no = '$challan_no'";
 $product_result = mysqli_query($con, $product_query);
 
-// Fetch the stitcher name for the invoice
+// Fetch the stitcher name for the invoice 
 $stitcher_name = $entry['stitcher_name']; // Fetching stitcher name from the last submitted entry
 $stitcher_query = "SELECT * FROM stitcher WHERE stitcher_name = '$stitcher_name' LIMIT 1";
 $stitcher_result = mysqli_query($con, $stitcher_query);
