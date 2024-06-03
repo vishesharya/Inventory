@@ -102,7 +102,7 @@ $labour_name = $labour_row['labour_name'];
             </div>
             <div id="head_details">
                 <div>
-                <p>labour : <?php echo $labour_name; ?></p>
+                <p> <b>labour : <?php echo $labour_name; ?></b></p>
               
                 </div>
                 <div>
@@ -148,7 +148,6 @@ $labour_name = $labour_row['labour_name'];
                         <tr>
                             <td colspan="3">Total</td>
                             <td><?php echo $total_quantity_ist; ?></td>
-                            <td colspan="1"></td> <!-- Add empty cells for other columns -->
                             <td><?php echo $total_quantity_iind; ?></td>
                         </tr>
                     </tfoot>
