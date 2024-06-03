@@ -90,7 +90,7 @@ if (isset($_POST['view_entries'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KITS ISSUE DETAILS</title>
+    <title>KITS RECEIVED DETAILS</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
        
@@ -163,7 +163,7 @@ if (isset($_POST['view_entries'])) {
 <body>
     <?php include('include/kits_nav.php'); ?>
     <div class="container-fluid mt-5">
-          <h1 class="h4 text-center mb-4">KITS ISSUE DETAILS (WITHOUT PRINT)</h1> <!-- Changed container to container-fluid -->
+          <h1 class="h4 text-center mb-4">KITS RECEIVED DETAILS (WITHOUT PRINT)</h1> <!-- Changed container to container-fluid -->
         <div id="form" class="row justify-content-center">
             <div class="col-lg-8">
                 <div class="card">
