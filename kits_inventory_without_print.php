@@ -116,7 +116,7 @@ include_once 'include/admin-main.php';
                                     </div>
                                 </a>
 
-                                <a href="kits_issue_print_data.php" style='color:white'>
+                                <a href="without_print_issue_all_data.php" style='color:white'>
                                     <div class="col-lg-4">
                                         <div class="panel bg-teal-400">
                                             <p style="margin: 10px; font-size: large;">Kits Issue Data (WITHOUT PRINT)</p>
