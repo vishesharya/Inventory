@@ -34,7 +34,7 @@ $stitcher_contact = $stitcher_contact_row['stitcher_contact'];
 
 ?>
 
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -158,9 +158,9 @@ $stitcher_contact = $stitcher_contact_row['stitcher_contact'];
                            
                             ?>
                             <tr>
-                                <td><?php echo $product['product_name1']; ?></td>
-                                <td><?php echo $product['product_base1']; ?></td>
-                                <td><?php echo $product['product_color1']; ?></td>
+                                <td><?php echo $product['product_name']; ?></td>
+                                <td><?php echo $product['product_base']; ?></td>
+                                <td><?php echo $product['product_color']; ?></td>
                                 <td><?php echo $product['received_quantity']; ?></td>
                       
                             </tr>

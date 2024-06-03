@@ -324,7 +324,7 @@ if (isset($_POST['view_entries'])) {
                 <?php $sn++; ?>
             <?php } ?>
         </tbody>
-            <tfoot>
+            <tfoot> 
             <tr>
                                    
     <td colspan="8"></td> <!-- Colspan to span across columns -->

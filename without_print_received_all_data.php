@@ -14,22 +14,22 @@ $stitcher_result = mysqli_query($con, $stitcher_query);
 $challan_no = isset($_SESSION['challan_no']) ? $_SESSION['challan_no'] : '';
 
 // Fetch product names
-$product_query = "SELECT DISTINCT product_name1 FROM print_received ORDER BY product_name ASC";
+$product_query = "SELECT DISTINCT product_name FROM print_received ORDER BY product_name ASC";
 $product_result = mysqli_query($con, $product_query);
 
 // Initialize selected product, base, and color variables
-$selected_product = isset($_POST['product_name1']) ? mysqli_real_escape_string($con, $_POST['product_name1']) : '';
-$selected_base = isset($_POST['product_base1']) ? mysqli_real_escape_string($con, $_POST['product_base1']) : '';
-$selected_color = isset($_POST['product_color1']) ? mysqli_real_escape_string($con, $_POST['product_color1']) : '';
+$selected_product = isset($_POST['product_name']) ? mysqli_real_escape_string($con, $_POST['product_name']) : '';
+$selected_base = isset($_POST['product_base']) ? mysqli_real_escape_string($con, $_POST['product_base']) : '';
+$selected_color = isset($_POST['product_color']) ? mysqli_real_escape_string($con, $_POST['product_color']) : '';
 
 // Fetch product bases based on selected product
 if ($selected_product) {
-    $product_base_query = "SELECT DISTINCT product_base1 FROM print_received WHERE product_name1 = '$selected_product' ORDER BY product_base1 ASC";
+    $product_base_query = "SELECT DISTINCT product_base FROM print_received WHERE product_name = '$selected_product' ORDER BY product_base ASC";
     $product_base_result = mysqli_query($con, $product_base_query);
 
     // Fetch product colors based on selected product and base
     if ($selected_base) {
-        $product_color_query = "SELECT DISTINCT product_color1 FROM print_received WHERE product_name1 = '$selected_product' AND product_base1 = '$selected_base' ORDER BY product_color1 ASC";
+        $product_color_query = "SELECT DISTINCT product_color FROM print_received WHERE product_name = '$selected_product' AND product_base = '$selected_base' ORDER BY product_color ASC";
         $product_color_result = mysqli_query($con, $product_color_query);
     }
 }
@@ -38,9 +38,9 @@ if ($selected_product) {
 if (isset($_POST['view_entries'])) {
     // Retrieve form data
     $stitcher_name = isset($_POST['stitcher_name']) ? mysqli_real_escape_string($con, $_POST['stitcher_name']) : '';
-    $selected_product = isset($_POST['product_name1']) ? mysqli_real_escape_string($con, $_POST['product_name1']) : '';
-    $selected_base = isset($_POST['product_base1']) ? mysqli_real_escape_string($con, $_POST['product_base1']) : '';
-    $selected_color = isset($_POST['product_color1']) ? mysqli_real_escape_string($con, $_POST['product_color1']) : '';
+    $selected_product = isset($_POST['product_name']) ? mysqli_real_escape_string($con, $_POST['product_name']) : '';
+    $selected_base = isset($_POST['product_base']) ? mysqli_real_escape_string($con, $_POST['product_base']) : '';
+    $selected_color = isset($_POST['product_color']) ? mysqli_real_escape_string($con, $_POST['product_color']) : '';
 
     // Construct conditions for SQL query
     $conditions = "1"; // Default condition
@@ -52,17 +52,17 @@ if (isset($_POST['view_entries'])) {
 
     // Add product name filter if provided
     if (!empty($selected_product)) {
-        $conditions .= " AND product_name1 = '$selected_product'";
+        $conditions .= " AND product_name = '$selected_product'";
     }
 
     // Add product base filter if provided
     if (!empty($selected_base)) {
-        $conditions .= " AND product_base1 = '$selected_base'";
+        $conditions .= " AND product_base = '$selected_base'";
     }
 
     // Add product color filter if provided
     if (!empty($selected_color)) {
-        $conditions .= " AND product_color1 = '$selected_color'";
+        $conditions .= " AND product_color = '$selected_color'";
     }
 
     // Add date range condition
@@ -232,10 +232,10 @@ if (isset($_POST['view_entries'])) {
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="product_name">Select Product:</label>
-                                        <select class="form-select" id="product_name" name="product_name1" onchange="this.form.submit()">
+                                        <select class="form-select" id="product_name" name="product_name" onchange="this.form.submit()">
                                             <option value="" selected disabled>Select Product</option>
                                             <?php while ($row = mysqli_fetch_assoc($product_result)) : ?>
-                                                <option value="<?php echo $row['product_name1']; ?>" <?php echo $selected_product == $row['product_name1'] ? 'selected' : ''; ?>><?php echo $row['product_name1']; ?></option>
+                                                <option value="<?php echo $row['product_name']; ?>" <?php echo $selected_product == $row['product_name'] ? 'selected' : ''; ?>><?php echo $row['product_name']; ?></option>
                                             <?php endwhile; ?>
                                         </select>
                                     </div>
@@ -243,11 +243,11 @@ if (isset($_POST['view_entries'])) {
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="product_base">Product Base:</label>
-                                        <select class="form-select" id="product_base" name="product_base1">
+                                        <select class="form-select" id="product_base" name="product_base">
                                             <option value="" selected disabled>Select Product Base</option>
                                             <?php if ($selected_product) : ?>
                                                 <?php while ($row = mysqli_fetch_assoc($product_base_result)) : ?>
-                                                    <option value="<?php echo $row['product_base1']; ?>"><?php echo $row['product_base1']; ?></option>
+                                                    <option value="<?php echo $row['product_base']; ?>"><?php echo $row['product_base']; ?></option>
                                                 <?php endwhile; ?>
                                             <?php endif; ?>
                                         </select>
@@ -256,11 +256,11 @@ if (isset($_POST['view_entries'])) {
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="product_color">Product Color:</label>
-                                        <select class="form-select" id="product_color" name="product_color1">
+                                        <select class="form-select" id="product_color" name="product_color">
                                             <option value="" selected disabled>Select Product Color</option>
                                             <?php if ($selected_product) : ?>
                                                 <?php while ($row = mysqli_fetch_assoc($product_color_result)) : ?>
-                                                    <option value="<?php echo $row['product_color1']; ?>"><?php echo $row['product_color1']; ?></option>
+                                                    <option value="<?php echo $row['product_color']; ?>"><?php echo $row['product_color']; ?></option>
                                                 <?php endwhile; ?>
                                             <?php endif; ?>
                                         </select>
@@ -305,20 +305,20 @@ if (isset($_POST['view_entries'])) {
                     <th>Sn.</th>
                     <th>Challan No.</th>
                     <th>Stitcher Name</th>
+                    <th>Received Product Name</th>
+                    <th>Received Product Base</th>
+                    <th>Received Product Color</th>
                     <th>Product Name</th>
                     <th>Product Base</th>
                     <th>Product Color</th>
-                    <th>Issue Quantity</th>
-                    <th>Ink Name</th>
-                    <th>Ink Quantity</th>
+                    <th>Received Quantity</th>
                     <th>Date</th>
                     </tr>
                 </thead>
                 <tbody>
                 <?php 
                 $sn = 1;
-                $total_issue_quantity = 0;
-                $total_ink_quantity = 0;
+                $total_received_quantity = 0;
 
                 while ($data = mysqli_fetch_array($result)) {
                     
@@ -330,25 +330,24 @@ if (isset($_POST['view_entries'])) {
                         <td><?php echo $data['product_name']; ?></td>
                         <td><?php echo ucfirst($data['product_base']); ?></td>
                         <td><?php echo ucfirst($data['product_color']); ?></td>
-                        <td><?php echo $data['issue_quantity']; ?></td>
-                        <td><?php echo $data['ink_name']; ?></td>
-                        <td><?php echo $data['ink_quantity']; ?></td>
+                        <td><?php echo $data['product_name1']; ?></td>
+                        <td><?php echo ucfirst($data['product_base1']); ?></td>
+                        <td><?php echo ucfirst($data['product_color1']); ?></td>
+                        <td><?php echo $data['received_quantity']; ?></td>
                         <td><?php echo date('d/m/Y', strtotime($data['date_and_time'])); ?></td>
+
                        
                     </tr>
                     <?php 
                     $sn++;
-                    $total_issue_quantity += $data['issue_quantity'];
-                    $total_ink_quantity += $data['ink_quantity'];
+                    $total_received_quantity += $data['received_quantity'];
                 }
                 ?>
                 <tr>
-                <td colspan="5"></td> <!-- Colspan to span across columns -->
-                <td><b>Total : </b></td>
-                <td><?php echo $total_issue_quantity; ?></td>
-                <td></td> <!-- Empty cell for bladder name -->
-                <td><?php echo $total_ink_quantity; ?></td>
-                <td></td>
+                <td colspan="8"></td> <!-- Colspan to span across columns -->
+                 <td><b>Total : </b></td>
+                 <td><?php echo $total_received_quantity; ?></td>
+                 <td></td>
                 </tr>
                 </tbody>
             </table>
@@ -401,43 +400,38 @@ if (isset($_POST['view_entries'])) {
             handleDateRangeChange();
         });
     </script>
+
 <script>
     // Function to update product colors based on selected product name and base
     function updateProductColors() {
-        var productName = document.getElementById('product_name1').value;
-        var productBase = document.getElementById('product_base1').value;
+        var productName = document.getElementById('product_name').value;
+        var productBase = document.getElementById('product_base').value;
 
-        if (productName && productBase) {
-            // Make an AJAX request to fetch product colors based on product name and base
-            var xhr = new XMLHttpRequest();
-            xhr.onreadystatechange = function() {
-                if (this.readyState === 4 && this.status === 200) {
-                    var colors = JSON.parse(this.responseText);
-                    var productColorSelect = document.getElementById('product_color1');
-                    // Clear existing options
-                    productColorSelect.innerHTML = '<option value="" selected disabled>Select Product Color</option>';
-                    // Add fetched colors as options
-                    colors.forEach(function(color) {
-                        var option = document.createElement('option');
-                        option.value = color;
-                        option.text = color;
-                        productColorSelect.appendChild(option);
-                    });
-                }
-            };
-            xhr.open('GET', 'fetch_product_color1.php?product_name1=' + encodeURIComponent(productName) + '&product_base1=' + encodeURIComponent(productBase), true);
-            xhr.send();
-        } else {
-            // If either productName or productBase is not selected, clear the product color options
-            document.getElementById('product_color1').innerHTML = '<option value="" selected disabled>Select Product Color</option>';
-        }
+        // Make an AJAX request to fetch product colors based on product name and base
+        var xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function() {
+            if (this.readyState === 4 && this.status === 200) {
+                var colors = JSON.parse(this.responseText);
+                var productColorSelect = document.getElementById('product_color');
+                // Clear existing options
+                productColorSelect.innerHTML = '<option value="" selected disabled>Select Product Color</option>';
+                // Add fetched colors as options
+                colors.forEach(function(color) {
+                    var option = document.createElement('option');
+                    option.value = color;
+                    option.text = color;
+                    productColorSelect.appendChild(option);
+                });
+            }
+        };
+        xhr.open('GET', 'fetch_product_color.php?product_name=' + productName + '&product_base=' + productBase, true);
+        xhr.send();
     }
 
     // Event listeners for product name and product base change
-    document.getElementById('product_name1').addEventListener('change', updateProductColors);
-    document.getElementById('product_base1').addEventListener('change', updateProductColors);
+    document.getElementById('product_name').addEventListener('change', updateProductColors);
+    document.getElementById('product_base').addEventListener('change', updateProductColors);
 </script>
-
 
     
 </body>
