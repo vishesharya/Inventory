@@ -335,9 +335,9 @@ if (isset($_POST['view_entries'])) {
                             $total_quantity += $product['received_quantity'];
                             ?>
                             <tr>
-                                <td><?php echo $product['product_name1']; ?></td>
-                                <td><?php echo $product['product_base1']; ?></td>
-                                <td><?php echo $product['product_color1']; ?></td>
+                                <td><?php echo $product['product_name']; ?></td>
+                                <td><?php echo $product['product_base']; ?></td>
+                                <td><?php echo $product['product_color']; ?></td>
                                 <td><?php echo $product['received_quantity']; ?></td>
                       
                             </tr>
