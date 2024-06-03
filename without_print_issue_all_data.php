@@ -348,6 +348,7 @@ if (isset($_POST['view_entries'])) {
                 <td><?php echo $total_issue_quantity; ?></td>
                 <td></td> <!-- Empty cell for bladder name -->
                 <td><?php echo $total_ink_quantity; ?></td>
+                <td></td>
                 </tr>
                 </tbody>
             </table>
