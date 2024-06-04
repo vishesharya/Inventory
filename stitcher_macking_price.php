@@ -424,7 +424,7 @@ if (isset($_POST['view_entries'])) {
                         var option = document.createElement("option");
                         option.value = challan;
                         option.text = challan;
-                        challanSelect.appendChild(option);
+                        challanSelect.appendChild(option); 
                     });
                 }
             };
