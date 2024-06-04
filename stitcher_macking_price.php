@@ -409,7 +409,7 @@ if (isset($_POST['view_entries'])) {
         <?php elseif (isset($_POST['view_entries'])): ?>
             <p>No entries found.</p>
         <?php endif; ?>
-    </div>
+    </div> 
 
     <!-- JavaScript code for fetching challan numbers based on selected stitcher and date range -->
     <script>
