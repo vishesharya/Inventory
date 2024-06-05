@@ -84,7 +84,7 @@ if (isset($_POST['add_product'])) {
         $quantity2 = isset($_POST['quantity2']) ? intval($_POST['quantity2']) : 0;
         $quantity3 = isset($_POST['quantity3']) ? intval($_POST['quantity3']) : 0;
 
-        $is_duplicate = false;
+        $is_duplicate = false; 
         foreach ($_SESSION['temp_products'] as $temp_product) {
             if ($temp_product['product_name'] === $product_name && 
             $temp_product['product_base'] === $product_base && 
