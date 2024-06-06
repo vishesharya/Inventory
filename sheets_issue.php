@@ -90,7 +90,7 @@ if (isset($_POST['add_product'])) {
             $temp_product['product_base'] === $product_base && 
             $temp_product['product_color'] === $product_color) {
                 $is_duplicate = true;
-                break;
+                break; 
             }
         }
         // Check for duplicate product
