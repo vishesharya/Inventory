@@ -7,7 +7,7 @@ include_once 'include/connection.php';
 include_once 'include/admin-main.php';
 
 // Check if the form for adding code is submitted
-if(isset($_POST['AddCode'])){
+if(isset($_POST['AddCode'])){ 
     $codes = $_POST['code'];    
 
     // Loop to generate and insert codes into the database

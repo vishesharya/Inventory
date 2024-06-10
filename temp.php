@@ -290,7 +290,7 @@ if (isset($_POST['view_entries'])) {
     <?php $sn = 1; ?>
     <?php while ($data = mysqli_fetch_array($result)): ?>
         <tr>
-            <td><?php echo $sn; ?>.</td>
+            <td><?php echo $sn; ?>.</td> 
             <?php
                     $ist_price = 0;
                     $ist_one_price = 0;
