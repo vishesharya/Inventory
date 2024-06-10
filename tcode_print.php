@@ -12,7 +12,7 @@ include_once 'include/admin-main.php';
 <link rel="icon" type="image/x-icon" href="assets/images/favicon.png">
 <link href="assets/labels.css" rel="stylesheet" type="text/css" >
 <style>
-
+ 
 page {
   background: white;
   display: block;
