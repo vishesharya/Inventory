@@ -295,7 +295,7 @@ if (isset($_POST['view_entries'])) {
                     $ist_price = 0;
                     $ist_one_price = 0;
                     $iind_price = 0;
-                    $iind_one_price = 0;
+                    $iind_one_price = 0; 
             // Calculate Ist Price
             $ist_price_query = "SELECT per_pice_price FROM kits_product WHERE product_name = '" . $data['product_name'] . "' AND product_base = '" . $data['product_base'] . "' AND product_color = '" . $data['product_color'] . "'";
             $ist_price_result = mysqli_query($con, $ist_price_query);
