@@ -6,7 +6,7 @@ include_once 'include/admin-main.php';
 // Initialize variables
 $check_count_f = 0;
 $uncheck_count_f = 0;
-$check_count_t = 0;
+$check_count_t = 0; 
 $uncheck_count_t = 0;
 
 // Check if the form is submitted
