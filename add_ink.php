@@ -7,7 +7,7 @@ $addInkMsg = '';
 
 // Add Ink Form Handling
 if (isset($_POST['add_ink'])) {
-    $ink_name = $_POST['ink_name'];
+    $ink_name = $_POST['ink_name']; 
     $quantity = $_POST['quantity'];
 
     // Check if the ink already exists
