@@ -171,12 +171,7 @@ if (isset($_POST['view_entries'])) {
             padding-right: 5px;
             
         }
-        #term{
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-        }
+       
        
     </style>
 </head>
@@ -398,8 +393,7 @@ if (isset($_POST['view_entries'])) {
         <td><?php echo $total_iind_stitches; ?></td>
         <td colspan="2"></td>
         <td><?php echo $total_all_quantity; ?></td>
-     
-        <td></td>
+        <td class="tablefoot">Total Amount <br> (Inc. Tax) : <?php echo number_format($total_amount_inc_tax, 2); ?></td>
     </tr>
 </tfoot>
 
@@ -408,12 +402,7 @@ if (isset($_POST['view_entries'])) {
 </table>
 
 
-            <div id="term">
-            <table>
-                <tr>
-                <td class="tablefoot">Total Amount <br> (Inc. Tax) : <?php echo number_format($total_amount_inc_tax, 2); ?></td>
-                </tr>
-            </table> 
+          
             
         <div class="text-center mt-5">
             <p class="mb-1">I have received all stitching payments from <?php echo date('d/m/Y', strtotime($start_date)); ?> to <?php echo date('d/m/Y', strtotime($end_date)); ?>.</p>
@@ -421,8 +410,6 @@ if (isset($_POST['view_entries'])) {
             <p class="mb-5">Stitcher Signature / सिलाईदार हस्ताक्षर: _____________________</p>
            
         </div>
-        </div>
-
         <?php elseif (isset($_POST['view_entries'])): ?>
             <p>No entries found.</p>
         <?php endif; ?>
