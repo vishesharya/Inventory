@@ -401,7 +401,7 @@ if (isset($_POST['view_entries'])) {
 
 </table>
 
-        <div class="text-center mt-5">
+        <div class="text-center mt-5 flex-column">
             <table>
                 <tr>
                 <td class="tablefoot">Total Amount <br> (Inc. Tax) : <?php echo number_format($total_amount_inc_tax, 2); ?></td>
