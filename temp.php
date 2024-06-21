@@ -393,7 +393,7 @@ if (isset($_POST['view_entries'])) {
         <td colspan="2"></td>
         <td><?php echo $total_all_quantity; ?></td>
      
-        <td class="tablefoot">Total Amount <br> (Inc. Tax) : <?php echo number_format($total_amount_inc_tax, 2); ?></td>
+        <td></td>
     </tr>
 </tfoot>
 
@@ -402,6 +402,11 @@ if (isset($_POST['view_entries'])) {
 </table>
 
         <div class="text-center mt-5">
+            <table>
+                <tr>
+                <td class="tablefoot">Total Amount <br> (Inc. Tax) : <?php echo number_format($total_amount_inc_tax, 2); ?></td>
+                </tr>
+            </table>
             <p class="mb-1">I have received all stitching payments from <?php echo date('d/m/Y', strtotime($start_date)); ?> to <?php echo date('d/m/Y', strtotime($end_date)); ?>.</p>
             <p class="mb-1">मैंने <?php echo date('d/m/Y', strtotime($start_date)); ?> से <?php echo date('d/m/Y', strtotime($end_date)); ?> तक के सभी सिलाई भुगतान प्राप्त कर लिए हैं।</p>
             <p class="mb-5">Stitcher Signature / सिलाईदार हस्ताक्षर: _____________________</p>
