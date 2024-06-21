@@ -376,21 +376,26 @@ if (isset($_POST['view_entries'])) {
   
 <tfoot>
     <tr>
-       
         <td class="tablefoot">Total Ist Price: <?php echo $total_ist_price; ?></td>
         <td class="tablefoot">Total IInd Price: <?php echo $total_iind_price; ?></td>
         <td class="tablefoot">Total Thread Price: <?php echo $total_thread_price; ?></td>
         <td class="tablefoot">Total Stitching Amount: <?php echo $total_ist_price + $total_iind_price; ?></td>
         <td class="tablefoot">Total Amount <br> (Exc. Tax) : <?php echo ($total_ist_price + $total_iind_price) - $total_thread_price; ?></td>
+        <?php
+            // Calculate 99% of Total Amount (Exc. Tax) for Total Amount (Inc. Tax)
+            $total_amount_exc_tax = ($total_ist_price + $total_iind_price) - $total_thread_price;
+            $total_amount_inc_tax = $total_amount_exc_tax * 0.99; // 99% of Total Amount (Exc. Tax)
+        ?>
+        <td class="tablefoot">Total Amount <br> (Inc. Tax) : <?php echo number_format($total_amount_inc_tax, 2); ?></td>
         <td><?php echo $total_ist_stitches; ?></td>
         <td colspan="2"></td>
         <td><?php echo $total_iind_stitches; ?></td>
         <td colspan="2"></td>
         <td><?php echo $total_all_quantity; ?></td>
-        
         <td colspan="7"></td>
     </tr>
 </tfoot>
+
 
 
 </table>
