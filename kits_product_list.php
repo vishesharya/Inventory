@@ -25,7 +25,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }
 
 // Fetch data alphabetically
-$result = mysqli_query($con, "SELECT id, product_name, product_base, product_color, remaining_quantity, per_pice_price,2nd_price FROM kits_product ORDER BY product_name ASC");
+$result = mysqli_query($con, "SELECT id, product_name, product_base, product_color, remaining_quantity, per_pice_price,2nd_price,2nd_price_10 FROM kits_product ORDER BY product_name ASC");
 
 ?>
 
@@ -130,6 +130,7 @@ $result = mysqli_query($con, "SELECT id, product_name, product_base, product_col
                                     <th>Product Closing Balance</th>
                                     <th>Ist Price (Per Piece)</th>
                                     <th>IInd Price (Per Piece)</th>
+                                    <th>IInd Price More Than 10% (Per Piece)</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -148,6 +149,7 @@ $result = mysqli_query($con, "SELECT id, product_name, product_base, product_col
                                     <td contenteditable="true" data-field="remaining_quantity" data-id="<?php echo $data['id']; ?>"><?php echo $data['remaining_quantity']; ?></td>
                                     <td contenteditable="true" data-field="per_pice_price" data-id="<?php echo $data['id']; ?>"><?php echo $data['per_pice_price']; ?></td>
                                     <td contenteditable="true" data-field="2nd_price" data-id="<?php echo $data['id']; ?>"><?php echo $data['2nd_price']; ?></td>
+                                    <td contenteditable="true" data-field="2nd_price_10" data-id="<?php echo $data['id']; ?>"><?php echo $data['2nd_price_10']; ?></td>
                                 </tr>
                                 <?php 
                                 $sn++; 
