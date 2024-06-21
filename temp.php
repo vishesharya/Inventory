@@ -173,6 +173,7 @@ if (isset($_POST['view_entries'])) {
         }
         #term{
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
         }
