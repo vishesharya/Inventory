@@ -289,93 +289,89 @@ if (isset($_POST['view_entries'])) {
 <tbody>
     <?php $sn = 1; ?>
     <?php while ($data = mysqli_fetch_array($result)): ?>
-        <tr>
-            <td><?php echo $sn; ?>.</td>
-            <?php
-                    $ist_price = 0;
-                    $ist_one_price = 0;
-                    $iind_price = 0;
-                    $iind_one_price = 0;
+    <tr>
+        <td><?php echo $sn; ?>.</td>
+        <?php
+            $ist_price = 0;
+            $ist_one_price = 0;
+            $iind_price = 0;
+            $iind_one_price = 0;
+
             // Calculate Ist Price
             $ist_price_query = "SELECT per_pice_price FROM kits_product WHERE product_name = '" . $data['product_name'] . "' AND product_base = '" . $data['product_base'] . "' AND product_color = '" . $data['product_color'] . "'";
             $ist_price_result = mysqli_query($con, $ist_price_query);
             $ist_price_row = mysqli_fetch_assoc($ist_price_result);
             $ist_price = ($data['S_Ist_C_Ist'] + $data['S_Ist_C_IInd']) * $ist_price_row['per_pice_price'];
 
-            // Calculate Ist Price
+            // Calculate Ist Price (Per Piece)
             $ist_one_price_query = "SELECT per_pice_price FROM kits_product WHERE product_name = '" . $data['product_name'] . "' AND product_base = '" . $data['product_base'] . "' AND product_color = '" . $data['product_color'] . "'";
             $ist_one_price_result = mysqli_query($con, $ist_one_price_query);
             $ist_one_price_row = mysqli_fetch_assoc($ist_one_price_result);
             $ist_one_price = $ist_one_price_row['per_pice_price'];
 
-
-            // Calculate IInd Price
-            $iind_price_query = "SELECT 2nd_price FROM kits_product WHERE product_name = '" . $data['product_name'] . "' AND product_base = '" . $data['product_base'] . "' AND product_color = '" . $data['product_color'] . "'";
+            // Calculate IInd Price based on condition
+            $iind_price_field = ($data['S_IInd_C_Ist'] + $data['S_IInd_C_IInd'] > 0.1 * $data['total']) ? '2nd_price_10' : '2nd_price';
+            $iind_price_query = "SELECT $iind_price_field FROM kits_product WHERE product_name = '" . $data['product_name'] . "' AND product_base = '" . $data['product_base'] . "' AND product_color = '" . $data['product_color'] . "'";
             $iind_price_result = mysqli_query($con, $iind_price_query);
             $iind_price_row = mysqli_fetch_assoc($iind_price_result);
-            $iind_price = ($data['S_IInd_C_Ist'] + $data['S_IInd_C_IInd']) * $iind_price_row['2nd_price'];
+            $iind_price = ($data['S_IInd_C_Ist'] + $data['S_IInd_C_IInd']) * $iind_price_row[$iind_price_field];
 
-            // Calculate IInd Price
-            $iind_one_price_query = "SELECT 2nd_price FROM kits_product WHERE product_name = '" . $data['product_name'] . "' AND product_base = '" . $data['product_base'] . "' AND product_color = '" . $data['product_color'] . "'";
+            // Calculate IInd Price (Per Piece)
+            $iind_one_price_query = "SELECT $iind_price_field FROM kits_product WHERE product_name = '" . $data['product_name'] . "' AND product_base = '" . $data['product_base'] . "' AND product_color = '" . $data['product_color'] . "'";
             $iind_one_price_result = mysqli_query($con, $iind_one_price_query);
             $iind_one_price_row = mysqli_fetch_assoc($iind_one_price_result);
-            $iind_one_price = $iind_one_price_row['2nd_price'];
+            $iind_one_price = $iind_one_price_row[$iind_price_field];
 
+            // Update total prices and quantities
             $total_ist_price += $ist_price;
             $total_iind_price += $iind_price;
             $total_ist_stitches += $data['S_Ist_C_Ist'] + $data['S_Ist_C_IInd']; 
             $total_iind_stitches += $data['S_IInd_C_Ist'] + $data['S_IInd_C_IInd'];
             $total_all_quantity +=  $data['total'];
+
             // Reset total thread price for each row
             $total_thread_price = 0;
-           
-           
-                // Fetch thread data for the selected stitcher and date range
-                $thread_query = "SELECT thread_name, thread_quantity FROM kits_issue WHERE stitcher_name = '$stitcher_name' AND date_and_time BETWEEN '$start_date' AND '$end_date'";
-                $thread_result = mysqli_query($con, $thread_query);
-        
-                // Calculate total thread price for each row
-              // Calculate total thread price for each row
-                while ($thread_data = mysqli_fetch_array($thread_result)) {
-                  // Fetch thread price from 'threads' table
-                 $thread_name = $thread_data['thread_name'];
-                $thread_quantity = $thread_data['thread_quantity'];
-                 $thread_price_query = "SELECT thread_price FROM threads WHERE thread_name = '$thread_name'";
-                 $thread_price_result = mysqli_query($con, $thread_price_query);
-    
-                  // Check if the query returned any rows
-                  if ($thread_price_result && mysqli_num_rows($thread_price_result) > 0) {
-                       $thread_price_row = mysqli_fetch_assoc($thread_price_result);
-                      $thread_price = $thread_price_row['thread_price'];
-                 } else {
-                      // Set $thread_price to 0 if $thread_price_row is null
-                     $thread_price = 0;
-                      }
 
-                     // Calculate total thread price
-                 $total_thread_price += ($thread_quantity * $thread_price);
+            // Fetch thread data for the selected stitcher and date range
+            $thread_query = "SELECT thread_name, thread_quantity FROM kits_issue WHERE stitcher_name = '$stitcher_name' AND date_and_time BETWEEN '$start_date' AND '$end_date'";
+            $thread_result = mysqli_query($con, $thread_query);
+
+            // Calculate total thread price for each row
+            while ($thread_data = mysqli_fetch_array($thread_result)) {
+                // Fetch thread price from 'threads' table
+                $thread_name = $thread_data['thread_name'];
+                $thread_quantity = $thread_data['thread_quantity'];
+                $thread_price_query = "SELECT thread_price FROM threads WHERE thread_name = '$thread_name'";
+                $thread_price_result = mysqli_query($con, $thread_price_query);
+
+                // Check if the query returned any rows
+                if ($thread_price_result && mysqli_num_rows($thread_price_result) > 0) {
+                    $thread_price_row = mysqli_fetch_assoc($thread_price_result);
+                    $thread_price = $thread_price_row['thread_price'];
+                } else {
+                    // Set $thread_price to 0 if $thread_price_row is null
+                    $thread_price = 0;
                 }
 
-            
-
-            ?>
-            <td><?php echo $data['challan_no']; ?></td>
-            
-            <td><?php echo $data['product_name']; ?></td>
-            <td><?php echo ucfirst($data['product_base']); ?></td>
-            <td><?php echo ucfirst($data['product_color']); ?></td>
-            <td><?php echo $data['S_Ist_C_Ist'] + $data['S_Ist_C_IInd']; ?></td>
-            <td><?php echo $ist_one_price; ?></td>
-            <td><?php echo $ist_price; ?></td>
-            <td><?php echo $data['S_IInd_C_Ist'] + $data['S_IInd_C_IInd']; ?></td>
-            <td><?php echo $iind_one_price; ?></td>
-            <td><?php echo $iind_price; ?></td>
-            <td><?php echo $data['total']; ?></td>
-            
-            <td><?php echo date('d/m/Y', strtotime($data['date_and_time'])); ?></td>
-        </tr>
-        <?php $sn++; ?>
-    <?php endwhile; ?>
+                // Calculate total thread price
+                $total_thread_price += ($thread_quantity * $thread_price);
+            }
+        ?>
+        <td><?php echo $data['challan_no']; ?></td>
+        <td><?php echo $data['product_name']; ?></td>
+        <td><?php echo ucfirst($data['product_base']); ?></td>
+        <td><?php echo ucfirst($data['product_color']); ?></td>
+        <td><?php echo $data['S_Ist_C_Ist'] + $data['S_Ist_C_IInd']; ?></td>
+        <td><?php echo $ist_one_price; ?></td>
+        <td><?php echo $ist_price; ?></td>
+        <td><?php echo $data['S_IInd_C_Ist'] + $data['S_IInd_C_IInd']; ?></td>
+        <td><?php echo $iind_one_price; ?></td>
+        <td><?php echo $iind_price; ?></td>
+        <td><?php echo $data['total']; ?></td>
+        <td><?php echo date('d/m/Y', strtotime($data['date_and_time'])); ?></td>
+    </tr>
+    <?php $sn++; ?>
+<?php endwhile; ?>
 </tbody>
   
 <tfoot>
