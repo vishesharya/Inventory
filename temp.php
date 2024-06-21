@@ -381,7 +381,7 @@ if (isset($_POST['view_entries'])) {
         <td class="tablefoot">Total IInd Price: <?php echo $total_iind_price; ?></td>
         <td class="tablefoot">Total Thread Price: <?php echo $total_thread_price; ?></td>
         <td class="tablefoot">Total Stitching Amount: <?php echo $total_ist_price + $total_iind_price; ?></td>
-        <td class="tablefoot">Total Amount ( Exc. Tax ) : <?php echo ($total_ist_price + $total_iind_price) - $total_thread_price; ?></td>
+        <td class="tablefoot">Total Amount  ( Exc. Tax ) : <?php echo ($total_ist_price + $total_iind_price) - $total_thread_price; ?></td>
         <td><?php echo $total_ist_stitches; ?></td>
         <td colspan="2"></td>
         <td><?php echo $total_iind_stitches; ?></td>
