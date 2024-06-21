@@ -162,6 +162,7 @@ $result = mysqli_query($con, "SELECT id, product_name, product_base, product_col
         <th><?php echo $totalRemainingQuantity; ?></th>
         <th></th>
         <th></th>
+        <th></th>
     </tr>
 </tfoot>
                         </table>
