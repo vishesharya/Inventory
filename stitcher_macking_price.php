@@ -382,9 +382,9 @@ if (isset($_POST['view_entries'])) {
             $total_amount_exc_tax = ($total_ist_price + $total_iind_price);
             $total_amount_inc_tax = $total_amount_exc_tax * 0.99 // 99% of Total Amount (Exc. Tax)
         ?>
-        <td class="tablefoot">Total Ist Price: <?php echo number_format($total_ist_price, 2); ?></td>
-        <td class="tablefoot">Total IInd Price: <?php echo number_format($total_iind_price, 2); ?></td>
-        <td class="tablefoot">Total Thread Price: <?php echo number_format($total_thread_price, 2); ?></td>
+        <td class="tablefoot">Total Ist Price : <?php echo number_format($total_ist_price, 2); ?></td>
+        <td class="tablefoot">Total IInd Price : <?php echo number_format($total_iind_price, 2); ?></td>
+        <td class="tablefoot">Total Thread Price : <?php echo number_format($total_thread_price, 2); ?></td>
         <td class="tablefoot">Total Amount : <?php echo number_format($total_ist_price + $total_iind_price, 2); ?></td>
         <td class="tablefoot">Total Amount <br> (Inc. TDS) : <?php echo number_format($total_amount_inc_tax, 2); ?></td>
       
