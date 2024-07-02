@@ -303,6 +303,7 @@ $result = mysqli_query($con, $query);
                 <td><?php echo $totalQuantity2; ?></td>
                 <td></td>
                 <td><?php echo $totalQuantity3; ?></td>
+                <td></td>
             </tr>
         </table>
     <?php elseif (isset($_POST['view_entries'])): ?>
