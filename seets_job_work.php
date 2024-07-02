@@ -99,7 +99,7 @@ $result = mysqli_query($con, $query);
     <title>Kits Job Work Details</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
-       body {
+        body {
             background-color: #f8f9fc;
             font-family: Arial, sans-serif;
         }
@@ -117,6 +117,7 @@ $result = mysqli_query($con, $query);
         .table {
             margin-top: 2rem;
             border-collapse:collapse;
+           
         }
         #printbtn {
             display: flex;
@@ -135,7 +136,7 @@ $result = mysqli_query($con, $query);
         @media print {
             #form {
                 display: none;
-            } 
+            }
         }
     </style>
 </head>
