@@ -134,7 +134,7 @@ $result = mysqli_query($con, $query);
             margin: 0.1rem;
         }
         @media print {
-            form {
+            #form1 {
                 display: none;
             }
         }
@@ -144,7 +144,7 @@ $result = mysqli_query($con, $query);
 <?php include('include/sheets_nav.php'); ?>
     <div class="container-fluid mt-5">
           <h1 class="h4 text-center mb-4">SHEETS JOB WORK </h1> <!-- Changed container to container-fluid -->
-        <div id="form" class="row justify-content-center">
+        <div id="form1" class="row justify-content-center">
             <div class="col-lg-8">
                 <div class="card">
                     <div class="card-body">
