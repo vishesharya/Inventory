@@ -109,6 +109,7 @@ $result = mysqli_query($con, "SELECT id, thread_name, thread_price, thread_remai
                                 <li><a data-action="collapse"></a></li>
                                 <li><a data-action="reload"></a></li>
                                 <li><a data-action="close"></a></li>
+                                <li><button class="btn btn-info btn-xs" onclick="printTable()">Print</button></li>
                             </ul>
                         </div>
                     </div>
@@ -179,5 +180,11 @@ $result = mysqli_query($con, "SELECT id, thread_name, thread_price, thread_remai
         xhr.send('id=' + id + '&field=' + field + '&value=' + value);
     }
     </script>
+    <script>
+    function printTable() {
+        window.print();
+    }
+</script>
+
 </body>
 </html>
