@@ -122,6 +122,7 @@ $result = mysqli_query($con, "SELECT id, thread_name, thread_price, thread_remai
                     </div>
 
                     </div>
+                </div>
 
                     <table class="table datatable-multi-sorting">
                         <thead>
