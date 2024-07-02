@@ -249,6 +249,7 @@ $result = mysqli_query($con, $query);
                 </div>
             </div>
         </div>
+    </div>
 
         <?php 
          $totalQuantity1 = 0;
