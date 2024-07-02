@@ -62,7 +62,13 @@ $result = mysqli_query($con, "SELECT id, thread_name, thread_price, thread_remai
 
     <!-- /theme JS files -->
 
-   
+   <style>
+     @media print {
+            #notprint {
+                display: none;
+            }
+        }
+   </style>
 
 </head>
 
@@ -80,6 +86,7 @@ $result = mysqli_query($con, "SELECT id, thread_name, thread_price, thread_remai
 
             <!-- Main content -->
             <div class="content-wrapper">
+                <div id="notprint">
 
                 <!-- Page header -->
                 <div class="page-header page-header-default">
@@ -105,13 +112,15 @@ $result = mysqli_query($con, "SELECT id, thread_name, thread_price, thread_remai
                         <h5 class="panel-title">Thread List</h5>
                         <div class="heading-elements">
                             <ul class="icons-list">
-                               
+                                  <li><button class="btn btn-info btn-xs" onclick="printTable()">Print</button></li>
                                 <li><a data-action="collapse"></a></li>
                                 <li><a data-action="reload"></a></li>
                                 <li><a data-action="close"></a></li>
-                                <li><button class="btn btn-info btn-xs" onclick="printTable()">Print</button></li>
+                               
                             </ul>
                         </div>
+                    </div>
+
                     </div>
 
                     <table class="table datatable-multi-sorting">
