@@ -133,7 +133,11 @@ $result = mysqli_query($con, $query);
         #input_field {
             margin: 0.1rem;
         }
-        
+        @media print {
+            form {
+                display: none;
+            }
+        }
     </style>
 </head>
 <body>
