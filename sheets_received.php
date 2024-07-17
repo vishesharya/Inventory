@@ -79,7 +79,7 @@ if (isset($_POST['add_product'])) {
         $quantity1 = isset($_POST['quantity1']) ? intval($_POST['quantity1']) : 0;
         $quantity2 = isset($_POST['quantity2']) ? intval($_POST['quantity2']) : 0;
         $quantity3 = isset($_POST['quantity3']) ? intval($_POST['quantity3']) : 0;
-
+        
         // Fetch remaining_big_panel from sheets_product table
         $remaining_big_panel_query = "SELECT remaining_big_panel FROM sheets_product WHERE product_name = '$product_name' AND product_base = '$product_base' AND product_color = '$product_color'";
         $remaining_big_panel_result = mysqli_query($con, $remaining_big_panel_query);
