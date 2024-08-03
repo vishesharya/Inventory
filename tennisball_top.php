@@ -3,19 +3,22 @@ session_start();
 include_once 'include/connection.php';
 include_once 'include/admin-main.php';
 
+// Initialize filter variables
 $from_date = isset($_POST['from_date']) ? $_POST['from_date'] : '';
 $to_date = isset($_POST['to_date']) ? $_POST['to_date'] : '';
 
-// Filter query
+// Initialize query
 $query = "SELECT COUNT(*) as count, name, mobile, email, city, state 
           FROM contact 
           WHERE product = 'Tennis Ball'";
 
+// Add date filter if both dates are provided
 if (!empty($from_date) && !empty($to_date)) {
     $query .= " AND sub_time BETWEEN '$from_date' AND '$to_date'";
 }
 
 $query .= " GROUP BY mobile ORDER BY count DESC LIMIT 10";
+
 ?>
 
 <!DOCTYPE html>
@@ -24,7 +27,7 @@ $query .= " GROUP BY mobile ORDER BY count DESC LIMIT 10";
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title><?php include('include/title.php');?>Tennis Ball Top 10 User</title>
+    <title><?php include('include/title.php');?> Tennis Ball Top 10 User</title>
     <link rel="icon" type="image/x-icon" href="assets/images/favicon.png">
 
     <!-- Global stylesheets -->
@@ -86,7 +89,7 @@ $query .= " GROUP BY mobile ORDER BY count DESC LIMIT 10";
                 <div class="content">
                     <div class="pad margin no-print">
                         <div class="callout callout-info">
-                            <form action="print_tennisball_top.php" method="POST" class="form-horizontal" enctype="multipart/form-data" autocomplete="off">
+                            <form action="tennisball_top.php" method="POST" class="form-horizontal" enctype="multipart/form-data" autocomplete="off">
                                 <div class="box-body">
                                     <div class="form-group">
                                         <label for="inputEmail3" class="col-sm-1 control-label">From Date</label>
