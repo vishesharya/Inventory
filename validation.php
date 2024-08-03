@@ -211,7 +211,7 @@ if (isset($_POST['AddCode'])) {
                                 <div class="form-group row">
                                     <div id="div_country" class="col-sm-6 mb-3 mb-sm-0">
                                     <select class="form-select  form-control-user"  id='product' name='product' required onchange="updateModelDropdown()" >
-                                          <option value=''>Select Product</option>
+                                          <option value='' disabled selected>Select Product</option>
                                           <option value='Tennis Ball'>Tennis Ball</option>
                                           <option value='Football'>Footballl / Volleyball</option>
                                           <!-- Add other products here -->
@@ -221,7 +221,7 @@ if (isset($_POST['AddCode'])) {
 
                                     <div class="col-sm-6">
                                     <select class="form-select  form-control-user "  id='model' name='model' required>
-                                        <option value=''>Select Model</option>
+                                        <option value='' disabled selected>Select Model</option>
 
                                         <!-- Add other products here -->
                                     </select>
