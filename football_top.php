@@ -6,7 +6,23 @@ include_once 'include/admin-main.php';
 // Handle form submission
 $from_date = isset($_POST['from_date']) ? $_POST['from_date'] : '';
 $to_date = isset($_POST['to_date']) ? $_POST['to_date'] : '';
+
+// Check if form was submitted for filtering
+$filter_query = "";
+if (isset($_POST['filter'])) {
+    $filter_query = " AND date_column BETWEEN '$from_date' AND '$to_date'";
+}
+
+// Fetch the data with filtering applied
+$query = "SELECT COUNT(*) as count, name, mobile, email, city, state 
+          FROM contact 
+          WHERE product = 'Football' $filter_query 
+          GROUP BY mobile 
+          ORDER BY count DESC 
+          LIMIT 10";
+$result = mysqli_query($con, $query);
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -125,6 +141,7 @@ $to_date = isset($_POST['to_date']) ? $_POST['to_date'] : '';
                             </thead>
                             <tbody>
                                 <?php 
+                                
                                 $result = mysqli_query($con, "SELECT COUNT(*) as count, name, mobile, email, city, state FROM contact WHERE product = 'Football' GROUP BY mobile ORDER BY count DESC LIMIT 10");
                                 while($data = mysqli_fetch_array($result)) {
                                 ?>
