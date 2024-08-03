@@ -165,7 +165,7 @@ if (isset($_POST['AddCode'])) {
 
                                     <div class="col-sm-6">
                                     <select id='state' name='state' class="form-select  form-control-user"   required>
-                                         <option value=''>Select State</option>
+                                         <option value='' disabled selected>Select State</option>
                                          <option value='Andhra Pradesh'>Andhra Pradesh</option>
                                          <option value='Arunachal Pradesh'>Arunachal Pradesh</option>
                                          <option value='Assam'>Assam</option>
@@ -277,7 +277,7 @@ if (isset($_POST['AddCode'])) {
         modelDropdown.innerHTML = ''; // Clear existing options
         if (selectedProduct === 'Tennis Ball') {
             // Add options for Tennis Balls
-            var tennisModels = ['Select Model','Aerospex','Bouncer', 'Famex Premium', 'Famex Solid (PL)', 'Famex Star', 'Glorex', 'Glorex Premium', 'Gold', 'Match', 'Playmaster', 'Practice', 'Practice Premium', 'Practice Star','Raunak', 'Super ','Super - E', 'Super Eleven', 'Swastik', 'Thrill', 'Tournament', 'Turf','Ultimate'];
+            var tennisModels = ['Aerospex','Bouncer', 'Famex Premium', 'Famex Solid (PL)', 'Famex Star', 'Glorex', 'Glorex Premium', 'Gold', 'Match', 'Playmaster', 'Practice', 'Practice Premium', 'Practice Star','Raunak', 'Super ','Super - E', 'Super Eleven', 'Swastik', 'Thrill', 'Tournament', 'Turf','Ultimate'];
             for (var i = 0; i < tennisModels.length; i++) {
                 var option = document.createElement('option');
                 option.text = tennisModels[i];
@@ -286,7 +286,7 @@ if (isset($_POST['AddCode'])) {
             }
         } else if (selectedProduct === 'Football') {
             // Add options for Football
-            var footballModels = ['Select Model','Aerospex', 'Bullet', 'Famex', 'Famex Super', 'Five Star', 'Funball', 'Glorex(PU)', 'Jyoti', 'Kiwikshot', 'Lokpriya', 'Practice Top', 'Ruby', 'Ruby 18 Panel', 'Super', 'Winsrex'];
+            var footballModels = ['Aerospex', 'Bullet', 'Famex', 'Famex Super', 'Five Star', 'Funball', 'Glorex(PU)', 'Jyoti', 'Kiwikshot', 'Lokpriya', 'Practice Top', 'Ruby', 'Ruby 18 Panel', 'Super', 'Winsrex'];
             for (var j = 0; j < footballModels.length; j++) {
                 var option2 = document.createElement('option');
                 option2.text = footballModels[j];
