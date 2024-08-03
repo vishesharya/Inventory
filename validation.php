@@ -158,7 +158,7 @@ if (isset($_POST['AddCode'])) {
                                     <div id="div_country" class="col-sm-6 mb-3 mb-sm-0">
 
                                     <select placeholder="country" id='country' name='country' class="form-select  form-control-user"  required>
-                                        <option value=''>Select Country</option>
+                                        <option value='' disabled selected>Select Country</option>
                                          <option value='India'>India</option>
                                     </select>
                                     </div>
