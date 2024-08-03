@@ -35,7 +35,7 @@ include_once 'include/admin-main.php';
 	<script type="text/javascript" src="assets/js/plugins/forms/selects/select2.min.js"></script>
 	
 	<script type="text/javascript" src="assets/js/core/app.js"></script>
-	<script type="text/javascript" src="assets/js/pages/datatables_sorting.js"></script>
+	<script type="text/javascript" src="assets/js/pages/datatables_sorting.js"></script> 
 	<!-- /theme JS files -->
 
 </head>
@@ -102,6 +102,9 @@ include_once 'include/admin-main.php';
                   
 				  <div class="col-sm-2">
                 <button type="submit" name="submit" class="btn btn-warning ">Print</button>   
+                  </div> 
+				  <div class="col-sm-2">
+                <button type="submit" name="view" class="btn btn-warning ">View Details</button>   
                   </div> 
                 </div>	
               
