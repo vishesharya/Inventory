@@ -2,11 +2,13 @@
 session_start();
 include_once 'include/connection.php';
 include_once 'include/admin-main.php';
-
+// Handle form submission
+$from_date = isset($_POST['from_date']) ? $_POST['from_date'] : '';
+$to_date = isset($_POST['to_date']) ? $_POST['to_date'] : '';
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en"> 
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -79,23 +81,27 @@ include_once 'include/admin-main.php';
                 <div class="content">
                     <div class="pad margin no-print">
                         <div class="callout callout-info">
-                            <form action="fquery_print.php" method="POST" class="form-horizontal" enctype="multipart/form-data"  autocomplete="off">
-                                <div class="box-body">
-                                    <div class="form-group">
-                                        <label for="inputEmail3" class="col-sm-1 control-label">From Date</label>
-                                        <div class="col-sm-2">
-                                            <input type="date" class="form-control datepicker" name="from_date" id="startdate">
-                                        </div>
-                                        <label for="inputEmail3" class="col-sm-1 control-label">To Date</label>
-                                        <div class="col-sm-2">
-                                            <input type="date" class="form-control" name="to_date" id="enddate">
-                                        </div>
-                                        <div class="col-sm-2">
-                                            <button type="submit" name="submit" class="btn btn-warning ">Print</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </form>
+                           
+                            <form action="fquery_print.php" method="POST" class="form-horizontal" enctype="multipart/form-data" autocomplete="off">
+								<div class="box-body">
+									<div class="form-group">
+										<label for="from_date" class="col-sm-1 control-label">From Date</label>
+										<div class="col-sm-2">
+											<input type="date" class="form-control datepicker" name="from_date" id="startdate" value="<?php echo $from_date; ?>" >
+										</div>
+										<label for="to_date" class="col-sm-1 control-label">To Date</label>
+										<div class="col-sm-2">
+											<input type="date" class="form-control" name="to_date" id="enddate" value="<?php echo $to_date; ?>" >
+										</div>
+										<div class="col-sm-2">
+											<button type="submit" name="filter" class="btn btn-primary">Filter</button>
+										</div> 
+										<div class="col-sm-2">
+											<button type="submit" formaction="fquery_print.php" formtarget="_blank" name="print" class="btn btn-warning">Print</button>   
+										</div> 
+									</div>
+								</div>			  
+							</form>
                         </div>
                     </div>
              

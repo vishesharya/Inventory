@@ -195,7 +195,7 @@ $to_date = isset($_POST['to_date']) ? $_POST['to_date'] : '';
 			<!-- /main content -->
 
 		</div>
-		<!-- /page content -->
+		<!-- /page content --> 
 
 	</div>
 	<!-- /page container -->

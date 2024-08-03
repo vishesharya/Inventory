@@ -17,7 +17,7 @@ include_once 'include/admin-main.php';
             display: block;
             margin: 1.0cm;
             box-shadow: 0 0 0.5cm rgba(0,0,0,0.5);
-        }
+        } 
         @media print {
             body, page {
                 margin: 0!important;
