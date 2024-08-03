@@ -84,7 +84,7 @@ $to_date = isset($_POST['to_date']) ? $_POST['to_date'] : '';
 				<div class="content">
 					<div class="pad margin no-print">
 						<div class="callout callout-info">       
-							<form action="tquery_print.php" method="POST" class="form-horizontal" enctype="multipart/form-data" autocomplete="off">
+							<form action="t_query.php" method="POST" class="form-horizontal" enctype="multipart/form-data" autocomplete="off">
 								<div class="box-body">
 									<div class="form-group">
 										<label for="from_date" class="col-sm-1 control-label">From Date</label>
@@ -99,7 +99,7 @@ $to_date = isset($_POST['to_date']) ? $_POST['to_date'] : '';
 											<button type="submit" name="filter" class="btn btn-primary">Filter</button>
 										</div> 
 										<div class="col-sm-2">
-											<button type="submit" name="submit" class="btn btn-warning">Print</button>   
+											<button type="submit" formaction="tquery_print.php" formtarget="_blank" name="print" class="btn btn-warning">Print</button>   
 										</div> 
 									</div>
 								</div>			  
@@ -222,6 +222,5 @@ $to_date = isset($_POST['to_date']) ? $_POST['to_date'] : '';
 	<!-- delete/edit validation end --> 
 
 </body>
-
 
 </html>
