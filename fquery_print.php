@@ -22,7 +22,7 @@ echo '<table border="1" cellpadding="10" cellspacing="0">
 			<th>Sn.</th>
 			<th>Product Code</th>
 			<th>Name</th>
-			<th>Mobile</th>
+			<th>Mobile</th> 
 			<th>Email</th> 
 			<th>City</th>
 			<th>State</th>
