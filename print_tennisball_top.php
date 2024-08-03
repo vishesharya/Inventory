@@ -15,7 +15,7 @@ $result = mysqli_query($con, $query);
 
 // Include your HTML structure for printing here
 
-echo '<h3>Tennis Ball Top 10 Contact Query</h3>';
+echo '<h3>Football Top 10 Contact Query</h3>';
 echo '<table border="1" cellpadding="10" cellspacing="0">
 		<tr>
 			<th>Sn.</th>
