@@ -138,7 +138,16 @@ $to_date = isset($_POST['to_date']) ? $_POST['to_date'] : '';
                             <tbody>
                                 <?php 
                                 $sn=1;
-                                $result=mysqli_query($con, "SELECT * FROM contact WHERE product = 'Football'");
+                                // Base query
+							    $query = "SELECT * FROM contact WHERE product = 'Football'";
+							
+							    // Add date filter if selected
+							    if (!empty($from_date) && !empty($to_date)) {
+							  	$query .= " AND sub_time BETWEEN '$from_date' AND '$to_date'";
+							    }
+
+							    $result = mysqli_query($con, $query);
+                                
                                 while($data=mysqli_fetch_array($result)) {
                                 ?>
                                 <tr>
