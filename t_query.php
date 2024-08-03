@@ -3,7 +3,38 @@ session_start();
 include_once 'include/connection.php';
 include_once 'include/admin-main.php';
 
+$sn = 1;
+$query = "SELECT * FROM contact WHERE product = 'Tennis Ball'";
 
+// Handle form submission for 'View Details'
+if (isset($_POST['view'])) {
+    $from_date = $_POST['from_date'];
+    $to_date = $_POST['to_date'];
+
+    // If both dates are empty, fetch the minimum and maximum sub_time from the database
+    if (empty($from_date) && empty($to_date)) {
+        $minTimeQuery = "SELECT MIN(sub_time) as sub_time FROM `contact` WHERE product = 'Tennis Ball'";
+        $maxTimeQuery = "SELECT MAX(sub_time) as sub_time FROM `contact` WHERE product = 'Tennis Ball'";
+        
+        $minTime = mysqli_fetch_array(mysqli_query($con, $minTimeQuery));
+        $maxTime = mysqli_fetch_array(mysqli_query($con, $maxTimeQuery));
+
+        $from_date = date('Y-m-d', strtotime($minTime['sub_time']));
+        $to_date = date('Y-m-d', strtotime($maxTime['sub_time']));
+    }
+
+    // Add date filtering to the query if dates are provided or set
+    if (!empty($from_date) && !empty($to_date)) {
+        $query .= " AND DATE(sub_time) BETWEEN '$from_date' AND '$to_date'";
+    } elseif (!empty($from_date)) {
+        $query .= " AND DATE(sub_time) >= '$from_date'";
+    } elseif (!empty($to_date)) {
+        $query .= " AND DATE(sub_time) <= '$to_date'";
+    }
+}
+
+// Execute the query
+$result = mysqli_query($con, $query);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -50,7 +81,7 @@ include_once 'include/admin-main.php';
 	<!-- Page container -->
 	<div class="page-container">
 
-		<!-- Page content -->
+		<!-- Page content --> 
 		<div class="page-content">
 
 			<!-- Main sidebar -->
