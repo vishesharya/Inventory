@@ -327,8 +327,8 @@ if (isset($_POST['view_entries'])) {
                 while ($data = mysqli_fetch_array($result)) {
                     
                     ?>
-                    <tr>
-                       
+                    <tr> 
+                        <td><?php echo $sn; ?>.</td>
                         <td><?php echo $data['challan_no']; ?></td>
                         <td><?php echo $data['stitcher_name']; ?></td>
                         <td><?php echo $data['product_name']; ?></td>
