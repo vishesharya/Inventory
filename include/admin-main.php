@@ -1,6 +1,6 @@
 <?php
-include './include/check_login.php';
-include './include/connection.php';
+include_once 'connection.php';
+
 class Vishesh_admin {
     function insert_code($table) {
         include('connection.php');
@@ -36,27 +36,20 @@ class Vishesh_admin {
         include('connection.php');
         $this->table_name = $table;
         $user = mysqli_real_escape_string($con, $_POST['username']);
-        $pass = $_POST['password'];
-
-        // Fetch the user data based on the username
-        $qry = mysqli_query($con, "SELECT * FROM $this->table_name WHERE username='$user'") or die('Select query fail: ' . mysqli_error($con));
+        $pass = mysqli_real_escape_string($con, $_POST['password']);
+        $qry = mysqli_query($con, "SELECT * FROM $this->table_name WHERE username='$user' AND password='$pass'") or die('Select query fail' . mysqli_connect_error());
         $data = mysqli_fetch_array($qry);
 
-        if ($data) {
-            // Verify the password
-            if (password_verify($pass, $data['password'])) {
-                session_start();
-                $_SESSION['admin_logged_in'] = true;
-                $_SESSION['username'] = $data['username'];
-                $_SESSION['name'] = $data['name'];
-                $_SESSION['id'] = $data['id'];
-                $_SESSION['role_user'] = $data['role_user'];
+        if (mysqli_num_rows($qry) == 1) {
+            session_start();
+            $_SESSION['admin_logged_in'] = true;
+            $_SESSION['username'] = $data['username'];
+            $_SESSION['name'] = $data['name'];
+            $_SESSION['id'] = $data['id'];
+            $_SESSION['role_user'] = $data['role_user'];
 
-                header('location:dashboard.php');
-                exit;
-            } else {
-                echo "<script>alert('Username or password is not correct')</script>";
-            }
+            header('location:dashboard.php');
+            exit;
         } else {
             echo "<script>alert('Username or password is not correct')</script>";
         }
