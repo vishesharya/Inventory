@@ -1,7 +1,7 @@
 <?php
-// Include your database connection file
-include_once 'include/connection.php';
-
+include './include/check_login.php';
+include './include/connection.php';
+include_once 'include/admin-main.php';
 // Check if product name is provided via GET request
 if (isset($_GET['product_name'])) {
     $product_name = $_GET['product_name'];

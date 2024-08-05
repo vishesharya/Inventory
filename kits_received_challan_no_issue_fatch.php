@@ -1,6 +1,7 @@
 <?php
-// Include necessary files and start session if required
-include_once 'include/connection.php'; // Include your database connection file
+include './include/check_login.php';
+include './include/connection.php';
+include_once 'include/admin-main.php';
 
 // Check if labour_name is set and not empty
 if(isset($_GET['labour_name']) && !empty($_GET['labour_name'])) {

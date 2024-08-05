@@ -1,5 +1,7 @@
 <?php
-include_once 'include/connection.php';
+include './include/check_login.php';
+include './include/connection.php';
+include_once 'include/admin-main.php';
 
 $labour = mysqli_real_escape_string($con, $_GET['labour']);
 $from_date = mysqli_real_escape_string($con, $_GET['from_date']);

@@ -1,11 +1,9 @@
 <?php
 session_start();
 
+include './include/check_login.php';
 include './include/connection.php';
-include './include/admin-main.php';
-
-include './include/connection.php';
-
+include_once 'include/admin-main.php';
 // Fetch all stitcher details
 $query = "SELECT * FROM stitcher";
 $result = mysqli_query($con, $query);

@@ -1,5 +1,7 @@
 <?php
-include_once 'include/connection.php';
+include './include/check_login.php';
+include './include/connection.php';
+include_once 'include/admin-main.php';
 
 if (isset($_GET['product_name']) && isset($_GET['product_base'])) {
     $product_name = $_GET['product_name'];

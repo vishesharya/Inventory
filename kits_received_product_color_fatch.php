@@ -1,6 +1,7 @@
 <?php
-// Include necessary files and start session if required
-include_once 'include/connection.php'; // Include your database connection file
+include './include/check_login.php';
+include './include/connection.php';
+include_once 'include/admin-main.php';
 
 // Check if challan_no_issue, product_name, and product_base are set and not empty
 if(isset($_GET['challan_no_issue']) && !empty($_GET['challan_no_issue']) && isset($_GET['product_name']) && !empty($_GET['product_name']) && isset($_GET['product_base']) && !empty($_GET['product_base'])) {

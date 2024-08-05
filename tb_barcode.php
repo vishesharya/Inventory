@@ -1,9 +1,7 @@
 <?php
 // Start session
-session_start();
-
-// Include necessary files
-include_once 'include/connection.php';
+include './include/check_login.php';
+include './include/connection.php';
 include_once 'include/admin-main.php';
 
 // Check if the form for adding code is submitted

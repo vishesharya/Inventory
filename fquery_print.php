@@ -1,7 +1,8 @@
 
 <?php
-session_start();
-include_once 'include/connection.php';
+include './include/check_login.php';
+include './include/connection.php';
+include_once 'include/admin-main.php';
 
 $from_date = isset($_POST['from_date']) ? $_POST['from_date'] : '';
 $to_date = isset($_POST['to_date']) ? $_POST['to_date'] : '';

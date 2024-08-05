@@ -1,6 +1,6 @@
 <?php
-session_start();
-include_once 'include/connection.php';
+include './include/check_login.php';
+include './include/connection.php';
 include_once 'include/admin-main.php';
 
 $labour_name = isset($_POST['labour_name']) ? $_POST['labour_name'] : "";

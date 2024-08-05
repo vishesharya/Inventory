@@ -1,6 +1,7 @@
 <?php
-session_start();
-include_once 'include/connection.php';
+include './include/check_login.php';
+include './include/connection.php';
+include_once 'include/admin-main.php';
 
 // Check if challan_no_issue, product_name, and product_base are set
 if (isset($_GET['challan_no_issue']) && isset($_GET['product_name']) && isset($_GET['product_base'])) {

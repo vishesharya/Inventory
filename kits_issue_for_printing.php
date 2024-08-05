@@ -1,7 +1,7 @@
 <?php
-session_start();
-include_once 'include/connection.php';
-include_once 'include/admin-main.php'; 
+include './include/check_login.php';
+include './include/connection.php';
+include_once 'include/admin-main.php';
 
 // Function to fetch current number from the database
 function getCurrentNumber($con) {
