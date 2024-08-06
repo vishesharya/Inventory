@@ -19,9 +19,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt->execute();
     }
 
-    echo "Permissions updated.";
     $stmt->close();
     $con->close();
+
+    // Redirect to index.php after successful update
+    header("Location: index.php");
+    exit();
 } else {
     echo "Invalid request method.";
 }
