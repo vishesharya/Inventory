@@ -92,7 +92,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 padding: 0;
             }
             .container {
-                width: 50%;
+                width: 90%;
+                max-width: 1200px;
                 margin: 50px auto;
                 background: #fff;
                 padding: 20px;
@@ -104,12 +105,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 color: #333;
             }
             .file-list {
-                display: flex;
-                flex-wrap: wrap;
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
                 gap: 10px;
             }
             .file-item {
-                flex: 1 1 48%;
                 display: flex;
                 align-items: center;
                 background: #f9f9f9;
@@ -134,6 +134,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 border-radius: 4px;
                 cursor: pointer;
                 font-size: 16px;
+                margin-top: 20px;
             }
             .btn:hover {
                 background: #0056b3;
