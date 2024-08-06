@@ -126,15 +126,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             }
             .btn {
                 display: block;
-                width: 100%;
+                width: 150px;
                 padding: 10px;
                 background: #007bff;
                 color: #fff;
                 border: none;
-                border-radius: 4px;
+                border-radius: 20px;
                 cursor: pointer;
-                font-size: 16px;
-                margin-top: 20px;
+                font-size: 14px;
+                margin: 20px auto 0;
+                text-align: center;
             }
             .btn:hover {
                 background: #0056b3;
