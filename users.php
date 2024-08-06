@@ -121,7 +121,7 @@ $result = $con->query("SELECT * FROM users");
 </head>
 <body>
     <header>
-        <h1>Users Dashboard</h1>
+        <h1>Add / Delete User</h1>
     </header>
     <div class="container">
         <section>
