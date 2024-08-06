@@ -126,14 +126,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             }
             .btn {
                 display: block;
-                width: 150px;
+                width: 200px;
                 padding: 10px;
                 background: #007bff;
                 color: #fff;
                 border: none;
-                border-radius: 20px;
+                border-radius: 10px;
                 cursor: pointer;
-                font-size: 14px;
+                font-size: 20px;
                 margin: 20px auto 0;
                 text-align: center;
             }
