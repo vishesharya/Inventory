@@ -7,67 +7,96 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     // Map PHP files to user-friendly labels
     $php_files = [
-        'add_bladder.php' => 'Add Bladder',
-        'add_ink.php' => 'Add Ink',
-        'add_inventory_products.php' => 'Add Inventory Products',
-        'add_labour.php' => 'Add Labour',
-        'add_products.php' => 'Add Products',
-        'add_stitcher.php' => 'Add Stitcher',
-        'add_thread.php' => 'Add Thread',
-        'all_customer_query_print.php' => 'All Customer Query Print',
-        'all_product_update.php' => 'All Product Update',
-        'all_small_stock-update.php' => 'All Small Stock Update',
-        'analytics.php' => 'Analytics',
-        'barcode.php' => 'Barcode',
-        'bladder_inventory.php' => 'Bladder Inventory',
-        'chart.php' => 'Chart',
-        'check_ratio.php' => 'Check Ratio',
-        'code_print-faizal.php' => 'Code Print Faizal',
-        'code_print.php' => 'Code Print',
-        'contact.php' => 'Contact',
+        'barcode.php' => 'Barcode Generate',
+        'delete_code.php' => 'Barcode Delete',
+        'fb_barcode.php' => 'Football Barcode Generate',
+        'fcode_delete.php' => 'Football Barcode Delete',
+        'fcode_print.php' => 'Football Barcode Print',
+        'tb_barcode.php' => 'Tennis Ball Barcode Generate',
+        'tcode_delete.php' => 'Tennis Ball Barcode Delete',
+        'tcode_print.php' => 'Tennis Ball Barcode Print',
         'contact_query.php' => 'Contact Query',
-        'customer_query_dtls.php' => 'Customer Query Details',
-        'cust_query_more_dtls.php' => 'Customer Query More Details',
-        'dashboard.php' => 'Dashboard',
-        'default.php' => 'Default',
-        'delete.php' => 'Delete',
-        'delete_all_data.php' => 'Delete All Data',
-        'delete_bladder.php' => 'Delete Bladder',
-        'delete_code.php' => 'Delete Code',
-        'delete_ink.php' => 'Delete Ink',
+        'f_query.php' => 'Football Contact Query',
+        'fquery_print.php' => 'Football Contact Query Print',
+        't_query.php' => 'Tennis Ball Contact Query',
+        'tquery_print.php' => 'Tennis Ball Contact Query Print',
+        'customer_query_dtls.php' => 'All Customer Query',
+        'all_customer_query_print.php' => 'All Customer Query Print',
+        'cust_query_more_dtls.php' => 'View Customer Query More Details',
+        'top_user.php' => 'Top 10 Contact Query',
+        'football_top.php' => 'Football Top 10 Contact Query',
+        'print_football_top.php' => 'Football Top 10 Contact Query Print',
+        'tennisball_top.php' => 'Tennis Ball Top 10 Contact Query',
+        'print_tennisball_top.php' => 'Tennis Ball Top 10 Contact Query Print',
+
+        'check_ratio.php' => 'Check Ratio',
+        'analytics.php' => 'Analytics',
+
+        'inventory.php' => 'Inventory',
+
+        'sheets_inventory.php' => 'Sheets Inventory',
+        'sheets_received.php' => 'Sheets Recived Form',
+        'sheets_issue.php' => 'Sheets Issue Form',
+        'sheets_buyer.php' => 'Sheets Selling Form',
+        'sheets_received_data.php' => 'Sheets Received Data',
+        'sheets_issue_data.php' => 'Sheets Issue Data ',
+        'sheets_selling_data.php' => 'Sheets Selling Data',
+        'sheets_issue_all_slip.php' => 'Sheets Issue Slip',
+        'sheets_product_list.php' => 'Sheets Inventory Status ( Packaging ) ',
+        'sheets_product_list_for_production.php' => 'Sheets Inventory Status ( Production ) ',
+        'sheets_color_panel_inventory.php' => 'Color Pannel ( Packaging ) ',
+        'sheets_color_panel_production_inventory.php' => 'Color Pannel ( Production ) ',
+        'all_small_stock-update.php' => 'Color Pannel Update',
+        'sheets_panel_color.php' => 'Color Pannel Add/Delete',
+       
+
+     
+
+        'kits_inventory.php' => 'Kits Inventory',
+        'football_inventory.php' => 'Kits Inventory',
+
+        'stitcher_macking_price.php' => 'Stitcher Invoice',
+        'add_stitcher.php' => 'Add/Edit/Delete Stitcher',
+
+        'add_inventory_products.php' => 'Add Inventory Products',
         'delete_inventory_products.php' => 'Delete Inventory Products',
-        'delete_products.php' => 'Delete Products',
-        'delete_product_row.php' => 'Delete Product Row',
-        'selling_data_print.php' => 'Selling Data Print',
-        'sheets_teceive_temp.php' => 'Sheets Teceive Temp',
-        'sheet_color_panel_stock_update.php' => 'Sheet Color Panel Stock Update',
-        'stitcher_macking_price.php' => 'Stitcher Macking Price',
-        'stitcher_macking_price_data_fatch.php' => 'Stitcher Macking Price Data Fetch',
-        'tb_barcode.php' => 'TB Barcode',
-        'tcode_delete.php' => 'TCode Delete',
-        'tcode_print.php' => 'TCode Print',
-        'temp.php' => 'Temp',
-        'tennisball_top.php' => 'Tennisball Top',
-        'thanks.php' => 'Thanks',
-        'thread_inventory.php' => 'Thread Inventory',
-        'thread_inventory_and_price_update.php' => 'Thread Inventory and Price Update',
-        'top_user.php' => 'Top User',
-        'tquery_print.php' => 'TQuery Print',
-        't_query.php' => 'TQuery',
-        'update.php' => 'Update',
+
+        'add_bladder.php' => 'Add Bladder',
+        'delete_bladder.php' => 'Delete Bladder',
+        'bladder_inventory.php' => 'Bladder Inventory',
         'update_bladder_balance.php' => 'Update Bladder Balance',
-        'update_for_football.php' => 'Update for Football',
-        'update_for_kits.php' => 'Update for Kits',
-        'update_small_stock_product.php' => 'Update Small Stock Product',
+
+        'add_ink.php' => 'Add Ink',
+        'delete_ink.php' => 'Delete Ink',
+        'ink_inventory.php' => 'Ink Inventory',
+        
+        'add_products.php' => 'Add Products',
+        'delete_products.php' => 'Delete Products',
+        'all_product_update.php' => 'Products Update',
+        
+        'add_thread.php' => 'Add Thread',
+        'thread_inventory.php' => 'Thread Inventory',
         'update_thread_balance.php' => 'Update Thread Balance',
+        'thread_inventory_and_price_update.php' => 'Thread Inventory and Price Update',
+        
+
+        
+       
+        
+        'add_labour.php' => 'Add Labour',
+        
+      
+        
+  
+     
+        'all_small_stock-update.php' => 'All Small Stock Update',
+
+        
+     
+   
+        'delete_all_data.php' => 'Delete All Data',
         'users.php' => 'User Management',
-        'validation.php' => 'Validation',
-        'wethout_print_issue_color_fetch.php' => 'Without Print Issue Color Fetch',
-        'wethout_print_received_color_fetch.php' => 'Without Print Received Color Fetch',
-        'without_print_issue_all_data.php' => 'Without Print Issue All Data',
-        'without_print_issue_slip.php' => 'Without Print Issue Slip',
-        'without_print_received_all_data.php' => 'Without Print Received All Data',
-        'without_print_received_slip.php' => 'Without Print Received Slip'
+        
     ];
 
     // Get user's current permissions
