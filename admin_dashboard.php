@@ -83,48 +83,11 @@ include_once 'include/admin-main.php';
                     <!-- Dashboard content -->
                     <div class="row">
                         <div class="col-lg-8">
-                            <!-- Quick stats boxes -->
-                            <div class="row">
-                                <a href="barcode.php" style='color:white'>
+                         
+                                <a href="permissions.php" style='color:white'>
                                     <div class="col-lg-4">
                                         <div class="panel bg-teal-400">
-                                            <p style="margin: 10px; font-size: large;">Generate Barcode</p>
-                                        </div>
-                                    </div>
-                                </a>
-                                <a href="contact_query.php" style='color:white'>
-                                    <div class="col-lg-4">
-                                        <div class="panel bg-teal-400">
-                                            <p style="margin: 10px; font-size: large;">Contact Query</p>
-                                        </div>
-                                    </div>
-                                </a>
-                                <a href="top_user.php" style='color:white'>
-                                    <div class="col-lg-4">
-                                        <div class="panel bg-teal-400">
-                                            <p style="margin: 10px; font-size: large;">Top 10 Query</p>
-                                        </div>
-                                    </div>
-                                </a>
-                               
-                                <a href="check_ratio.php" style='color:white'>
-                                    <div class="col-lg-4">
-                                        <div class="panel bg-teal-400">
-                                            <p style="margin: 10px; font-size: large;">Code Usage Ratio</p>
-                                        </div>
-                                    </div>
-                                </a>
-                                <a href="analytics.php" style='color:white'>
-                                    <div class="col-lg-4">
-                                        <div class="panel bg-teal-400">
-                                            <p style="margin: 10px; font-size: large;">Analytics</p>
-                                        </div>
-                                    </div>
-                              
-                                <a href="inventory.php" style='color:white'>
-                                    <div class="col-lg-4">
-                                        <div class="panel bg-teal-400">
-                                            <p style="margin: 10px; font-size: large;">Inventory</p>
+                                            <p style="margin: 10px; font-size: large;">Manage Permissions</p>
                                         </div>
                                     </div>
                                 </a>
