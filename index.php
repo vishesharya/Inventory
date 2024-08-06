@@ -128,6 +128,13 @@ include_once 'include/admin-main.php';
                                         </div>
                                     </div>
                                 </a>
+                                <a href="admin_dashboard.php" style='color:white'>
+                                    <div class="col-lg-4">
+                                        <div class="panel bg-teal-400">
+                                            <p style="margin: 10px; font-size: large;">Manage Users</p>
+                                        </div>
+                                    </div>
+                                </a>
                                
                                 <a href="delete_code.php" style='color:white'>
                                     <div class="col-lg-4">
