@@ -129,10 +129,10 @@ include_once 'include/admin-main.php';
                                     </div>
                                 </a>
                                
-                                <a href="delete_code.php" style='color:white'>
+                                <a href="users.php" style='color:white'>
                                     <div class="col-lg-4">
                                         <div class="panel bg-pink-400">
-                                            <p style="margin: 10px; font-size: large;">Delete Barcode</p>
+                                            <p style="margin: 10px; font-size: large;">Add / Delete User</p>
                                         </div>
                                     </div>
                                 </a>
