@@ -179,7 +179,6 @@ $result = $con->query("SELECT * FROM users");
             <h2>Users</h2>
             <table id="users-table">
                 <tr>
-                    <th><input type="checkbox" id="select-all"></th>
                     <th>ID</th>
                     <th>Username</th>
                     <th>Role</th>
@@ -187,7 +186,6 @@ $result = $con->query("SELECT * FROM users");
                 </tr>
                 <?php while ($row = $result->fetch_assoc()): ?>
                 <tr data-id="<?php echo $row['id']; ?>">
-                    <td><input type="checkbox" class="select-user"></td>
                     <td><?php echo $row['id']; ?></td>
                     <td><?php echo htmlspecialchars($row['username']); ?></td>
                     <td><?php echo $row['role'] == 1 ? 'Admin' : 'User'; ?></td>
@@ -259,12 +257,6 @@ $result = $con->query("SELECT * FROM users");
     </div>
     <script>
         $(document).ready(function() {
-            // Select/Deselect all users
-            $('#select-all').click(function() {
-                var isChecked = $(this).is(':checked');
-                $('.select-user').prop('checked', isChecked);
-            });
-
             // Handle form submission for adding a user
             $('#add-user-form').submit(function(event) {
                 event.preventDefault();
