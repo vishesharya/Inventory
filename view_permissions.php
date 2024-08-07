@@ -40,6 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         'sheets_buyer.php' => 'Sheets Selling Form',
         'sheets_received_data.php' => 'Sheets Received Data',
         'sheets_issue_data.php' => 'Sheets Issue Data ',
+        'seets_job_work.php' => 'Sheets Job Work ',
         'sheets_selling_data.php' => 'Sheets Selling Data',
         'sheets_issue_all_slip.php' => 'Sheets Issue Slip',
         'sheets_product_list.php' => 'Sheets Inventory Status ( Packaging ) ',
@@ -53,7 +54,33 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
      
 
         'kits_inventory.php' => 'Kits Inventory',
-        'football_inventory.php' => 'Kits Inventory',
+        'kits_receive_form.php' => 'Kits Recived Form',
+        'kits_issue_form.php' => 'Kits Issue Form',
+        'kits_receive_data.php' => 'Kits Received Data',
+        'kits_issue_data.php' => 'Kits Issue Data ',
+        'kits_receive_slip_all_data.php' => 'Kits Received Slip',
+        'kits_issue_all_data_slip.php' => 'Kits Issue Slip',
+        'kits_job_work.php' => 'Kits Job Work',
+        'kits_product_list.php' => 'Kits Inventory Status',
+
+        'kits_inventory_without_print.php' => 'Kits Inventory ( Without Print ) ',
+        'kits_received_for_printing.php' => 'Kits Recived Form ( Without Print )',
+        'kits_issue_for_printing.php' => 'Kits Issue Form ( Without Print )',
+        'without_print_received_all_data.php' => 'Kits Received Data ( Without Print )',
+        'without_print_issue_all_data.php' => 'Kits Issue Data ( Without Print )',
+        'without_print_received_slip.php' => 'Kits Received Slip ( Without Print )',
+        'without_print_issue_slip.php' => 'Kits Issue Slip ( Without Print )',
+        'printing_job_work.php' => 'Kits Job Work ( Without Print )',
+       
+     
+       
+        'football_inventory.php' => 'Football Inventory',
+        'football_received.php' => 'Football Recived Form',
+        'football_issue.php' => 'Football Issue Form',
+        'football_receiving_data.php' => 'Football Received Data',
+        'football_issue_data.php' => 'Football Issue Data ',
+        'football_receive_all_slip.php' => 'Football Received Slip',
+        'football_product_list.php' => 'Football Inventory Status',
 
         'stitcher_macking_price.php' => 'Stitcher Invoice',
         'add_stitcher.php' => 'Add/Edit/Delete Stitcher',
