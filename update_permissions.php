@@ -1,6 +1,9 @@
 <?php
-include_once 'include/connection.php';
 include './include/check_login.php';
+include './include/connection.php';
+include_once 'include/admin-main.php';
+include('access_control.php');
+
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $user_id = $_POST['user_id'];
