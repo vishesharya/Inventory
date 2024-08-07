@@ -6,11 +6,16 @@ $response = [];
 
 // Handle AJAX requests
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    // Add User
     if (isset($_POST['add_user'])) {
         $username = $_POST['username'];
         $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
         $role = $_POST['role'];
-        if ($con->query("INSERT INTO users (username, password, role) VALUES ('$username', '$password', '$role')")) {
+        $first_name = password_hash($_POST['first_name'], PASSWORD_DEFAULT);
+        $dob = password_hash($_POST['dob'], PASSWORD_DEFAULT);
+        $joining_date = password_hash($_POST['joining_date'], PASSWORD_DEFAULT);
+
+        if ($con->query("INSERT INTO users (username, password, role, first_name, dob, joining_date) VALUES ('$username', '$password', '$role', '$first_name', '$dob', '$joining_date')")) {
             $response['success'] = true;
             $response['message'] = 'User added successfully.';
         } else {
@@ -19,6 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
     }
 
+    // Delete User
     if (isset($_POST['delete_user'])) {
         $user_id = $_POST['user_id'];
         if ($con->query("DELETE FROM users WHERE id = $user_id")) {
@@ -29,7 +35,44 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $response['message'] = 'Failed to delete user.';
         }
     }
-    
+
+    // Reset Password
+    if (isset($_POST['reset_password'])) {
+        $username = $_POST['username'];
+        $first_name = $_POST['first_name'];
+        $dob = $_POST['dob'];
+        $joining_date = $_POST['joining_date'];
+
+        $result = $con->query("SELECT * FROM users WHERE username = '$username'");
+        if ($result->num_rows > 0) {
+            $user = $result->fetch_assoc();
+            if (password_verify($first_name, $user['first_name']) && password_verify($dob, $user['dob']) && password_verify($joining_date, $user['joining_date'])) {
+                $response['success'] = true;
+                $response['message'] = 'Security questions matched.';
+            } else {
+                $response['success'] = false;
+                $response['message'] = 'Security questions did not match.';
+            }
+        } else {
+            $response['success'] = false;
+            $response['message'] = 'User not found.';
+        }
+    }
+
+    // Set New Password
+    if (isset($_POST['set_new_password'])) {
+        $username = $_POST['username'];
+        $new_password = password_hash($_POST['new_password'], PASSWORD_DEFAULT);
+
+        if ($con->query("UPDATE users SET password = '$new_password' WHERE username = '$username'")) {
+            $response['success'] = true;
+            $response['message'] = 'Password reset successfully.';
+        } else {
+            $response['success'] = false;
+            $response['message'] = 'Failed to reset password.';
+        }
+    }
+
     echo json_encode($response);
     exit();
 }
@@ -160,8 +203,45 @@ $result = $con->query("SELECT * FROM users");
                     <option value="1">Admin</option>
                     <option value="2">User</option>
                 </select>
+
+                <label for="first_name">First Name:</label>
+                <input type="text" id="first_name" name="first_name" required>
+
+                <label for="dob">Date of Birth:</label>
+                <input type="date" id="dob" name="dob" required>
+
+                <label for="joining_date">Joining Date:</label>
+                <input type="date" id="joining_date" name="joining_date" required>
                 
                 <button type="submit">Add User</button>
+            </form>
+        </section>
+
+        <section class="form-container">
+            <h2>Reset Password</h2>
+            <form id="reset-password-form">
+                <label for="reset_username">Username:</label>
+                <input type="text" id="reset_username" name="username" required>
+
+                <label for="reset_first_name">First Name:</label>
+                <input type="text" id="reset_first_name" name="first_name" required>
+
+                <label for="reset_dob">Date of Birth:</label>
+                <input type="date" id="reset_dob" name="dob" required>
+
+                <label for="reset_joining_date">Joining Date:</label>
+                <input type="date" id="reset_joining_date" name="joining_date" required>
+
+                <button type="submit">Verify</button>
+            </form>
+        </section>
+
+        <section class="form-container" id="reset-password-section" style="display:none;">
+            <h2>Enter New Password</h2>
+            <form id="set-new-password-form">
+                <label for="new_password">New Password:</label>
+                <input type="password" id="new_password" name="new_password" required>
+                <button type="submit">Reset Password</button>
             </form>
         </section>
     </div>
@@ -201,6 +281,50 @@ $result = $con->query("SELECT * FROM users");
                         if (response.success) {
                             alert(response.message);
                             row.remove(); // Remove the row from the table
+                        } else {
+                            alert(response.message);
+                        }
+                    }
+                });
+            });
+
+            // Handle password reset form submission
+            $('#reset-password-form').submit(function(event) {
+                event.preventDefault();
+                
+                $.ajax({
+                    type: 'POST',
+                    url: '',
+                    data: $(this).serialize() + '&reset_password=true',
+                    dataType: 'json',
+                    success: function(response) {
+                        if (response.success) {
+                            alert(response.message);
+                            $('#reset-password-section').show();
+                        } else {
+                            alert(response.message);
+                        }
+                    }
+                });
+            });
+
+            // Handle new password form submission
+            $('#set-new-password-form').submit(function(event) {
+                event.preventDefault();
+                
+                $.ajax({
+                    type: 'POST',
+                    url: '',
+                    data: {
+                        username: $('#reset_username').val(),
+                        new_password: $('#new_password').val(),
+                        set_new_password: true
+                    },
+                    dataType: 'json',
+                    success: function(response) {
+                        if (response.success) {
+                            alert(response.message);
+                            location.reload(); // Refresh the page after password reset
                         } else {
                             alert(response.message);
                         }
