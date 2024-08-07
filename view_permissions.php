@@ -129,86 +129,105 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $permissions[$row['file']] = $row['has_access'];
     }
     ?>
-    <!DOCTYPE html>
-    <html>
-    <head>
-        <title>View Permissions</title>
-        <style>
-            body {
-                font-family: Arial, sans-serif;
-                background-color: #f4f4f4;
-                margin: 0;
-                padding: 0;
-            }
-            .container {
-                width: 90%;
-                max-width: 1200px;
-                margin: 50px auto;
-                background: #fff;
-                padding: 20px;
-                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-                border-radius: 8px;
-            }
-            h1 {
-                text-align: center;
-                color: #333;
-            }
-            .file-list {
-                display: grid;
-                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-                gap: 10px;
-            }
-            .file-item {
-                display: flex;
-                align-items: center;
-                background: #f9f9f9;
-                padding: 10px;
-                border-radius: 4px;
-                border: 1px solid #ddd;
-            }
-            .file-item label {
-                margin-left: 10px;
-                font-weight: bold;
-            }
-            .file-item input {
-                margin-right: 10px;
-            }
-            .btn {
-                display: block;
-                width: 200px;
-                padding: 10px;
-                background: #007bff;
-                color: #fff;
-                border: none;
-                border-radius: 10px;
-                cursor: pointer;
-                font-size: 20px;
-                margin: 20px auto 0;
-                text-align: center;
-            }
-            .btn:hover {
-                background: #0056b3;
-            }
-        </style>
-    </head>
-    <body>
-        <div class="container">
-            <h1>View Permissions for User ID: <?php echo $user_id; ?></h1>
-            <form method="post" action="update_permissions.php">
-                <input type="hidden" name="user_id" value="<?php echo $user_id; ?>">
-                <div class="file-list">
-                    <?php foreach ($php_files as $file => $label): ?>
-                        <div class="file-item">
-                            <input type="checkbox" name="permissions[<?php echo $file; ?>]" value="1" <?php echo isset($permissions[$file]) && $permissions[$file] ? 'checked' : ''; ?>>
-                            <label for="permissions[<?php echo $file; ?>]"><?php echo $label; ?></label>
-                        </div>
-                    <?php endforeach; ?>
-                </div>
-                <button type="submit" class="btn">Update Permissions</button>
-            </form>
+   <!DOCTYPE html>
+<html>
+<head>
+    <title>View Permissions</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 50px auto;
+            background: #fff;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .file-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 10px;
+        }
+        .file-item {
+            display: flex;
+            align-items: center;
+            background: #f9f9f9;
+            padding: 10px;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+        }
+        .file-item label {
+            margin-left: 10px;
+            font-weight: bold;
+        }
+        .file-item input {
+            margin-right: 10px;
+        }
+        .btn {
+            display: block;
+            width: 200px;
+            padding: 10px;
+            background: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 20px;
+            margin: 20px auto 0;
+            text-align: center;
+        }
+        .btn:hover {
+            background: #0056b3;
+        }
+        .select-all-container {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+    </style>
+    <script>
+        function toggleSelectAll() {
+            const checkboxes = document.querySelectorAll('.file-item input[type="checkbox"]');
+            const selectAllCheckbox = document.getElementById('select-all-checkbox');
+            checkboxes.forEach(checkbox => {
+                checkbox.checked = selectAllCheckbox.checked;
+            });
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>View Permissions for User ID: <?php echo $user_id; ?></h1>
+        <div class="select-all-container">
+            <label>
+                <input type="checkbox" id="select-all-checkbox" onclick="toggleSelectAll()"> Select All
+            </label>
         </div>
-    </body>
-    </html>
+        <form method="post" action="update_permissions.php">
+            <input type="hidden" name="user_id" value="<?php echo $user_id; ?>">
+            <div class="file-list">
+                <?php foreach ($php_files as $file => $label): ?>
+                    <div class="file-item">
+                        <input type="checkbox" name="permissions[<?php echo $file; ?>]" value="1" <?php echo isset($permissions[$file]) && $permissions[$file] ? 'checked' : ''; ?>>
+                        <label for="permissions[<?php echo $file; ?>]"><?php echo $label; ?></label>
+                    </div>
+                <?php endforeach; ?>
+            </div>
+            <button type="submit" class="btn">Update Permissions</button>
+        </form>
+    </div>
+</body>
+</html>
+
     <?php
 }
 ?>
