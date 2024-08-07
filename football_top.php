@@ -2,6 +2,7 @@
 include './include/check_login.php';
 include './include/connection.php';
 include_once 'include/admin-main.php';
+include('access_control.php');
 
 $from_date = isset($_POST['from_date']) ? $_POST['from_date'] : '';
 $to_date = isset($_POST['to_date']) ? $_POST['to_date'] : '';

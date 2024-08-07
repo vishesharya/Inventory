@@ -108,8 +108,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         'thread_inventory_and_price_update.php' => 'Thread Inventory and Price Update',
       
         'add_labour.php' => 'Add/Edit/Delete Labour',
+        'admin_dashboard.php' => 'Admin Dashboard',
+        'view_permissions.php' => 'View User Permissions',
+        'update_permissions.php' => 'Update Permissions',
+        'users.php' => 'Add / Delete Management',
+        
+        
        
-        'users.php' => 'User Management',
+        
         
     ];
 

@@ -2,6 +2,7 @@
 include './include/check_login.php';
 include './include/connection.php';
 include_once 'include/admin-main.php';
+include('access_control.php');
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (isset($_POST['id']) && isset($_POST['field']) && isset($_POST['value'])) {

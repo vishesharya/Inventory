@@ -2,7 +2,7 @@
 include './include/check_login.php';
 include './include/connection.php';
 include_once 'include/admin-main.php';
-
+include('access_control.php');
 // Default value for Labour Name
 $buyer_name = isset($_POST['buyer_name']) ? $_POST['buyer_name'] : "";
 // Default value for invoice number

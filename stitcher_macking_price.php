@@ -2,6 +2,7 @@
 include './include/check_login.php';
 include './include/connection.php';
 include_once 'include/admin-main.php';
+include('access_control.php');
 // Fetch stitcher names from the database
 $stitcher_query = "SELECT DISTINCT stitcher_name FROM football_received ORDER BY stitcher_name ASC "; 
 $stitcher_result = mysqli_query($con, $stitcher_query);
