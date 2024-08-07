@@ -28,6 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         'print_football_top.php' => 'Football Top 10 Contact Query Print',
         'tennisball_top.php' => 'Tennis Ball Top 10 Contact Query',
         'print_tennisball_top.php' => 'Tennis Ball Top 10 Contact Query Print',
+        'delete_all_data.php' => 'Delete All Barcode & Contact Query',
 
         'check_ratio.php' => 'Check Ratio',
         'analytics.php' => 'Analytics',
@@ -105,23 +106,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         'thread_inventory.php' => 'Thread Inventory',
         'update_thread_balance.php' => 'Update Thread Balance',
         'thread_inventory_and_price_update.php' => 'Thread Inventory and Price Update',
-        
-
-        
-       
-        
-        'add_labour.php' => 'Add Labour',
-        
       
-        
-  
-     
-        'all_small_stock-update.php' => 'All Small Stock Update',
-
-        
-     
-   
-        'delete_all_data.php' => 'Delete All Data',
+        'add_labour.php' => 'Add/Edit/Delete Labour',
+       
         'users.php' => 'User Management',
         
     ];
