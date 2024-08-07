@@ -14,14 +14,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         exit();
     }
 
-    $result = $con->query("SELECT * FROM users WHERE username = '$email'");
-    if ($result && $result->num_rows > 0) {
-        $user = $result->fetch_assoc();
+    $stmt = $con->prepare("SELECT * FROM users WHERE username = ?");
+    $stmt->bind_param("s", $email);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    
+    if ($result->num_rows > 0) {
         $token = bin2hex(random_bytes(16));
         $expiry = date('Y-m-d H:i:s', strtotime('+1 hour'));
 
-        if ($con->query("UPDATE users SET reset_token = '$token', reset_expiry = '$expiry' WHERE username = '$email'")) {
-            $resetLink = "http://khannasports.co.in/reset_password.php?token=$token";
+        $stmt = $con->prepare("UPDATE users SET reset_token = ?, reset_expiry = ? WHERE username = ?");
+        $stmt->bind_param("sss", $token, $expiry, $email);
+        if ($stmt->execute()) {
+            $resetLink = "http://khannasports.cp.in/reset_password.php?token=$token";
 
             // Send email with the reset link (pseudo code)
             // mail($email, "Password Reset", "Click this link to reset your password: $resetLink");
@@ -39,5 +44,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     
     echo json_encode($response);
     exit();
+}
+?>
+
 }
 ?>
