@@ -5,6 +5,22 @@ include_once 'include/admin-main.php';
 $msg = '';
 $code = '';
 
+$allowed_referrer = "https://khannasports.in/pages/product-verification";
+
+// Check if the referrer matches the allowed referrer
+if (isset($_SERVER['HTTP_REFERER'])) {
+    $referrer = $_SERVER['HTTP_REFERER'];
+    if (strpos($referrer, $allowed_referrer) !== 0) {
+        // Redirect to khannasports.in if the referrer is not the allowed one
+        header("Location: https://khannasports.in");
+        exit();
+    }
+} else {
+    // Redirect to khannasports.in if there's no referrer
+    header("Location: https://khannasports.in");
+    exit();
+}
+
 if (isset($_POST['AddCode'])) {
     $code = $_POST['code'];
     
