@@ -63,7 +63,7 @@ if (isset($_POST['admin_login'])) {
                     <!-- Tabbed form -->
                     <div class="tabbable panel login-form width-400">
                         <ul class="nav nav-tabs nav-justified">
-                            <li class="active"><a href="#basic-tab1" data-toggle="tab"><h6>Bar Code Generator</h6></a></li>
+                            <li class="active"><a href="#basic-tab1" data-toggle="tab"><h6>Khanna Sports industries Pvt. Ltd. </h6></a></li>
                         </ul>
                         <div class="tab-content panel-body">
                             <div class="tab-pane fade in active" id="basic-tab1">
