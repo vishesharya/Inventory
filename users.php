@@ -182,7 +182,6 @@ $result = $con->query("SELECT * FROM users");
                     <option value="1">Admin</option>
                     <option value="2">User</option>
                 </select>
-<<<<<<< HEAD
 >>>>>>> parent of 13bf915 (Update users.php)
 
                 <label for="first_name">First Name:</label>
@@ -193,13 +192,10 @@ $result = $con->query("SELECT * FROM users");
 
                 <label for="joining_date">Joining Date:</label>
                 <input type="date" id="joining_date" name="joining_date" required>
-=======
->>>>>>> parent of 18ac1fc (Update users.php)
                 
                 <button type="submit">Add User</button>
             </form>
         </section>
-<<<<<<< HEAD
 
         <section class="form-container">
             <h2>Reset Password</h2>
@@ -246,8 +242,6 @@ $result = $con->query("SELECT * FROM users");
 >>>>>>> parent of 18ac1fc (Update users.php)
             </form>
         </section>
-=======
->>>>>>> parent of 18ac1fc (Update users.php)
     </div>
     <script>
         $(document).ready(function() {
