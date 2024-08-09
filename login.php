@@ -92,9 +92,6 @@ if (isset($_POST['admin_login'])) {
                                                     Remember
                                                 </label>
                                             </div>
-                                            <div class="col-sm-6 text-right">
-                                                <a href="forgot.php">Forgot Password?</a>
-                                            </div>
                                         </div>
                                     </div>
                                     <div class="form-group">
