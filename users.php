@@ -4,7 +4,6 @@ include './include/connection.php';
 include_once 'include/admin-main.php';
 include('access_control.php');
 
-
 // Initialize response array
 $response = [];
 
@@ -46,7 +45,7 @@ $result = $con->query("SELECT * FROM users");
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add / Delete User</title>
+    <title>Admin Dashboard</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -125,7 +124,7 @@ $result = $con->query("SELECT * FROM users");
 </head>
 <body>
     <header>
-        <h1>Add / Delete User</h1>
+        <h1>Admin Dashboard</h1>
     </header>
     <div class="container">
         <section>
@@ -150,79 +149,6 @@ $result = $con->query("SELECT * FROM users");
             </table>
         </section>
         
-<<<<<<< HEAD
-<<<<<<< HEAD
-        <section class="form-row">
-            <div class="form-container">
-                <h2>Add User</h2>
-                <form id="add-user-form">
-                    <label for="username">Username:</label>
-                    <input type="text" id="username" name="username" required>
-                    
-                    <label for="password">Password:</label>
-                    <input type="password" id="password" name="password" required>
-                    
-                    <label for="role">Role:</label>
-                    <select id="role" name="role">
-                        <option value="1">Admin</option>
-                        <option value="2">User</option>
-                    </select>
-=======
-        <section class="form-container">
-            <h2>Add User</h2>
-            <form id="add-user-form">
-                <label for="username">Username:</label>
-                <input type="text" id="username" name="username" required>
-                
-                <label for="password">Password:</label>
-                <input type="password" id="password" name="password" required>
-                
-                <label for="role">Role:</label>
-                <select id="role" name="role">
-                    <option value="1">Admin</option>
-                    <option value="2">User</option>
-                </select>
->>>>>>> parent of 13bf915 (Update users.php)
-
-                <label for="first_name">First Name:</label>
-                <input type="text" id="first_name" name="first_name" required>
-
-                <label for="dob">Date of Birth:</label>
-                <input type="date" id="dob" name="dob" required>
-
-                <label for="joining_date">Joining Date:</label>
-                <input type="date" id="joining_date" name="joining_date" required>
-                
-                <button type="submit">Add User</button>
-            </form>
-        </section>
-
-        <section class="form-container">
-            <h2>Reset Password</h2>
-            <form id="reset-password-form">
-                <label for="reset_username">Username:</label>
-                <input type="text" id="reset_username" name="username" required>
-
-                <label for="reset_first_name">First Name:</label>
-                <input type="text" id="reset_first_name" name="first_name" required>
-
-                <label for="reset_dob">Date of Birth:</label>
-                <input type="date" id="reset_dob" name="dob" required>
-
-                <label for="reset_joining_date">Joining Date:</label>
-                <input type="date" id="reset_joining_date" name="joining_date" required>
-
-                <button type="submit">Verify</button>
-            </form>
-        </section>
-
-        <section class="form-container" id="reset-password-section" style="display:none;">
-            <h2>Enter New Password</h2>
-            <form id="set-new-password-form">
-                <label for="new_password">New Password:</label>
-                <input type="password" id="new_password" name="new_password" required>
-                <button type="submit">Reset Password</button>
-=======
         <section class="form-container">
             <h2>Add User</h2>
             <form id="add-user-form">
@@ -239,7 +165,6 @@ $result = $con->query("SELECT * FROM users");
                 </select>
                 
                 <button type="submit">Add User</button>
->>>>>>> parent of 18ac1fc (Update users.php)
             </form>
         </section>
     </div>
