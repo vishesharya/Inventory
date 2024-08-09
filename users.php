@@ -54,16 +54,16 @@ $result = $con->query("SELECT * FROM users");
             padding: 0;
             background-color: #f4f4f4;
         }
+        .container {
+            width: 80%;
+            margin: auto;
+            overflow: hidden;
+        }
         header {
             background: #333;
             color: #fff;
             padding: 1rem 0;
             text-align: center;
-        }
-        .container {
-            width: 90%;
-            margin: auto;
-            overflow: hidden;
         }
         table {
             width: 100%;
@@ -87,7 +87,6 @@ $result = $con->query("SELECT * FROM users");
             padding: 20px;
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0,0,0,0.1);
-            margin-bottom: 20px;
         }
         .form-container h2 {
             margin-top: 0;
@@ -114,19 +113,12 @@ $result = $con->query("SELECT * FROM users");
         button:hover {
             background-color: #555;
         }
-        .form-row {
+        .action-buttons {
             display: flex;
-            gap: 20px;
-            flex-wrap: wrap;
+            justify-content: space-between;
         }
-        .form-row .form-container {
-            flex: 1;
-            min-width: 300px;
-        }
-        @media (max-width: 767px) {
-            .form-row {
-                flex-direction: column;
-            }
+        .action-buttons form {
+            margin: 0;
         }
     </style>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -159,6 +151,7 @@ $result = $con->query("SELECT * FROM users");
         </section>
         
 <<<<<<< HEAD
+<<<<<<< HEAD
         <section class="form-row">
             <div class="form-container">
                 <h2>Add User</h2>
@@ -174,38 +167,53 @@ $result = $con->query("SELECT * FROM users");
                         <option value="1">Admin</option>
                         <option value="2">User</option>
                     </select>
+=======
+        <section class="form-container">
+            <h2>Add User</h2>
+            <form id="add-user-form">
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" required>
+                
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required>
+                
+                <label for="role">Role:</label>
+                <select id="role" name="role">
+                    <option value="1">Admin</option>
+                    <option value="2">User</option>
+                </select>
+>>>>>>> parent of 13bf915 (Update users.php)
 
-                    <label for="first_name">First Name:</label>
-                    <input type="text" id="first_name" name="first_name" required>
+                <label for="first_name">First Name:</label>
+                <input type="text" id="first_name" name="first_name" required>
 
-                    <label for="dob">Date of Birth:</label>
-                    <input type="date" id="dob" name="dob" required>
+                <label for="dob">Date of Birth:</label>
+                <input type="date" id="dob" name="dob" required>
 
-                    <label for="joining_date">Joining Date:</label>
-                    <input type="date" id="joining_date" name="joining_date" required>
-                    
-                    <button type="submit">Add User</button>
-                </form>
-            </div>
+                <label for="joining_date">Joining Date:</label>
+                <input type="date" id="joining_date" name="joining_date" required>
+                
+                <button type="submit">Add User</button>
+            </form>
+        </section>
 
-            <div class="form-container">
-                <h2>Reset Password</h2>
-                <form id="reset-password-form">
-                    <label for="reset_username">Username:</label>
-                    <input type="text" id="reset_username" name="username" required>
+        <section class="form-container">
+            <h2>Reset Password</h2>
+            <form id="reset-password-form">
+                <label for="reset_username">Username:</label>
+                <input type="text" id="reset_username" name="username" required>
 
-                    <label for="reset_first_name">First Name:</label>
-                    <input type="text" id="reset_first_name" name="first_name" required>
+                <label for="reset_first_name">First Name:</label>
+                <input type="text" id="reset_first_name" name="first_name" required>
 
-                    <label for="reset_dob">Date of Birth:</label>
-                    <input type="date" id="reset_dob" name="dob" required>
+                <label for="reset_dob">Date of Birth:</label>
+                <input type="date" id="reset_dob" name="dob" required>
 
-                    <label for="reset_joining_date">Joining Date:</label>
-                    <input type="date" id="reset_joining_date" name="joining_date" required>
+                <label for="reset_joining_date">Joining Date:</label>
+                <input type="date" id="reset_joining_date" name="joining_date" required>
 
-                    <button type="submit">Verify</button>
-                </form>
-            </div>
+                <button type="submit">Verify</button>
+            </form>
         </section>
 
         <section class="form-container" id="reset-password-section" style="display:none;">
