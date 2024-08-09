@@ -31,6 +31,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $response['message'] = 'Failed to delete user.';
         }
     }
+    if (isset($_POST['reset_password'])) {
+        $username = $_POST['username'];
+        $new_password = password_hash($_POST['new_password'], PASSWORD_DEFAULT);
+    
+        if ($con->query("UPDATE users SET password = '$new_password' WHERE username = '$username'")) {
+            $response['success'] = true;
+            $response['message'] = 'Password reset successfully.';
+        } else {
+            $response['success'] = false;
+            $response['message'] = 'Failed to reset password.';
+        }
+    }
+    
     
     echo json_encode($response);
     exit();
@@ -85,6 +98,8 @@ $result = $con->query("SELECT * FROM users");
             padding: 20px;
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            margin-top: 20px;
+            flex: 1;
         }
         .form-container h2 {
             margin-top: 0;
@@ -118,12 +133,17 @@ $result = $con->query("SELECT * FROM users");
         .action-buttons form {
             margin: 0;
         }
+        .forms-row {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
     </style>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
     <header>
-        <h1>Add / Delete Users</h1>
+        <h1>Add / Delete / Reset Password</h1>
     </header>
     <div class="container">
         <section>
@@ -148,23 +168,38 @@ $result = $con->query("SELECT * FROM users");
             </table>
         </section>
         
-        <section class="form-container">
-            <h2>Add User</h2>
-            <form id="add-user-form">
-                <label for="username">Username:</label>
-                <input type="text" id="username" name="username" required>
-                
-                <label for="password">Password:</label>
-                <input type="password" id="password" name="password" required>
-                
-                <label for="role">Role:</label>
-                <select id="role" name="role">
-                    <option value="1">Admin</option>
-                    <option value="2">User</option>
-                </select>
-                
-                <button type="submit">Add User</button>
-            </form>
+        <section class="forms-row">
+            <div class="form-container">
+                <h2>Add User</h2>
+                <form id="add-user-form">
+                    <label for="username">Username:</label>
+                    <input type="text" id="username" name="username" required>
+                    
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password" required>
+                    
+                    <label for="role">Role:</label>
+                    <select id="role" name="role">
+                        <option value="1">Admin</option>
+                        <option value="2">User</option>
+                    </select>
+                    
+                    <button type="submit">Add User</button>
+                </form>
+            </div>
+            
+            <div class="form-container">
+                <h2>Forgot Password</h2>
+                <form id="reset-password-form">
+                    <label for="reset-username">Username:</label>
+                    <input type="text" id="reset-username" name="username" required>
+                    
+                    <label for="new-password">New Password:</label>
+                    <input type="password" id="new-password" name="new_password" required>
+                    
+                    <button type="submit">Reset Password</button>
+                </form>
+            </div>
         </section>
     </div>
     <script>
@@ -177,6 +212,26 @@ $result = $con->query("SELECT * FROM users");
                     type: 'POST',
                     url: '',
                     data: $(this).serialize() + '&add_user=true',
+                    dataType: 'json',
+                    success: function(response) {
+                        if (response.success) {
+                            alert(response.message);
+                            location.reload(); // Refresh the page to update the user list
+                        } else {
+                            alert(response.message);
+                        }
+                    }
+                });
+            });
+
+            // Handle form submission for resetting password
+            $('#reset-password-form').submit(function(event) {
+                event.preventDefault();
+                
+                $.ajax({
+                    type: 'POST',
+                    url: '',
+                    data: $(this).serialize() + '&reset_password=true',
                     dataType: 'json',
                     success: function(response) {
                         if (response.success) {
