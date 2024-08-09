@@ -11,9 +11,7 @@ $expected_token = "12345";
 
 // Check if the token is present and valid
 if (isset($_GET['access_token']) && $_GET['access_token'] === $expected_token) {
-    // Token is valid, allow access
-    echo "Access granted";
-    // The rest of your validation.php code goes here
+    
 } else {
     // Invalid or missing token, redirect to home page
     header("Location: https://khannasports.in");
