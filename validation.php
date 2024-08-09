@@ -5,18 +5,7 @@ include_once 'include/connection.php';
 $msg = '';
 $code = '';
 // Define the expected token
-$expected_token = "12345";
 
-// Check if the token is present and valid
-if (isset($_GET['access_token']) && $_GET['access_token'] === $expected_token) {
-    // Token is valid, allow access
-    echo "Access granted";
-    // The rest of your validaction.php code goes here
-} else {
-    // Invalid or missing token, redirect to home page
-    header("Location: https://khannasports.in");
-    exit();
-}
 
 if (isset($_POST['AddCode'])) {
     $code = $_POST['code'];
