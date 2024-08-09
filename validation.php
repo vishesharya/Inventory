@@ -4,19 +4,16 @@ include_once 'include/admin-main.php';
 
 $msg = '';
 $code = '';
+// Define the expected token
+$expected_token = "12345";
 
-$allowed_referrer = "https://khannasports.in/pages/product-verification";
-
-// Check if the referrer matches the allowed referrer
-if (isset($_SERVER['HTTP_REFERER'])) {
-    $referrer = $_SERVER['HTTP_REFERER'];
-    if (strpos($referrer, $allowed_referrer) !== 0) {
-        // Redirect to khannasports.in if the referrer is not the allowed one
-        header("Location: https://khannasports.in");
-        exit();
-    }
+// Check if the token is present and valid
+if (isset($_GET['access_token']) && $_GET['access_token'] === $expected_token) {
+    // Token is valid, allow access
+    echo "Access granted";
+    // The rest of your validaction.php code goes here
 } else {
-    // Redirect to khannasports.in if there's no referrer
+    // Invalid or missing token, redirect to home page
     header("Location: https://khannasports.in");
     exit();
 }
