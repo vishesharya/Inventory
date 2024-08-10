@@ -40,8 +40,12 @@ if (isset($_POST['view_entries'])) {
             
             // Define the path where the signatures are stored
             $signature_path = './signatures/' . $signature;
+
+            // Check if the signature file exists
+            if (!file_exists($signature_path)) {
+                $signature_path = null; // Set to null if the file doesn't exist
+            }
         }
-        
 
         // Fetch the date and time
         $date_and_time_query = "SELECT date_and_time FROM kits_issue WHERE challan_no = '$challan_no' LIMIT 1";
@@ -370,8 +374,7 @@ if (isset($_POST['view_entries'])) {
         <div class="signature">
         <div class="receiver-signature">
     Receiver Signature 
-    <br>  
-    <?php if (!empty($signature)): ?>
+    <?php if (!empty($signature_path)): ?>
         <img src="<?php echo htmlspecialchars($signature_path); ?>" alt="Signature" style="width: 175px; height: 50px;">
     <?php else: ?>
         No signature available
