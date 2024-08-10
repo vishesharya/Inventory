@@ -30,7 +30,7 @@ if (isset($_POST['view_entries'])) {
         // Fetch stitcher details including contact, aadhar, pan, address, bank details, and signature
         $stitcher_details_query = "SELECT stitcher_contact, stitcher_aadhar, stitcher_pan, stitcher_address,signature FROM stitcher WHERE stitcher_name = '$stitcher_name' LIMIT 1";
         $stitcher_details_result = mysqli_query($con, $stitcher_details_query);
-        $stitcher_details = mysqli_fetch_assoc($stitcher_details_result);
+        $stitcher_details_row = mysqli_fetch_assoc($stitcher_details_result);
 
         if ($stitcher_details_row) {
             $stitcher_contact = $stitcher_details_row['stitcher_contact'];
@@ -39,7 +39,7 @@ if (isset($_POST['view_entries'])) {
             $stitcher_address = $stitcher_details_row['stitcher_address'];
             
         }
-        $signature_filename = $stitcher_details['signature']; // Get the signature filename
+        $signature_filename = $stitcher_details_row['signature']; // Get the signature filename
 
         // Define the path to the signature
         $signature_path = 'uploads/signatures/' . $signature_filename;
