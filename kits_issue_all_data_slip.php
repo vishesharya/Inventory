@@ -37,7 +37,11 @@ if (isset($_POST['view_entries'])) {
             $stitcher_pan = $stitcher_details_row['stitcher_pan'];
             $stitcher_address = $stitcher_details_row['stitcher_address'];
             $signature = $stitcher_details_row['signature'];
+            
+            // Define the path where the signatures are stored
+            $signature_path = './signatures/' . $signature;
         }
+        
 
         // Fetch the date and time
         $date_and_time_query = "SELECT date_and_time FROM kits_issue WHERE challan_no = '$challan_no' LIMIT 1";
@@ -364,11 +368,15 @@ if (isset($_POST['view_entries'])) {
             </div>
         </div>
         <div class="signature">
-            <div class="receiver-signature">Receiver Signature </Br>  <?php if (!empty($signature_filename)): ?>
-                                <img src="<?php echo htmlspecialchars($signature_path); ?>" alt="Signature" style="width: 200px; height: 75px; max-width:300px; margin: 0px; padding: 0px;">
-                            <?php else: ?>
-                                No signature available
-                            <?php endif; ?> </div>
+        <div class="receiver-signature">
+    Receiver Signature 
+    <br>  
+    <?php if (!empty($signature)): ?>
+        <img src="<?php echo htmlspecialchars($signature_path); ?>" alt="Signature" style="width: 175px; height: 50px;">
+    <?php else: ?>
+        No signature available
+    <?php endif; ?> 
+</div>
             <div class="middle-signature">Guard Signature</div>
             <div class="issuer-signature">Issuer Signature</div>
         </div>
