@@ -9,12 +9,6 @@
             font-family: Arial, sans-serif;
         }
 
-        button#openPopup {
-            padding: 10px 20px;
-            font-size: 16px;
-            cursor: pointer;
-        }
-
         /* Popup Modal */
         .popup {
             display: none; /* Hidden by default */
@@ -93,9 +87,6 @@ $details = "Some details about the content. This section can include more descri
 $image = "your-image.jpg"; // Path to the image
 ?>
 
-<!-- Trigger Button for Popup -->
-<button id="openPopup">Open Popup</button>
-
 <!-- Popup Modal -->
 <div id="popupModal" class="popup">
     <div class="popup-content">
@@ -114,11 +105,10 @@ $image = "your-image.jpg"; // Path to the image
 <script>
 // Get elements
 var popup = document.getElementById("popupModal");
-var btn = document.getElementById("openPopup");
 var span = document.getElementsByClassName("close")[0];
 
-// Open the popup when the button is clicked
-btn.onclick = function() {
+// Automatically show the popup when the page loads
+window.onload = function() {
     popup.style.display = "block";
 }
 
