@@ -36,7 +36,10 @@ if (isset($_POST['view_entries'])) {
             $stitcher_aadhar = $stitcher_details_row['stitcher_aadhar'];
             $stitcher_pan = $stitcher_details_row['stitcher_pan'];
             $stitcher_address = $stitcher_details_row['stitcher_address'];
-            $signature = $stitcher_details_row['signature'];
+            $signature_filename = $stitcher_details['signature']; // Get the signature filename
+
+            // Define the path to the signature
+            $signature_path = 'uploads/signatures/' . $signature_filename;
         }
 
         // Fetch the date and time
