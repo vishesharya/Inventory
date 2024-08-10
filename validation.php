@@ -1,6 +1,6 @@
 <?php
 include_once 'include/connection.php';
-include_once 'popup.php';
+include 'popup.php';
 
 $msg = '';
 $code = '';
