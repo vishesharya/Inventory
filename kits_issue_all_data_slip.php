@@ -6,11 +6,13 @@ include_once 'include/admin-main.php';
 // Fetch stitcher names from the database
 $stitcher_query = "SELECT DISTINCT stitcher_name FROM kits_issue ORDER BY stitcher_name ASC"; 
 $stitcher_result = mysqli_query($con, $stitcher_query);
+
 $challan_no = isset($_POST['challan_no']) ? $_POST['challan_no'] : "";
 $stitcher_contact = isset($_POST['stitcher_contact']) ? $_POST['stitcher_contact'] : "";
 $stitcher_aadhar = isset($_POST['stitcher_aadhar']) ? $_POST['stitcher_aadhar'] : "";
 $stitcher_pan = isset($_POST['stitcher_pan']) ? $_POST['stitcher_pan'] : "";
 $stitcher_address = isset($_POST['stitcher_address']) ? $_POST['stitcher_address'] : "";
+
 // Check if 'challan_no' is set in session
 if (isset($_SESSION['challan_no'])) {
     $challan_no = $_SESSION['challan_no'];
@@ -23,35 +25,27 @@ $result = null;
 if (isset($_POST['view_entries'])) {
     // Get selected stitcher
     $stitcher_name = isset($_POST['stitcher_name']) ? mysqli_real_escape_string($con, $_POST['stitcher_name']) : '';
-   
+
     if (!empty($stitcher_name)) {
-        $stitcher_contact_query = "SELECT stitcher_contact FROM stitcher WHERE stitcher_name = '$stitcher_name' LIMIT 1";
-        $stitcher_contact_result = mysqli_query($con, $stitcher_contact_query);
-        $stitcher_contact_row = mysqli_fetch_assoc($stitcher_contact_result);
-        $stitcher_contact = $stitcher_contact_row['stitcher_contact'];
+        $stitcher_details_query = "SELECT stitcher_contact, stitcher_aadhar, stitcher_pan, stitcher_address, signature FROM stitcher WHERE stitcher_name = '$stitcher_name' LIMIT 1";
+        $stitcher_details_result = mysqli_query($con, $stitcher_details_query);
+        $stitcher_details_row = mysqli_fetch_assoc($stitcher_details_result);
 
-        $stitcher_aadhar_query = "SELECT stitcher_aadhar FROM stitcher WHERE stitcher_name = '$stitcher_name' LIMIT 1";
-        $stitcher_aadhar_result = mysqli_query($con, $stitcher_aadhar_query);
-        $stitcher_aadhar_row = mysqli_fetch_assoc($stitcher_aadhar_result);
-        $stitcher_aadhar = $stitcher_aadhar_row['stitcher_aadhar'];
+        if ($stitcher_details_row) {
+            $stitcher_contact = $stitcher_details_row['stitcher_contact'];
+            $stitcher_aadhar = $stitcher_details_row['stitcher_aadhar'];
+            $stitcher_pan = $stitcher_details_row['stitcher_pan'];
+            $stitcher_address = $stitcher_details_row['stitcher_address'];
+            $signature = $stitcher_details_row['signature'];
+        }
 
-        $stitcher_pan_query = "SELECT stitcher_pan FROM stitcher WHERE stitcher_name = '$stitcher_name' LIMIT 1";
-        $stitcher_pan_result = mysqli_query($con, $stitcher_pan_query);
-        $stitcher_pan_row = mysqli_fetch_assoc($stitcher_pan_result);
-        $stitcher_pan = $stitcher_pan_row['stitcher_pan'];
-
-        $stitcher_address_query = "SELECT stitcher_address FROM stitcher WHERE stitcher_name = '$stitcher_name' LIMIT 1";
-        $stitcher_address_result = mysqli_query($con, $stitcher_address_query);
-        $stitcher_address_row = mysqli_fetch_assoc($stitcher_address_result);
-        $stitcher_address = $stitcher_address_row['stitcher_address'];
-
-        // Fetch the date and time 
+        // Fetch the date and time
         $date_and_time_query = "SELECT date_and_time FROM kits_issue WHERE challan_no = '$challan_no' LIMIT 1";
         $date_and_time_result = mysqli_query($con, $date_and_time_query);
         $date_and_time_row = mysqli_fetch_assoc($date_and_time_result);
         $date_and_time = $date_and_time_row['date_and_time'];
-
     }
+
     // Initialize conditions
     $conditions = "";
 
@@ -75,7 +69,7 @@ if (isset($_POST['view_entries'])) {
     if (!empty($_POST['challan_no'])) {
         // Get selected challan number
         $challan_no = mysqli_real_escape_string($con, $_POST['challan_no']);
-        
+
         // Add AND or WHERE depending on whether previous conditions exist
         $conditions .= ($conditions == "") ? " WHERE" : " AND";
         $conditions .= " challan_no = '$challan_no'";
@@ -86,6 +80,7 @@ if (isset($_POST['view_entries'])) {
     $result = mysqli_query($con, $query);
 }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
