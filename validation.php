@@ -204,50 +204,7 @@ if (isset($_POST['AddCode'])) {
 
 
     <div class="container">
-    <?php
-// Example PHP variables for content
-$heading = "Your Heading";
-$details = "Some details about the content. This section can include more descriptive text.";
-$image = "your-image.jpg"; // Path to the image
-?>
 
-<!-- Popup Modal -->
-<div id="popupModal" class="popup">
-    <div class="popup-content">
-        <span class="close">&times;</span>
-        <div class="popup-left">
-            <img src="<?php echo $image; ?>" alt="Popup Image">
-        </div>
-        <div class="popup-right">
-            <h2><?php echo $heading; ?></h2>
-            <p><?php echo $details; ?></p>
-            <button class="action-btn">Click Me</button>
-        </div>
-    </div>
-</div>
-
-<script>
-// Get elements
-var popup = document.getElementById("popupModal");
-var span = document.getElementsByClassName("close")[0];
-
-// Automatically show the popup when the page loads
-window.onload = function() {
-    popup.style.display = "block";
-}
-
-// Close the popup when the "x" is clicked
-span.onclick = function() {
-    popup.style.display = "none";
-}
-
-// Close the popup when clicking outside of the popup content
-window.onclick = function(event) {
-    if (event.target == popup) {
-        popup.style.display = "none";
-    }
-}
-</script>
         <div class="card o-hidden border-0 shadow-lg my-5">
             <div class="card-body p-0">
                 <!-- Nested Row within Card Body -->
