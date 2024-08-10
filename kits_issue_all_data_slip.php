@@ -364,7 +364,11 @@ if (isset($_POST['view_entries'])) {
             </div>
         </div>
         <div class="signature">
-            <div class="receiver-signature">Receiver Signature</div>
+            <div class="receiver-signature">Receiver Signature </Br>  <?php if (!empty($signature)) { ?>
+        <img src="<?php echo htmlspecialchars($signature); ?>" alt="Stitcher Signature">
+    <?php } else { ?>
+        <p>No signature available.</p>
+    <?php } ?></div>
             <div class="middle-signature">Guard Signature</div>
             <div class="issuer-signature">Issuer Signature</div>
         </div>
