@@ -3,13 +3,15 @@ include './include/check_login.php';
 include './include/connection.php';
 include_once 'include/admin-main.php';
 include('access_control.php');
+
 // Fetch stitcher names from the database
-$stitcher_query = "SELECT DISTINCT stitcher_name FROM football_received ORDER BY stitcher_name ASC "; 
+$stitcher_query = "SELECT DISTINCT stitcher_name FROM football_received ORDER BY stitcher_name ASC"; 
 $stitcher_result = mysqli_query($con, $stitcher_query);
 
 // Initialize $result variable
 $result = null;
 
+// Initialize other variables
 $total_ist_price = 0;
 $total_iind_price = 0;
 $total_thread_price = 0;
@@ -32,42 +34,30 @@ if (isset($_POST['view_entries'])) {
         $query = "SELECT * FROM football_received WHERE stitcher_name = '$stitcher_name' AND date_and_time BETWEEN '$start_date' AND '$end_date'";
         $result = mysqli_query($con, $query);
 
-        
-            $stitcher_contact_query = "SELECT stitcher_contact FROM stitcher WHERE stitcher_name = '$stitcher_name' LIMIT 1";
-            $stitcher_contact_result = mysqli_query($con, $stitcher_contact_query);
-            $stitcher_contact_row = mysqli_fetch_assoc($stitcher_contact_result);
-            $stitcher_contact = $stitcher_contact_row['stitcher_contact'];
-    
-            $stitcher_aadhar_query = "SELECT stitcher_aadhar FROM stitcher WHERE stitcher_name = '$stitcher_name' LIMIT 1";
-            $stitcher_aadhar_result = mysqli_query($con, $stitcher_aadhar_query);
-            $stitcher_aadhar_row = mysqli_fetch_assoc($stitcher_aadhar_result);
-            $stitcher_aadhar = $stitcher_aadhar_row['stitcher_aadhar'];
-    
-            $stitcher_pan_query = "SELECT stitcher_pan FROM stitcher WHERE stitcher_name = '$stitcher_name' LIMIT 1";
-            $stitcher_pan_result = mysqli_query($con, $stitcher_pan_query);
-            $stitcher_pan_row = mysqli_fetch_assoc($stitcher_pan_result);
-            $stitcher_pan = $stitcher_pan_row['stitcher_pan'];
-    
-            $stitcher_address_query = "SELECT stitcher_address FROM stitcher WHERE stitcher_name = '$stitcher_name' LIMIT 1";
-            $stitcher_address_result = mysqli_query($con, $stitcher_address_query);
-            $stitcher_address_row = mysqli_fetch_assoc($stitcher_address_result);
-            $stitcher_address = $stitcher_address_row['stitcher_address'];
-
-            // Fetch stitcher details including bank details
-        $stitcher_details_query = "SELECT bank_name, bank_no, ifsc_code FROM stitcher WHERE stitcher_name = '$stitcher_name' LIMIT 1";
+        // Fetch stitcher details including contact, aadhar, pan, address, bank details, and signature
+        $stitcher_details_query = "SELECT stitcher_contact, stitcher_aadhar, stitcher_pan, stitcher_address, bank_name, bank_no, ifsc_code, signature FROM stitcher WHERE stitcher_name = '$stitcher_name' LIMIT 1";
         $stitcher_details_result = mysqli_query($con, $stitcher_details_query);
         $stitcher_details = mysqli_fetch_assoc($stitcher_details_result);
 
+        $stitcher_contact = $stitcher_details['stitcher_contact'];
+        $stitcher_aadhar = $stitcher_details['stitcher_aadhar'];
+        $stitcher_pan = $stitcher_details['stitcher_pan'];
+        $stitcher_address = $stitcher_details['stitcher_address'];
+        $bank_name = $stitcher_details['bank_name'];
+        $bank_no = $stitcher_details['bank_no'];
+        $ifsc_code = $stitcher_details['ifsc_code'];
+        $signature_filename = $stitcher_details['signature']; // Get the signature filename
 
-    
-        
+        // Define the path to the signature
+        $signature_path = 'uploads/signatures/' . $signature_filename;
+
     } else {
         // If neither stitcher nor date range is selected, do not fetch any entries
         $result = null;
     }
 }
-
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -408,8 +398,14 @@ if (isset($_POST['view_entries'])) {
         <div class="text-center mt-5">
             <p class="mb-1">I have received all stitching payments from <?php echo date('d/m/Y', strtotime($start_date)); ?> to <?php echo date('d/m/Y', strtotime($end_date)); ?>.</p>
             <p class="mb-1">मैंने <?php echo date('d/m/Y', strtotime($start_date)); ?> से <?php echo date('d/m/Y', strtotime($end_date)); ?> तक के सभी सिलाई भुगतान प्राप्त कर लिए हैं।</p>
-            <p class="mb-5">Stitcher Signature / सिलाईदार हस्ताक्षर: _____________________</p>
-           
+            <div>
+            <p class="mb-0">Stitcher Signature / सिलाईदार हस्ताक्षर</p>
+            <div><?php if (!empty($signature_filename)): ?>
+                                <img src="<?php echo htmlspecialchars($signature_path); ?>" alt="Signature" style="width: 200px; height: 75px; max-width:300px; margin: 0px; padding: 0px;">
+                            <?php else: ?>
+                                No signature available
+                            <?php endif; ?> </div>
+                            </div>
         </div>
         <?php elseif (isset($_POST['view_entries'])): ?>
             <p>No entries found.</p>

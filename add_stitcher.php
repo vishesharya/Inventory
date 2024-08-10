@@ -8,6 +8,13 @@ $updateStitcherMsg = '';
 $addStitcherMsg = '';
 $deleteStitcherMsg = '';
 
+// Define upload directory
+$uploadDir = 'uploads/signatures/';
+
+// Create directory if it doesn't exist
+if (!is_dir($uploadDir)) {
+    mkdir($uploadDir, 0755, true);
+}
 // Add Stitcher Form Handling
 if (isset($_POST['add_stitcher'])) {
     $stitcher_name = $_POST['stitcher_name'];
@@ -19,6 +26,13 @@ if (isset($_POST['add_stitcher'])) {
     $bank_no = $_POST['bank_no'];
     $ifsc_code = $_POST['ifsc_code'];
 
+    // Signature upload handling
+    $signature_filename = '';
+    if (isset($_FILES['signature']) && $_FILES['signature']['error'] === 0) {
+        $signature_filename = time() . '_' . $_FILES['signature']['name'];
+        move_uploaded_file($_FILES['signature']['tmp_name'], "uploads/signatures/$signature_filename");
+    }
+
     // Check if the stitcher already exists
     $checkQuery = mysqli_query($con, "SELECT * FROM stitcher WHERE stitcher_name = '$stitcher_name'");
     $rowCount = mysqli_num_rows($checkQuery);
@@ -27,7 +41,7 @@ if (isset($_POST['add_stitcher'])) {
         $addStitcherMsg = "<p id='addStitcherMsg' style='color: red;font-size: medium;text-align: center;'>Stitcher already exists</p>";
     } else {
         // Insert into stitcher table
-        $insertStitcherQuery = "INSERT INTO stitcher (stitcher_name, stitcher_contact, stitcher_address, stitcher_aadhar, stitcher_pan, bank_name, bank_no, ifsc_code) VALUES ('$stitcher_name', '$stitcher_contact', '$stitcher_address', '$stitcher_aadhar', '$stitcher_pan', '$bank_name', '$bank_no', '$ifsc_code')";
+        $insertStitcherQuery = "INSERT INTO stitcher (stitcher_name, stitcher_contact, stitcher_address, stitcher_aadhar, stitcher_pan, bank_name, bank_no, ifsc_code, signature) VALUES ('$stitcher_name', '$stitcher_contact', '$stitcher_address', '$stitcher_aadhar', '$stitcher_pan', '$bank_name', '$bank_no', '$ifsc_code', '$signature_filename')";
         if (mysqli_query($con, $insertStitcherQuery)) {
             $addStitcherMsg = "<p id='addStitcherMsg' style='color: green;font-size: medium;text-align: center;'>Stitcher added successfully</p>";
         } else {
@@ -47,6 +61,13 @@ if (isset($_POST['edit_stitcher'])) {
     $new_bank_name = $_POST['new_bank_name'];
     $new_bank_no = $_POST['new_bank_no'];
     $new_ifsc_code = $_POST['new_ifsc_code'];
+
+    // Signature upload handling
+    $signature_filename = '';
+    if (isset($_FILES['new_signature']) && $_FILES['new_signature']['error'] === 0) {
+        $signature_filename = time() . '_' . $_FILES['new_signature']['name'];
+        move_uploaded_file($_FILES['new_signature']['tmp_name'], "uploads/signatures/$signature_filename");
+    }
 
     // Fetch the existing details of the stitcher
     $stitcherDetailsQuery = mysqli_query($con, "SELECT * FROM stitcher WHERE id = $stitcher_id");
@@ -83,6 +104,9 @@ if (isset($_POST['edit_stitcher'])) {
     if (!empty($new_ifsc_code)) {
         $updateFields[] = "ifsc_code = '$new_ifsc_code'";
     }
+    if (!empty($signature_filename)) {
+        $updateFields[] = "signature = '$signature_filename'";
+    }
 
     // Append the fields to the update query
     $updateStitcherQuery .= implode(", ", $updateFields);
@@ -97,6 +121,7 @@ if (isset($_POST['edit_stitcher'])) {
         $updateStitcherMsg = "<p id='updateStitcherMsg' style='color: red;font-size: medium;text-align: center;'>Failed to update stitcher</p>";
     }
 }
+
 
 // Delete Stitcher Handling
 if (isset($_POST['delete_stitcher'])) {
@@ -144,41 +169,45 @@ if (isset($_POST['delete_stitcher'])) {
                     </div>
                     <div class="card-body">
                         <?php echo $addStitcherMsg; ?>
-                        <form action="" method="post">
-                            <div class="form-group">
-                                <label for="stitcher_name">Enter Stitcher Name</label>
-                                <input type="text" name="stitcher_name" id="stitcher_name" class="form-control" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="stitcher_contact">Enter Contact Number</label>
-                                <input type="number" name="stitcher_contact" id="stitcher_contact" class="form-control" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="stitcher_address">Enter Address</label>
-                                <input type="text" name="stitcher_address" id="stitcher_address" class="form-control">
-                            </div>
-                            <div class="form-group">
-                                <label for="stitcher_aadhar">Enter Aadhar No</label>
-                                <input type="number" name="stitcher_aadhar" id="stitcher_aadhar" class="form-control">
-                            </div>
-                            <div class="form-group">
-                                <label for="stitcher_pan">Enter Pan No</label>
-                                <input type="text" name="stitcher_pan" id="stitcher_pan" class="form-control">
-                            </div>
-                            <div class="form-group">
-                                <label for="bank_name">Enter Bank Name</label>
-                                <input type="text" name="bank_name" id="bank_name" class="form-control">
-                            </div>
-                            <div class="form-group">
-                                <label for="bank_no">Enter Bank Account Number</label>
-                                <input type="text" name="bank_no" id="bank_no" class="form-control">
-                            </div>
-                            <div class="form-group">
-                                <label for="ifsc_code">Enter IFSC Code</label>
-                                <input type="text" name="ifsc_code" id="ifsc_code" class="form-control">
-                            </div>
-                            <button type="submit" class="btn btn-primary" name="add_stitcher">Add Stitcher</button>
-                        </form>
+                        <form action="" method="post" enctype="multipart/form-data">
+    <div class="form-group">
+        <label for="stitcher_name">Enter Stitcher Name</label>
+        <input type="text" name="stitcher_name" id="stitcher_name" class="form-control" required>
+    </div>
+    <div class="form-group">
+        <label for="stitcher_contact">Enter Contact Number</label>
+        <input type="number" name="stitcher_contact" id="stitcher_contact" class="form-control" required>
+    </div>
+    <div class="form-group">
+        <label for="stitcher_address">Enter Address</label>
+        <input type="text" name="stitcher_address" id="stitcher_address" class="form-control">
+    </div>
+    <div class="form-group">
+        <label for="stitcher_aadhar">Enter Aadhar No</label>
+        <input type="number" name="stitcher_aadhar" id="stitcher_aadhar" class="form-control">
+    </div>
+    <div class="form-group">
+        <label for="stitcher_pan">Enter Pan No</label>
+        <input type="text" name="stitcher_pan" id="stitcher_pan" class="form-control">
+    </div>
+    <div class="form-group">
+        <label for="bank_name">Enter Bank Name</label>
+        <input type="text" name="bank_name" id="bank_name" class="form-control">
+    </div>
+    <div class="form-group">
+        <label for="bank_no">Enter Bank Account Number</label>
+        <input type="text" name="bank_no" id="bank_no" class="form-control">
+    </div>
+    <div class="form-group">
+        <label for="ifsc_code">Enter IFSC Code</label>
+        <input type="text" name="ifsc_code" id="ifsc_code" class="form-control">
+    </div>
+    <div class="form-group">
+        <label for="signature">Upload Signature (175px x 50px)</label>
+        <input type="file" name="signature" id="signature" class="form-control" accept="image/*">
+    </div>
+    <button type="submit" class="btn btn-primary" name="add_stitcher">Add Stitcher</button>
+</form>
                     </div>
                 </div>
             </div>
@@ -190,53 +219,57 @@ if (isset($_POST['delete_stitcher'])) {
                     <div class="card-body">
                         <?php echo $updateStitcherMsg; ?>
                         <?php echo $deleteStitcherMsg; ?>
-                        <form action="" method="post">
-                            <div class="form-group">
-                                <label for="select_stitcher">Select Stitcher Name</label>
-                                <select name="stitcher_id" id="select_stitcher" class="form-control">
-                                    <option value="">Select Stitcher</option>
-                                    <?php
-                                    $selectStitcherQuery = mysqli_query($con, "SELECT * FROM stitcher ORDER BY stitcher_name ASC");
-                                    while ($row = mysqli_fetch_assoc($selectStitcherQuery)) {
-                                        echo "<option value='" . $row['id'] . "'>" . $row['stitcher_name'] . "</option>";
-                                    }
-                                    ?>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="new_stitcher_name">New Stitcher Name</label>
-                                <input type="text" name="new_stitcher_name" id="new_stitcher_name" class="form-control">
-                            </div>
-                            <div class="form-group">
-                                <label for="new_stitcher_contact">New Contact Number</label>
-                                <input type="number" name="new_stitcher_contact" id="new_stitcher_contact" class="form-control">
-                            </div>
-                            <div class="form-group">
-                                <label for="new_stitcher_address">New Address</label>
-                                <input type="text" name="new_stitcher_address" id="new_stitcher_address" class="form-control">
-                            </div>
-                            <div class="form-group">
-                                <label for="new_stitcher_aadhar">New Aadhar No</label>
-                                <input type="number" name="new_stitcher_aadhar" id="new_stitcher_aadhar" class="form-control">
-                            </div>
-                            <div class="form-group">
-                                <label for="new_stitcher_pan">New Pan No</label>
-                                <input type="text" name="new_stitcher_pan" id="new_stitcher_pan" class="form-control">
-                            </div>
-                            <div class="form-group">
-                                <label for="new_bank_name">New Bank Name</label>
-                                <input type="text" name="new_bank_name" id="new_bank_name" class="form-control">
-                            </div>
-                            <div class="form-group">
-                                <label for="new_bank_no">New Bank Account Number</label>
-                                <input type="text" name="new_bank_no" id="new_bank_no" class="form-control">
-                            </div>
-                            <div class="form-group">
-                                <label for="new_ifsc_code">New IFSC Code</label>
-                                <input type="text" name="new_ifsc_code" id="new_ifsc_code" class="form-control">
-                            </div>
-                            <button type="submit" class="btn btn-primary" name="edit_stitcher">Edit Stitcher</button>
-                        </form>
+                        <form action="" method="post" enctype="multipart/form-data">
+    <div class="form-group">
+        <label for="select_stitcher">Select Stitcher Name</label>
+        <select name="stitcher_id" id="select_stitcher" class="form-control" onchange="fetchStitcherDetails(this.value)">
+            <option value="">-- Select --</option>
+            <?php
+            $stitchersQuery = mysqli_query($con, "SELECT id, stitcher_name FROM stitcher");
+            while ($stitcher = mysqli_fetch_assoc($stitchersQuery)) {
+                echo "<option value='{$stitcher['id']}'>{$stitcher['stitcher_name']}</option>";
+            }
+            ?>
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="new_stitcher_name">Update Stitcher Name</label>
+        <input type="text" name="new_stitcher_name" id="new_stitcher_name" class="form-control">
+    </div>
+    <div class="form-group">
+        <label for="new_stitcher_contact">Update Contact Number</label>
+        <input type="number" name="new_stitcher_contact" id="new_stitcher_contact" class="form-control">
+    </div>
+    <div class="form-group">
+        <label for="new_stitcher_address">Update Address</label>
+        <input type="text" name="new_stitcher_address" id="new_stitcher_address" class="form-control">
+    </div>
+    <div class="form-group">
+        <label for="new_stitcher_aadhar">Update Aadhar No</label>
+        <input type="number" name="new_stitcher_aadhar" id="new_stitcher_aadhar" class="form-control">
+    </div>
+    <div class="form-group">
+        <label for="new_stitcher_pan">Update Pan No</label>
+        <input type="text" name="new_stitcher_pan" id="new_stitcher_pan" class="form-control">
+    </div>
+    <div class="form-group">
+        <label for="new_bank_name">Update Bank Name</label>
+        <input type="text" name="new_bank_name" id="new_bank_name" class="form-control">
+    </div>
+    <div class="form-group">
+        <label for="new_bank_no">Update Bank Account Number</label>
+        <input type="text" name="new_bank_no" id="new_bank_no" class="form-control">
+    </div>
+    <div class="form-group">
+        <label for="new_ifsc_code">Update IFSC Code</label>
+        <input type="text" name="new_ifsc_code" id="new_ifsc_code" class="form-control">
+    </div>
+    <div class="form-group">
+        <label for="new_signature">Update Signature (175px x 50px)</label>
+        <input type="file" name="new_signature" id="new_signature" class="form-control" accept="image/*">
+    </div>
+    <button type="submit" class="btn btn-primary" name="edit_stitcher">Update Stitcher</button>
+</form>
                         <form action="" method="post" class="mt-3">
                             <div class="form-group">
                                 <label for="delete_stitcher">Delete Stitcher</label>
