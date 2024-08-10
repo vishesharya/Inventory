@@ -202,7 +202,9 @@ if (isset($_POST['AddCode'])) {
 
 <body class="bg-gradient-primary">
 
-<?php
+
+    <div class="container">
+    <?php
 // Example PHP variables for content
 $heading = "Your Heading";
 $details = "Some details about the content. This section can include more descriptive text.";
@@ -246,9 +248,6 @@ window.onclick = function(event) {
     }
 }
 </script>
-
-    <div class="container">
-
         <div class="card o-hidden border-0 shadow-lg my-5">
             <div class="card-body p-0">
                 <!-- Nested Row within Card Body -->
