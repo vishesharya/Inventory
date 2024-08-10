@@ -374,7 +374,8 @@ if (isset($_POST['view_entries'])) {
         <div class="signature">
         <div class="receiver-signature">
     Receiver Signature 
-    <?php if (!empty($signature_path)): ?>
+  
+    <?php if (!empty($signature)): ?>
         <img src="<?php echo htmlspecialchars($signature_path); ?>" alt="Signature" style="width: 175px; height: 50px;">
     <?php else: ?>
         No signature available
