@@ -33,6 +33,7 @@ if (isset($_POST['view_entries'])) {
         // Fetch entries within the selected date range for the selected stitcher
         $query = "SELECT * FROM football_received WHERE stitcher_name = '$stitcher_name' AND date_and_time BETWEEN '$start_date' AND '$end_date'";
         $result = mysqli_query($con, $query);
+        
 
         // Fetch stitcher details including contact, aadhar, pan, address, bank details, and signature
         $stitcher_details_query = "SELECT stitcher_contact, stitcher_aadhar, stitcher_pan, stitcher_address, bank_name, bank_no, ifsc_code, signature FROM stitcher WHERE stitcher_name = '$stitcher_name' LIMIT 1";

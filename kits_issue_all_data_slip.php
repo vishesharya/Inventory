@@ -27,21 +27,23 @@ if (isset($_POST['view_entries'])) {
     $stitcher_name = isset($_POST['stitcher_name']) ? mysqli_real_escape_string($con, $_POST['stitcher_name']) : '';
 
     if (!empty($stitcher_name)) {
-        $stitcher_details_query = "SELECT stitcher_contact, stitcher_aadhar, stitcher_pan, stitcher_address, signature FROM stitcher WHERE stitcher_name = '$stitcher_name' LIMIT 1";
+        // Fetch stitcher details including contact, aadhar, pan, address, bank details, and signature
+        $stitcher_details_query = "SELECT stitcher_contact, stitcher_aadhar, stitcher_pan, stitcher_address,signature FROM stitcher WHERE stitcher_name = '$stitcher_name' LIMIT 1";
         $stitcher_details_result = mysqli_query($con, $stitcher_details_query);
-        $stitcher_details_row = mysqli_fetch_assoc($stitcher_details_result);
+        $stitcher_details = mysqli_fetch_assoc($stitcher_details_result);
 
         if ($stitcher_details_row) {
             $stitcher_contact = $stitcher_details_row['stitcher_contact'];
             $stitcher_aadhar = $stitcher_details_row['stitcher_aadhar'];
             $stitcher_pan = $stitcher_details_row['stitcher_pan'];
             $stitcher_address = $stitcher_details_row['stitcher_address'];
-            $signature = $stitcher_details_row['signature'];
             
-            // Define the path where the signatures are stored
-            $signature_path = './signatures/' . $signature;
         }
-        
+        $signature_filename = $stitcher_details['signature']; // Get the signature filename
+
+        // Define the path to the signature
+        $signature_path = 'uploads/signatures/' . $signature_filename;
+
 
         // Fetch the date and time
         $date_and_time_query = "SELECT date_and_time FROM kits_issue WHERE challan_no = '$challan_no' LIMIT 1";
@@ -368,15 +370,11 @@ if (isset($_POST['view_entries'])) {
             </div>
         </div>
         <div class="signature">
-        <div class="receiver-signature">
-    Receiver Signature 
-  
-    <?php if (!empty($signature)): ?>
-        <img src="<?php echo htmlspecialchars($signature_path); ?>" alt="Signature" style="width: 175px; height: 50px;">
-    <?php else: ?>
-        No signature available
-    <?php endif; ?> 
-</div>
+            <div class="receiver-signature">Receiver Signature </Br>   <div><?php if (!empty($signature_filename)): ?>
+                                <img src="<?php echo htmlspecialchars($signature_path); ?>" alt="Signature" style="width: 200px; height: 75px; max-width:300px; margin: 0px; padding: 0px;">
+                            <?php else: ?>
+                                No signature available
+                            <?php endif; ?> </div> </div>
             <div class="middle-signature">Guard Signature</div>
             <div class="issuer-signature">Issuer Signature</div>
         </div>
