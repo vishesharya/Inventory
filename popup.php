@@ -71,7 +71,7 @@ if (isset($_GET['access_token']) && $_GET['access_token'] === $expected_token) {
         .popup-left,
         .popup-right {
             flex: 1;
-            min-width: 300px;
+            min-width: 250px;
         }
 
         /* Image Section */
