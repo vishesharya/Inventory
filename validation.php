@@ -140,14 +140,14 @@ if (isset($_POST['AddCode'])) {
 
 .popup-content {
     background-color: white;
-    margin: 10% auto;
+    margin: 15% auto;
     padding: 20px;
     border-radius: 5px;
     width: 80%;
     max-width: 600px;
     display: flex;
     flex-wrap: wrap;
-    position: relative; /* Required for close button positioning */
+    position: relative;
 }
 
 /* Close Button */
@@ -194,8 +194,13 @@ h2 {
         flex-direction: column;
     }
 
-    .popup-left {
-        margin-bottom: 20px; /* Add some spacing between image and text */
+    .popup-left, .popup-right {
+        min-width: 100%;
+    }
+
+    .popup-left img {
+        width: 100%;
+        height: auto;
     }
 }
 
@@ -339,23 +344,19 @@ h2 {
             </div>
         </div>
 
-        <div id="popup" class="popup">
-            <div class="popup-content">
-                <span class="close" onclick="closePopup()">&times;</span>
-                <div class="popup-left">
-                    <img src="./assets/images/Poster.jpg" alt="Popup Image">
-                </div>
-                <div class="popup-right">
-                    <h2>Follow Us</h2>
-                    <p>Stay connected and follow us on our social media channels for the latest updates and promotions!</p>
-                    <button class="btn btn-primary action-btn" onclick="window.location.href='https://khannasports.in'">Follow Us</button>
-                </div>
-            </div>
+        <div id="popupModal" class="popup">
+    <div class="popup-content">
+        <span class="close" onclick="closePopup()">&times;</span>
+        <div class="popup-left">
+            <img src="https://via.placeholder.com/300" alt="Popup Image">
         </div>
-
+        <div class="popup-right">
+            <h2>Verification Successful</h2>
+            <p>Your product has been successfully verified. Please follow us for more updates and information.</p>
+            <a href="https://www.instagram.com/khannasports" class="btn btn-primary action-btn">Follow Us</a>
+        </div>
     </div>
-
-    
+</div>
 
   
 
