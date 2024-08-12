@@ -120,7 +120,8 @@ if (isset($_GET['access_token']) && $_GET['access_token'] === $expected_token) {
 
     <!-- Main content and form elements here -->
     <?php 
-    include 'validation.php?access_token=12345';
+    $access_token = '12345';
+    include('validation.php');    
     ?>
     <!-- Popup Modal -->
     <div id="popupModal" class="popup">

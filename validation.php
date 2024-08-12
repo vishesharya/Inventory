@@ -7,7 +7,7 @@ $code = '';
 
 
 // Define the expected token
-$expected_token = "101112";
+$expected_token = "12345";
 
 // Check if the token is present and valid
 if (isset($_GET['access_token']) && $_GET['access_token'] === $expected_token) {
