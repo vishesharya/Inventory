@@ -1,17 +1,5 @@
 <?php
     
-// Define the expected token
-$expected_token = "12345";
-
-// Check if the token is present and valid
-if (isset($_GET['access_token']) && $_GET['access_token'] === $expected_token) {
-    
-} else {
-    // Invalid or missing token, redirect to home page
-    header("Location: https://khannasports.in");
-    exit();
-}
-
 
 ?>
 <!DOCTYPE html>
