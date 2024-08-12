@@ -136,7 +136,7 @@ h2 {
 
     .action-btn {
         font-size: 14px; /* Adjust button font size for smaller screens */
-        padding: 8px 16px; /* Adjust button padding */
+        padding: 12px 20px; /* Adjust button padding */
     }
 }
 
