@@ -248,7 +248,7 @@ $result = $con->query("SELECT * FROM users");
     </form>
 </div>
 
-<div><a href="./first_time_question.php"></a>Q&A</div>
+<a href="first_time_question.php">Q&A</a>
     </div>
     <script>
         $(document).ready(function() {
