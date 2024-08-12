@@ -335,41 +335,6 @@ h2 {
 
                             
                            
-                            <div id="popupModal" class="popup">
-    <div class="popup-content">
-        <span class="close" onclick="closePopup()">&times;</span>
-        <div class="popup-left">
-            <img src="https://via.placeholder.com/300" alt="Popup Image">
-        </div>
-        <div class="popup-right">
-            <h2>Verification Successful</h2>
-            <p>Your product has been successfully verified. Please follow us for more updates and information.</p>
-            <a href="https://www.instagram.com/khannasports" class="btn btn-primary action-btn">Follow Us</a>
-        </div>
-    </div>
-</div>
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div id="popupModal" class="popup">
-    <div class="popup-content">
-        <span class="close" onclick="closePopup()">&times;</span>
-        <div class="popup-left">
-            <img src="https://via.placeholder.com/300" alt="Popup Image">
-        </div>
-        <div class="popup-right">
-            <h2>Verification Successful</h2>
-            <p>Your product has been successfully verified. Please follow us for more updates and information.</p>
-            <a href="https://www.instagram.com/khannasports" class="btn btn-primary action-btn">Follow Us</a>
-        </div>
-    </div>
-</div>
-
-  
 
     <!-- Core plugin JavaScript-->
     <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
