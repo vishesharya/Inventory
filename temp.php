@@ -30,5 +30,5 @@ if ($stmt->execute()) {
 
 // Close the statement and connection
 $stmt->close();
-$conn->close();
+$con->close();
 ?>
