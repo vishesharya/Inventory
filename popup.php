@@ -53,7 +53,7 @@ if (isset($_GET['access_token']) && $_GET['access_token'] === $expected_token) {
             padding: 20px;
             border-radius: 5px;
             width: 80%;
-            max-width: 700px;
+            max-width: 600px;
             display: flex;
             flex-wrap: wrap;
             position: relative;
