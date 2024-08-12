@@ -138,6 +138,7 @@ h2 {
         font-size: 14px; /* Adjust button font size for smaller screens */
         padding: 12px 20px; /* Adjust button padding */
     }
+    
 }
 
     </style>
@@ -158,7 +159,7 @@ h2 {
                 <img src="https://via.placeholder.com/300" alt="Popup Image">
             </div>
             <div class="popup-right">
-                <h2>Follow Us On Instagram</h2>
+                <h3>Follow Us On Instagram</h3>
                 <p> has been successfully verified. Please follow us for more updates and information.</p>
                 <a href="https://www.instagram.com/khannasports" class="btn btn-outline-primary btn-lg action-btn">Follow Us</a>
             </div>
