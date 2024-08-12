@@ -160,7 +160,7 @@ h2 {
             <div class="popup-right">
                 <h2>Follow Us On Instagram</h2>
                 <p> has been successfully verified. Please follow us for more updates and information.</p>
-                <a href="https://www.instagram.com/khannasports" class="btn btn-primary action-btn">Follow Us</a>
+                <a href="https://www.instagram.com/khannasports" class="btn btn-outline-primary btn-lg action-btn">Follow Us</a>
             </div>
         </div>
     </div>
