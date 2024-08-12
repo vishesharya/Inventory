@@ -35,84 +35,111 @@ if (isset($_GET['access_token']) && $_GET['access_token'] === $expected_token) {
     <link href="new/css/sb-admin-2.css" rel="stylesheet">
 
     <style>
-        /* Popup Modal */
-        .popup {
-            display: none; /* Hidden by default */
-            position: fixed;
-            z-index: 1;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5); /* Black background with opacity */
-        }
+       /* Popup Modal */
+.popup {
+    display: none; /* Hidden by default */
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Black background with opacity */
+}
 
-        .popup-content {
-            background-color: white;
-            margin: 15% auto;
-            padding: 20px;
-            border-radius: 5px;
-            width: 100%;
-            max-width: 600px;
-            display: flex;
-            flex-wrap: wrap;
-            position: relative;
-        }
+.popup-content {
+    background-color: white;
+    margin: 10% auto; /* Adjusted margin */
+    padding: 30px; /* Increased padding */
+    border-radius: 10px; /* Increased border radius */
+    width: 90%; /* Set width to 90% to accommodate smaller screens */
+    max-width: 800px; /* Increased max-width */
+    display: flex;
+    flex-wrap: wrap;
+    position: relative;
+    box-sizing: border-box; /* Ensure padding is included in width */
+}
 
-        /* Close Button */
-        .close {
-            position: absolute;
-            top: 10px;
-            right: 20px;
-            font-size: 24px;
-            cursor: pointer;
-        }
+/* Close Button */
+.close {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    font-size: 24px;
+    cursor: pointer;
+}
 
-        .popup-left,
-        .popup-right {
-            flex: 1;
-            min-width: 275px;
-        }
+.popup-left,
+.popup-right {
+    flex: 1;
+    min-width: 300px; /* Increased minimum width */
+    box-sizing: border-box; /* Ensure padding is included in width */
+}
 
-        /* Image Section */
-        .popup-left img {
-            width: 100%;
-            height: auto;
-            border-radius: 5px;
-        }
+/* Image Section */
+.popup-left img {
+    width: 100%;
+    height: auto;
+    border-radius: 5px;
+}
 
-        /* Text Section */
-        .popup-right {
-            padding: 20px;
-        }
+/* Text Section */
+.popup-right {
+    padding: 30px; /* Increased padding */
+}
 
-        h2 {
-            margin-top: 0;
-        }
+h2 {
+    margin-top: 0;
+}
 
-        .action-btn {
-            margin-top: 20px;
-            padding: 10px 20px;
-            font-size: 16px;
-            cursor: pointer;
-        }
+.action-btn {
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+}
 
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .popup-content {
-                flex-direction: column;
-            }
+/* Responsive Design */
+@media (max-width: 768px) {
+    .popup-content {
+        flex-direction: column;
+        width: 95%; /* Increase width on smaller screens */
+        padding: 20px; /* Reduce padding for smaller screens */
+    }
 
-            .popup-left,
-            .popup-right {
-                min-width: 100%;
-            }
+    .popup-left,
+    .popup-right {
+        min-width: 100%;
+        padding: 0; /* Remove padding for full-width layout on small screens */
+    }
 
-            .popup-left img {
-                width: 100%;
-                height: auto;
-            }
-        }
+    .popup-left img {
+        width: 100%;
+        height: auto;
+    }
+}
+
+@media (max-width: 480px) {
+    .popup-content {
+        margin: 5% auto; /* Reduce top margin for very small screens */
+        padding: 15px; /* Further reduce padding */
+    }
+
+    .popup-left img {
+        width: 100%;
+        height: auto;
+    }
+
+    .popup-right {
+        padding: 15px; /* Further reduce padding */
+    }
+
+    .action-btn {
+        font-size: 14px; /* Adjust button font size for smaller screens */
+        padding: 8px 16px; /* Adjust button padding */
+    }
+}
+
     </style>
 </head>
 
