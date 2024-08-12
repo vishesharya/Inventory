@@ -42,8 +42,8 @@ if (isset($_GET['access_token']) && $_GET['access_token'] === $expected_token) {
             z-index: 1;
             left: 0;
             top: 0;
-            width: 100%;
-            height: 150%;
+            width: 1rem;
+            height: 1rem;
             background-color: rgba(0, 0, 0, 0.5); /* Black background with opacity */
         }
 
