@@ -125,79 +125,81 @@ if (isset($_POST['AddCode'])) {
     <link href="new/css/sb-admin-2.min.css" rel="stylesheet">
     <link href="new/css/sb-admin-2.css" rel="stylesheet">
 
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-        }
-
+     <style>
         /* Popup Modal */
-        .popup {
-            display: none; /* Hidden by default */
-            position: fixed;
-            z-index: 1;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5); /* Black background with opacity */
-        }
+.popup {
+    display: none; /* Hidden by default */
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Black background with opacity */
+}
 
-        .popup-content {
-            background-color: white;
-            margin: 15% auto;
-            padding: 20px;
-            border-radius: 5px;
-            width: 80%;
-            max-width: 600px;
-            display: flex;
-            flex-wrap: wrap;
-        }
+.popup-content {
+    background-color: white;
+    margin: 10% auto;
+    padding: 20px;
+    border-radius: 5px;
+    width: 80%;
+    max-width: 600px;
+    display: flex;
+    flex-wrap: wrap;
+    position: relative; /* Required for close button positioning */
+}
 
-        /* Close Button */
-        .close {
-            position: absolute;
-            top: 10px;
-            right: 20px;
-            font-size: 24px;
-            cursor: pointer;
-        }
+/* Close Button */
+.close {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    font-size: 24px;
+    cursor: pointer;
+}
 
-        .popup-left,
-        .popup-right {
-            flex: 1;
-            min-width: 250px;
-        }
+.popup-left,
+.popup-right {
+    flex: 1;
+    min-width: 250px;
+}
 
-        /* Image Section */
-        .popup-left img {
-            width: 100%;
-            height: auto;
-            border-radius: 5px;
-        }
+/* Image Section */
+.popup-left img {
+    width: 100%;
+    height: auto;
+    border-radius: 5px;
+}
 
-        /* Text Section */
-        .popup-right {
-            padding: 20px;
-        }
+/* Text Section */
+.popup-right {
+    padding: 20px;
+}
 
-        h2 {
-            margin-top: 0;
-        }
+h2 {
+    margin-top: 0;
+}
 
-        .action-btn {
-            margin-top: 20px;
-            padding: 10px 20px;
-            font-size: 16px;
-            cursor: pointer;
-        }
+.action-btn {
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+}
 
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .popup-content {
-                flex-direction: column;
-            }
-        }
-    </style>
+/* Responsive Design */
+@media (max-width: 768px) {
+    .popup-content {
+        flex-direction: column;
+    }
+
+    .popup-left {
+        margin-bottom: 20px; /* Add some spacing between image and text */
+    }
+}
+
+     </style>
 </head>
 
 <body class="bg-gradient-primary">
@@ -327,6 +329,8 @@ if (isset($_POST['AddCode'])) {
 
                           <!-- End Varification form -->
                             <hr>
+
+                            
                            
                            
                         </div>
@@ -335,13 +339,44 @@ if (isset($_POST['AddCode'])) {
             </div>
         </div>
 
+        <div id="popup" class="popup">
+            <div class="popup-content">
+                <span class="close" onclick="closePopup()">&times;</span>
+                <div class="popup-left">
+                    <img src="./assets/images/Poster.jpg" alt="Popup Image">
+                </div>
+                <div class="popup-right">
+                    <h2>Follow Us</h2>
+                    <p>Stay connected and follow us on our social media channels for the latest updates and promotions!</p>
+                    <button class="btn btn-primary action-btn" onclick="window.location.href='https://khannasports.in'">Follow Us</button>
+                </div>
+            </div>
+        </div>
+
     </div>
 
+    
 
   
 
     <!-- Core plugin JavaScript-->
     <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script>
+        // Function to close the popup
+        function closePopup() {
+            document.getElementById("popup").style.display = "none";
+        }
+
+        // Function to open the popup
+        function openPopup() {
+            document.getElementById("popup").style.display = "block";
+        }
+
+        // Open the popup after a delay (e.g., 3 seconds)
+        window.onload = function() {
+            setTimeout(openPopup, 3000);
+        }
+    </script>
 
     <!-- Custom scripts for all pages-->
     <script src="js/sb-admin-2.min.js"></script>
