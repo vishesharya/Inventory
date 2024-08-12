@@ -159,7 +159,7 @@ h2 {
                 <img src="https://via.placeholder.com/300" alt="Popup Image">
             </div>
             <div class="popup-right">
-                <h3>Follow Us On Instagram</h3>
+                <h3 class="fw-semibold">Follow Us On Instagram</h3>
                 <p> has been successfully verified. Please follow us for more updates and information.</p>
                 <a href="https://www.instagram.com/khannasports" class="btn btn-outline-primary btn-lg action-btn">Follow Us</a>
             </div>
