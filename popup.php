@@ -156,7 +156,7 @@ h2 {
         <div class="popup-content">
             <span class="close" onclick="closePopup()">&times;</span>
             <div class="popup-left">
-                <img src="https://via.placeholder.com/300" alt="Popup Image">
+                <img src="./assets/images/follow.jpg" alt="Popup Image">
             </div>
             <div class="popup-right">
                 <h3 class="fw-semibold">Follow Us On Instagram</h3>
