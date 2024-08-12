@@ -53,7 +53,7 @@ if (isset($_GET['access_token']) && $_GET['access_token'] === $expected_token) {
             padding: 20px;
             border-radius: 5px;
             width: 80%;
-            max-width: 600px;
+            max-width: 700px;
             display: flex;
             flex-wrap: wrap;
             position: relative;
@@ -131,7 +131,7 @@ if (isset($_GET['access_token']) && $_GET['access_token'] === $expected_token) {
                 <img src="https://via.placeholder.com/300" alt="Popup Image">
             </div>
             <div class="popup-right">
-                <h2>Follow Us on Instagram</h2>
+                <h2>Follow Us On Instagram</h2>
                 <p> has been successfully verified. Please follow us for more updates and information.</p>
                 <a href="https://www.instagram.com/khannasports" class="btn btn-primary action-btn">Follow Us</a>
             </div>
