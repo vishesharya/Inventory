@@ -25,6 +25,27 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
     }
 
+
+    if (isset($_POST['change_username'])) {
+        $user_id = $_POST['user_id'];
+        $new_username = $_POST['new_username'];
+
+        // Prevent changing the current user's username to something that already exists
+        $result = $con->query("SELECT id FROM users WHERE username = '$new_username'");
+        if ($result->num_rows > 0) {
+            $response['success'] = false;
+            $response['message'] = 'Username already exists.';
+        } else {
+            if ($con->query("UPDATE users SET username = '$new_username' WHERE id = $user_id")) {
+                $response['success'] = true;
+                $response['message'] = 'Username changed successfully.';
+            } else {
+                $response['success'] = false;
+                $response['message'] = 'Failed to change username.';
+            }
+        }
+    }
+
     if (isset($_POST['delete_user'])) {
         $user_id = $_POST['user_id'];
         // Prevent the current user from deleting themselves
@@ -54,6 +75,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $response['message'] = 'Failed to reset password.';
         }
     }
+
 
     echo json_encode($response);
     exit();
@@ -212,9 +234,42 @@ $result = $con->query("SELECT * FROM users");
                 </form>
             </div>
         </section>
+        
+        <div class="form-container">
+    <h2>Change Username</h2>
+    <form id="change-username-form">
+        <label for="user-id">User ID:</label>
+        <input type="number" id="user-id" name="user_id" required>
+        
+        <label for="new-username">New Username:</label>
+        <input type="text" id="new-username" name="new_username" required>
+        
+        <button type="submit">Change Username</button>
+    </form>
+</div>
+
     </div>
     <script>
         $(document).ready(function() {
+
+            $('#change-username-form').submit(function(event) {
+        event.preventDefault();
+        
+        $.ajax({
+            type: 'POST',
+            url: '',
+            data: $(this).serialize() + '&change_username=true',
+            dataType: 'json',
+            success: function(response) {
+                if (response.success) {
+                    alert(response.message);
+                    location.reload(); // Refresh the page to update the user list
+                } else {
+                    alert(response.message);
+                }
+            }
+        });
+    });
             // Handle form submission for adding a user
             $('#add-user-form').submit(function(event) {
                 event.preventDefault();
