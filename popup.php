@@ -42,8 +42,8 @@ if (isset($_GET['access_token']) && $_GET['access_token'] === $expected_token) {
             z-index: 1;
             left: 0;
             top: 0;
-            width: 1rem;
-            height: 1rem;
+            width: 100%;
+            height: 100%;
             background-color: rgba(0, 0, 0, 0.5); /* Black background with opacity */
         }
 
@@ -71,7 +71,7 @@ if (isset($_GET['access_token']) && $_GET['access_token'] === $expected_token) {
         .popup-left,
         .popup-right {
             flex: 1;
-            min-width: 250px;
+            min-width: 275px;
         }
 
         /* Image Section */
