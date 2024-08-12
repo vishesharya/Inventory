@@ -1,3 +1,19 @@
+<?php
+    
+// Define the expected token
+$expected_token = "12345";
+
+// Check if the token is present and valid
+if (isset($_GET['access_token']) && $_GET['access_token'] === $expected_token) {
+    
+} else {
+    // Invalid or missing token, redirect to home page
+    header("Location: https://khannasports.in");
+    exit();
+}
+
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -104,7 +120,7 @@
 
     <!-- Main content and form elements here -->
     <?php 
-    include 'validation.php';
+    include 'validation.php?access_token=12345';
     ?>
     <!-- Popup Modal -->
     <div id="popupModal" class="popup">
