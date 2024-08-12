@@ -4,10 +4,11 @@ include './include/connection.php';
 include_once 'include/admin-main.php';
 include('access_control.php');
 
-
-
 // Initialize response array
 $response = [];
+
+// Assuming the current user's ID is stored in the session
+$current_user_id = $_SESSION['user_id']; // Adjust based on your session handling
 
 // Handle AJAX requests
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -26,18 +27,25 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     if (isset($_POST['delete_user'])) {
         $user_id = $_POST['user_id'];
-        if ($con->query("DELETE FROM users WHERE id = $user_id")) {
-            $response['success'] = true;
-            $response['message'] = 'User deleted successfully.';
-        } else {
+        // Prevent the current user from deleting themselves
+        if ($user_id == $current_user_id) {
             $response['success'] = false;
-            $response['message'] = 'Failed to delete user.';
+            $response['message'] = 'You cannot delete your own account.';
+        } else {
+            if ($con->query("DELETE FROM users WHERE id = $user_id")) {
+                $response['success'] = true;
+                $response['message'] = 'User deleted successfully.';
+            } else {
+                $response['success'] = false;
+                $response['message'] = 'Failed to delete user.';
+            }
         }
     }
+
     if (isset($_POST['reset_password'])) {
         $username = $_POST['username'];
         $new_password = password_hash($_POST['new_password'], PASSWORD_DEFAULT);
-    
+
         if ($con->query("UPDATE users SET password = '$new_password' WHERE username = '$username'")) {
             $response['success'] = true;
             $response['message'] = 'Password reset successfully.';
@@ -46,8 +54,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $response['message'] = 'Failed to reset password.';
         }
     }
-    
-    
+
     echo json_encode($response);
     exit();
 }
@@ -55,6 +62,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 // Fetch users for initial load
 $result = $con->query("SELECT * FROM users");
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
