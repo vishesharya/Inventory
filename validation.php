@@ -337,7 +337,20 @@ h2 {
 
                             
                            
-                           
+                            <div id="popupModal" class="popup">
+    <div class="popup-content">
+        <span class="close" onclick="closePopup()">&times;</span>
+        <div class="popup-left">
+            <img src="https://via.placeholder.com/300" alt="Popup Image">
+        </div>
+        <div class="popup-right">
+            <h2>Verification Successful</h2>
+            <p>Your product has been successfully verified. Please follow us for more updates and information.</p>
+            <a href="https://www.instagram.com/khannasports" class="btn btn-primary action-btn">Follow Us</a>
+        </div>
+    </div>
+</div>
+
                         </div>
                     </div>
                 </div>
@@ -363,20 +376,19 @@ h2 {
     <!-- Core plugin JavaScript-->
     <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
     <script>
-        // Function to close the popup
-        function closePopup() {
-            document.getElementById("popup").style.display = "none";
-        }
+       function showPopup() {
+    document.getElementById('popupModal').style.display = 'block';
+}
 
-        // Function to open the popup
-        function openPopup() {
-            document.getElementById("popup").style.display = "block";
-        }
+function closePopup() {
+    document.getElementById('popupModal').style.display = 'none';
+}
 
-        // Open the popup after a delay (e.g., 3 seconds)
-        window.onload = function() {
-            setTimeout(openPopup, 3000);
-        }
+// Automatically show the popup when the page loads
+window.onload = function() {
+    showPopup();
+};
+
     </script>
 
     <!-- Custom scripts for all pages-->
