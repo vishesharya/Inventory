@@ -131,7 +131,7 @@ h2 {
     }
 
     .popup-right {
-        padding: 15px; /* Further reduce padding */
+        padding: 0px; /* Further reduce padding */
     }
 
     .action-btn {
