@@ -160,7 +160,21 @@ h2 {
             </div>
             <div class="popup-right">
                 <h3 class="fw-semibold">Follow Us On Instagram</h3>
-                <p> Follow us on Instagram <b>"khannasports"</b> and join our community today!</p>
+                <p>Follow us on Instagram <b>"khannasports"</b> and join our community today!</p>
+                <p>Get an opportunity to win a discount coupon worth 250/- by following us.</p>
+               <ul>
+                <li>
+                    <p>
+                     DM us on Instagram after you follow us.
+                    </p>
+                </li>
+                <li>
+                   <p>
+                   We will provide you with a coupon code worth 250/-
+                   </p>
+                </li>
+               </ul>
+               <p class="fw-bold">ITS THAT SIMPLE!</p>
                 <a href="https://www.instagram.com/khannasports" class="btn btn-outline-primary btn-lg action-btn">Follow Us</a>
             </div>
         </div>
