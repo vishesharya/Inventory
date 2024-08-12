@@ -49,7 +49,7 @@ if (isset($_GET['access_token']) && $_GET['access_token'] === $expected_token) {
 
         .popup-content {
             background-color: white;
-            margin: 0px;
+            margin: 15% auto;
             padding: 20px;
             border-radius: 5px;
             width: 100%;
