@@ -95,7 +95,7 @@ h2 {
 .action-btn {
     margin-top: 20px;
     padding: 10px 20px;
-    font-size: 16px;
+    font-size: 17px;
     cursor: pointer;
 }
 
