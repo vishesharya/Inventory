@@ -1,14 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Responsive Popup</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-        }
 
+<head>
+    <!-- Meta tags and title -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Verify Your Khanna Product">
+    <meta name="author" content="Khanna Sports">
+
+    <title>Product Verification</title>
+    <link rel="icon" type="image/x-icon" href="assets/images/favicon.png">
+    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+
+    <link href="new/css/sb-admin-2.min.css" rel="stylesheet">
+    <link href="new/css/sb-admin-2.css" rel="stylesheet">
+
+    <style>
         /* Popup Modal */
         .popup {
             display: none; /* Hidden by default */
@@ -30,6 +40,7 @@
             max-width: 600px;
             display: flex;
             flex-wrap: wrap;
+            position: relative;
         }
 
         /* Close Button */
@@ -75,55 +86,67 @@
             .popup-content {
                 flex-direction: column;
             }
+
+            .popup-left,
+            .popup-right {
+                min-width: 100%;
+            }
+
+            .popup-left img {
+                width: 100%;
+                height: auto;
+            }
         }
     </style>
 </head>
-<body>
 
-<?php
-// Example PHP variables for content
-$heading = "Your Heading";
-$details = "Some details about the content. This section can include more descriptive text.";
-$image = "your-image.jpg"; // Path to the image
-?>
+<body class="bg-gradient-primary">
 
-<!-- Popup Modal -->
-<div id="popupModal" class="popup">
-    <div class="popup-content">
-        <span class="close">&times;</span>
-        <div class="popup-left">
-            <img src="<?php echo $image; ?>" alt="Popup Image">
-        </div>
-        <div class="popup-right">
-            <h2><?php echo $heading; ?></h2>
-            <p><?php echo $details; ?></p>
-            <button class="action-btn">Click Me</button>
+    <!-- Main content and form elements here -->
+
+    <!-- Popup Modal -->
+    <div id="popupModal" class="popup">
+        <div class="popup-content">
+            <span class="close" onclick="closePopup()">&times;</span>
+            <div class="popup-left">
+                <img src="https://via.placeholder.com/300" alt="Popup Image">
+            </div>
+            <div class="popup-right">
+                <h2>Verification Successful</h2>
+                <p>Your product has been successfully verified. Please follow us for more updates and information.</p>
+                <a href="https://www.instagram.com/khannasports" class="btn btn-primary action-btn">Follow Us</a>
+            </div>
         </div>
     </div>
-</div>
 
-<script>
-// Get elements
-var popup = document.getElementById("popupModal");
-var span = document.getElementsByClassName("close")[0];
+    <!-- Core plugin JavaScript-->
+    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script>
+        function showPopup() {
+            document.getElementById('popupModal').style.display = 'block';
+        }
 
-// Automatically show the popup when the page loads
-window.onload = function() {
-    popup.style.display = "block";
-}
+        function closePopup() {
+            document.getElementById('popupModal').style.display = 'none';
+        }
 
-// Close the popup when the "x" is clicked
-span.onclick = function() {
-    popup.style.display = "none";
-}
+        // Automatically show the popup when the page loads
+        window.onload = function() {
+            showPopup();
+            hideMessage(); // Call hideMessage here if you want to hide messages after a certain time
+        };
 
-// Close the popup when clicking outside of the popup content
-window.onclick = function(event) {
-    if (event.target == popup) {
-        popup.style.display = "none";
-    }
-}
-</script>
+        function hideMessage() {
+            // Get the message element
+            var messageElement = document.getElementById('message');
 
+            // Hide the message after 3 seconds
+            setTimeout(function() {
+                messageElement.style.display = 'none';
+            }, 3000);
+        }
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
+
 </html>

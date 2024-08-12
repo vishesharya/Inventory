@@ -1,10 +1,9 @@
 <?php
 include_once 'include/connection.php';
-
+include 'popup.php';
 
 $msg = '';
 $code = '';
-
 
 
 
