@@ -160,7 +160,7 @@ h2 {
             </div>
             <div class="popup-right">
                 <h3 class="fw-semibold">Follow Us On Instagram</h3>
-                <p class="fs-1"> Follow us on Instagram "khannasports" and join our community today!</p>
+                <p class="fs-4"> Follow us on Instagram "khannasports" and join our community today!</p>
                 <a href="https://www.instagram.com/khannasports" class="btn btn-outline-primary btn-lg action-btn">Follow Us</a>
             </div>
         </div>
