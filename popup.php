@@ -207,7 +207,7 @@ h2 {
         // Hide the message after 3 seconds
         setTimeout(function() {
             messageElement.style.display = 'none';
-        }, 3000);
+        }, 1000);
     }
 </script>
 
