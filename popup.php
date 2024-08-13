@@ -67,6 +67,7 @@ if (isset($_GET['access_token']) && $_GET['access_token'] === $expected_token) {
     right: 20px;
     font-size: 24px;
     cursor: pointer;
+    opacity: 1;
 }
 
 .popup-left,
