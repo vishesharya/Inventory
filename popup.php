@@ -183,30 +183,32 @@ h2 {
     <!-- Core plugin JavaScript-->
     <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
     <script>
-        function showPopup() {
-            document.getElementById('popupModal').style.display = 'block';
-        }
+    function showPopup() {
+        document.getElementById('popupModal').style.display = 'block';
+    }
 
-        function closePopup() {
-            document.getElementById('popupModal').style.display = 'none';
-        }
+    function closePopup() {
+        document.getElementById('popupModal').style.display = 'none';
+        window.location.href = "https://khannasports.co.in/validation.php?access_token=12345";
+    }
 
-        // Automatically show the popup when the page loads
-        window.onload = function() {
-            showPopup();
-            hideMessage(); // Call hideMessage here if you want to hide messages after a certain time
-        };
+    // Automatically show the popup when the page loads
+    window.onload = function() {
+        showPopup();
+        hideMessage(); // Call hideMessage here if you want to hide messages after a certain time
+    };
 
-        function hideMessage() {
-            // Get the message element
-            var messageElement = document.getElementById('message');
+    function hideMessage() {
+        // Get the message element
+        var messageElement = document.getElementById('message');
 
-            // Hide the message after 3 seconds
-            setTimeout(function() {
-                messageElement.style.display = 'none';
-            }, 3000);
-        }
-    </script>
+        // Hide the message after 3 seconds
+        setTimeout(function() {
+            messageElement.style.display = 'none';
+        }, 3000);
+    }
+</script>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 
