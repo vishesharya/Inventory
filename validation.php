@@ -130,7 +130,7 @@ if (isset($_POST['AddCode'])) {
                             <!-- Instagram Username Field -->
                             <div class="form-group">
                                 <input type="text" name="instagram_username" value="" class="form-control form-control-user" 
-                                    placeholder="Enter your Instagram Username" maxlength="30" required>
+                                    placeholder="Enter your Instagram Username" maxlength="30">
                             </div>
 
                             <div class="form-group">
