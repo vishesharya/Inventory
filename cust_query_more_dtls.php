@@ -114,6 +114,14 @@ label.col-lg-3.control-label {
 									</div>
 
 									<div class="panel-body">
+
+									<div class="form-group">
+											<label class="col-lg-3 control-label">Instagram Username:</label>
+											<div class="col-lg-9">
+												<div class="form-control-static"> <?php echo ucfirst($dtls['instagram_username']); ?></div>
+											</div>
+										</div>
+
 										<div class="form-group">
 											<label class="col-lg-3 control-label">Name :</label>
 											<div class="col-lg-9">
