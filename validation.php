@@ -63,6 +63,7 @@ if (isset($_POST['AddCode'])) {
                 $msg = "<p style='color: green;font-size: medium;text-align: center;'>Your product code is already verified</p>";
             } else {
                 // Code is not verified yet, proceed with insertion
+                $instagram_username = $_POST['instagram_username'];
                 $name = $_POST['name'];
                 $mobile = $_POST['mobile'];
                 $email = $_POST['email'];
@@ -73,8 +74,8 @@ if (isset($_POST['AddCode'])) {
                 $product = isset($_POST['product']) ? $_POST['product'] : '';
                 $model = isset($_POST['model']) ? $_POST['model'] : '';
 
-                $result = mysqli_query($con, "INSERT INTO `contact`(`name`, `mobile`, `email`, `city`, `state`, `country`, `product`, `model`, `pcode`) 
-                               VALUES ('$name','$mobile', '$email', '$city', '$state', '$country', '$product', '$model', '$code') ") or die(mysqli_connect_error());
+                $result = mysqli_query($con, "INSERT INTO `contact`(`instagram_username`,`name`, `mobile`, `email`, `city`, `state`, `country`, `product`, `model`, `pcode`) 
+                               VALUES ('$instagram_username,','$name','$mobile', '$email', '$city', '$state', '$country', '$product', '$model', '$code') ") or die(mysqli_connect_error());
 
                 if ($result) {
                     // Update the status of the code to 1 (used) in the appropriate table
