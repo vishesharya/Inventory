@@ -143,7 +143,8 @@ if (isset($_POST['AddCode'])) {
                                 <h1 class="h4 text-gray-900 mb-4">Product Verification</h1>
                             </div>
                             <!-- start Varification form -->
-
+                            <form action="" method="post"  enctype="multipart/form-data" accept-charset="utf-8" class="user">
+                                 <!-- Instagram Note -->
                             <p style="color: #0056b3; font-size: medium; text-align: center;">
                                 Get a voucher worth INR 250! Follow us on Instagram and enter your Instagram username below to verify.
                             </p>
