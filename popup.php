@@ -11,8 +11,9 @@ if (isset($_GET['access_token']) && $_GET['access_token'] === $expected_token) {
     header("Location: https://khannasports.in");
     exit();
 }
-?>
 
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -68,9 +69,11 @@ if (isset($_GET['access_token']) && $_GET['access_token'] === $expected_token) {
     cursor: pointer;
 }
 
-.close img {
-    width: 24px; /* Adjust the size of the close icon */
-    height: 24px;
+.popup-left,
+.popup-right {
+    flex: 1;
+    min-width: 300px; /* Increased minimum width */
+    box-sizing: border-box; /* Ensure padding is included in width */
 }
 
 /* Image Section */
@@ -151,9 +154,7 @@ h2 {
     <!-- Popup Modal -->
     <div id="popupModal" class="popup">
         <div class="popup-content">
-            <span class="close" onclick="closePopup()">
-                <img src="https://cdn.shopify.com/s/files/1/0693/0399/2571/files/closeicon.png?v=1723538935" alt="Close">
-            </span>
+            <span class="close" onclick="closePopup()">&times;</span>
             <div class="popup-left">
                 <img src="./assets/images/follow.jpg" alt="Popup Image">
             </div>
@@ -210,5 +211,6 @@ h2 {
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
+
 
 </html>
