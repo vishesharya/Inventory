@@ -140,6 +140,22 @@ h2 {
     }
     
 }
+/* Close Button */
+.close {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    font-size: 32px; /* Increased font size */
+    cursor: pointer;
+    color: red; /* Set color to red */
+    transition: transform 0.3s ease, color 0.3s ease; /* Smooth transition */
+}
+
+.close:hover {
+    transform: scale(1.2); /* Zoom effect on hover */
+    color: darkred; /* Optional: Change color on hover */
+}
+
 
     </style>
 </head>
