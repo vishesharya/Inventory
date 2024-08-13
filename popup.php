@@ -63,8 +63,8 @@ if (isset($_GET['access_token']) && $_GET['access_token'] === $expected_token) {
 /* Close Button */
 .close {
     position: absolute;
-    top: 10px;
-    right: 20px;
+    top: 5px;
+    right: 5px;
     font-size: 24px;
     cursor: pointer;
 }
