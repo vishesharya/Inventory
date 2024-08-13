@@ -1,10 +1,8 @@
 <?php
 include_once 'include/connection.php';
 
-
 $msg = '';
 $code = '';
-
 
 // Define the expected token
 $expected_token = "12345";
@@ -18,8 +16,6 @@ if (isset($_GET['access_token']) && $_GET['access_token'] === $expected_token) {
     exit();
 }
 
-
-
 if (isset($_POST['AddCode'])) {
     $code = $_POST['code'];
     
@@ -29,62 +25,45 @@ if (isset($_POST['AddCode'])) {
     if ($codePrefix === 'FB') {
         // If the first two characters are 'FB', check in the 'f_code' table
         $query = mysqli_query($con, "SELECT * FROM `f_code` WHERE `fcode` = '$code'");
-        if ($query) {
-            $rowCount = mysqli_num_rows($query);
-        } else {
-            $rowCount = 0;
-        }
     } elseif ($codePrefix === 'TB') {
         // If the first two characters are 'TB', check in the 't_code' table
         $query = mysqli_query($con, "SELECT * FROM `t_code` WHERE `tcode` = '$code'");
-        if ($query) {
-            $rowCount = mysqli_num_rows($query);
-        } else {
-            $rowCount = 0;
-        }
     } else {
         // Invalid code format
-        $rowCount = 0;
+        $query = false;
     }
 
-    if ($rowCount > 0) {
+    if ($query && mysqli_num_rows($query) > 0) {
         // Code found, proceed with insertion
 
         // Check if the code is already verified
-        $statusQueryFB = mysqli_query($con, "SELECT `status` FROM `f_code` WHERE `fcode` = '$code'");
-        $statusQueryTB = mysqli_query($con, "SELECT `status` FROM `t_code` WHERE `tcode` = '$code'");
+        $statusQuery = mysqli_query($con, "SELECT `status` FROM `" . ($codePrefix === 'FB' ? 'f_code' : 't_code') . "` WHERE `" . ($codePrefix === 'FB' ? 'fcode' : 'tcode') . "` = '$code'");
         
-        if ($statusQueryFB && $statusQueryTB) {
-            $statusDataFB = mysqli_fetch_assoc($statusQueryFB);
-            $statusDataTB = mysqli_fetch_assoc($statusQueryTB);
-            $statusFB = isset($statusDataFB['status']) ? $statusDataFB['status'] : null;
-            $statusTB = isset($statusDataTB['status']) ? $statusDataTB['status'] : null;
+        if ($statusQuery) {
+            $statusData = mysqli_fetch_assoc($statusQuery);
+            $status = isset($statusData['status']) ? $statusData['status'] : null;
 
-            if ($statusFB == 1 || $statusTB == 1) {
+            if ($status == 1) {
                 // Code is already verified
                 $msg = "<p style='color: green;font-size: medium;text-align: center;'>Your product code is already verified</p>";
             } else {
                 // Code is not verified yet, proceed with insertion
+                $instagram_username = $_POST['instagram_username'];
                 $name = $_POST['name'];
                 $mobile = $_POST['mobile'];
                 $email = $_POST['email'];
                 $city = $_POST['city'];
                 $state = $_POST['state'];
                 $country = $_POST['country'];
-
                 $product = isset($_POST['product']) ? $_POST['product'] : '';
                 $model = isset($_POST['model']) ? $_POST['model'] : '';
 
-                $result = mysqli_query($con, "INSERT INTO `contact`(`name`, `mobile`, `email`, `city`, `state`, `country`, `product`, `model`, `pcode`) 
-                               VALUES ('$name','$mobile', '$email', '$city', '$state', '$country', '$product', '$model', '$code') ") or die(mysqli_connect_error());
+                $result = mysqli_query($con, "INSERT INTO `contact`(`instagram_username`, `name`, `mobile`, `email`, `city`, `state`, `country`, `product`, `model`, `pcode`) 
+                               VALUES ('$instagram_username','$name','$mobile', '$email', '$city', '$state', '$country', '$product', '$model', '$code')");
 
                 if ($result) {
                     // Update the status of the code to 1 (used) in the appropriate table
-                    if ($codePrefix === 'FB') {
-                        mysqli_query($con, "UPDATE `f_code` SET `status` = '1' WHERE `fcode` = '$code'");
-                    } elseif ($codePrefix === 'TB') {
-                        mysqli_query($con, "UPDATE `t_code` SET `status` = '1' WHERE `tcode` = '$code'");
-                    }
+                    mysqli_query($con, "UPDATE `" . ($codePrefix === 'FB' ? 'f_code' : 't_code') . "` SET `status` = '1' WHERE `" . ($codePrefix === 'FB' ? 'fcode' : 'tcode') . "` = '$code'");
                     $msg = "<p style='color: green;font-size: medium;text-align: center;'>Congratulations! Your product code is activated successfully</p>";
                 } else {
                     $msg = "<p style='color: red;font-size: medium;text-align: center;'>Failed to insert data into the database</p>";
@@ -99,9 +78,6 @@ if (isset($_POST['AddCode'])) {
     }
 }
 ?>
-
-
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -124,9 +100,11 @@ if (isset($_POST['AddCode'])) {
 
     <link href="new/css/sb-admin-2.min.css" rel="stylesheet">
     <link href="new/css/sb-admin-2.css" rel="stylesheet">
+
 </head>
 
 <body class="bg-gradient-primary">
+
 
     <div class="container">
 
@@ -144,6 +122,17 @@ if (isset($_POST['AddCode'])) {
                             </div>
                             <!-- start Varification form -->
                             <form action="" method="post"  enctype="multipart/form-data" accept-charset="utf-8" class="user">
+                                 <!-- Instagram Note -->
+                            <p style="color: #0056b3; font-size: medium; text-align: center;">
+                                Get a voucher worth INR 250! Follow us on Instagram and enter your Instagram username below to verify.
+                            </p>
+
+                            <!-- Instagram Username Field -->
+                            <div class="form-group">
+                                <input type="text" name="instagram_username" value="" class="form-control form-control-user" 
+                                    placeholder="Enter your Instagram Username" maxlength="30" required>
+                            </div>
+
                             <div class="form-group">
                                     <input type="text" name="code" value="" class="form-control form-control-user" 
                                         placeholder="Enter 16 digit Code" maxlength="16" required>
@@ -252,21 +241,27 @@ if (isset($_POST['AddCode'])) {
 
                           <!-- End Varification form -->
                             <hr>
+
+                            
                            
-                           
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-    </div>
-
-
-  
 
     <!-- Core plugin JavaScript-->
     <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script>
+       function showPopup() {
+    document.getElementById('popupModal').style.display = 'block';
+}
+
+function closePopup() {
+    document.getElementById('popupModal').style.display = 'none';
+}
+
+// Automatically show the popup when the page loads
+window.onload = function() {
+    showPopup();
+};
+
+    </script>
 
     <!-- Custom scripts for all pages-->
     <script src="js/sb-admin-2.min.js"></script>
