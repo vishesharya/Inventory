@@ -154,7 +154,9 @@ h2 {
     <!-- Popup Modal -->
     <div id="popupModal" class="popup">
         <div class="popup-content">
-            <span class="close" onclick="closePopup()">&times;</span>
+        <span class="close" onclick="closePopup()">
+                <img src="https://cdn.shopify.com/s/files/1/0693/0399/2571/files/closeicon.png?v=1723538935" alt="Close">
+            </span>
             <div class="popup-left">
                 <img src="./assets/images/follow.jpg" alt="Popup Image">
             </div>
