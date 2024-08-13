@@ -145,6 +145,7 @@ if (isset($_POST['AddCode'])) {
                             </div>
                             <!-- start Varification form -->
                             <form action="" method="post"  enctype="multipart/form-data" accept-charset="utf-8" class="user">
+<<<<<<< HEAD
                                  <!-- Instagram Note -->
                             <p style="color: #0056b3; font-size: medium; text-align: center;">
                                 Get a voucher worth INR 250! Follow us on Instagram and enter your Instagram username below to verify.
@@ -155,6 +156,8 @@ if (isset($_POST['AddCode'])) {
                                 <input type="text" name="instagram_username" value="" class="form-control form-control-user" 
                                     placeholder="Enter your Instagram Username" maxlength="30" required>
                             </div>
+=======
+>>>>>>> parent of ef2931b (Update validation.php)
                             <div class="form-group">
                                     <input type="text" name="code" value="" class="form-control form-control-user" 
                                         placeholder="Enter 16 digit Code" maxlength="16" required>
