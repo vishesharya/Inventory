@@ -19,6 +19,12 @@ if (isset($_SESSION['challan_no'])) {
 // Initialize $result variable
 $result = null;
 
+$total_S_Ist_C_Ist = 0;
+$total_S_Ist_C_IInd = 0;
+$total_S_IInd_C_Ist = 0;
+$total_S_IInd_C_IInd = 0;
+$total_total = 0;
+
 // Check if 'View' button is clicked
 if (isset($_POST['view_entries'])) {
     // Get selected stitcher

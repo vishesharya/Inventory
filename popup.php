@@ -163,8 +163,6 @@ h2 {
             <div class="popup-right">
                 <h3 class="fw-semibold">Follow Us On Instagram</h3>
                 <p>Follow us on Instagram <b>"khannasports"</b> and join our community today!</p>
-
-               <p class="fw-bold">ITS THAT SIMPLE!</p>
                 <a href="https://www.instagram.com/khannasports" class="btn btn-outline-primary btn-lg action-btn">Follow Us</a>
             </div>
         </div>
