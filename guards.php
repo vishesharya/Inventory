@@ -15,7 +15,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         move_uploaded_file($signature_temp, $target_file);
 
         // Insert guard details into the database
-        $stmt = $pdo->prepare("INSERT INTO guards (name, signature, status) VALUES (:name, :signature, 0)");
+        $stmt = $con->prepare("INSERT INTO guards (name, signature, status) VALUES (:name, :signature, 0)");
         $stmt->execute([':name' => $name, ':signature' => $signature]);
 
         echo "<div class='alert alert-success'>Guard added successfully!</div>";
@@ -33,10 +33,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $target_file = $upload_dir . basename($signature);
             move_uploaded_file($signature_temp, $target_file);
 
-            $stmt = $pdo->prepare("UPDATE guards SET name = :name, signature = :signature WHERE id = :id");
+            $stmt = $con->prepare("UPDATE guards SET name = :name, signature = :signature WHERE id = :id");
             $stmt->execute([':name' => $name, ':signature' => $signature, ':id' => $id]);
         } else {
-            $stmt = $pdo->prepare("UPDATE guards SET name = :name WHERE id = :id");
+            $stmt = $con->prepare("UPDATE guards SET name = :name WHERE id = :id");
             $stmt->execute([':name' => $name, ':id' => $id]);
         }
 
@@ -47,7 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $id = $_POST['id'];
 
         // Fetch the signature filename to delete it from the server
-        $stmt = $pdo->prepare("SELECT signature FROM guards WHERE id = :id");
+        $stmt = $con->prepare("SELECT signature FROM guards WHERE id = :id");
         $stmt->execute([':id' => $id]);
         $signature = $stmt->fetchColumn();
 
@@ -55,7 +55,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         unlink('uploads/signatures/' . $signature);
 
         // Delete guard from the database
-        $stmt = $pdo->prepare("DELETE FROM guards WHERE id = :id");
+        $stmt = $con->prepare("DELETE FROM guards WHERE id = :id");
         $stmt->execute([':id' => $id]);
 
         echo "<div class='alert alert-success'>Guard deleted successfully!</div>";
@@ -65,11 +65,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $id = $_POST['id'];
 
         // Set all guards' status to 0
-        $stmt = $pdo->prepare("UPDATE guards SET status = 0");
+        $stmt = $con->prepare("UPDATE guards SET status = 0");
         $stmt->execute();
 
         // Set the selected guard's status to 1
-        $stmt = $pdo->prepare("UPDATE guards SET status = 1 WHERE id = :id");
+        $stmt = $con->prepare("UPDATE guards SET status = 1 WHERE id = :id");
         $stmt->execute([':id' => $id]);
 
         echo "<div class='alert alert-success'>Guard status updated successfully!</div>";
