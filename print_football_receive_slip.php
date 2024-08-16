@@ -267,6 +267,7 @@ $total_total = 0;
                             <?php endif; ?> 
             </div>
         </div>
+    </div>
         <div class="print-btn">
             <button onclick="window.print()" class="btn btn-primary">Print</button>
         </div>
