@@ -395,7 +395,7 @@ if (!empty($selected_challan)) {
             </div>
         </div>
         <div class="signature">
-            <div class="receiver-signature">Receiver Signature <br>
+            <div class="receiver-signature">Supervisor Signature <br>
             <?php if ($signature_supervisors_path): ?>
         <img src="<?= htmlspecialchars($signature_supervisors_path) ?>" alt="Signature" style="width: 180px; height: 75px; max-width:300px; margin: 0px; padding: 0px;">
     <?php else: ?>
