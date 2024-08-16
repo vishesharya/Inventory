@@ -2,6 +2,7 @@
 include './include/connection.php';
 include './include/check_login.php';
 
+
 // Directory to store uploaded signatures
 $target_dir = "uploads/";
 
@@ -42,7 +43,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 }
 
-// Retrieve guards from the database
+// Retrieve guards from the database after every action to reflect changes
 $guards = $con->query("SELECT * FROM guards");
 ?>
 
@@ -110,7 +111,9 @@ $guards = $con->query("SELECT * FROM guards");
                 <div class="mb-3">
                     <label for="guard-id" class="form-label">Select Guard:</label>
                     <select name="guard_id" class="form-select" required>
-                        <?php while ($guard = $guards->fetch_assoc()) { ?>
+                        <?php
+                        $guards->data_seek(0); // Reset pointer to the start
+                        while ($guard = $guards->fetch_assoc()) { ?>
                             <option value="<?= $guard['id'] ?>"><?= $guard['name'] ?> (Status: <?= $guard['status'] == 1 ? 'Default' : 'Not Default' ?>)</option>
                         <?php } ?>
                     </select>
@@ -139,7 +142,9 @@ $guards = $con->query("SELECT * FROM guards");
                 <div class="mb-3">
                     <label for="guard-id" class="form-label">Select Guard:</label>
                     <select name="guard_id" class="form-select" required>
-                        <?php while ($guard = $guards->fetch_assoc()) { ?>
+                        <?php
+                        $guards->data_seek(0); // Reset pointer to the start
+                        while ($guard = $guards->fetch_assoc()) { ?>
                             <option value="<?= $guard['id'] ?>"><?= $guard['name'] ?></option>
                         <?php } ?>
                     </select>
@@ -160,7 +165,9 @@ $guards = $con->query("SELECT * FROM guards");
                 <div class="mb-3">
                     <label for="guard-id" class="form-label">Select Guard:</label>
                     <select name="guard_id" class="form-select" required>
-                        <?php while ($guard = $guards->fetch_assoc()) { ?>
+                        <?php
+                        $guards->data_seek(0); // Reset pointer to the start
+                        while ($guard = $guards->fetch_assoc()) { ?>
                             <option value="<?= $guard['id'] ?>"><?= $guard['name'] ?> (Status: <?= $guard['status'] == 1 ? 'Default' : 'Not Default' ?>)</option>
                         <?php } ?>
                     </select>
@@ -177,8 +184,7 @@ $guards = $con->query("SELECT * FROM guards");
         </div>
         <div class="card-body">
             <?php
-            // Fetch the list of guards again to display their signatures
-            $guards = $con->query("SELECT * FROM guards");
+            $guards->data_seek(0); // Reset pointer to the start
             while ($guard = $guards->fetch_assoc()) { ?>
                 <div class="mb-3">
                     <strong><?= $guard['name'] ?>:</strong><br>
