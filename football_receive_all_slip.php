@@ -30,6 +30,19 @@ if (isset($_POST['view_entries'])) {
     // Get selected stitcher
     $stitcher_name = isset($_POST['stitcher_name']) ? mysqli_real_escape_string($con, $_POST['stitcher_name']) : '';
     if (!empty($stitcher_name)) {
+
+        $query = "SELECT signature FROM stitcher WHERE stitcher_name = '$stitcher_name' LIMIT 1";
+    
+        // Execute the query
+        $result = $con->query($query);
+        
+        if ($result && $result->num_rows > 0) {
+            $row = $result->fetch_assoc();
+            $signature = $row['signature'];
+        } else {
+            $signature = "No signature found for the specified stitcher.";
+        }
+
         $stitcher_contact_query = "SELECT stitcher_contact FROM stitcher WHERE stitcher_name = '$stitcher_name' LIMIT 1";
         $stitcher_contact_result = mysqli_query($con, $stitcher_contact_query);
         $stitcher_contact_row = mysqli_fetch_assoc($stitcher_contact_result);
@@ -364,7 +377,16 @@ if (!empty($selected_challan)) {
         <div class="signature">
             <div class="receiver-signature">Receiver Signature</div>
             <div class="middle-signature">Guard Signature</div>
-            <div class="issuer-signature">Issuer Signature</div>
+            <div class="issuer-signature">Issuer Signature
+            <?php if ($stitcher_name && $signature): ?>
+        <h2>Signature for <?php echo htmlspecialchars($stitcher_name); ?>:</h2>
+        <?php if (strpos($signature, 'No signature') === false): ?>
+            <img src="path_to_signature_directory/<?php echo htmlspecialchars($signature); ?>" alt="Signature of <?php echo htmlspecialchars($stitcher_name); ?>" style="width:175px; height:50px;">
+        <?php else: ?>
+            <p><?php echo htmlspecialchars($signature); ?></p>
+        <?php endif; ?>
+    <?php endif; ?>
+            </div>
         </div>
     </div>
 <?php endif; ?>
