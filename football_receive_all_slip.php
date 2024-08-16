@@ -397,7 +397,7 @@ if (!empty($selected_challan)) {
         <div class="signature">
             <div class="receiver-signature">Receiver Signature <br>
             <?php if ($signature_supervisors_path): ?>
-        <img src="<?= htmlspecialchars($signature_supervisors_path) ?>" alt="Signature" style="width: 200px; height: 80px; max-width:300px; margin: 0px; padding: 0px;">
+        <img src="<?= htmlspecialchars($signature_supervisors_path) ?>" alt="Signature" style="width: 180px; height: 75px; max-width:300px; margin: 0px; padding: 0px;">
     <?php else: ?>
         <p>No signature available.</p>
     <?php endif; ?>
@@ -405,7 +405,7 @@ if (!empty($selected_challan)) {
             <div class="middle-signature">Guard Signature <br>
 
             <?php if ($signature_file_path): ?>
-        <img src="<?= htmlspecialchars($signature_file_path) ?>" alt="Signature" style="width: 260px; height: 120px; max-width:300px; margin: 0px; padding: 0px;">
+        <img src="<?= htmlspecialchars($signature_file_path) ?>" alt="Signature" style="width: 190px; height: 100px; max-width:300px; margin: 0px; padding: 0px;">
     <?php else: ?>
         <p>No signature available.</p>
     <?php endif; ?>
@@ -413,7 +413,7 @@ if (!empty($selected_challan)) {
             </div>
             <div class="issuer-signature">Issuer Signature <br>
             <?php if (!empty($signature_filename)): ?>
-                                <img src="<?php echo htmlspecialchars($signature_path); ?>" alt="Signature" style="width: 250px; height: 100px; max-width:300px; margin: 0px; padding: 0px;">
+                                <img src="<?php echo htmlspecialchars($signature_path); ?>" alt="Signature" style="width: 200px; height: 75px; max-width:300px; margin: 0px; padding: 0px;">
                             <?php else: ?>
                                 No signature available
                             <?php endif; ?> 
