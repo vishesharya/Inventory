@@ -405,7 +405,7 @@ if (!empty($selected_challan)) {
             <div class="middle-signature">Guard Signature <br>
 
             <?php if ($signature_file_path): ?>
-        <img src="<?= htmlspecialchars($signature_file_path) ?>" alt="Signature" style="width: 190px; height: 100px; max-width:300px; margin: 0px; padding: 0px;">
+        <img src="<?= htmlspecialchars($signature_file_path) ?>" alt="Signature" style="width: 190px; height: 90px; max-width:300px; margin: 0px; padding: 0px;">
     <?php else: ?>
         <p>No signature available.</p>
     <?php endif; ?>
