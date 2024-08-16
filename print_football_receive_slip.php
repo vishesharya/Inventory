@@ -94,48 +94,42 @@ $signature_path = 'uploads/signatures/' . $signature_filename;
             font-family: Arial, sans-serif;
         }
         .container {
-            margin-top: 50px;
-            
-            padding: 20px;
+            margin-top: 30px;
+            padding: 10px 20px;
             border-radius: 10px;
             box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            page-break-inside: avoid;
         }
         .heading {
             text-align: center;
-            margin-bottom: 20px;
+            margin-bottom: 10px;
             color: #333;
-            line-height: 5px;
+            line-height: 1.2;
         }
         .table {
             margin-top: 0px;
+            font-size: 12px;
+            page-break-inside: auto;
         }
         .footer {
-            margin-top: 30px;
+            margin-top: 20px;
             display: flex;
             justify-content: space-between;
-            gap: 8.2rem;
+            gap: 5rem;
             align-items: flex-end;
             color: #555;
         }
-        .receiver-signature{
-            text-align: right;
-            
-        
-        }
-        .issuer-signature {
-            text-align: left;
-        
-        }
-        .middle-signature {
+        .receiver-signature, .issuer-signature, .middle-signature {
             text-align: center;
-           
+            flex: 1;
+            page-break-inside: avoid;
         }
         .print-btn {
             display: block;
-            margin-top: 20px;
+            margin-top: 10px;
             text-align: center;
         }
-        #head_details{
+        #head_details {
             display: flex;
             margin-top: 0px;
             padding-top: 0px; 
@@ -147,15 +141,27 @@ $signature_path = 'uploads/signatures/' . $signature_filename;
             .print-btn {
                 display: none !important;
             }
+            body, .container {
+                margin: 0;
+                padding: 0;
+                box-shadow: none;
+            }
+            .table th, .table td {
+                padding: 5px;
+            }
+            .footer {
+                page-break-inside: avoid;
+            }
         }
-        p{
-            line-height: 7px;
+        p {
+            line-height: 5px;
         }
-        .stitcher_bold{
+        .stitcher_bold {
             font-weight: bold;
         }
-        .issue_heading{
+        .issue_heading {
             text-align: center;
+            margin-bottom: 10px;
         }
     </style>
 </head>
