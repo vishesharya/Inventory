@@ -95,7 +95,7 @@ $signature_path = 'uploads/signatures/' . $signature_filename;
         }
         .container {
             margin-top: 50px;
-            background-color: #f8f9fc;
+            
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
@@ -243,7 +243,14 @@ $total_total = 0;
             </div>
         </div>
         <div class="footer">
-            <div class="receiver-signature">Receiver Signature</div>
+            <div class="receiver-signature">Supervisor Signature
+                <br>
+                <?php if ($signature_supervisors_path): ?>
+        <img src="<?= htmlspecialchars($signature_supervisors_path) ?>" alt="Signature" style="width: 180px; height: 75px; max-width:300px; margin: 0px; padding: 0px;">
+    <?php else: ?>
+        <p>No signature available.</p>
+    <?php endif; ?>
+            </div>
             <div class="middle-signature">Guard Signature <br>
             <?php if ($signature_file_path): ?>
         <img src="<?= htmlspecialchars($signature_file_path) ?>" alt="Signature" style="width: 190px; height: 90px; max-width:300px; margin: 0px; padding: 0px;">
