@@ -87,7 +87,7 @@ $signature_path = 'uploads/signatures/' . $signature_filename;
     <style>
         @page {
             size: A4;
-            margin: 1cm;
+            margin: 2cm;
         }
         body {
             font-family: 'Arial', sans-serif;
@@ -130,12 +130,11 @@ $signature_path = 'uploads/signatures/' . $signature_filename;
         .signature-section {
             text-align: center;
             flex: 1;
-            page-break-inside: avoid;
+            
         }
         .signature-section img {
-            border: 1px solid #ddd;
             padding: 5px;
-            background-color: #fff;
+           
         }
         .print-btn {
             display: block;
