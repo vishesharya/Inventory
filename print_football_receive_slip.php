@@ -13,6 +13,30 @@ if (!$entry) {
     exit();
 }
 
+$guard_sql = "SELECT * FROM guards WHERE status = 1 LIMIT 1";
+$guard_result = $con->query($guard_sql);
+
+if ($guard_result->num_rows > 0) {
+    $guard = $guard_result->fetch_assoc();
+    $signature_file_path = $guard['signature'];
+} else {
+    // Handle case where no guard has status = 1
+    $guard_name = "No default guard set";
+    $signature_file_path = null;
+}
+
+$supervisors_sql = "SELECT * FROM supervisors WHERE status = 1 LIMIT 1";
+$supervisors_result = $con->query($supervisors_sql);
+
+if ($supervisors_result->num_rows > 0) {
+    $supervisors = $supervisors_result->fetch_assoc();
+    $signature_supervisors_path = $supervisors['signature'];
+} else {
+    // Handle case where no guard has status = 1
+    $supervisors_name = "No default guard set";
+    $signature_supervisors_path = null;
+}
+
 // Fetch all added products corresponding to the last submitted entry's challan_no
 $challan_no = $entry['challan_no'];
 $product_query = "SELECT * FROM  football_received WHERE challan_no = '$challan_no'";
@@ -23,6 +47,8 @@ $stitcher_query = "SELECT stitcher_name FROM  football_received WHERE challan_no
 $stitcher_result = mysqli_query($con, $stitcher_query);
 $stitcher_row = mysqli_fetch_assoc($stitcher_result);
 $stitcher_name = $stitcher_row['stitcher_name'];
+
+
 
 // Fetch the date and time 
 $date_and_time_query = "SELECT date_and_time FROM football_received WHERE challan_no = '$challan_no' LIMIT 1";
@@ -44,6 +70,12 @@ $stitcher_row = mysqli_fetch_assoc($stitcher_result);
 $stitcher_address = $stitcher_row['stitcher_address'];
 $stitcher_aadhar = $stitcher_row['stitcher_aadhar'];
 $stitcher_pan = $stitcher_row['stitcher_pan'];
+$signature_filename = $stitcher_row['signature']; // Get the signature filename
+
+// Define the path to the signature
+$signature_path = 'uploads/signatures/' . $signature_filename;
+
+
 ?>
 
 <!DOCTYPE html>
@@ -63,7 +95,7 @@ $stitcher_pan = $stitcher_row['stitcher_pan'];
         }
         .container {
             margin-top: 50px;
-            background-color: #f8f9fc;
+            
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
@@ -211,9 +243,28 @@ $total_total = 0;
             </div>
         </div>
         <div class="footer">
-            <div class="receiver-signature">Receiver Signature</div>
-            <div class="middle-signature">Guard Signature</div>
-            <div class="issuer-signature">Issuer Signature</div>
+            <div class="receiver-signature">Supervisor Signature
+                <br>
+                <?php if ($signature_supervisors_path): ?>
+        <img src="<?= htmlspecialchars($signature_supervisors_path) ?>" alt="Signature" style="width: 180px; height: 75px; max-width:300px; margin: 0px; padding: 0px;">
+    <?php else: ?>
+        <p>No signature available.</p>
+    <?php endif; ?>
+            </div>
+            <div class="middle-signature">Guard Signature <br>
+            <?php if ($signature_file_path): ?>
+        <img src="<?= htmlspecialchars($signature_file_path) ?>" alt="Signature" style="width: 190px; height: 90px; max-width:300px; margin: 0px; padding: 0px;">
+    <?php else: ?>
+        <p>No signature available.</p>
+    <?php endif; ?>
+        </div>
+            <div class="issuer-signature">Stitcher Signature <br>
+            <?php if (!empty($signature_filename)): ?>
+                                <img src="<?php echo htmlspecialchars($signature_path); ?>" alt="Signature" style="width: 200px; height: 75px; max-width:300px; margin: 0px; padding: 0px;">
+                            <?php else: ?>
+                                No signature available
+                            <?php endif; ?> 
+        </div>
         </div>
         <div class="print-btn">
             <button onclick="window.print()" class="btn btn-primary">Print</button>
