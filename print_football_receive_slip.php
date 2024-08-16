@@ -88,202 +88,151 @@ $signature_path = 'uploads/signatures/' . $signature_filename;
         @page {
             size: A4;
             margin: 1cm;
-            align-items: center;
-            text-align: center;
-            justify-content: center;
-            justify-items: center;
         }
         body {
             font-family: 'Arial', sans-serif;
             background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
         }
         .container {
-            margin-top: 30px;
-            padding: 20px;
             background-color: #fff;
-            border-radius: 10px;
+            border-radius: 5px;
             box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-            page-break-inside: avoid;
+            padding: 20px;
         }
-        .heading {
+        .heading, .sub-heading, .address, .contact-details {
             text-align: center;
-            margin-bottom: 15px;
-            color: #333;
-            line-height: 1.2;
-            font-weight: bold;
-        }
-        .sub-heading {
-            text-align: center;
-            margin-bottom: 5px;
-            font-weight: bold;
-            color: #555;
         }
         .table {
-            margin-top: 10px;
-            font-size: 12px;
-            page-break-inside: auto;
+            margin-top: 20px;
         }
         .footer {
             margin-top: 20px;
-            display: flex;
-            justify-content: space-between;
-            gap: 5rem;
-            align-items: flex-end;
-            color: #555;
         }
         .signature-section {
             text-align: center;
             flex: 1;
-            
         }
         .signature-section img {
-            padding: 5px;
-           
-        }
-        .print-btn {
-            display: block;
-            margin-top: 20px;
-            text-align: center;
-        }
-        .header-section {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 20px;
-        }
-        .header-section p {
-            margin: 0;
-            padding: 2px 0;
-        }
-        .address, .contact-details {
-            text-align: center;
-        }
-        .bold-text {
-            font-weight: bold;
+            width: 150px;
+            height: 50px;
         }
         @media print {
             .print-btn {
-                display: none !important;
+                display: none;
             }
-            body, .container {
+            .container {
+                box-shadow: none;
                 margin: 0;
                 padding: 0;
-                box-shadow: none;
-            }
-            .table th, .table td {
-                padding: 5px;
-            }
-            .footer {
-                page-break-inside: avoid;
             }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="invoice-header">
-            <p class="sub-heading">FOOTBALL RECEIVING SLIP</p>
-            <h2 class="heading">KHANNA SPORTS INDUSTRIES PVT. LTD</h2>
+        <div class="text-center mb-4">
+            <h4 class="mb-0">FOOTBALL RECEIVING SLIP</h4>
+            <h1 class="heading mb-1">KHANNA SPORTS INDUSTRIES PVT. LTD</h1>
             <p class="address">A-7, Sports Complex Delhi Road, Meerut, Uttar Pradesh 250002</p>
             <p class="contact-details">Contact: 8449441387, 98378427750 | GST: 09AAACK9669A1ZD</p>
-            <hr>
-            <div class="header-section">
-                <div>
-                    <p class="bold-text">Stitcher: <?php echo $stitcher_name; ?></p>
-                    <p>Contact: <?php echo $stitcher_contact; ?></p>
-                    <p>Aadhaar: <?php echo $stitcher_aadhar; ?></p>
-                    <p>PAN: <?php echo $stitcher_pan; ?></p>
-                    <p>Address: <?php echo $stitcher_address; ?></p>
-                </div>
-                <div>
-                    <p class="bold-text">Challan No: <?php echo $entry['challan_no']; ?></p>
-                    <p>Date: <?php echo date('d-m-Y', strtotime($date_and_time)); ?></p>
-                </div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col-md-6">
+                <p><strong>Stitcher:</strong> <?php echo $stitcher_name; ?></p>
+                <p><strong>Contact:</strong> <?php echo $stitcher_contact; ?></p>
+                <p><strong>Aadhaar:</strong> <?php echo $stitcher_aadhar; ?></p>
+                <p><strong>PAN:</strong> <?php echo $stitcher_pan; ?></p>
+                <p><strong>Address:</strong> <?php echo $stitcher_address; ?></p>
+            </div>
+            <div class="col-md-6 text-end">
+                <p><strong>Challan No:</strong> <?php echo $entry['challan_no']; ?></p>
+                <p><strong>Date:</strong> <?php echo date('d-m-Y', strtotime($date_and_time)); ?></p>
             </div>
         </div>
-        <div class="row">
-            <div class="col-md-12">
-                <?php
+        <div class="table-responsive">
+            <table class="table table-bordered mt-4">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Product Name</th>
+                        <th>Base</th>
+                        <th>Color</th>
+                        <th>S-Ist C-Ist</th>
+                        <th>S-Ist C-IInd</th>
+                        <th>S-IInd C-Ist</th>
+                        <th>S-IInd C-IInd</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php 
                     $total_S_Ist_C_Ist = 0;
                     $total_S_Ist_C_IInd = 0;
                     $total_S_IInd_C_Ist = 0;
                     $total_S_IInd_C_IInd = 0;
                     $total_total = 0;
-                ?>
-                <table class="table table-bordered">
-                    <thead class="table-dark">
+
+                    while ($product = mysqli_fetch_assoc($product_result)) : 
+                        $total_S_Ist_C_Ist += $product['S_Ist_C_Ist'];
+                        $total_S_Ist_C_IInd += $product['S_Ist_C_IInd'];
+                        $total_S_IInd_C_Ist += $product['S_IInd_C_Ist'];
+                        $total_S_IInd_C_IInd += $product['S_IInd_C_IInd'];
+                        $total_total += $product['total'];
+                    ?>
                         <tr>
-                            <th>Product Name</th>
-                            <th>Base</th>
-                            <th>Color</th>
-                            <th>S-Ist C-Ist</th>
-                            <th>S-Ist C-IInd</th>
-                            <th>S-IInd C-Ist</th>
-                            <th>S-IInd C-IInd</th>
-                            <th>Total</th>
+                            <td><?php echo $product['product_name']; ?></td>
+                            <td><?php echo $product['product_base']; ?></td>
+                            <td><?php echo $product['product_color']; ?></td>
+                            <td><?php echo $product['S_Ist_C_Ist']; ?></td>
+                            <td><?php echo $product['S_Ist_C_IInd']; ?></td>
+                            <td><?php echo $product['S_IInd_C_Ist']; ?></td>
+                            <td><?php echo $product['S_IInd_C_IInd']; ?></td>
+                            <td><?php echo $product['total']; ?></td>
                         </tr>
-                    </thead>
-                    <tbody>
-                        <?php while ($product = mysqli_fetch_assoc($product_result)) : 
-                            $total_S_Ist_C_Ist += $product['S_Ist_C_Ist'];
-                            $total_S_Ist_C_IInd += $product['S_Ist_C_IInd'];
-                            $total_S_IInd_C_Ist += $product['S_IInd_C_Ist'];
-                            $total_S_IInd_C_IInd += $product['S_IInd_C_IInd'];
-                            $total_total += $product['total'];
-                        ?>
-                            <tr>
-                                <td><?php echo $product['product_name']; ?></td>
-                                <td><?php echo $product['product_base']; ?></td>
-                                <td><?php echo $product['product_color']; ?></td>
-                                <td><?php echo $product['S_Ist_C_Ist']; ?></td>
-                                <td><?php echo $product['S_Ist_C_IInd']; ?></td>
-                                <td><?php echo $product['S_IInd_C_Ist']; ?></td>
-                                <td><?php echo $product['S_IInd_C_IInd']; ?></td>
-                                <td><?php echo $product['total']; ?></td>
-                            </tr>
-                        <?php endwhile; ?>
-                    </tbody>
-                    <tfoot>
-                        <tr class="table-dark">
-                            <td colspan="3">Total</td>
-                            <td><?php echo $total_S_Ist_C_Ist; ?></td>
-                            <td><?php echo $total_S_Ist_C_IInd; ?></td>
-                            <td><?php echo $total_S_IInd_C_Ist; ?></td>
-                            <td><?php echo $total_S_IInd_C_IInd; ?></td>
-                            <td><?php echo $total_total; ?></td>
-                        </tr>
-                    </tfoot>
-                </table>
-            </div>
+                    <?php endwhile; ?>
+                </tbody>
+                <tfoot>
+                    <tr class="table-dark">
+                        <td colspan="3">Total</td>
+                        <td><?php echo $total_S_Ist_C_Ist; ?></td>
+                        <td><?php echo $total_S_Ist_C_IInd; ?></td>
+                        <td><?php echo $total_S_IInd_C_Ist; ?></td>
+                        <td><?php echo $total_S_IInd_C_IInd; ?></td>
+                        <td><?php echo $total_total; ?></td>
+                    </tr>
+                </tfoot>
+            </table>
         </div>
-        <div class="footer">
-            <div class="signature-section">
-                Supervisor Signature<br>
+        <div class="footer row">
+            <div class="col-md-4 text-center">
+                <p><strong>Supervisor Signature</strong></p>
                 <?php if ($signature_supervisors_path): ?>
-                    <img src="<?= htmlspecialchars($signature_supervisors_path) ?>" alt="Supervisor Signature" style="width: 150px; height: 50px;">
+                    <img src="<?= htmlspecialchars($signature_supervisors_path) ?>" alt="Supervisor Signature">
                 <?php else: ?>
                     <p>No signature available.</p>
                 <?php endif; ?>
             </div>
-            <div class="signature-section">
-                Guard Signature<br>
+            <div class="col-md-4 text-center">
+                <p><strong>Guard Signature</strong></p>
                 <?php if ($signature_file_path): ?>
-                    <img src="<?= htmlspecialchars($signature_file_path) ?>" alt="Guard Signature" style="width: 150px; height: 50px;">
+                    <img src="<?= htmlspecialchars($signature_file_path) ?>" alt="Guard Signature">
                 <?php else: ?>
                     <p>No signature available.</p>
                 <?php endif; ?>
             </div>
-            <div class="signature-section">
-                Stitcher Signature<br>
+            <div class="col-md-4 text-center">
+                <p><strong>Stitcher Signature</strong></p>
                 <?php if (!empty($signature_filename)): ?>
-                    <img src="<?php echo htmlspecialchars($signature_path); ?>" alt="Stitcher Signature" style="width: 150px; height: 50px;">
+                    <img src="<?php echo htmlspecialchars($signature_path); ?>" alt="Stitcher Signature">
                 <?php else: ?>
                     <p>No signature available</p>
                 <?php endif; ?> 
             </div>
         </div>
-        <div class="print-btn">
-            <button onclick="window.print()" class="btn btn-primary">Print</button>
+        <div class="text-center mt-4">
+            <button onclick="window.print()" class="btn btn-primary print-btn">Print</button>
         </div>
     </div>
 </body>
