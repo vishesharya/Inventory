@@ -29,8 +29,8 @@ $guards_signature_query = "SELECT signature FROM guards WHERE status = 0 LIMIT 1
 $guards_signature_result = mysqli_query($con, $guards_signature_query);
 $guards_signature = mysqli_fetch_assoc($guards_signature_result);
 
-$signature_filename1 = $guards_signature['signature']; 
-$signature_path1 = 'uploads/signatures/' . $signature_filename1;
+$signature_filename = $guards_signature['signature']; 
+$signature_path = 'uploads/signatures/' . $signature_filename;
 
 // Check if 'View' button is clicked
 if (isset($_POST['view_entries'])) {
