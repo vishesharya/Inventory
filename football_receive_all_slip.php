@@ -30,12 +30,11 @@ $result = $con->query($sql);
 
 if ($result->num_rows > 0) {
     $guard = $result->fetch_assoc();
-    $guard_name = $guard['name'];
-    $signature_path = $guard['signature'];
+    $signature_file_path = $guard['signature'];
 } else {
     // Handle case where no guard has status = 1
     $guard_name = "No default guard set";
-    $signature_path = null;
+    $signature_file_path = null;
 }
 
 // Check if 'View' button is clicked
@@ -387,8 +386,8 @@ if (!empty($selected_challan)) {
             <div class="receiver-signature">Receiver Signature</div>
             <div class="middle-signature">Guard Signature
 
-            <?php if ($signature_path): ?>
-        <img src="<?= htmlspecialchars($signature_path) ?>" alt="Signature" class="img-thumbnail">
+            <?php if ($signature_file_path): ?>
+        <img src="<?= htmlspecialchars($signature_file_path) ?>" alt="Signature" class="img-thumbnail">
     <?php else: ?>
         <p>No signature available.</p>
     <?php endif; ?>
