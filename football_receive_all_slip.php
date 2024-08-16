@@ -39,6 +39,8 @@ if (isset($_POST['view_entries'])) {
         $stitcher_signature_result = mysqli_query($con, $stitcher_signature_query);
         $stitcher_signature_row = mysqli_fetch_assoc($stitcher_signature_result);
         $stitcher_signature = $stitcher_signature_row['stitcher_signature'];
+        $stitcher_signature = 'path/to/signatures/' . $stitcher_signature;
+
 
         $stitcher_aadhar_query = "SELECT stitcher_aadhar FROM stitcher WHERE stitcher_name = '$stitcher_name' LIMIT 1";
         $stitcher_aadhar_result = mysqli_query($con, $stitcher_aadhar_query);
@@ -368,14 +370,17 @@ if (!empty($selected_challan)) {
         </div>
         <div class="signature">
             <div class="receiver-signature">Receiver Signature</div>
-            <iv class="middle-signature">Guard Signature
-            <?php if (!empty($stitcher_signature)): ?>
-                                <img src="<?php echo htmlspecialchars($stitcher_signature); ?>" alt="Signature" style="width: 200px; height: 75px; max-width:300px; margin: 0px; padding: 0px;">
-                            <?php else: ?>
-                                No signature available
-                            <?php endif; ?>
-            </iv>
-            <div class="issuer-signature">Stitcher Signature</div>
+            <div class="middle-signature">Guard Signature
+            <div class="issuer-signature">Stitcher Signature
+            <div class="issuer-signature">
+        Stitcher Signature
+        <?php if (!empty($stitcher_signature)): ?>
+            <img src="<?php echo htmlspecialchars($stitcher_signature); ?>" alt="Signature" style="width: 200px; height: 75px; max-width:300px; margin: 0px; padding: 0px;">
+        <?php else: ?>
+            No signature available
+        <?php endif; ?>
+    </div>
+            </div>
         </div>
     </div>
 <?php endif; ?>
