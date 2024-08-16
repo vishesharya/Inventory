@@ -88,18 +88,12 @@ $signature_path = 'uploads/signatures/' . $signature_filename;
     <style>
         @page {
             size: A4;
-            margin: 1cm;
+            margin: 0cm;
         }
         body {
             font-family: Arial, sans-serif;
         }
-        .container {
-            margin-top: 50px;
-            
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-        }
+        
         .heading {
             text-align: center;
             margin-bottom: 20px;
