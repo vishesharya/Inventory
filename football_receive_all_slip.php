@@ -411,7 +411,7 @@ if (!empty($selected_challan)) {
     <?php endif; ?>
 
             </div>
-            <div class="issuer-signature">Issuer Signature <br>
+            <div class="issuer-signature">Stitcher Signature <br>
             <?php if (!empty($signature_filename)): ?>
                                 <img src="<?php echo htmlspecialchars($signature_path); ?>" alt="Signature" style="width: 200px; height: 75px; max-width:300px; margin: 0px; padding: 0px;">
                             <?php else: ?>
