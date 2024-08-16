@@ -244,7 +244,13 @@ $total_total = 0;
         </div>
         <div class="footer">
             <div class="receiver-signature">Receiver Signature</div>
-            <div class="middle-signature">Guard Signature</div>
+            <div class="middle-signature">Guard Signature <br>
+            <?php if ($signature_file_path): ?>
+        <img src="<?= htmlspecialchars($signature_file_path) ?>" alt="Signature" style="width: 190px; height: 90px; max-width:300px; margin: 0px; padding: 0px;">
+    <?php else: ?>
+        <p>No signature available.</p>
+    <?php endif; ?>
+        </div>
             <div class="issuer-signature">Stitcher Signature <br>
             <?php if (!empty($signature_filename)): ?>
                                 <img src="<?php echo htmlspecialchars($signature_path); ?>" alt="Signature" style="width: 200px; height: 75px; max-width:300px; margin: 0px; padding: 0px;">
