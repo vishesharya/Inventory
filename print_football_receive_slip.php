@@ -90,23 +90,32 @@ $signature_path = 'uploads/signatures/' . $signature_filename;
             margin: 1cm;
         }
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f9fa;
         }
         .container {
             margin-top: 30px;
-            padding: 10px 20px;
+            padding: 20px;
+            background-color: #fff;
             border-radius: 10px;
             box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
             page-break-inside: avoid;
         }
         .heading {
             text-align: center;
-            margin-bottom: 10px;
+            margin-bottom: 15px;
             color: #333;
             line-height: 1.2;
+            font-weight: bold;
+        }
+        .sub-heading {
+            text-align: center;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #555;
         }
         .table {
-            margin-top: 0px;
+            margin-top: 10px;
             font-size: 12px;
             page-break-inside: auto;
         }
@@ -118,23 +127,36 @@ $signature_path = 'uploads/signatures/' . $signature_filename;
             align-items: flex-end;
             color: #555;
         }
-        .receiver-signature, .issuer-signature, .middle-signature {
+        .signature-section {
             text-align: center;
             flex: 1;
             page-break-inside: avoid;
         }
+        .signature-section img {
+            border: 1px solid #ddd;
+            padding: 5px;
+            background-color: #fff;
+        }
         .print-btn {
             display: block;
-            margin-top: 10px;
+            margin-top: 20px;
             text-align: center;
         }
-        #head_details {
+        .header-section {
             display: flex;
-            margin-top: 0px;
-            padding-top: 0px; 
-            flex-direction: row;
-            align-items: flex-end;
             justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 20px;
+        }
+        .header-section p {
+            margin: 0;
+            padding: 2px 0;
+        }
+        .address, .contact-details {
+            text-align: center;
+        }
+        .bold-text {
+            font-weight: bold;
         }
         @media print {
             .print-btn {
@@ -152,38 +174,26 @@ $signature_path = 'uploads/signatures/' . $signature_filename;
                 page-break-inside: avoid;
             }
         }
-        p {
-            line-height: 5px;
-        }
-        .stitcher_bold {
-            font-weight: bold;
-        }
-        .issue_heading {
-            text-align: center;
-            margin-bottom: 10px;
-        }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="invoice-header">
-            <div>
-                <p class="issue_heading">FOOTBALLS RECEIVING SLIP</p>
-                <hr>
-                <h2 class="heading">KHANNA SPORTS INDUSTRIES PVT. LTD</h2>
-                <p class="heading"> A-7, Sports Complex Delhi Road Meerut Uttar Pradesh 250002</p>
-                <p class="heading">Contact : 8449441387, 98378427750 &nbsp;  GST : 09AAACK9669A1ZD </p>
-            </div>
-            <div id="head_details">
+            <p class="sub-heading">FOOTBALL RECEIVING SLIP</p>
+            <h2 class="heading">KHANNA SPORTS INDUSTRIES PVT. LTD</h2>
+            <p class="address">A-7, Sports Complex Delhi Road, Meerut, Uttar Pradesh 250002</p>
+            <p class="contact-details">Contact: 8449441387, 98378427750 | GST: 09AAACK9669A1ZD</p>
+            <hr>
+            <div class="header-section">
                 <div>
-                    <p class="stitcher_bold">Stitcher : <?php echo $stitcher_name; ?></p>
-                    <p>Stitcher Contact : <?php echo $stitcher_contact; ?></p>
-                    <p>Stitcher Aadhaar : <?php echo $stitcher_aadhar; ?></p>
-                    <p>Stitcher PAN : <?php echo $stitcher_pan; ?></p>
-                    <p>Stitcher Address : <?php echo $stitcher_address; ?></p>
+                    <p class="bold-text">Stitcher: <?php echo $stitcher_name; ?></p>
+                    <p>Contact: <?php echo $stitcher_contact; ?></p>
+                    <p>Aadhaar: <?php echo $stitcher_aadhar; ?></p>
+                    <p>PAN: <?php echo $stitcher_pan; ?></p>
+                    <p>Address: <?php echo $stitcher_address; ?></p>
                 </div>
                 <div>
-                    <p><br/><br/>Challan No : <?php echo $entry['challan_no']; ?></p>
+                    <p class="bold-text">Challan No: <?php echo $entry['challan_no']; ?></p>
                     <p>Date: <?php echo date('d-m-Y', strtotime($date_and_time)); ?></p>
                 </div>
             </div>
@@ -197,17 +207,16 @@ $signature_path = 'uploads/signatures/' . $signature_filename;
                     $total_S_IInd_C_IInd = 0;
                     $total_total = 0;
                 ?>
-
                 <table class="table table-bordered">
-                    <thead>
+                    <thead class="table-dark">
                         <tr>
                             <th>Product Name</th>
-                            <th>Product Base</th>
-                            <th>Product Color</th>
-                            <th>Stitcher Ist Company Ist</th>
-                            <th>Stitcher Ist Company IInd</th>
-                            <th>Stitcher IInd Company Ist</th>
-                            <th>Stitcher IInd Company IInd</th>
+                            <th>Base</th>
+                            <th>Color</th>
+                            <th>S-Ist C-Ist</th>
+                            <th>S-Ist C-IInd</th>
+                            <th>S-IInd C-Ist</th>
+                            <th>S-IInd C-IInd</th>
                             <th>Total</th>
                         </tr>
                     </thead>
@@ -232,7 +241,7 @@ $signature_path = 'uploads/signatures/' . $signature_filename;
                         <?php endwhile; ?>
                     </tbody>
                     <tfoot>
-                        <tr>
+                        <tr class="table-dark">
                             <td colspan="3">Total</td>
                             <td><?php echo $total_S_Ist_C_Ist; ?></td>
                             <td><?php echo $total_S_Ist_C_IInd; ?></td>
@@ -245,28 +254,28 @@ $signature_path = 'uploads/signatures/' . $signature_filename;
             </div>
         </div>
         <div class="footer">
-            <div class="receiver-signature">
+            <div class="signature-section">
                 Supervisor Signature<br>
                 <?php if ($signature_supervisors_path): ?>
-                    <img src="<?= htmlspecialchars($signature_supervisors_path) ?>" alt="Signature" style="width: 180px; height: 75px;">
+                    <img src="<?= htmlspecialchars($signature_supervisors_path) ?>" alt="Supervisor Signature" style="width: 150px; height: 50px;">
                 <?php else: ?>
                     <p>No signature available.</p>
                 <?php endif; ?>
             </div>
-            <div class="middle-signature">
+            <div class="signature-section">
                 Guard Signature<br>
                 <?php if ($signature_file_path): ?>
-                    <img src="<?= htmlspecialchars($signature_file_path) ?>" alt="Signature" style="width: 190px; height: 90px;">
+                    <img src="<?= htmlspecialchars($signature_file_path) ?>" alt="Guard Signature" style="width: 150px; height: 50px;">
                 <?php else: ?>
                     <p>No signature available.</p>
                 <?php endif; ?>
             </div>
-            <div class="issuer-signature">
+            <div class="signature-section">
                 Stitcher Signature<br>
                 <?php if (!empty($signature_filename)): ?>
-                    <img src="<?php echo htmlspecialchars($signature_path); ?>" alt="Signature" style="width: 200px; height: 75px;">
+                    <img src="<?php echo htmlspecialchars($signature_path); ?>" alt="Stitcher Signature" style="width: 150px; height: 50px;">
                 <?php else: ?>
-                    No signature available
+                    <p>No signature available</p>
                 <?php endif; ?> 
             </div>
         </div>
