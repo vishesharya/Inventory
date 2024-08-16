@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt = $pdo->prepare("INSERT INTO guards (name, signature, status) VALUES (:name, :signature, 0)");
         $stmt->execute([':name' => $name, ':signature' => $signature]);
 
-        echo "Guard added successfully!";
+        echo "<div class='alert alert-success'>Guard added successfully!</div>";
     }
 
     if (isset($_POST['edit'])) {
@@ -40,7 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $stmt->execute([':name' => $name, ':id' => $id]);
         }
 
-        echo "Guard updated successfully!";
+        echo "<div class='alert alert-success'>Guard updated successfully!</div>";
     }
 
     if (isset($_POST['delete'])) {
@@ -58,7 +58,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt = $pdo->prepare("DELETE FROM guards WHERE id = :id");
         $stmt->execute([':id' => $id]);
 
-        echo "Guard deleted successfully!";
+        echo "<div class='alert alert-success'>Guard deleted successfully!</div>";
     }
 
     if (isset($_POST['change_guard'])) {
@@ -72,7 +72,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt = $pdo->prepare("UPDATE guards SET status = 1 WHERE id = :id");
         $stmt->execute([':id' => $id]);
 
-        echo "Guard status updated successfully!";
+        echo "<div class='alert alert-success'>Guard status updated successfully!</div>";
     }
 }
 ?>
@@ -83,36 +83,67 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Guard Management</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-    <h2>Guard Management</h2>
+<div class="container mt-5">
+    <h2 class="text-center">Guard Management</h2>
+    
+    <div class="row">
+        <div class="col-md-6">
+            <h3>Upload Guard</h3>
+            <form method="POST" enctype="multipart/form-data" class="mb-4">
+                <div class="mb-3">
+                    <label for="name" class="form-label">Guard Name</label>
+                    <input type="text" name="name" id="name" class="form-control" placeholder="Guard Name" required>
+                </div>
+                <div class="mb-3">
+                    <label for="signature" class="form-label">Signature</label>
+                    <input type="file" name="signature" id="signature" class="form-control" required>
+                </div>
+                <button type="submit" name="upload" class="btn btn-primary">Upload Guard</button>
+            </form>
+        </div>
 
-    <form method="POST" enctype="multipart/form-data">
-        <!-- Upload Guard -->
-        <h3>Upload Guard</h3>
-        <input type="text" name="name" placeholder="Guard Name" required>
-        <input type="file" name="signature" required>
-        <button type="submit" name="upload">Upload Guard</button>
-        <br><br>
+        <div class="col-md-6">
+            <h3>Edit Guard</h3>
+            <form method="POST" enctype="multipart/form-data" class="mb-4">
+                <input type="hidden" name="id" value="<!-- Guard ID for Edit -->">
+                <div class="mb-3">
+                    <label for="edit-name" class="form-label">Guard Name</label>
+                    <input type="text" name="name" id="edit-name" class="form-control" placeholder="Guard Name" required>
+                </div>
+                <div class="mb-3">
+                    <label for="edit-signature" class="form-label">Signature</label>
+                    <input type="file" name="signature" id="edit-signature" class="form-control">
+                </div>
+                <button type="submit" name="edit" class="btn btn-warning">Edit Guard</button>
+            </form>
+        </div>
+    </div>
 
-        <!-- Edit Guard -->
-        <h3>Edit Guard</h3>
-        <input type="hidden" name="id" value="<!-- Guard ID for Edit -->">
-        <input type="text" name="name" placeholder="Guard Name" required>
-        <input type="file" name="signature">
-        <button type="submit" name="edit">Edit Guard</button>
-        <br><br>
+    <div class="row">
+        <div class="col-md-6">
+            <h3>Delete Guard</h3>
+            <form method="POST" class="mb-4">
+                <input type="hidden" name="id" value="<!-- Guard ID for Delete -->">
+                <button type="submit" name="delete" class="btn btn-danger">Delete Guard</button>
+            </form>
+        </div>
 
-        <!-- Delete Guard -->
-        <h3>Delete Guard</h3>
-        <input type="hidden" name="id" value="<!-- Guard ID for Delete -->">
-        <button type="submit" name="delete">Delete Guard</button>
-        <br><br>
+        <div class="col-md-6">
+            <h3>Change Guard Status</h3>
+            <form method="POST" class="mb-4">
+                <input type="hidden" name="id" value="<!-- Guard ID for Change -->">
+                <button type="submit" name="change_guard" class="btn btn-success">Change Guard</button>
+            </form>
+        </div>
+    </div>
+</div>
 
-        <!-- Change Guard Status -->
-        <h3>Change Guard Status</h3>
-        <input type="hidden" name="id" value="<!-- Guard ID for Change -->">
-        <button type="submit" name="change_guard">Change Guard</button>
-    </form>
+<!-- Bootstrap JS and dependencies -->
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.7/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
 </body>
 </html>
