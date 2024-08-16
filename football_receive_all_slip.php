@@ -4,8 +4,6 @@ include './include/connection.php';
 include_once 'include/admin-main.php';
 include('access_control.php');
 
-
-
 // Fetch stitcher names from the database
 $stitcher_query = "SELECT DISTINCT stitcher_name FROM football_received ORDER BY stitcher_name ASC"; 
 $stitcher_result = mysqli_query($con, $stitcher_query);
@@ -27,18 +25,30 @@ $total_S_IInd_C_Ist = 0;
 $total_S_IInd_C_IInd = 0;
 $total_total = 0;
 
+// Check if 'View' button is clicked
 if (isset($_POST['view_entries'])) {
     // Get selected stitcher
     $stitcher_name = isset($_POST['stitcher_name']) ? mysqli_real_escape_string($con, $_POST['stitcher_name']) : '';
     if (!empty($stitcher_name)) {
-        $stitcher_contact_query = "SELECT stitcher_contact, stitcher_aadhar, stitcher_pan, stitcher_address, stitcher_signature FROM stitcher WHERE stitcher_name = '$stitcher_name' LIMIT 1";
+        $stitcher_contact_query = "SELECT stitcher_contact FROM stitcher WHERE stitcher_name = '$stitcher_name' LIMIT 1";
         $stitcher_contact_result = mysqli_query($con, $stitcher_contact_query);
         $stitcher_contact_row = mysqli_fetch_assoc($stitcher_contact_result);
         $stitcher_contact = $stitcher_contact_row['stitcher_contact'];
-        $stitcher_aadhar = $stitcher_contact_row['stitcher_aadhar'];
-        $stitcher_pan = $stitcher_contact_row['stitcher_pan'];
-        $stitcher_address = $stitcher_contact_row['stitcher_address'];
-        $stitcher_signature = $stitcher_contact_row['stitcher_signature']; // Fetching the stitcher signature
+
+        $stitcher_aadhar_query = "SELECT stitcher_aadhar FROM stitcher WHERE stitcher_name = '$stitcher_name' LIMIT 1";
+        $stitcher_aadhar_result = mysqli_query($con, $stitcher_aadhar_query);
+        $stitcher_aadhar_row = mysqli_fetch_assoc($stitcher_aadhar_result);
+        $stitcher_aadhar = $stitcher_aadhar_row['stitcher_aadhar'];
+
+        $stitcher_pan_query = "SELECT stitcher_pan FROM stitcher WHERE stitcher_name = '$stitcher_name' LIMIT 1";
+        $stitcher_pan_result = mysqli_query($con, $stitcher_pan_query);
+        $stitcher_pan_row = mysqli_fetch_assoc($stitcher_pan_result);
+        $stitcher_pan = $stitcher_pan_row['stitcher_pan'];
+
+        $stitcher_address_query = "SELECT stitcher_address FROM stitcher WHERE stitcher_name = '$stitcher_name' LIMIT 1";
+        $stitcher_address_result = mysqli_query($con, $stitcher_address_query);
+        $stitcher_address_row = mysqli_fetch_assoc($stitcher_address_result);
+        $stitcher_address = $stitcher_address_row['stitcher_address'];
 
         // Fetch the date and time 
         $date_and_time_query = "SELECT date_and_time FROM football_received WHERE challan_no = '$challan_no' LIMIT 1";
@@ -354,14 +364,7 @@ if (!empty($selected_challan)) {
         <div class="signature">
             <div class="receiver-signature">Receiver Signature</div>
             <div class="middle-signature">Guard Signature</div>
-            <div class="issuer-signature">
-        Stitcher Signature
-        <?php if (!empty($stitcher_signature)) : ?>
-            <img src="<?php echo $stitcher_signature; ?>" alt="Stitcher Signature" style="max-height: 100px;">
-        <?php else : ?>
-            <p>No signature available</p>
-        <?php endif; ?>
-    </div>
+            <div class="issuer-signature">Stitcher Signature</div>
         </div>
     </div>
 <?php endif; ?>
