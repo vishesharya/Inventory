@@ -25,12 +25,12 @@ $total_S_IInd_C_Ist = 0;
 $total_S_IInd_C_IInd = 0;
 $total_total = 0;
 
+// Fetch guard signature
 $guards_signature_query = "SELECT signature FROM guards WHERE status = 0 LIMIT 1";
 $guards_signature_result = mysqli_query($con, $guards_signature_query);
 $guards_signature = mysqli_fetch_assoc($guards_signature_result);
-
-$signature_filename = $guards_signature['signature']; 
-$signature_path = 'uploads/signatures/' . $signature_filename;
+$guard_signature_filename = $guards_signature['signature']; 
+$guard_signature_path = 'uploads/signatures/' . $guard_signature_filename;
 
 // Check if 'View' button is clicked
 if (isset($_POST['view_entries'])) {
@@ -381,11 +381,11 @@ if (!empty($selected_challan)) {
             <div class="receiver-signature">Receiver Signature</div>
             <div class="middle-signature">Guard Signature
 
-            <?php if (!empty($signature_filename1)): ?>
-                                <img src="<?php echo htmlspecialchars($signature_path1); ?>" alt="Signature" style="width: 200px; height: 75px; max-width:300px; margin: 0px; padding: 0px;">
-                            <?php else: ?>
-                                No signature available
-                            <?php endif; ?> 
+            <?php if (!empty($guard_signature_filename)) { ?>
+                    <img src="<?php echo $guard_signature_path; ?>" alt="Guard Signature" width="175" height="50">
+                <?php } else { ?>
+                    <p>No signature available</p>
+                <?php } ?>
 
             </div>
             <div class="issuer-signature">Issuer Signature <br>
