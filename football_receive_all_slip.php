@@ -31,17 +31,9 @@ if (isset($_POST['view_entries'])) {
     $stitcher_name = isset($_POST['stitcher_name']) ? mysqli_real_escape_string($con, $_POST['stitcher_name']) : '';
     if (!empty($stitcher_name)) {
 
-        $query = "SELECT signature FROM stitcher WHERE stitcher_name = '$stitcher_name' LIMIT 1";
-    
-        // Execute the query
-        $result = $con->query($query);
-        
-        if ($result && $result->num_rows > 0) {
-            $row = $result->fetch_assoc();
-            $signature = $row['signature'];
-        } else {
-            $signature = "No signature found for the specified stitcher.";
-        }
+        $stitcher_signature_query = "SELECT signature FROM stitcher WHERE stitcher_name = '$stitcher_name' LIMIT 1";
+        $stitcher_signature_result = mysqli_query($con, $stitcher_signature_query);
+        $stitcher_signature = mysqli_fetch_assoc($stitcher_signature_result);
 
         $stitcher_contact_query = "SELECT stitcher_contact FROM stitcher WHERE stitcher_name = '$stitcher_name' LIMIT 1";
         $stitcher_contact_result = mysqli_query($con, $stitcher_contact_query);
@@ -68,6 +60,10 @@ if (isset($_POST['view_entries'])) {
         $date_and_time_result = mysqli_query($con, $date_and_time_query);
         $date_and_time_row = mysqli_fetch_assoc($date_and_time_result);
         $date_and_time = $date_and_time_row['date_and_time'];
+
+        $signature_filename = $stitcher_signature['signature']; // Get the signature filename
+        // Define the path to the signature
+        $signature_path = 'uploads/signatures/' . $signature_filename;
     }
  
     // Get selected challan number
@@ -378,14 +374,11 @@ if (!empty($selected_challan)) {
             <div class="receiver-signature">Receiver Signature</div>
             <div class="middle-signature">Guard Signature</div>
             <div class="issuer-signature">Issuer Signature
-            <?php if ($stitcher_name && $signature): ?>
-        <h2>Signature for <?php echo htmlspecialchars($stitcher_name); ?>:</h2>
-        <?php if (strpos($signature, 'No signature') === false): ?>
-            <img src="path_to_signature_directory/<?php echo htmlspecialchars($signature); ?>" alt="Signature of <?php echo htmlspecialchars($stitcher_name); ?>" style="width:175px; height:50px;">
-        <?php else: ?>
-            <p><?php echo htmlspecialchars($signature); ?></p>
-        <?php endif; ?>
-    <?php endif; ?>
+            <?php if (!empty($signature_filename)): ?>
+                                <img src="<?php echo htmlspecialchars($signature_path); ?>" alt="Signature" style="width: 200px; height: 75px; max-width:300px; margin: 0px; padding: 0px;">
+                            <?php else: ?>
+                                No signature available
+                            <?php endif; ?> 
             </div>
         </div>
     </div>
