@@ -2,21 +2,32 @@
 include './include/connection.php';
 include './include/check_login.php';
 
+// Directory to store uploaded signatures
+$target_dir = "uploads/";
 
-// Handle form submissions
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (isset($_POST['add_guard'])) {
+        // Handle file upload
+        $target_file = $target_dir . basename($_FILES["guard_signature"]["name"]);
+        move_uploaded_file($_FILES["guard_signature"]["tmp_name"], $target_file);
+        
         // Add a new guard
         $name = $_POST['guard_name'];
-        $signature = $_POST['guard_signature'];
+        $signature = $target_file;
         $sql = "INSERT INTO guards (name, signature, status) VALUES ('$name', '$signature', 0)";
         $con->query($sql);
     } elseif (isset($_POST['edit_guard'])) {
-        // Edit an existing guard
+        // Handle file upload if a new file is uploaded
         $id = $_POST['guard_id'];
         $name = $_POST['guard_name'];
-        $signature = $_POST['guard_signature'];
-        $sql = "UPDATE guards SET name='$name', signature='$signature' WHERE id=$id";
+        $signature = $_FILES["guard_signature"]["name"] ? $target_dir . basename($_FILES["guard_signature"]["name"]) : null;
+        
+        if ($signature) {
+            move_uploaded_file($_FILES["guard_signature"]["tmp_name"], $signature);
+            $sql = "UPDATE guards SET name='$name', signature='$signature' WHERE id=$id";
+        } else {
+            $sql = "UPDATE guards SET name='$name' WHERE id=$id";
+        }
         $con->query($sql);
     } elseif (isset($_POST['delete_guard'])) {
         // Delete a guard
@@ -57,6 +68,9 @@ $guards = $con->query("SELECT * FROM guards");
         .card {
             margin-bottom: 20px;
         }
+        .img-thumbnail {
+            max-height: 100px;
+        }
     </style>
 </head>
 <body>
@@ -70,15 +84,15 @@ $guards = $con->query("SELECT * FROM guards");
             <h5>Add Guard</h5>
         </div>
         <div class="card-body">
-            <form method="POST" action="">
+            <form method="POST" action="" enctype="multipart/form-data">
                 <input type="hidden" name="add_guard" value="1">
                 <div class="mb-3">
                     <label for="guard-name" class="form-label">Guard Name:</label>
                     <input type="text" name="guard_name" class="form-control" required>
                 </div>
                 <div class="mb-3">
-                    <label for="guard-signature" class="form-label">Guard Signature:</label>
-                    <input type="text" name="guard_signature" class="form-control" required>
+                    <label for="guard-signature" class="form-label">Guard Signature (Image):</label>
+                    <input type="file" name="guard_signature" class="form-control" accept="image/*" required>
                 </div>
                 <button type="submit" class="btn btn-primary">Add Guard</button>
             </form>
@@ -91,7 +105,7 @@ $guards = $con->query("SELECT * FROM guards");
             <h5>Edit Guard</h5>
         </div>
         <div class="card-body">
-            <form method="POST" action="">
+            <form method="POST" action="" enctype="multipart/form-data">
                 <input type="hidden" name="edit_guard" value="1">
                 <div class="mb-3">
                     <label for="guard-id" class="form-label">Select Guard:</label>
@@ -106,8 +120,8 @@ $guards = $con->query("SELECT * FROM guards");
                     <input type="text" name="guard_name" class="form-control" required>
                 </div>
                 <div class="mb-3">
-                    <label for="guard-signature" class="form-label">Guard Signature:</label>
-                    <input type="text" name="guard_signature" class="form-control" required>
+                    <label for="guard-signature" class="form-label">Guard Signature (Image):</label>
+                    <input type="file" name="guard_signature" class="form-control" accept="image/*">
                 </div>
                 <button type="submit" class="btn btn-warning">Edit Guard</button>
             </form>
@@ -153,6 +167,24 @@ $guards = $con->query("SELECT * FROM guards");
                 </div>
                 <button type="submit" class="btn btn-success">Set Default</button>
             </form>
+        </div>
+    </div>
+
+    <!-- Display Signatures -->
+    <div class="card">
+        <div class="card-header">
+            <h5>Guard Signatures</h5>
+        </div>
+        <div class="card-body">
+            <?php
+            // Fetch the list of guards again to display their signatures
+            $guards = $con->query("SELECT * FROM guards");
+            while ($guard = $guards->fetch_assoc()) { ?>
+                <div class="mb-3">
+                    <strong><?= $guard['name'] ?>:</strong><br>
+                    <img src="<?= $guard['signature'] ?>" alt="Signature" class="img-thumbnail">
+                </div>
+            <?php } ?>
         </div>
     </div>
 </div>
