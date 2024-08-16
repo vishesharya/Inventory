@@ -77,7 +77,7 @@ $guards = $con->query("SELECT * FROM guards");
 <body>
 
 <div class="container">
-    <h2 class="text-center">Guard Management</h2>
+    <h2 class="text-center">Manage Guards</h2>
     
     <!-- Add Guard -->
     <div class="card">
