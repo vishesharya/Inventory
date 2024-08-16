@@ -51,8 +51,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt->execute([':id' => $id]);
         $signature = $stmt->fetchColumn();
 
-        // Delete the signature file
-        unlink('uploads/signatures/' . $signature);
+        // Delete the signature file if it exists
+        if ($signature && file_exists('uploads/signatures/' . $signature)) {
+            unlink('uploads/signatures/' . $signature);
+        }
 
         // Delete guard from the database
         $stmt = $con->prepare("DELETE FROM guards WHERE id = :id");
@@ -76,7 +78,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
