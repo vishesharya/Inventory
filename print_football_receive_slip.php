@@ -88,7 +88,7 @@ $signature_path = 'uploads/signatures/' . $signature_filename;
     <style>
         @page {
             size: A4;
-            margin: 0cm;
+            margin: 1cm;
         }
         body {
             font-family: Arial, sans-serif;
@@ -104,7 +104,7 @@ $signature_path = 'uploads/signatures/' . $signature_filename;
             margin-top: 0px;
         }
         .footer {
-            margin-top: 30px;
+            margin-top: 20px;
             display: flex;
             justify-content: space-between;
             gap: 8.2rem;
@@ -134,7 +134,7 @@ $signature_path = 'uploads/signatures/' . $signature_filename;
             margin-top: 0px;
             padding-top: 0px; 
             flex-direction: row;
-            align-items: flex-end;
+            align-items: flex-start;
             justify-content: space-between;
         }
         @media print {
