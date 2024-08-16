@@ -384,10 +384,10 @@ if (!empty($selected_challan)) {
         </div>
         <div class="signature">
             <div class="receiver-signature">Receiver Signature</div>
-            <div class="middle-signature">Guard Signature
+            <div class="middle-signature">Guard Signature <br>
 
             <?php if ($signature_file_path): ?>
-        <img src="<?= htmlspecialchars($signature_file_path) ?>" alt="Signature" class="img-thumbnail">
+        <img src="<?= htmlspecialchars($signature_file_path) ?>" alt="Signature" style="width: 200px; height: 75px; max-width:300px; margin: 0px; padding: 0px;">
     <?php else: ?>
         <p>No signature available.</p>
     <?php endif; ?>
