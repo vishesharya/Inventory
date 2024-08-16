@@ -16,6 +16,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         // Insert guard details into the database
         $stmt = $con->prepare("INSERT INTO guards (name, signature, status) VALUES (:name, :signature, 0)");
+        if ($stmt === false) {
+            die("Prepare failed: " . print_r($con->errorInfo(), true));
+        }
         $stmt->execute([':name' => $name, ':signature' => $signature]);
 
         echo "<div class='alert alert-success'>Guard added successfully!</div>";
@@ -34,9 +37,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             move_uploaded_file($signature_temp, $target_file);
 
             $stmt = $con->prepare("UPDATE guards SET name = :name, signature = :signature WHERE id = :id");
+            if ($stmt === false) {
+                die("Prepare failed: " . print_r($con->errorInfo(), true));
+            }
             $stmt->execute([':name' => $name, ':signature' => $signature, ':id' => $id]);
         } else {
             $stmt = $con->prepare("UPDATE guards SET name = :name WHERE id = :id");
+            if ($stmt === false) {
+                die("Prepare failed: " . print_r($con->errorInfo(), true));
+            }
             $stmt->execute([':name' => $name, ':id' => $id]);
         }
 
@@ -48,6 +57,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         // Fetch the signature filename to delete it from the server
         $stmt = $con->prepare("SELECT signature FROM guards WHERE id = :id");
+        if ($stmt === false) {
+            die("Prepare failed: " . print_r($con->errorInfo(), true));
+        }
         $stmt->execute([':id' => $id]);
         $signature = $stmt->fetchColumn();
 
@@ -58,6 +70,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         // Delete guard from the database
         $stmt = $con->prepare("DELETE FROM guards WHERE id = :id");
+        if ($stmt === false) {
+            die("Prepare failed: " . print_r($con->errorInfo(), true));
+        }
         $stmt->execute([':id' => $id]);
 
         echo "<div class='alert alert-success'>Guard deleted successfully!</div>";
@@ -68,16 +83,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         // Set all guards' status to 0
         $stmt = $con->prepare("UPDATE guards SET status = 0");
+        if ($stmt === false) {
+            die("Prepare failed: " . print_r($con->errorInfo(), true));
+        }
         $stmt->execute();
 
         // Set the selected guard's status to 1
         $stmt = $con->prepare("UPDATE guards SET status = 1 WHERE id = :id");
+        if ($stmt === false) {
+            die("Prepare failed: " . print_r($con->errorInfo(), true));
+        }
         $stmt->execute([':id' => $id]);
 
         echo "<div class='alert alert-success'>Guard status updated successfully!</div>";
     }
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
