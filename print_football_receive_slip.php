@@ -77,7 +77,6 @@ $signature_path = 'uploads/signatures/' . $signature_filename;
 
 
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -168,109 +167,108 @@ $signature_path = 'uploads/signatures/' . $signature_filename;
 <body>
     <div class="container">
         <div class="invoice-header">
-             <div>
-                <p class="issue_heading" >FOOTBALLS RECEIVING SLIP</p>
+            <div>
+                <p class="issue_heading">FOOTBALLS RECEIVING SLIP</p>
                 <hr>
                 <h2 class="heading">KHANNA SPORTS INDUSTRIES PVT. LTD</h2>
                 <p class="heading"> A-7, Sports Complex Delhi Road Meerut Uttar Pradesh 250002</p>
-                <p class="heading">Contact : 8449441387,98378427750 &nbsp;  GST : 09AAACK9669A1ZD </p>
+                <p class="heading">Contact : 8449441387, 98378427750 &nbsp;  GST : 09AAACK9669A1ZD </p>
             </div>
             <div id="head_details">
-            <div>
-                    <p class="stitcher_bold" >Stitcher : <?php echo $stitcher_name; ?></p>
+                <div>
+                    <p class="stitcher_bold">Stitcher : <?php echo $stitcher_name; ?></p>
                     <p>Stitcher Contact : <?php echo $stitcher_contact; ?></p>
                     <p>Stitcher Aadhaar : <?php echo $stitcher_aadhar; ?></p>
                     <p>Stitcher PAN : <?php echo $stitcher_pan; ?></p>
                     <p>Stitcher Address : <?php echo $stitcher_address; ?></p>
-             </div>
-             <div>
-                <p><br/><br/>Challan No : <?php echo $entry['challan_no']; ?></p>
-                <p>Date: <?php echo date('d-m-Y', strtotime($date_and_time)); ?></p>
-                 </div> 
+                </div>
+                <div>
+                    <p><br/><br/>Challan No : <?php echo $entry['challan_no']; ?></p>
+                    <p>Date: <?php echo date('d-m-Y', strtotime($date_and_time)); ?></p>
+                </div>
             </div>
         </div>
         <div class="row">
             <div class="col-md-12">
-            <?php
-// Initialize totals
-$total_S_Ist_C_Ist = 0;
-$total_S_Ist_C_IInd = 0;
-$total_S_IInd_C_Ist = 0;
-$total_S_IInd_C_IInd = 0;
-$total_total = 0;
-?>
+                <?php
+                    $total_S_Ist_C_Ist = 0;
+                    $total_S_Ist_C_IInd = 0;
+                    $total_S_IInd_C_Ist = 0;
+                    $total_S_IInd_C_IInd = 0;
+                    $total_total = 0;
+                ?>
 
-<table class="table table-bordered">
-    <thead>
-        <tr>
-            <th>Product Name</th>
-            <th>Product Base</th>
-            <th>Product Color</th>
-            <th>Stitcher Ist Company Ist</th>
-            <th>Stitcher Ist Company IInd</th>
-            <th>Stitcher IInd Company Ist</th>
-            <th>Stitcher IInd Company IInd</th>
-            <th>Total</th>
-        </tr>
-    </thead>
-    <tbody>
-        <?php while ($product = mysqli_fetch_assoc($product_result)) : 
-            // Accumulate totals
-            $total_S_Ist_C_Ist += $product['S_Ist_C_Ist'];
-            $total_S_Ist_C_IInd += $product['S_Ist_C_IInd'];
-            $total_S_IInd_C_Ist += $product['S_IInd_C_Ist'];
-            $total_S_IInd_C_IInd += $product['S_IInd_C_IInd'];
-            $total_total += $product['total'];
-        ?>
-            <tr>
-                <td><?php echo $product['product_name']; ?></td>
-                <td><?php echo $product['product_base']; ?></td>
-                <td><?php echo $product['product_color']; ?></td>
-                <td><?php echo $product['S_Ist_C_Ist']; ?></td>
-                <td><?php echo $product['S_Ist_C_IInd']; ?></td>
-                <td><?php echo $product['S_IInd_C_Ist']; ?></td>
-                <td><?php echo $product['S_IInd_C_IInd']; ?></td>
-                <td><?php echo $product['total']; ?></td>
-            </tr>
-        <?php endwhile; ?>
-    </tbody>
-    <tfoot>
-        <tr>
-            <td colspan="3">Total</td>
-            <td><?php echo $total_S_Ist_C_Ist; ?></td>
-            <td><?php echo $total_S_Ist_C_IInd; ?></td>
-            <td><?php echo $total_S_IInd_C_Ist; ?></td>
-            <td><?php echo $total_S_IInd_C_IInd; ?></td>
-            <td><?php echo $total_total; ?></td>
-        </tr>
-    </tfoot>
-</table>
-
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Product Name</th>
+                            <th>Product Base</th>
+                            <th>Product Color</th>
+                            <th>Stitcher Ist Company Ist</th>
+                            <th>Stitcher Ist Company IInd</th>
+                            <th>Stitcher IInd Company Ist</th>
+                            <th>Stitcher IInd Company IInd</th>
+                            <th>Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php while ($product = mysqli_fetch_assoc($product_result)) : 
+                            $total_S_Ist_C_Ist += $product['S_Ist_C_Ist'];
+                            $total_S_Ist_C_IInd += $product['S_Ist_C_IInd'];
+                            $total_S_IInd_C_Ist += $product['S_IInd_C_Ist'];
+                            $total_S_IInd_C_IInd += $product['S_IInd_C_IInd'];
+                            $total_total += $product['total'];
+                        ?>
+                            <tr>
+                                <td><?php echo $product['product_name']; ?></td>
+                                <td><?php echo $product['product_base']; ?></td>
+                                <td><?php echo $product['product_color']; ?></td>
+                                <td><?php echo $product['S_Ist_C_Ist']; ?></td>
+                                <td><?php echo $product['S_Ist_C_IInd']; ?></td>
+                                <td><?php echo $product['S_IInd_C_Ist']; ?></td>
+                                <td><?php echo $product['S_IInd_C_IInd']; ?></td>
+                                <td><?php echo $product['total']; ?></td>
+                            </tr>
+                        <?php endwhile; ?>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="3">Total</td>
+                            <td><?php echo $total_S_Ist_C_Ist; ?></td>
+                            <td><?php echo $total_S_Ist_C_IInd; ?></td>
+                            <td><?php echo $total_S_IInd_C_Ist; ?></td>
+                            <td><?php echo $total_S_IInd_C_IInd; ?></td>
+                            <td><?php echo $total_total; ?></td>
+                        </tr>
+                    </tfoot>
+                </table>
             </div>
         </div>
         <div class="footer">
-            <div class="receiver-signature">Supervisor Signature
-                <br>
+            <div class="receiver-signature">
+                Supervisor Signature<br>
                 <?php if ($signature_supervisors_path): ?>
-        <img src="<?= htmlspecialchars($signature_supervisors_path) ?>" alt="Signature" style="width: 180px; height: 75px; max-width:300px; margin: 0px; padding: 0px;">
-    <?php else: ?>
-        <p>No signature available.</p>
-    <?php endif; ?>
+                    <img src="<?= htmlspecialchars($signature_supervisors_path) ?>" alt="Signature" style="width: 180px; height: 75px;">
+                <?php else: ?>
+                    <p>No signature available.</p>
+                <?php endif; ?>
             </div>
-            <div class="middle-signature">Guard Signature <br>
-            <?php if ($signature_file_path): ?>
-        <img src="<?= htmlspecialchars($signature_file_path) ?>" alt="Signature" style="width: 190px; height: 90px; max-width:300px; margin: 0px; padding: 0px;">
-    <?php else: ?>
-        <p>No signature available.</p>
-    <?php endif; ?>
-        </div>
-            <div class="issuer-signature">Stitcher Signature <br>
-            <?php if (!empty($signature_filename)): ?>
-                                <img src="<?php echo htmlspecialchars($signature_path); ?>" alt="Signature" style="width: 200px; height: 75px; max-width:300px; margin: 0px; padding: 0px;">
-                            <?php else: ?>
-                                No signature available
-                            <?php endif; ?> 
-        </div>
+            <div class="middle-signature">
+                Guard Signature<br>
+                <?php if ($signature_file_path): ?>
+                    <img src="<?= htmlspecialchars($signature_file_path) ?>" alt="Signature" style="width: 190px; height: 90px;">
+                <?php else: ?>
+                    <p>No signature available.</p>
+                <?php endif; ?>
+            </div>
+            <div class="issuer-signature">
+                Stitcher Signature<br>
+                <?php if (!empty($signature_filename)): ?>
+                    <img src="<?php echo htmlspecialchars($signature_path); ?>" alt="Signature" style="width: 200px; height: 75px;">
+                <?php else: ?>
+                    No signature available
+                <?php endif; ?> 
+            </div>
         </div>
         <div class="print-btn">
             <button onclick="window.print()" class="btn btn-primary">Print</button>
