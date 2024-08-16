@@ -2,102 +2,37 @@
 include './include/connection.php';
 include './include/check_login.php';
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-    if (isset($_POST['upload'])) {
-        $name = $_POST['name'];
-        $signature = $_FILES['signature']['name'];
-        $signature_temp = $_FILES['signature']['tmp_name'];
-
-        // Move the uploaded signature to a directory
-        $upload_dir = 'uploads/signatures/';
-        $target_file = $upload_dir . basename($signature);
-        move_uploaded_file($signature_temp, $target_file);
-
-        // Insert guard details into the database
-        $stmt = $con->prepare("INSERT INTO guards (name, signature, status) VALUES (:name, :signature, 0)");
-        if ($stmt === false) {
-            die("Prepare failed: " . print_r($con->errorInfo(), true));
-        }
-        $stmt->execute([':name' => $name, ':signature' => $signature]);
-
-        echo "<div class='alert alert-success'>Guard added successfully!</div>";
-    }
-
-    if (isset($_POST['edit'])) {
-        $id = $_POST['id'];
-        $name = $_POST['name'];
-        $signature = $_FILES['signature']['name'];
-        $signature_temp = $_FILES['signature']['tmp_name'];
-
-        // Update signature if a new one is uploaded
-        if (!empty($signature)) {
-            $upload_dir = 'uploads/signatures/';
-            $target_file = $upload_dir . basename($signature);
-            move_uploaded_file($signature_temp, $target_file);
-
-            $stmt = $con->prepare("UPDATE guards SET name = :name, signature = :signature WHERE id = :id");
-            if ($stmt === false) {
-                die("Prepare failed: " . print_r($con->errorInfo(), true));
-            }
-            $stmt->execute([':name' => $name, ':signature' => $signature, ':id' => $id]);
-        } else {
-            $stmt = $con->prepare("UPDATE guards SET name = :name WHERE id = :id");
-            if ($stmt === false) {
-                die("Prepare failed: " . print_r($con->errorInfo(), true));
-            }
-            $stmt->execute([':name' => $name, ':id' => $id]);
-        }
-
-        echo "<div class='alert alert-success'>Guard updated successfully!</div>";
-    }
-
-    if (isset($_POST['delete'])) {
-        $id = $_POST['id'];
-
-        // Fetch the signature filename to delete it from the server
-        $stmt = $con->prepare("SELECT signature FROM guards WHERE id = :id");
-        if ($stmt === false) {
-            die("Prepare failed: " . print_r($con->errorInfo(), true));
-        }
-        $stmt->execute([':id' => $id]);
-        $signature = $stmt->fetchColumn();
-
-        // Delete the signature file if it exists
-        if ($signature && file_exists('uploads/signatures/' . $signature)) {
-            unlink('uploads/signatures/' . $signature);
-        }
-
-        // Delete guard from the database
-        $stmt = $con->prepare("DELETE FROM guards WHERE id = :id");
-        if ($stmt === false) {
-            die("Prepare failed: " . print_r($con->errorInfo(), true));
-        }
-        $stmt->execute([':id' => $id]);
-
-        echo "<div class='alert alert-success'>Guard deleted successfully!</div>";
-    }
-
-    if (isset($_POST['change_guard'])) {
-        $id = $_POST['id'];
-
-        // Set all guards' status to 0
-        $stmt = $con->prepare("UPDATE guards SET status = 0");
-        if ($stmt === false) {
-            die("Prepare failed: " . print_r($con->errorInfo(), true));
-        }
-        $stmt->execute();
-
-        // Set the selected guard's status to 1
-        $stmt = $con->prepare("UPDATE guards SET status = 1 WHERE id = :id");
-        if ($stmt === false) {
-            die("Prepare failed: " . print_r($con->errorInfo(), true));
-        }
-        $stmt->execute([':id' => $id]);
-
-        echo "<div class='alert alert-success'>Guard status updated successfully!</div>";
+// Handle form submissions
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    if (isset($_POST['add_guard'])) {
+        // Add a new guard
+        $name = $_POST['guard_name'];
+        $signature = $_POST['guard_signature'];
+        $sql = "INSERT INTO guards (name, signature, status) VALUES ('$name', '$signature', 0)";
+        $con->query($sql);
+    } elseif (isset($_POST['edit_guard'])) {
+        // Edit an existing guard
+        $id = $_POST['guard_id'];
+        $name = $_POST['guard_name'];
+        $signature = $_POST['guard_signature'];
+        $sql = "UPDATE guards SET name='$name', signature='$signature' WHERE id=$id";
+        $con->query($sql);
+    } elseif (isset($_POST['delete_guard'])) {
+        // Delete a guard
+        $id = $_POST['guard_id'];
+        $sql = "DELETE FROM guards WHERE id=$id";
+        $con->query($sql);
+    } elseif (isset($_POST['default_guard'])) {
+        // Set a guard as default
+        $id = $_POST['guard_id'];
+        $con->query("UPDATE guards SET status=0");
+        $con->query("UPDATE guards SET status=1 WHERE id=$id");
     }
 }
+
+// Retrieve guards from the database
+$guards = $con->query("SELECT * FROM guards");
 ?>
 
 <!DOCTYPE html>
@@ -106,67 +41,126 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Guard Management</title>
-    <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+        }
+        h2 {
+            margin-bottom: 20px;
+        }
+        .card {
+            margin-bottom: 20px;
+        }
+    </style>
 </head>
 <body>
-<div class="container mt-5">
+
+<div class="container">
     <h2 class="text-center">Guard Management</h2>
     
-    <div class="row">
-        <div class="col-md-6">
-            <h3>Upload Guard</h3>
-            <form method="POST" enctype="multipart/form-data" class="mb-4">
-                <div class="mb-3">
-                    <label for="name" class="form-label">Guard Name</label>
-                    <input type="text" name="name" id="name" class="form-control" placeholder="Guard Name" required>
-                </div>
-                <div class="mb-3">
-                    <label for="signature" class="form-label">Signature</label>
-                    <input type="file" name="signature" id="signature" class="form-control" required>
-                </div>
-                <button type="submit" name="upload" class="btn btn-primary">Upload Guard</button>
-            </form>
+    <!-- Add Guard -->
+    <div class="card">
+        <div class="card-header">
+            <h5>Add Guard</h5>
         </div>
-
-        <div class="col-md-6">
-            <h3>Edit Guard</h3>
-            <form method="POST" enctype="multipart/form-data" class="mb-4">
-                <input type="hidden" name="id" value="<!-- Guard ID for Edit -->">
+        <div class="card-body">
+            <form method="POST" action="">
+                <input type="hidden" name="add_guard" value="1">
                 <div class="mb-3">
-                    <label for="edit-name" class="form-label">Guard Name</label>
-                    <input type="text" name="name" id="edit-name" class="form-control" placeholder="Guard Name" required>
+                    <label for="guard-name" class="form-label">Guard Name:</label>
+                    <input type="text" name="guard_name" class="form-control" required>
                 </div>
                 <div class="mb-3">
-                    <label for="edit-signature" class="form-label">Signature</label>
-                    <input type="file" name="signature" id="edit-signature" class="form-control">
+                    <label for="guard-signature" class="form-label">Guard Signature:</label>
+                    <input type="text" name="guard_signature" class="form-control" required>
                 </div>
-                <button type="submit" name="edit" class="btn btn-warning">Edit Guard</button>
+                <button type="submit" class="btn btn-primary">Add Guard</button>
             </form>
         </div>
     </div>
 
-    <div class="row">
-        <div class="col-md-6">
-            <h3>Delete Guard</h3>
-            <form method="POST" class="mb-4">
-                <input type="hidden" name="id" value="<!-- Guard ID for Delete -->">
-                <button type="submit" name="delete" class="btn btn-danger">Delete Guard</button>
+    <!-- Edit Guard -->
+    <div class="card">
+        <div class="card-header">
+            <h5>Edit Guard</h5>
+        </div>
+        <div class="card-body">
+            <form method="POST" action="">
+                <input type="hidden" name="edit_guard" value="1">
+                <div class="mb-3">
+                    <label for="guard-id" class="form-label">Select Guard:</label>
+                    <select name="guard_id" class="form-select" required>
+                        <?php while ($guard = $guards->fetch_assoc()) { ?>
+                            <option value="<?= $guard['id'] ?>"><?= $guard['name'] ?> (Status: <?= $guard['status'] == 1 ? 'Default' : 'Not Default' ?>)</option>
+                        <?php } ?>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="guard-name" class="form-label">Guard Name:</label>
+                    <input type="text" name="guard_name" class="form-control" required>
+                </div>
+                <div class="mb-3">
+                    <label for="guard-signature" class="form-label">Guard Signature:</label>
+                    <input type="text" name="guard_signature" class="form-control" required>
+                </div>
+                <button type="submit" class="btn btn-warning">Edit Guard</button>
             </form>
         </div>
+    </div>
 
-        <div class="col-md-6">
-            <h3>Change Guard Status</h3>
-            <form method="POST" class="mb-4">
-                <input type="hidden" name="id" value="<!-- Guard ID for Change -->">
-                <button type="submit" name="change_guard" class="btn btn-success">Change Guard</button>
+    <!-- Delete Guard -->
+    <div class="card">
+        <div class="card-header">
+            <h5>Delete Guard</h5>
+        </div>
+        <div class="card-body">
+            <form method="POST" action="">
+                <input type="hidden" name="delete_guard" value="1">
+                <div class="mb-3">
+                    <label for="guard-id" class="form-label">Select Guard:</label>
+                    <select name="guard_id" class="form-select" required>
+                        <?php while ($guard = $guards->fetch_assoc()) { ?>
+                            <option value="<?= $guard['id'] ?>"><?= $guard['name'] ?></option>
+                        <?php } ?>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-danger">Delete Guard</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Set Default Guard -->
+    <div class="card">
+        <div class="card-header">
+            <h5>Set Default Guard</h5>
+        </div>
+        <div class="card-body">
+            <form method="POST" action="">
+                <input type="hidden" name="default_guard" value="1">
+                <div class="mb-3">
+                    <label for="guard-id" class="form-label">Select Guard:</label>
+                    <select name="guard_id" class="form-select" required>
+                        <?php while ($guard = $guards->fetch_assoc()) { ?>
+                            <option value="<?= $guard['id'] ?>"><?= $guard['name'] ?> (Status: <?= $guard['status'] == 1 ? 'Default' : 'Not Default' ?>)</option>
+                        <?php } ?>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-success">Set Default</button>
             </form>
         </div>
     </div>
 </div>
 
-<!-- Bootstrap JS and dependencies -->
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.7/dist/umd/popper.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
+
+<?php
+$con->close();
+?>
