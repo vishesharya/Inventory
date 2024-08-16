@@ -37,6 +37,18 @@ if ($result->num_rows > 0) {
     $signature_file_path = null;
 }
 
+$supervisors_sql = "SELECT * FROM guards WHERE status = 1 LIMIT 1";
+$supervisors_result = $con->query($supervisors_sql);
+
+if ($supervisors_result->num_rows > 0) {
+    $supervisors = $supervisors_result->fetch_assoc();
+    $signature_supervisors_path = $supervisors['signature'];
+} else {
+    // Handle case where no guard has status = 1
+    $supervisors_name = "No default guard set";
+    $signature_supervisors_path = null;
+}
+
 // Check if 'View' button is clicked
 if (isset($_POST['view_entries'])) {
     // Get selected stitcher
@@ -383,7 +395,13 @@ if (!empty($selected_challan)) {
             </div>
         </div>
         <div class="signature">
-            <div class="receiver-signature">Receiver Signature</div>
+            <div class="receiver-signature">Receiver Signature <br>
+            <?php if ($signature_supervisors_path): ?>
+        <img src="<?= htmlspecialchars($signature_supervisors_path) ?>" alt="Signature" style="width: 260px; height: 120px; max-width:300px; margin: 0px; padding: 0px;">
+    <?php else: ?>
+        <p>No signature available.</p>
+    <?php endif; ?>
+            </div>
             <div class="middle-signature">Guard Signature <br>
 
             <?php if ($signature_file_path): ?>
