@@ -37,7 +37,7 @@ if ($result->num_rows > 0) {
     $signature_file_path = null;
 }
 
-$supervisors_sql = "SELECT * FROM guards WHERE status = 1 LIMIT 1";
+$supervisors_sql = "SELECT * FROM supervisors WHERE status = 1 LIMIT 1";
 $supervisors_result = $con->query($supervisors_sql);
 
 if ($supervisors_result->num_rows > 0) {
