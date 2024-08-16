@@ -373,7 +373,7 @@ if (!empty($selected_challan)) {
         <div class="signature">
             <div class="receiver-signature">Receiver Signature</div>
             <div class="middle-signature">Guard Signature</div>
-            <div class="issuer-signature">Issuer Signature
+            <div class="issuer-signature">Issuer Signature <br>
             <?php if (!empty($signature_filename)): ?>
                                 <img src="<?php echo htmlspecialchars($signature_path); ?>" alt="Signature" style="width: 200px; height: 75px; max-width:300px; margin: 0px; padding: 0px;">
                             <?php else: ?>
