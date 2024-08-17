@@ -187,13 +187,7 @@ include('access_control.php');
                                         </div>
                                     </div>
                                 </a>
-                                <a href="./add_labour.php" style='color:white'>
-                                    <div class="col-lg-4">
-                                        <div class="panel bg-pink-400">
-                                            <p style="margin: 10px; font-size: large;">Add/Delete Labour</p>
-                                        </div>
-                                    </div>
-                                </a>
+                              
                                 
                             </div>
                         </div>
