@@ -1,6 +1,9 @@
 <?php
-include './include/connection.php';
 include './include/check_login.php';
+include './include/connection.php';
+include_once 'include/admin-main.php';
+include('access_control.php');
+
 
 // Directory to store uploaded signatures
 $target_dir = "uploads/";
@@ -189,7 +192,7 @@ $supervisors = $con->query("SELECT * FROM supervisors");
                     <strong><?= $supervisor['name'] ?>:</strong><br>
                     <img src="<?= $supervisor['signature'] ?>" alt="Signature" class="img-thumbnail">
                 </div>
-            <?php } ?>
+            <?php } ?> 
         </div>
     </div>
 </div>

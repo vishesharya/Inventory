@@ -115,6 +115,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         'view_permissions.php' => 'View User Permissions',
         'update_permissions.php' => 'Update Permissions',
         'users.php' => 'Add / Delete Management',
+        'guards.php' => 'Guards Management',
+        'supervisor.php' => 'Supervisor Management',
         'first_time_question.php' => 'Security Q&A',
         
         

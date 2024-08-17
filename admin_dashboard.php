@@ -97,10 +97,35 @@ include('access_control.php');
                                 <a href="users.php" style='color:white'>
                                     <div class="col-lg-4">
                                         <div class="panel bg-pink-400">
-                                            <p style="margin: 10px; font-size: large;">Add / Delete User</p>
+                                            <p style="margin: 10px; font-size: large;">Add / Delete Users</p>
                                         </div>
                                     </div>
                                 </a>
+
+                                <a href="add_stitcher.php" style='color:white'>
+                                    <div class="col-lg-4">
+                                        <div class="panel bg-pink-400">
+                                            <p style="margin: 10px; font-size: large;">Add / Delete Stitchers</p>
+                                        </div>
+                                    </div>
+                                </a>
+
+                                <a href="guards.php" style='color:white'>
+                                    <div class="col-lg-4">
+                                        <div class="panel bg-pink-400">
+                                            <p style="margin: 10px; font-size: large;">Add / Delete Guards</p>
+                                        </div>
+                                    </div>
+                                </a>
+
+                                <a href="supervisor.php" style='color:white'>
+                                    <div class="col-lg-4">
+                                        <div class="panel bg-pink-400">
+                                            <p style="margin: 10px; font-size: large;">Add / Delete Supervisors</p>
+                                        </div>
+                                    </div>
+                                </a>
+
                             </div>
                         </div>
                     </div>

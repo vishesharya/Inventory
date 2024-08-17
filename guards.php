@@ -1,6 +1,9 @@
 <?php
-include './include/connection.php';
 include './include/check_login.php';
+include './include/connection.php';
+include_once 'include/admin-main.php';
+include('access_control.php');
+
 
 
 // Directory to store uploaded signatures
@@ -18,7 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $sql = "INSERT INTO guards (name, signature, status) VALUES ('$name', '$signature', 0)";
         $con->query($sql);
     } elseif (isset($_POST['edit_guard'])) {
-        // Handle file upload if a new file is uploaded
+        // Handle file upload if a new file is uploaded 
         $id = $_POST['guard_id'];
         $name = $_POST['guard_name'];
         $signature = $_FILES["guard_signature"]["name"] ? $target_dir . basename($_FILES["guard_signature"]["name"]) : null;

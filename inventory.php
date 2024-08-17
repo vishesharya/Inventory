@@ -129,13 +129,6 @@ include('access_control.php');
                                     </div>
                                 </a>
                                
-                                  <a href="add_stitcher.php" style='color:white'>
-                                    <div class="col-lg-4">
-                                        <div class="panel bg-teal-400">
-                                            <p style="margin: 10px; font-size: large;">Add/Delete Stitcher</p>
-                                        </div>
-                                    </div>
-                                </a>
                                 
                                 <a href="add_inventory_products.php" style='color:white'>
                                     <div class="col-lg-4">
