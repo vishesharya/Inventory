@@ -127,7 +127,7 @@ include_once 'include/admin-main.php';
                                 </a>
 
                                 <a href="supervisor.php" style='color:white'>
-                                    <div class="col-lg-4">
+                                    <div class="col-lg-5">
                                         <div class="panel bg-pink-400">
                                             <p style="margin: 10px; font-size: large;">Add / Delete Supervisors</p>
                                         </div>
