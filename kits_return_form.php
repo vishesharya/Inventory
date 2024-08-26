@@ -431,6 +431,26 @@ if (isset($_POST['submit_form'])) {
                                         <input type="number" class="form-control" id="quantity" name="quantity" >
                                     </div>
                                 </div>
+                                
+                                <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="select_bladder">Select Bladder:</label>
+                                        <select class="form-select" id="select_bladder" name="select_bladder">
+                                            <option value="" selected disabled>Select Bladder</option>
+                                            <?php while ($row = mysqli_fetch_assoc($bladder_result)) : ?>
+                                                <option value="<?php echo $row['bladder_name']; ?>"><?php echo $row['bladder_name']; ?></option>
+                                            <?php endwhile; ?>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="bladder_quantity">Bladder Quantity:</label>
+                                        <input type="number" class="form-control" id="bladder_quantity" name="bladder_quantity" placeholder="Enter Bladder Quantity">
+                                    </div>
+                                </div>
+                            </div>
 
                                 <div class="col-md-6">
                                     <div class="form-group">
