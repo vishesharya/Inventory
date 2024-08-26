@@ -190,9 +190,9 @@ $stitcher_contact = $stitcher_contact_row['stitcher_contact'];
                        
 
                         while ($product = mysqli_fetch_assoc($product_result)) : 
-                            $total_product_quantity += $product['issue_quantity'];
+                            $total_quantity += $product['issue_quantity'];
                             $total_bladder_quantity += $product['bladder_quantity'];
-                            $total_thread_quantity += $product['thread_quantity'];
+                          
                         ?>
                             <tr>
                                 <td><?php echo $product['product_name']; ?></td>
