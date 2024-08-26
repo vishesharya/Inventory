@@ -177,7 +177,7 @@ if (isset($_POST['delete_product'])) {
         $new_remaining_quantity = max(0, $existing_remaining_quantity - $quantity);
        
         // Update remaining quantity in products table for Ist Company Ist
-        $update_remaining_quantity = "UPDATE kits_product SET remaining_quantity = '$new_remaining_quantity' WHERE product_name = '$product_name' AND product_base = '$product_base' AND product_color = '$product_color'";
+        $update_remaining_quantity_query = "UPDATE kits_product SET remaining_quantity = '$new_remaining_quantity' WHERE product_name = '$product_name' AND product_base = '$product_base' AND product_color = '$product_color'";
         $update_remaining_quantity_result = mysqli_query($con, $update_remaining_quantity_query);
 
 
