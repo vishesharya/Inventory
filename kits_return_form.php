@@ -468,7 +468,7 @@ if (isset($_POST['submit_form'])) {
                                 </div>
                                
                                   <div>
-                                      <a  href="print_football_receive_slip.php" >Print Issue  Slip </a>
+                                      <a  href="./kits_return_slip_print.php" >Print Issue  Slip </a>
                                   </div>
                             
                             </div>
