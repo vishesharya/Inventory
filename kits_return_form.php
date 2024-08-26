@@ -495,7 +495,8 @@ if (isset($_POST['submit_form'])) {
                                         <th>Product Base</th>
                                         <th>Product Color</th>
                                         <th>Returns Quantity</th>
-                                      
+                                        <th>Bladder Name</th>
+                                        <th>Bladder Quantity</th>
                                         <th>Date</th>
                                         <th>Delete Product</th>
                                     </tr>
@@ -512,6 +513,8 @@ if (isset($_POST['submit_form'])) {
                                                 <td><?php echo $product['product_base']; ?></td>
                                                 <td><?php echo $product['product_color']; ?></td>
                                                 <td><?php echo $product['quantity']; ?></td>
+                                                <td><?php echo $product['bladder_name']; ?></td>
+                                                <td><?php echo $product['bladder_quantity']; ?></td>
                                                 <td><?php echo $product['date_and_time']; ?></td>
                                                 <td>
                                                     <form method="post" action="">
