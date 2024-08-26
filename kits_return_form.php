@@ -173,7 +173,7 @@ if (isset($_POST['add_product'])) {
 
      
 
-if (isset($_POST['delete_product'])) {
+  if (isset($_POST['delete_product'])) {
     $delete_index = $_POST['delete_index']; 
 
     if (isset($_SESSION['temp_products'][$delete_index])) {
@@ -184,8 +184,7 @@ if (isset($_POST['delete_product'])) {
         $product_color = mysqli_real_escape_string($con, $temp_product['product_color']);
         $quantity = intval($temp_product['quantity']);
 
-       
-        // Fetch existing remaining quantity for Ist Company Ist
+        // Fetch existing remaining quantity for the product
         $existing_remaining_quantity_query = "SELECT remaining_quantity FROM kits_product WHERE product_name = '$product_name' AND product_base = '$product_base' AND product_color = '$product_color'";
         $existing_remaining_quantity_result = mysqli_query($con, $existing_remaining_quantity_query);
         $row_quantity = mysqli_fetch_assoc($existing_remaining_quantity_result);
@@ -193,16 +192,16 @@ if (isset($_POST['delete_product'])) {
 
         // Calculate new remaining quantity
         $new_remaining_quantity = max(0, $existing_remaining_quantity - $quantity);
-       
-        // Update remaining quantity in products table for Ist Company Ist
+
+        // Update remaining quantity in products table
         $update_remaining_quantity_query = "UPDATE kits_product SET remaining_quantity = '$new_remaining_quantity' WHERE product_name = '$product_name' AND product_base = '$product_base' AND product_color = '$product_color'";
         $update_remaining_quantity_result = mysqli_query($con, $update_remaining_quantity_query);
 
-         // Update bladder quantity
-    $bladder_name = mysqli_real_escape_string($con, $deleted_product['bladder_name']);
-    $bladder_quantity = mysqli_real_escape_string($con, $deleted_product['bladder_quantity']);
-    $update_bladder_quantity_query = "UPDATE bladder SET bladder_remaining_quantity = bladder_remaining_quantity - $bladder_quantity WHERE bladder_name = '$bladder_name'";
-    mysqli_query($con, $update_bladder_quantity_query);
+        // Update bladder quantity
+        $bladder_name = mysqli_real_escape_string($con, $temp_product['bladder_name']);
+        $bladder_quantity = intval($temp_product['bladder_quantity']);
+        $update_bladder_quantity_query = "UPDATE bladder SET bladder_remaining_quantity = bladder_remaining_quantity - $bladder_quantity WHERE bladder_name = '$bladder_name'";
+        mysqli_query($con, $update_bladder_quantity_query);
 
         if ($update_remaining_quantity_result) {
             // Fetch existing issue quantity
@@ -216,13 +215,6 @@ if (isset($_POST['delete_product'])) {
                 $updated_issue_quantity = $existing_issue_quantity + $quantity;
                 $update_issue_quantity_query = "UPDATE kits_job_work SET issue_quantity = '$updated_issue_quantity' WHERE challan_no_issue = '{$temp_product['challan_no_issue']}' AND stitcher_name = '$stitcher_name' AND product_name = '$product_name' AND product_base = '$product_base' AND product_color = '$product_color'";
                 $update_issue_quantity_result = mysqli_query($con, $update_issue_quantity_query);
-
-                
-    // Update bladder quantity
-    $bladder_name = mysqli_real_escape_string($con, $deleted_product['bladder_name']);
-    $bladder_quantity = mysqli_real_escape_string($con, $deleted_product['bladder_quantity']);
-    $update_bladder_quantity_query = "UPDATE bladder SET bladder_remaining_quantity = bladder_remaining_quantity - $bladder_quantity WHERE bladder_name = '$bladder_name'";
-    mysqli_query($con, $update_bladder_quantity_query);
 
                 if ($update_issue_quantity_result) {
                     // Check if issue quantity is now more than 0 and update status accordingly
