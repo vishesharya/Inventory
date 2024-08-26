@@ -228,6 +228,10 @@ if (isset($_POST['view_entries'])) {
         #stitcher_name{
             font-weight: bold;
         }
+        .gaurd{
+            width: 200px;
+            height: 80px;
+        }
     </style> 
 </head>
 <body>
@@ -395,7 +399,7 @@ if (isset($_POST['view_entries'])) {
             <div class="signature-box">
                 <span>Guard Signature</span>
                 <?php if ($signature_file_path): ?>
-                    <img src="<?= htmlspecialchars($signature_file_path) ?>" alt="Guard Signature" style="width: 200px; height: 75px;">
+                    <img src="<?= htmlspecialchars($signature_file_path) ?>" class="gaurd" alt="Guard Signature" style="width: 200px; height: 75px;">
                 <?php else: ?>
                     <p>No signature available.</p>
                 <?php endif; ?>
