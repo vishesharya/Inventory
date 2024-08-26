@@ -450,11 +450,8 @@ if (isset($_POST['submit_form'])) {
                                         <th>Product Name</th>
                                         <th>Product Base</th>
                                         <th>Product Color</th>
-                                        <th>Stitcher Ist Company Ist</th>
-                                        <th>Stitcher IInd Company IInd</th>
-                                        <th>Stitcher IInd Company Ist</th>
-                                        <th>Stitcher Ist Company IInd</th>
-                                        <th>Total</th>
+                                        <th>Returns Quantity</th>
+                                      
                                         <th>Date</th>
                                         <th>Delete Product</th>
                                     </tr>
@@ -470,11 +467,7 @@ if (isset($_POST['submit_form'])) {
                                                 <td><?php echo $product['product_name']; ?></td>
                                                 <td><?php echo $product['product_base']; ?></td>
                                                 <td><?php echo $product['product_color']; ?></td>
-                                                <td><?php echo $product['stitcher_ist_company_ist']; ?></td>
-                                                <td><?php echo $product['stitcher_iind_company_iind']; ?></td>
-                                                <td><?php echo $product['stitcher_iind_company_ist']; ?></td>
-                                                <td><?php echo $product['stitcher_ist_company_iind']; ?></td>
-                                                <td><?php echo $product['stitcher_ist_company_ist'] + $product['stitcher_iind_company_iind'] + $product['stitcher_iind_company_ist'] + $product['stitcher_ist_company_iind']; ?></td>
+                                                <td><?php echo $product['quantity']; ?></td>
                                                 <td><?php echo $product['date_and_time']; ?></td>
                                                 <td>
                                                     <form method="post" action="">
