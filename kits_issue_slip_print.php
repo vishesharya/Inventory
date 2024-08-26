@@ -233,7 +233,7 @@ $stitcher_contact = $stitcher_contact_row['stitcher_contact'];
             </div>
             <div class="middle-signature">Guard Signature <br>
             <?php if ($signature_file_path): ?>
-                    <img src="<?= htmlspecialchars($signature_file_path) ?>" alt="Guard Signature" style="width: 150px; height: 50px;">
+                    <img src="<?= htmlspecialchars($signature_file_path) ?>" alt="Guard Signature" style="width: 170px; height: 70px;">
                 <?php else: ?>
                     <p>No signature available.</p>
                 <?php endif; ?>
