@@ -217,6 +217,13 @@ if (isset($_POST['delete_product'])) {
                 $update_issue_quantity_query = "UPDATE kits_job_work SET issue_quantity = '$updated_issue_quantity' WHERE challan_no_issue = '{$temp_product['challan_no_issue']}' AND stitcher_name = '$stitcher_name' AND product_name = '$product_name' AND product_base = '$product_base' AND product_color = '$product_color'";
                 $update_issue_quantity_result = mysqli_query($con, $update_issue_quantity_query);
 
+                
+    // Update bladder quantity
+    $bladder_name = mysqli_real_escape_string($con, $deleted_product['bladder_name']);
+    $bladder_quantity = mysqli_real_escape_string($con, $deleted_product['bladder_quantity']);
+    $update_bladder_quantity_query = "UPDATE bladder SET bladder_remaining_quantity = bladder_remaining_quantity - $bladder_quantity WHERE bladder_name = '$bladder_name'";
+    mysqli_query($con, $update_bladder_quantity_query);
+
                 if ($update_issue_quantity_result) {
                     // Check if issue quantity is now more than 0 and update status accordingly
                     if ($updated_issue_quantity > 0) {
