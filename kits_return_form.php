@@ -90,7 +90,7 @@ if (isset($_POST['add_product'])) {
             } else {
 
              // Fetch existing remaining quantity 
-            $existing_remaining_quantity_query = "SELECT remaining_quantity FROM products WHERE product_name = '$product_name' AND product_base = '$product_base' AND product_color = '$product_color'";
+            $existing_remaining_quantity_query = "SELECT remaining_quantity FROM kits_product WHERE product_name = '$product_name' AND product_base = '$product_base' AND product_color = '$product_color'";
             $existing_remaining_quantity_result = mysqli_query($con, $existing_remaining_quantity_query);
             $row_quantity = mysqli_fetch_assoc($existing_remaining_quantity_result);
             $existing_remaining_quantity = $row_quantity['remaining_quantity'];
@@ -100,7 +100,7 @@ if (isset($_POST['add_product'])) {
             $new_remaining_quantity = $existing_remaining_quantity + $quantity;
 
             // Update remaining quantity in products table 
-            $update_remaining_quantity_query = "UPDATE products SET remaining_quantity = '$new_remaining_quantity' WHERE product_name = '$product_name' AND product_base = '$product_base' AND  product_color = '$product_color'";
+            $update_remaining_quantity_query = "UPDATE kits_product SET remaining_quantity = '$new_remaining_quantity' WHERE product_name = '$product_name' AND product_base = '$product_base' AND  product_color = '$product_color'";
             $update_remaining_quantity_result = mysqli_query($con, $update_remaining_quantity_query);
 
                 // Update issue quantity in the database
@@ -168,7 +168,7 @@ if (isset($_POST['delete_product'])) {
 
        
         // Fetch existing remaining quantity for Ist Company Ist
-        $existing_remaining_quantity_query = "SELECT remaining_quantity FROM products WHERE product_name = '$product_name' AND product_base = '$product_base' AND product_color = '$product_color'";
+        $existing_remaining_quantity_query = "SELECT remaining_quantity FROM kits_product WHERE product_name = '$product_name' AND product_base = '$product_base' AND product_color = '$product_color'";
         $existing_remaining_quantity_result = mysqli_query($con, $existing_remaining_quantity_query);
         $row_quantity = mysqli_fetch_assoc($existing_remaining_quantity_ist_company_ist_result);
         $existing_remaining_quantity = $row_quantity['remaining_quantity'];
@@ -177,7 +177,7 @@ if (isset($_POST['delete_product'])) {
         $new_remaining_quantity = max(0, $existing_remaining_quantity - $quantity);
        
         // Update remaining quantity in products table for Ist Company Ist
-        $update_remaining_quantity = "UPDATE products SET remaining_quantity = '$new_remaining_quantity' WHERE product_name = '$product_name' AND product_base = '$product_base' AND product_color = '$product_color'";
+        $update_remaining_quantity = "UPDATE kits_product SET remaining_quantity = '$new_remaining_quantity' WHERE product_name = '$product_name' AND product_base = '$product_base' AND product_color = '$product_color'";
         $update_remaining_quantity_result = mysqli_query($con, $update_remaining_quantity_query);
 
 
