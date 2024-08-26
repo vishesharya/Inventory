@@ -104,7 +104,7 @@ if (isset($_POST['add_product'])) {
             $update_remaining_quantity_result = mysqli_query($con, $update_remaining_quantity_query);
 
                 // Update issue quantity in the database
-                $updated_issue_quantity = max(0, $existing_issue_quantity - $quanitty); // Ensure issue quantity doesn't go negative
+                $updated_issue_quantity = max(0, $existing_issue_quantity - $quantity); // Ensure issue quantity doesn't go negative
                 $update_issue_quantity_query = "UPDATE kits_job_work SET issue_quantity = '$updated_issue_quantity' WHERE challan_no_issue = '$selected_challan' AND stitcher_name = '$stitcher_name' AND product_name = '$product_name' AND product_base = '$product_base' AND product_color = '$product_color'";
                 $update_issue_quantity_result = mysqli_query($con, $update_issue_quantity_query);
 
