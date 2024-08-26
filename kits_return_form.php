@@ -4,13 +4,17 @@ include './include/connection.php';
 include_once 'include/admin-main.php';
 
 
+// Logic to fetch bladder names from the database
+$bladder_query = "SELECT bladder_name, bladder_remaining_quantity FROM bladder ORDER BY bladder_name ASC ";
+$bladder_result = mysqli_query($con, $bladder_query);
+
 // Function to fetch current number from the database
 function getCurrentNumber($con) {
     $result = mysqli_query($con, "SELECT football_received_temp FROM challan_temp LIMIT 1");
     $row = mysqli_fetch_assoc($result);
     return $row['football_received_temp'];
 }
-
+ 
 // Function to update the current number in the database
 function updateCurrentNumber($con, $newNumber) {
     mysqli_query($con, "UPDATE challan_temp SET football_received_temp = $newNumber");
@@ -74,6 +78,8 @@ if (isset($_POST['add_product'])) {
         $product_base = mysqli_real_escape_string($con, $_POST['product_base']);
         $product_color = mysqli_real_escape_string($con, $_POST['product_color']);
         $quantity = mysqli_real_escape_string($con, $_POST['quantity']);
+        $selected_bladder = mysqli_real_escape_string($con, $_POST['select_bladder']);
+        $bladder_quantity = mysqli_real_escape_string($con, $_POST['bladder_quantity']);
       
     
 
@@ -120,6 +126,16 @@ if (isset($_POST['add_product'])) {
                         }
                     }
 
+        // Validate quantities against bladder stock
+        $bladder_remaining_quantity_query = "SELECT bladder_remaining_quantity FROM bladder WHERE bladder_name = '$selected_bladder'";
+        $bladder_remaining_quantity_result = mysqli_query($con, $bladder_remaining_quantity_query);
+        $row = mysqli_fetch_assoc($bladder_remaining_quantity_result);
+        $bladder_remaining_quantity = $row['bladder_remaining_quantity'];
+
+        // Update thread_remaining_quantity in threads table
+        $updated_bladder_remaining_quantity = $bladder_remaining_quantity + $bladder_quantity;
+        $update_bladder_remaining_quantity_query = "UPDATE bladder SET bladder_remaining_quantity = $updated_bladder_remaining_quantity WHERE bladder_name = '$selected_bladder'";
+        mysqli_query($con, $update_bladder_remaining_quantity_query);
 
             if (!$update_remaining_quantity_result) {
                 $errors[] = "Failed to update remaining quantity in the database.";
@@ -134,6 +150,8 @@ if (isset($_POST['add_product'])) {
                         'product_base' => $product_base,
                         'product_color' => $product_color,
                         'quantity' => $quantity,
+                        'bladder_name' => $selected_bladder,
+                        'bladder_quantity' => $bladder_quantity,
                         'date_and_time' => isset($_POST['date_and_time']) ? $_POST['date_and_time'] : date('Y-m-d H:i:s')
                         
                         
@@ -180,6 +198,11 @@ if (isset($_POST['delete_product'])) {
         $update_remaining_quantity_query = "UPDATE kits_product SET remaining_quantity = '$new_remaining_quantity' WHERE product_name = '$product_name' AND product_base = '$product_base' AND product_color = '$product_color'";
         $update_remaining_quantity_result = mysqli_query($con, $update_remaining_quantity_query);
 
+         // Update bladder quantity
+    $bladder_name = mysqli_real_escape_string($con, $deleted_product['bladder_name']);
+    $bladder_quantity = mysqli_real_escape_string($con, $deleted_product['bladder_quantity']);
+    $update_bladder_quantity_query = "UPDATE bladder SET bladder_remaining_quantity = bladder_remaining_quantity - $bladder_quantity WHERE bladder_name = '$bladder_name'";
+    mysqli_query($con, $update_bladder_quantity_query);
 
         if ($update_remaining_quantity_result) {
             // Fetch existing issue quantity
@@ -239,10 +262,12 @@ if (isset($_POST['submit_form'])) {
             $product_color = mysqli_real_escape_string($con, $product['product_color']);
             $quantity = mysqli_real_escape_string($con, $product['quantity']);
             $date_and_time = mysqli_real_escape_string($con, $product['date_and_time']);
+            $bladder_name = mysqli_real_escape_string($con, $product['bladder_name']);
+            $bladder_quantity = mysqli_real_escape_string($con, $product['bladder_quantity']);
 
             // Insert product into the database
-            $insert_query = "INSERT INTO kits_return ( challan_no, stitcher_name, product_name, product_base, product_color, quantity, date_and_time) 
-            VALUES ( '$challan_no', '$stitcher_name', '$product_name', '$product_base', '$product_color', '$quantity', '$date_and_time')";
+            $insert_query = "INSERT INTO kits_return ( challan_no, stitcher_name, product_name, product_base, product_color, quantity, bladder_name, bladder_quantity, date_and_time) 
+            VALUES ( '$challan_no', '$stitcher_name', '$product_name', '$product_base', '$product_color', '$quantity', '$bladder_name', '$bladder_quantity','$date_and_time')";
              $insert_result = mysqli_query($con, $insert_query);
 
             if (!$insert_result) {
