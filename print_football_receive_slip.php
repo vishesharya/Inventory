@@ -233,7 +233,7 @@ $signature_path = 'uploads/signatures/' . $signature_filename;
         </div>
         <div class="footer">
             <div class="signature-section">
-                Supervisor Signature<br>
+                Supervisor Signature <br>
                 <?php if ($signature_supervisors_path): ?>
                     <img src="<?= htmlspecialchars($signature_supervisors_path) ?>" alt="Supervisor Signature" style="width: 150px; height: 50px;">
                 <?php else: ?>

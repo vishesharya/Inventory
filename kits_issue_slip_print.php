@@ -239,7 +239,7 @@ $stitcher_contact = $stitcher_contact_row['stitcher_contact'];
                 <?php endif; ?>
 
             </div>
-            <div class="issuer-signature">supervisors Signature <br>
+            <div class="issuer-signature">Supervisors Signature <br>
             <?php if ($signature_supervisors_path): ?>
                     <img src="<?= htmlspecialchars($signature_supervisors_path) ?>" alt="Supervisor Signature" style="width: 150px; height: 50px;">
                 <?php else: ?>
