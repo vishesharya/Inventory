@@ -394,7 +394,7 @@ if (isset($_POST['view_entries'])) {
             </div>
         </div>
         <div class="signature">
-            <div class="receiver-signature">Receiver Signature </Br>   <div><?php if (!empty($signature_filename)): ?>
+            <div class="receiver-signature">Stitcher Signature </Br>   <div><?php if (!empty($signature_filename)): ?>
                                 <img src="<?php echo htmlspecialchars($signature_path); ?>" alt="Signature" style="width: 200px; height: 75px; max-width:300px; margin: 0px; padding: 0px;">
                             <?php else: ?>
                                 No signature available
@@ -408,7 +408,7 @@ if (isset($_POST['view_entries'])) {
     <?php endif; ?>
 
             </div>
-            <div class="issuer-signature">Issuer Signature <br>
+            <div class="issuer-signature">Supervisor Signature <br>
             <?php if ($signature_supervisors_path): ?>
         <img src="<?= htmlspecialchars($signature_supervisors_path) ?>" alt="Signature" style="width: 180px; height: 75px; max-width:300px; margin: 0px; padding: 0px;">
     <?php else: ?>
