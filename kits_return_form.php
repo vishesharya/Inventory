@@ -170,7 +170,7 @@ if (isset($_POST['delete_product'])) {
         // Fetch existing remaining quantity for Ist Company Ist
         $existing_remaining_quantity_query = "SELECT remaining_quantity FROM kits_product WHERE product_name = '$product_name' AND product_base = '$product_base' AND product_color = '$product_color'";
         $existing_remaining_quantity_result = mysqli_query($con, $existing_remaining_quantity_query);
-        $row_quantity = mysqli_fetch_assoc($existing_remaining_quantity_ist_company_ist_result);
+        $row_quantity = mysqli_fetch_assoc($existing_remaining_quantity_result);
         $existing_remaining_quantity = $row_quantity['remaining_quantity'];
 
         // Calculate new remaining quantity
