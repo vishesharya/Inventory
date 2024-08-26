@@ -71,7 +71,7 @@ if (isset($_POST['view_entries'])) {
         $date_and_time_result = mysqli_query($con, $date_and_time_query);
         $date_and_time_row = mysqli_fetch_assoc($date_and_time_result);
         $date_and_time = $date_and_time_row['date_and_time'];
-    }
+    
     // Initialize conditions
     $conditions = "";
 
@@ -104,6 +104,7 @@ if (isset($_POST['view_entries'])) {
     // Construct the final query
     $query = "SELECT * FROM print_received $conditions";
     $result = mysqli_query($con, $query);
+}
 }
 ?>
 
