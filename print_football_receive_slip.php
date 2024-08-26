@@ -49,7 +49,7 @@ $stitcher_row = mysqli_fetch_assoc($stitcher_result);
 $stitcher_name = $stitcher_row['stitcher_name'];
 
 
-
+ 
 // Fetch the date and time 
 $date_and_time_query = "SELECT date_and_time FROM football_received WHERE challan_no = '$challan_no' LIMIT 1";
 $date_and_time_result = mysqli_query($con, $date_and_time_query);
