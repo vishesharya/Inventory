@@ -177,18 +177,17 @@ $stitcher_contact = $stitcher_contact_row['stitcher_contact'];
                             <th>Product Name</th>
                             <th>Product Base</th>
                             <th>Product Color</th>
-                            <th>Product Quantity</th>
+                            <th>Quantity</th>
                             <th>Bladder Type</th>
                             <th>Bladder Quantity</th>
-                            <th>Thread Type</th>
-                            <th>Thread Quantity</th>
+                          
                         </tr>
                     </thead>
                     <tbody>
                         <?php 
-                        $total_product_quantity = 0;
+                        $total_quantity = 0;
                         $total_bladder_quantity = 0;
-                        $total_thread_quantity = 0;
+                       
 
                         while ($product = mysqli_fetch_assoc($product_result)) : 
                             $total_product_quantity += $product['issue_quantity'];
@@ -199,22 +198,21 @@ $stitcher_contact = $stitcher_contact_row['stitcher_contact'];
                                 <td><?php echo $product['product_name']; ?></td>
                                 <td><?php echo $product['product_base']; ?></td>
                                 <td><?php echo $product['product_color']; ?></td>
-                                <td><?php echo $product['issue_quantity']; ?></td>
+                                <td><?php echo $product['quantity']; ?></td>
                                 <td><?php echo $product['bladder_name']; ?></td>
                                 <td><?php echo $product['bladder_quantity']; ?></td>
-                                <td><?php echo $product['thread_name']; ?></td>
-                                <td><?php echo $product['thread_quantity']; ?></td>
+                               
                             </tr>
                         <?php endwhile; ?>
                     </tbody>
                     <tfoot>
                         <tr>
                             <td colspan="3">Total</td>
-                            <td><?php echo $total_product_quantity; ?></td>
+                            <td><?php echo $total_quantity; ?></td>
                             <td colspan="1"></td>
                             <td><?php echo $total_bladder_quantity; ?></td>
-                            <td colspan="1"></td>
-                            <td><?php echo $total_thread_quantity; ?></td>
+                            <td colspan="2"></td>
+                            
                         </tr>
                     </tfoot>
                 </table>
