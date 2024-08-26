@@ -317,7 +317,7 @@ if (isset($_POST['view_entries'])) {
                 <tbody>
                 <?php 
                 
-                $total_issue_quantity = 0;
+                $total_return_quantity = 0;
                 $total_bladder_quantity = 0;
                 $sn = 1; 
 
