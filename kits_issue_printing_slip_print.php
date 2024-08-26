@@ -62,7 +62,6 @@ $stitcher_contact_row = mysqli_fetch_assoc($stitcher_contact_result);
 $stitcher_contact = $stitcher_contact_row['stitcher_contact'];
 
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -138,6 +137,12 @@ $stitcher_contact = $stitcher_contact_row['stitcher_contact'];
         .issue_heading{
             text-align: center;
         }
+        /* Define the size for signatures */
+        .signature-img {
+            width: 150px;
+            height: 50px;
+            object-fit: contain;
+        }
     </style>
 </head>
 <body>
@@ -162,8 +167,6 @@ $stitcher_contact = $stitcher_contact_row['stitcher_contact'];
                 <p><br/><br/>Challan No : <?php echo $entry['challan_no']; ?></p>
                 <p>Date : <?php echo date("d-m-Y"); ?></p>
                 </div>
-               
-                
             </div>
         </div>
         <div class="row">
@@ -194,8 +197,6 @@ $stitcher_contact = $stitcher_contact_row['stitcher_contact'];
                                 <td><?php echo $product['issue_quantity']; ?></td>
                                 <td><?php echo $product['ink_name']; ?></td>
                                 <td><?php echo $product['ink_quantity']; ?></td>
-                                
-                      
                             </tr>
                         <?php endwhile; ?>
                     </tbody> 
@@ -212,26 +213,26 @@ $stitcher_contact = $stitcher_contact_row['stitcher_contact'];
         </div>
         <div class="footer">
             <div class="receiver-signature">Stitcher Signature <br>
-            <?php if (!empty($signature_filename)): ?>
-                    <img src="<?php echo htmlspecialchars($signature_path); ?>" alt="Stitcher Signature">
+                <?php if (!empty($signature_filename)): ?>
+                    <img src="<?php echo htmlspecialchars($signature_path); ?>" alt="Stitcher Signature" class="signature-img">
                 <?php else: ?>
                     <p>No signature available</p>
                 <?php endif; ?> 
             </div>
             <div class="middle-signature">Guard Signature <br>
-            <?php if ($signature_file_path): ?>
-                    <img src="<?= htmlspecialchars($signature_file_path) ?>" alt="Guard Signature">
+                <?php if ($signature_file_path): ?>
+                    <img src="<?= htmlspecialchars($signature_file_path) ?>" alt="Guard Signature" class="signature-img">
                 <?php else: ?>
                     <p>No signature available.</p>
                 <?php endif; ?>
             </div>
-            <div class="issuer-signature">supervisors Signature <br>
+            <div class="issuer-signature">Supervisor Signature <br>
                 <?php if ($signature_supervisors_path): ?>
-                    <img src="<?= htmlspecialchars($signature_supervisors_path) ?>" alt="Supervisor Signature">
+                    <img src="<?= htmlspecialchars($signature_supervisors_path) ?>" alt="Supervisor Signature" class="signature-img">
                 <?php else: ?>
                     <p>No signature available.</p>
                 <?php endif; ?>
-        </div>
+            </div>
         </div>
         <div class="print-btn">
             <button onclick="window.print()" class="btn btn-primary">Print</button>
