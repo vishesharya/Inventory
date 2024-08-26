@@ -78,11 +78,8 @@ $stitcher_contact = $stitcher_contact_row['stitcher_contact'];
             font-family: Arial, sans-serif;
         }
         .container {
-            margin-top: 50px;
-            background-color: #f8f9fc;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            margin-top: 30px;
+
         }
         .heading {
             text-align: center;
@@ -97,19 +94,23 @@ $stitcher_contact = $stitcher_contact_row['stitcher_contact'];
             margin-top: 30px;
             display: flex;
             justify-content: space-between;
-            gap: 8.2rem;
-            align-items: flex-end;
+            align-items: center;
             color: #555;
         }
-        .receiver-signature,
-        .issuer-signature {
-            flex: 1;
-            text-align: left;
-        }
-        .middle-signature {
+        .signature-box {
             flex: 1;
             text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
         }
+        .signature-box img {
+            width: 150px;
+            height: 50px;
+            margin-top: 5px;
+        }
+           
         .print-btn {
             display: block;
             margin-top: 20px;
