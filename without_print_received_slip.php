@@ -173,19 +173,28 @@ if (isset($_POST['view_entries'])) {
             align-items: flex-end;
             color: #555;
         }
-        .receiver-signature{
-            text-align: right;
-            
-        
+        .footer {
+            margin-top: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #555;
         }
-        .issuer-signature {
-            text-align: left;
-        
-        }
-        .middle-signature {
+        .signature-box {
+            flex: 1;
             text-align: center;
-           
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
         }
+        .signature-box img {
+            width: 150px;
+            height: 50px;
+            margin-top: 5px;
+        }
+           
+        
         .print-btn {
             display: block;
             margin-top: 20px;
