@@ -73,36 +73,9 @@ if (isset($_POST['add_product'])) {
         $product_name = mysqli_real_escape_string($con, $_POST['product_name']);
         $product_base = mysqli_real_escape_string($con, $_POST['product_base']);
         $product_color = mysqli_real_escape_string($con, $_POST['product_color']);
-        $stitcher_ist_company_ist = mysqli_real_escape_string($con, $_POST['stitcher_ist_company_ist']);
-        $stitcher_iind_company_iind = mysqli_real_escape_string($con, $_POST['stitcher_iind_company_iind']);
-        $stitcher_iind_company_ist = mysqli_real_escape_string($con, $_POST['stitcher_iind_company_ist']);
-        $stitcher_ist_company_iind = mysqli_real_escape_string($con, $_POST['stitcher_ist_company_iind']);
-
-        
-
-        $stitcher_ist_company_ist = isset($_POST['stitcher_ist_company_ist']) ? intval($_POST['stitcher_ist_company_ist']) : 0;
-        $stitcher_iind_company_iind = isset($_POST['stitcher_iind_company_iind']) ? intval($_POST['stitcher_iind_company_iind']) : 0;
-        $stitcher_iind_company_ist = isset($_POST['stitcher_iind_company_ist']) ? intval($_POST['stitcher_iind_company_ist']) : 0;
-        $stitcher_ist_company_iind = isset($_POST['stitcher_ist_company_iind']) ? intval($_POST['stitcher_ist_company_iind']) : 0;
-        
-        
-        // Calculate total
-        $total = $stitcher_ist_company_ist + $stitcher_iind_company_iind + $stitcher_iind_company_ist + $stitcher_ist_company_iind;
-        
-        // If input is empty, default to zero
-        if ($_POST['stitcher_ist_company_ist'] === '' && isset($_POST['stitcher_ist_company_ist'])) {
-            $stitcher_ist_company_ist = 0;
-        }
-        if ($_POST['stitcher_iind_company_iind'] === '' && isset($_POST['stitcher_iind_company_iind'])) {
-            $stitcher_iind_company_iind = 0;
-        }
-        if ($_POST['stitcher_iind_company_ist'] === '' && isset($_POST['stitcher_iind_company_ist'])) {
-            $stitcher_iind_company_ist = 0;
-        }
-        if ($_POST['stitcher_ist_company_iind'] === '' && isset($_POST['stitcher_ist_company_iind'])) {
-            $stitcher_ist_company_iind = 0;
-        }
-
+        $quantity = mysqli_real_escape_string($con, $_POST['quantity']);
+      
+    
 
         // Fetch existing issue quantity
         $issue_quantity_query = "SELECT issue_quantity FROM kits_job_work WHERE challan_no_issue = '$selected_challan' AND stitcher_name = '$stitcher_name' AND product_name = '$product_name' AND product_base = '$product_base' AND product_color = '$product_color'";
@@ -112,36 +85,26 @@ if (isset($_POST['add_product'])) {
             $existing_issue_quantity = $issue_quantity_row['issue_quantity'];
 
             // Check if total exceeds existing issue quantity
-            if ($total > $existing_issue_quantity) {
+            if ($quantity > $existing_issue_quantity) {
                 $errors[] = "The entered quantity exceeds the balance quantity.";
             } else {
 
-             // Fetch existing remaining quantity for Ist Company Ist
-            $existing_remaining_quantity_ist_company_ist_query = "SELECT remaining_quantity FROM products WHERE product_name = '$product_name' AND product_base = '$product_base' AND product_color = '$product_color'";
-            $existing_remaining_quantity_ist_company_ist_result = mysqli_query($con, $existing_remaining_quantity_ist_company_ist_query);
-            $row_ist_company_ist = mysqli_fetch_assoc($existing_remaining_quantity_ist_company_ist_result);
-            $existing_remaining_quantity_ist_company_ist = $row_ist_company_ist['remaining_quantity'];
-
-            // Fetch existing remaining quantity for IInd Company IInd
-            $existing_remaining_quantity_iind_company_iind_query = "SELECT remaining_quantity FROM products WHERE product_name = '$product_name IIND' AND product_base = 'MIX COLOR' AND product_color = 'MIX COLOR'";
-            $existing_remaining_quantity_iind_company_iind_result = mysqli_query($con, $existing_remaining_quantity_iind_company_iind_query);
-            $row_iind_company_iind = mysqli_fetch_assoc($existing_remaining_quantity_iind_company_iind_result);
-            $existing_remaining_quantity_iind_company_iind = $row_iind_company_iind['remaining_quantity'];
+             // Fetch existing remaining quantity 
+            $existing_remaining_quantity_query = "SELECT remaining_quantity FROM products WHERE product_name = '$product_name' AND product_base = '$product_base' AND product_color = '$product_color'";
+            $existing_remaining_quantity_result = mysqli_query($con, $existing_remaining_quantity_query);
+            $row_quantity = mysqli_fetch_assoc($existing_remaining_quantity_result);
+            $existing_remaining_quantity = $row_quantity['remaining_quantity'];
 
             // Calculate new remaining quantity
-            $new_remaining_quantity_ist_company_ist = $existing_remaining_quantity_ist_company_ist + $stitcher_ist_company_ist + $stitcher_iind_company_ist;
-            $new_remaining_quantity_iind_company_iind = $existing_remaining_quantity_iind_company_iind + $stitcher_iind_company_iind + $stitcher_ist_company_iind ;
+            $new_remaining_quantity = $existing_remaining_quantity;
+            $new_remaining_quantity = $existing_remaining_quantity + $quantity;
 
-            // Update remaining quantity in products table for Ist Company Ist
-            $update_remaining_quantity_ist_company_ist_query = "UPDATE products SET remaining_quantity = '$new_remaining_quantity_ist_company_ist' WHERE product_name = '$product_name' AND product_base = '$product_base' AND  product_color = '$product_color'";
-            $update_remaining_quantity_ist_company_ist_result = mysqli_query($con, $update_remaining_quantity_ist_company_ist_query);
-
-            // Update remaining quantity in products table for IInd Company IInd
-            $update_remaining_quantity_iind_company_iind_query = "UPDATE products SET remaining_quantity = '$new_remaining_quantity_iind_company_iind' WHERE product_name = '$product_name IIND' AND product_base = 'MIX COLOR' AND product_color = 'MIX COLOR'";
-            $update_remaining_quantity_iind_company_iind_result = mysqli_query($con, $update_remaining_quantity_iind_company_iind_query);
+            // Update remaining quantity in products table 
+            $update_remaining_quantity_query = "UPDATE products SET remaining_quantity = '$new_remaining_quantity' WHERE product_name = '$product_name' AND product_base = '$product_base' AND  product_color = '$product_color'";
+            $update_remaining_quantity_result = mysqli_query($con, $update_remaining_quantity_query);
 
                 // Update issue quantity in the database
-                $updated_issue_quantity = max(0, $existing_issue_quantity - $total); // Ensure issue quantity doesn't go negative
+                $updated_issue_quantity = max(0, $existing_issue_quantity - $quanitty); // Ensure issue quantity doesn't go negative
                 $update_issue_quantity_query = "UPDATE kits_job_work SET issue_quantity = '$updated_issue_quantity' WHERE challan_no_issue = '$selected_challan' AND stitcher_name = '$stitcher_name' AND product_name = '$product_name' AND product_base = '$product_base' AND product_color = '$product_color'";
                 $update_issue_quantity_result = mysqli_query($con, $update_issue_quantity_query);
 
@@ -158,7 +121,7 @@ if (isset($_POST['add_product'])) {
                     }
 
 
-            if (!$update_remaining_quantity_ist_company_ist_result || !$update_remaining_quantity_iind_company_iind_result) {
+            if (!$update_remaining_quantity_result) {
                 $errors[] = "Failed to update remaining quantity in the database.";
             }
 
@@ -170,11 +133,7 @@ if (isset($_POST['add_product'])) {
                         'product_name' => $product_name,
                         'product_base' => $product_base,
                         'product_color' => $product_color,
-                        'stitcher_ist_company_ist' => $stitcher_ist_company_ist,
-                        'stitcher_iind_company_iind' => $stitcher_iind_company_iind,
-                        'stitcher_iind_company_ist' => $stitcher_iind_company_ist,
-                        'stitcher_ist_company_iind' => $stitcher_ist_company_iind,
-                        'total' => $total,
+                        '' => $total,
                         'date_and_time' => isset($_POST['date_and_time']) ? $_POST['date_and_time'] : date('Y-m-d H:i:s')
                         
                         
