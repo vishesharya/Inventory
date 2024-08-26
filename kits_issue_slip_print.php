@@ -67,7 +67,6 @@ $stitcher_contact_result = mysqli_query($con, $stitcher_contact_query);
 $stitcher_contact_row = mysqli_fetch_assoc($stitcher_contact_result);
 $stitcher_contact = $stitcher_contact_row['stitcher_contact'];
 ?> 
-
 <!DOCTYPE html>
 <html lang="en">
 <head> 
@@ -85,10 +84,8 @@ $stitcher_contact = $stitcher_contact_row['stitcher_contact'];
         }
         .container {
             margin-top: 50px;
-            
             padding: 20px;
             border-radius: 10px;
-          
         }
         .heading {
             text-align: center;
@@ -103,25 +100,28 @@ $stitcher_contact = $stitcher_contact_row['stitcher_contact'];
             margin-top: 30px;
             display: flex;
             justify-content: space-between;
-            gap: 8.2rem;
-            align-items: flex-end;
+            align-items: center;
             color: #555;
         }
-        .receiver-signature,
-        .issuer-signature {
-            flex: 1;
-            text-align: left;
-        }
-        .middle-signature {
+        .signature-box {
             flex: 1;
             text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        .signature-box img {
+            width: 150px;
+            height: 50px;
+            margin-top: 5px;
         }
         .print-btn {
             display: block;
             margin-top: 20px;
             text-align: center;
         }
-        #head_details{
+        #head_details {
             display: flex;
             margin-top: 0px;
             padding-top: 0px;
@@ -134,13 +134,13 @@ $stitcher_contact = $stitcher_contact_row['stitcher_contact'];
                 display: none !important;
             }
         }
-        p{
+        p {
             line-height: 7px;
         }
-        .stitcher_bold{
+        .stitcher_bold {
             font-weight: bold;
         }
-        .issue_heading{
+        .issue_heading {
             text-align: center;
         }
     </style>
@@ -148,24 +148,23 @@ $stitcher_contact = $stitcher_contact_row['stitcher_contact'];
 <body>
     <div class="container">
         <div class="invoice-header">
-        
             <div>
-                <p class="issue_heading" >KITS ISSUE SLIP</p>
+                <p class="issue_heading">KITS ISSUE SLIP</p>
                 <hr>
                 <h2 class="heading">KHANNA SPORTS INDUSTRIES PVT. LTD</h2>
-                <p class="heading"> A-7, Sports Complex Delhi Road Meerut Uttar Pradesh 250002</p>
-                <p class="heading">Contact : 8449441387,98378427750 &nbsp;  GST : 09AAACK9669A1ZD </p>
+                <p class="heading">A-7, Sports Complex Delhi Road Meerut Uttar Pradesh 250002</p>
+                <p class="heading">Contact: 8449441387, 98378427750 &nbsp; GST: 09AAACK9669A1ZD</p>
             </div>
             <div id="head_details">
                 <div>
-                    <p class="stitcher_bold" >Stitcher : <?php echo $stitcher_name; ?></p>
-                    <p>Stitcher Contact : <?php echo $stitcher_contact; ?></p>
-                    <p>Stitcher Aadhar : <?php echo $stitcher_aadhar; ?></p>
-                    <p>Stitcher Pan : <?php echo $stitcher_pan; ?></p>
-                    <p>Stitcher Address : <?php echo $stitcher_address; ?></p>
+                    <p class="stitcher_bold">Stitcher: <?php echo $stitcher_name; ?></p>
+                    <p>Stitcher Contact: <?php echo $stitcher_contact; ?></p>
+                    <p>Stitcher Aadhar: <?php echo $stitcher_aadhar; ?></p>
+                    <p>Stitcher Pan: <?php echo $stitcher_pan; ?></p>
+                    <p>Stitcher Address: <?php echo $stitcher_address; ?></p>
                 </div>
                 <div>
-                    <p><br/><br/>Challan No : <?php echo $entry['challan_no']; ?></p>
+                    <p><br/><br/>Challan No: <?php echo $entry['challan_no']; ?></p>
                     <p>Date: <?php echo date('d-m-Y', strtotime($date_and_time)); ?></p>
                 </div>
             </div>
@@ -192,7 +191,6 @@ $stitcher_contact = $stitcher_contact_row['stitcher_contact'];
                         $total_thread_quantity = 0;
 
                         while ($product = mysqli_fetch_assoc($product_result)) : 
-                            // Update total quantities
                             $total_product_quantity += $product['issue_quantity'];
                             $total_bladder_quantity += $product['bladder_quantity'];
                             $total_thread_quantity += $product['thread_quantity'];
@@ -213,7 +211,7 @@ $stitcher_contact = $stitcher_contact_row['stitcher_contact'];
                         <tr>
                             <td colspan="3">Total</td>
                             <td><?php echo $total_product_quantity; ?></td>
-                            <td colspan="1"></td> <!-- Add empty cells for other columns -->
+                            <td colspan="1"></td>
                             <td><?php echo $total_bladder_quantity; ?></td>
                             <td colspan="1"></td>
                             <td><?php echo $total_thread_quantity; ?></td>
@@ -223,31 +221,33 @@ $stitcher_contact = $stitcher_contact_row['stitcher_contact'];
             </div>
         </div> 
         <div class="footer">
-            <div class="receiver-signature">Stitcher Signature <br>
-            <?php if (!empty($signature_filename)): ?>
-                    <img src="<?php echo htmlspecialchars($signature_path); ?>" alt="Stitcher Signature" style="width: 150px; height: 50px;">
+            <div class="signature-box">
+                <span>Stitcher Signature</span>
+                <?php if (!empty($signature_filename)): ?>
+                    <img src="<?php echo htmlspecialchars($signature_path); ?>" alt="Stitcher Signature">
                 <?php else: ?>
                     <p>No signature available</p>
                 <?php endif; ?> 
-
             </div>
-            <div class="middle-signature">Guard Signature <br>
-            <?php if ($signature_file_path): ?>
-                    <img src="<?= htmlspecialchars($signature_file_path) ?>" alt="Guard Signature" style="width: 170px; height: 70px;">
+            <div class="signature-box">
+                <span>Guard Signature</span>
+                <?php if ($signature_file_path): ?>
+                    <img src="<?= htmlspecialchars($signature_file_path) ?>" alt="Guard Signature">
                 <?php else: ?>
                     <p>No signature available.</p>
                 <?php endif; ?>
-
             </div>
-            <div class="issuer-signature">Supervisors Signature <br>
-            <?php if ($signature_supervisors_path): ?>
-                    <img src="<?= htmlspecialchars($signature_supervisors_path) ?>" alt="Supervisor Signature" style="width: 150px; height: 50px;">
+            <div class="signature-box">
+                <span>Supervisor Signature</span>
+                <?php if ($signature_supervisors_path): ?>
+                    <img src="<?= htmlspecialchars($signature_supervisors_path) ?>" alt="Supervisor Signature">
                 <?php else: ?>
                     <p>No signature available.</p>
-                <?php endif; ?></div>
+                <?php endif; ?>
+            </div>
         </div>
         <div class="print-btn">
-            <button onclick="window.print()" class="btn btn-primary">Print</button>
+            <button class="btn btn-primary" onclick="window.print()">Print</button>
         </div>
     </div>
 </body>
