@@ -3,6 +3,30 @@ include './include/check_login.php';
 include './include/connection.php';
 include_once 'include/admin-main.php';
 
+$sql = "SELECT * FROM guards WHERE status = 1 LIMIT 1";
+$result = $con->query($sql);
+
+if ($result->num_rows > 0) {
+    $guard = $result->fetch_assoc();
+    $signature_file_path = $guard['signature'];
+} else {
+    // Handle case where no guard has status = 1
+    $guard_name = "No default guard set";
+    $signature_file_path = null;
+}
+
+$supervisors_sql = "SELECT * FROM supervisors WHERE status = 1 LIMIT 1";
+$supervisors_result = $con->query($supervisors_sql);
+
+if ($supervisors_result->num_rows > 0) {
+    $supervisors = $supervisors_result->fetch_assoc();
+    $signature_supervisors_path = $supervisors['signature'];
+} else {
+    // Handle case where no guard has status = 1
+    $supervisors_name = "No default guard set";
+    $signature_supervisors_path = null;
+}
+
 // Fetch stitcher names from the database
 $stitcher_query = "SELECT DISTINCT stitcher_name FROM kits_issue ORDER BY stitcher_name ASC"; 
 $stitcher_result = mysqli_query($con, $stitcher_query);
@@ -15,7 +39,7 @@ $stitcher_address = isset($_POST['stitcher_address']) ? $_POST['stitcher_address
 
 // Check if 'challan_no' is set in session
 if (isset($_SESSION['challan_no'])) {
-    $challan_no = $_SESSION['challan_no'];
+    $challan_no = $_SESSION['challan_no']; 
 }
 
 // Initialize $result variable
@@ -376,7 +400,14 @@ if (isset($_POST['view_entries'])) {
                                 No signature available
                             <?php endif; ?> </div> </div>
             <div class="middle-signature">Guard Signature</div>
-            <div class="issuer-signature">Issuer Signature</div>
+            <div class="issuer-signature">Issuer Signature <br>
+            <?php if ($signature_supervisors_path): ?>
+        <img src="<?= htmlspecialchars($signature_supervisors_path) ?>" alt="Signature" style="width: 180px; height: 75px; max-width:300px; margin: 0px; padding: 0px;">
+    <?php else: ?>
+        <p>No signature available.</p>
+    <?php endif; ?>
+
+            </div>
         </div>
     </div>
 <?php endif; ?>
