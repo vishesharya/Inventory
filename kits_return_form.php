@@ -133,7 +133,7 @@ if (isset($_POST['add_product'])) {
                         'product_name' => $product_name,
                         'product_base' => $product_base,
                         'product_color' => $product_color,
-                        '' => $total,
+                        'quantity' => $quantity,
                         'date_and_time' => isset($_POST['date_and_time']) ? $_POST['date_and_time'] : date('Y-m-d H:i:s')
                         
                         
@@ -164,38 +164,24 @@ if (isset($_POST['delete_product'])) {
         $product_name = mysqli_real_escape_string($con, $temp_product['product_name']);
         $product_base = mysqli_real_escape_string($con, $temp_product['product_base']);
         $product_color = mysqli_real_escape_string($con, $temp_product['product_color']);
-        $stitcher_ist_company_ist = intval($temp_product['stitcher_ist_company_ist']);
-        $stitcher_iind_company_iind = intval($temp_product['stitcher_iind_company_iind']);
-        $stitcher_iind_company_ist = intval($temp_product['stitcher_iind_company_ist']);
-        $stitcher_ist_company_iind = intval($temp_product['stitcher_ist_company_iind']);
-        $total = intval($temp_product['total']);
+        $quantity = intval($temp_product['quantity']);
 
-        // Revert remaining quantities in the products table
+       
         // Fetch existing remaining quantity for Ist Company Ist
-        $existing_remaining_quantity_ist_company_ist_query = "SELECT remaining_quantity FROM products WHERE product_name = '$product_name' AND product_base = '$product_base' AND product_color = '$product_color'";
-        $existing_remaining_quantity_ist_company_ist_result = mysqli_query($con, $existing_remaining_quantity_ist_company_ist_query);
-        $row_ist_company_ist = mysqli_fetch_assoc($existing_remaining_quantity_ist_company_ist_result);
-        $existing_remaining_quantity_ist_company_ist = $row_ist_company_ist['remaining_quantity'];
-
-        // Fetch existing remaining quantity for IInd Company IInd
-        $existing_remaining_quantity_iind_company_iind_query = "SELECT remaining_quantity FROM products WHERE product_name = '$product_name IIND' AND product_base = 'MIX COLOR' AND product_color = 'MIX COLOR'";
-        $existing_remaining_quantity_iind_company_iind_result = mysqli_query($con, $existing_remaining_quantity_iind_company_iind_query);
-        $row_iind_company_iind = mysqli_fetch_assoc($existing_remaining_quantity_iind_company_iind_result);
-        $existing_remaining_quantity_iind_company_iind = $row_iind_company_iind['remaining_quantity'];
+        $existing_remaining_quantity_query = "SELECT remaining_quantity FROM products WHERE product_name = '$product_name' AND product_base = '$product_base' AND product_color = '$product_color'";
+        $existing_remaining_quantity_result = mysqli_query($con, $existing_remaining_quantity_query);
+        $row_quantity = mysqli_fetch_assoc($existing_remaining_quantity_ist_company_ist_result);
+        $existing_remaining_quantity = $row_quantity['remaining_quantity'];
 
         // Calculate new remaining quantity
-        $new_remaining_quantity_ist_company_ist = max(0, $existing_remaining_quantity_ist_company_ist - ($stitcher_ist_company_ist + $stitcher_iind_company_ist));
-        $new_remaining_quantity_iind_company_iind = max(0, $existing_remaining_quantity_iind_company_iind - ($stitcher_iind_company_iind + $stitcher_ist_company_iind));
-
+        $new_remaining_quantity = max(0, $existing_remaining_quantity - $quantity);
+       
         // Update remaining quantity in products table for Ist Company Ist
-        $update_remaining_quantity_ist_company_ist_query = "UPDATE products SET remaining_quantity = '$new_remaining_quantity_ist_company_ist' WHERE product_name = '$product_name' AND product_base = '$product_base' AND product_color = '$product_color'";
-        $update_remaining_quantity_ist_company_ist_result = mysqli_query($con, $update_remaining_quantity_ist_company_ist_query);
+        $update_remaining_quantity = "UPDATE products SET remaining_quantity = '$new_remaining_quantity' WHERE product_name = '$product_name' AND product_base = '$product_base' AND product_color = '$product_color'";
+        $update_remaining_quantity_result = mysqli_query($con, $update_remaining_quantity_query);
 
-        // Update remaining quantity in products table for IInd Company IInd
-        $update_remaining_quantity_iind_company_iind_query = "UPDATE products SET remaining_quantity = '$new_remaining_quantity_iind_company_iind' WHERE product_name = '$product_name IIND' AND product_base = 'MIX COLOR' AND product_color = 'MIX COLOR'";
-        $update_remaining_quantity_iind_company_iind_result = mysqli_query($con, $update_remaining_quantity_iind_company_iind_query);
 
-        if ($update_remaining_quantity_ist_company_ist_result && $update_remaining_quantity_iind_company_iind_result) {
+        if ($update_remaining_quantity_result) {
             // Fetch existing issue quantity
             $issue_quantity_query = "SELECT issue_quantity FROM kits_job_work WHERE challan_no_issue = '{$temp_product['challan_no_issue']}' AND stitcher_name = '$stitcher_name' AND product_name = '$product_name' AND product_base = '$product_base' AND product_color = '$product_color'";
             $issue_quantity_result = mysqli_query($con, $issue_quantity_query);
@@ -204,7 +190,7 @@ if (isset($_POST['delete_product'])) {
                 $existing_issue_quantity = $issue_quantity_row['issue_quantity'];
 
                 // Update issue quantity in the database
-                $updated_issue_quantity = $existing_issue_quantity + $total;
+                $updated_issue_quantity = $existing_issue_quantity + $quantity;
                 $update_issue_quantity_query = "UPDATE kits_job_work SET issue_quantity = '$updated_issue_quantity' WHERE challan_no_issue = '{$temp_product['challan_no_issue']}' AND stitcher_name = '$stitcher_name' AND product_name = '$product_name' AND product_base = '$product_base' AND product_color = '$product_color'";
                 $update_issue_quantity_result = mysqli_query($con, $update_issue_quantity_query);
 
@@ -251,13 +237,7 @@ if (isset($_POST['submit_form'])) {
             $product_name = mysqli_real_escape_string($con, $product['product_name']);
             $product_base = mysqli_real_escape_string($con, $product['product_base']);
             $product_color = mysqli_real_escape_string($con, $product['product_color']);
-            $stitcher_ist_company_ist = mysqli_real_escape_string($con, $product['stitcher_ist_company_ist']);
-
-            $total = mysqli_real_escape_string($con, $product['total']);
-            $stitcher_iind_company_iind = mysqli_real_escape_string($con, $product['stitcher_iind_company_iind']);
-            $stitcher_iind_company_ist = mysqli_real_escape_string($con, $product['stitcher_iind_company_ist']);
-            $stitcher_ist_company_ist = mysqli_real_escape_string($con, $product['stitcher_ist_company_ist']);
-            $stitcher_ist_company_iind = mysqli_real_escape_string($con, $product['stitcher_ist_company_iind']);
+            $quantity = mysqli_real_escape_string($con, $product['quantity']);
             $date_and_time = mysqli_real_escape_string($con, $product['date_and_time']);
 
             // Insert product into the database
@@ -338,7 +318,7 @@ if (isset($_POST['submit_form'])) {
             <div class="col-lg-8">
                 <div class="card">
                     <div class="card-body">
-                        <h1 class="h4 text-center mb-4">Football Receiving Form</h1>
+                        <h1 class="h4 text-center mb-4">Kits Returns Form</h1>
                         <?php if (!empty($errors)) : ?>
                             <div class="alert alert-danger" role="alert">
                                 <?php foreach ($errors as $error) : ?>
@@ -418,28 +398,12 @@ if (isset($_POST['submit_form'])) {
                                     </div>
                                 </div>
                           
+                             
+                              
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="stitcher_ist_company_ist">Stitcher Ist Company Ist:</label>
-                                        <input type="number" class="form-control" id="stitcher_ist_company_ist" name="stitcher_ist_company_ist" >
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="stitcher_ist_company_iind">Stitcher Ist Company IInd:</label>
-                                        <input type="number" class="form-control" id="stitcher_ist_company_iind" name="stitcher_ist_company_iind" >
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="stitcher_iind_company_ist">Stitcher IInd Company Ist:</label>
-                                        <input type="number" class="form-control" id="stitcher_iind_company_ist" name="stitcher_iind_company_ist" >
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="stitcher_iind_company_iind">Stitcher IInd Company IInd:</label>
-                                        <input type="number" class="form-control" id="stitcher_iind_company_iind" name="stitcher_iind_company_iind" >
+                                        <label for="quantity">Enter Returns Quantity:</label>
+                                        <input type="number" class="form-control" id="quantity" name="quantity" >
                                     </div>
                                 </div>
 
