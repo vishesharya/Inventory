@@ -3,6 +3,7 @@ include './include/check_login.php';
 include './include/connection.php';
 include_once 'include/admin-main.php';
 
+
 // Fetch the last submitted entry
 $query = "SELECT * FROM  football_received ORDER BY id DESC LIMIT 1";
 $result = mysqli_query($con, $query);

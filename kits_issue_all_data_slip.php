@@ -62,6 +62,7 @@ if (isset($_POST['view_entries'])) {
             $stitcher_pan = $stitcher_details_row['stitcher_pan'];
             $stitcher_address = $stitcher_details_row['stitcher_address'];
             
+            
         }
         $signature_filename = $stitcher_details_row['signature']; // Get the signature filename
 
