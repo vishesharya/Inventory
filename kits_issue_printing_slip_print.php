@@ -78,11 +78,10 @@ $stitcher_contact = $stitcher_contact_row['stitcher_contact'];
             font-family: Arial, sans-serif;
         }
         .container {
-            margin-top: 50px;
-            background-color: #f8f9fc;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            margin-top: 30px;
+          
+            padding: 10px;
+           
         }
         .heading {
             text-align: center;
@@ -97,7 +96,7 @@ $stitcher_contact = $stitcher_contact_row['stitcher_contact'];
             margin-top: 30px;
             display: flex;
             justify-content: space-between;
-            gap: 8.2rem;
+        
             align-items: flex-end;
             color: #555;
         }
