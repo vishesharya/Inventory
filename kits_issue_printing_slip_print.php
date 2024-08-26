@@ -94,7 +94,7 @@ $stitcher_contact = $stitcher_contact_row['stitcher_contact'];
             margin-top: 30px;
             display: flex;
             justify-content: space-between;
-            gap: 7.5rem;
+            gap: 7rem;
             align-items: flex-end;
             color: #555;
         }
