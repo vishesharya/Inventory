@@ -432,7 +432,7 @@ if (isset($_POST['submit_form'])) {
                                     </div>
                                 </div>
                                 
-                                <div class="row">
+                    
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="select_bladder">Select Bladder:</label>
@@ -450,9 +450,7 @@ if (isset($_POST['submit_form'])) {
                                         <input type="number" class="form-control" id="bladder_quantity" name="bladder_quantity" placeholder="Enter Bladder Quantity">
                                     </div>
                                 </div>
-                            </div>
-                            </div>
-
+                          
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="date_and_time">Date and Time:</label>
