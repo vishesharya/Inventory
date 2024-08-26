@@ -2,6 +2,29 @@
 include './include/check_login.php';
 include './include/connection.php';
 include_once 'include/admin-main.php';
+$guard_sql = "SELECT * FROM guards WHERE status = 1 LIMIT 1";
+$guard_result = $con->query($guard_sql);
+
+if ($guard_result->num_rows > 0) {
+    $guard = $guard_result->fetch_assoc();
+    $signature_file_path = $guard['signature'];
+} else {
+    // Handle case where no guard has status = 1
+    $guard_name = "No default guard set";
+    $signature_file_path = null;
+}
+
+$supervisors_sql = "SELECT * FROM supervisors WHERE status = 1 LIMIT 1";
+$supervisors_result = $con->query($supervisors_sql);
+
+if ($supervisors_result->num_rows > 0) {
+    $supervisors = $supervisors_result->fetch_assoc();
+    $signature_supervisors_path = $supervisors['signature'];
+} else {
+    // Handle case where no guard has status = 1
+    $supervisors_name = "No default guard set";
+    $signature_supervisors_path = null;
+}
 
 // Fetch the last submitted entry
 $query = "SELECT * FROM print_received ORDER BY id DESC LIMIT 1";
@@ -26,6 +49,10 @@ $stitcher_row = mysqli_fetch_assoc($stitcher_result);
 $stitcher_address = $stitcher_row['stitcher_address'];
 $stitcher_aadhar = $stitcher_row['stitcher_aadhar'];
 $stitcher_pan = $stitcher_row['stitcher_pan'];
+$signature_filename = $stitcher_row['signature']; // Get the signature filename
+
+// Define the path to the signature
+$signature_path = 'uploads/signatures/' . $signature_filename;
 
 // Fetch the stitcher contact for the invoice
 $stitcher_contact_query = "SELECT stitcher_contact FROM stitcher WHERE stitcher_name = '$stitcher_name' LIMIT 1";
@@ -177,9 +204,31 @@ $stitcher_contact = $stitcher_contact_row['stitcher_contact'];
             </div>
         </div>
         <div class="footer">
-            <div class="receiver-signature">Receiver Signature</div>
-            <div class="middle-signature">Guard Signature</div>
-            <div class="issuer-signature">Issuer Signature</div>
+          <div class="signature-box">
+                <span>Supervisor Signature</span>
+                <?php if ($signature_supervisors_path): ?>
+                    <img src="<?= htmlspecialchars($signature_supervisors_path) ?>" alt="Supervisor Signature">
+                <?php else: ?>
+                    <p>No signature available.</p>
+                <?php endif; ?>
+            </div>
+            <div class="signature-box">
+                <span>Guard Signature</span>
+                <?php if ($signature_file_path): ?>
+                    <img src="<?= htmlspecialchars($signature_file_path) ?>" class="gaurd" alt="Guard Signature" style="width: 200px; height: 75px;">
+                <?php else: ?>
+                    <p>No signature available.</p>
+                <?php endif; ?>
+            </div>
+          
+            <div class="signature-box">
+                <span>Stitcher Signature</span>
+                <?php if (!empty($signature_filename)): ?>
+                    <img src="<?php echo htmlspecialchars($signature_path); ?>" alt="Stitcher Signature">
+                <?php else: ?>
+                    <p>No signature available</p>
+                <?php endif; ?> 
+            </div>
         </div>
         <div class="print-btn">
             <button onclick="window.print()" class="btn btn-primary">Print</button>
