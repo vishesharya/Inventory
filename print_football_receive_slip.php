@@ -97,8 +97,8 @@ $signature_path = 'uploads/signatures/' . $signature_filename;
             margin-top: 50px;
             background-color: #f8f9fc;
             padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+           
+          
         }
         .heading {
             text-align: center;
