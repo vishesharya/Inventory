@@ -385,14 +385,15 @@ if (isset($_POST['view_entries'])) {
             </div>
         </div>
         <div class="footer">
-          <div class="signature-box">
-                <span>Supervisor Signature</span>
-                <?php if ($signature_supervisors_path): ?>
-                    <img src="<?= htmlspecialchars($signature_supervisors_path) ?>" alt="Supervisor Signature">
+        <div class="signature-box">
+                <span>Stitcher Signature</span>
+                <?php if (!empty($signature_filename)): ?>
+                    <img src="<?php echo htmlspecialchars($signature_path); ?>" alt="Stitcher Signature">
                 <?php else: ?>
-                    <p>No signature available.</p>
-                <?php endif; ?>
+                    <p>No signature available</p>
+                <?php endif; ?> 
             </div>
+          
             <div class="signature-box">
                 <span>Guard Signature</span>
                 <?php if ($signature_file_path): ?>
@@ -401,15 +402,16 @@ if (isset($_POST['view_entries'])) {
                     <p>No signature available.</p>
                 <?php endif; ?>
             </div>
-          
             <div class="signature-box">
-                <span>Stitcher Signature</span>
-                <?php if (!empty($signature_filename)): ?>
-                    <img src="<?php echo htmlspecialchars($signature_path); ?>" alt="Stitcher Signature">
-                <?php else: ?>
-                    <p>No signature available</p>
-                <?php endif; ?> 
-            </div>
+            
+            <span>Supervisor Signature</span>
+            <?php if ($signature_supervisors_path): ?>
+                <img src="<?= htmlspecialchars($signature_supervisors_path) ?>" alt="Supervisor Signature">
+            <?php else: ?>
+                <p>No signature available.</p>
+            <?php endif; ?>
+        </div>
+         
         </div>
     </div>
 <?php endif; ?>
