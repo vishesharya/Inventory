@@ -399,7 +399,15 @@ if (isset($_POST['view_entries'])) {
                             <?php else: ?>
                                 No signature available
                             <?php endif; ?> </div> </div>
-            <div class="middle-signature">Guard Signature</div>
+            <div class="middle-signature">Guard Signature  <br>
+            
+            <?php if ($signature_file_path): ?>
+        <img src="<?= htmlspecialchars($signature_file_path) ?>" alt="Signature" style="width: 190px; height: 90px; max-width:300px; margin: 0px; padding: 0px;">
+    <?php else: ?>
+        <p>No signature available.</p>
+    <?php endif; ?>
+
+            </div>
             <div class="issuer-signature">Issuer Signature <br>
             <?php if ($signature_supervisors_path): ?>
         <img src="<?= htmlspecialchars($signature_supervisors_path) ?>" alt="Signature" style="width: 180px; height: 75px; max-width:300px; margin: 0px; padding: 0px;">
