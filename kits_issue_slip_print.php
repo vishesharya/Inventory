@@ -224,7 +224,7 @@ $stitcher_contact = $stitcher_contact_row['stitcher_contact'];
             <div class="signature-box">
                 <span>Stitcher Signature</span>
                 <?php if (!empty($signature_filename)): ?>
-                    <img src="<?php echo htmlspecialchars($signature_path); ?>" alt="Stitcher Signature" style="width: 150px; height: 50px;>
+                    <img src="<?php echo htmlspecialchars($signature_path); ?>" alt="Stitcher Signature">
                 <?php else: ?>
                     <p>No signature available</p>
                 <?php endif; ?> 
@@ -232,7 +232,7 @@ $stitcher_contact = $stitcher_contact_row['stitcher_contact'];
             <div class="signature-box">
                 <span>Guard Signature</span>
                 <?php if ($signature_file_path): ?>
-                    <img src="<?= htmlspecialchars($signature_file_path) ?>" alt="Guard Signature" style="width: 150px; height: 50px;>
+                    <img src="<?= htmlspecialchars($signature_file_path) ?>" alt="Guard Signature">
                 <?php else: ?>
                     <p>No signature available.</p>
                 <?php endif; ?>
@@ -240,7 +240,7 @@ $stitcher_contact = $stitcher_contact_row['stitcher_contact'];
             <div class="signature-box">
                 <span>Supervisor Signature</span>
                 <?php if ($signature_supervisors_path): ?>
-                    <img src="<?= htmlspecialchars($signature_supervisors_path) ?>" alt="Supervisor Signature" style="width: 150px; height: 50px;>
+                    <img src="<?= htmlspecialchars($signature_supervisors_path) ?>" alt="Supervisor Signature" style>
                 <?php else: ?>
                     <p>No signature available.</p>
                 <?php endif; ?>
