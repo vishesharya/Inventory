@@ -72,7 +72,7 @@ $stitcher_contact = $stitcher_contact_row['stitcher_contact'];
 <head> 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Khanna Sports Kits Issue Slip</title>
+    <title>Khanna Sports Kits Returns Slip</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         @page {
@@ -149,7 +149,7 @@ $stitcher_contact = $stitcher_contact_row['stitcher_contact'];
     <div class="container">
         <div class="invoice-header">
             <div>
-                <p class="issue_heading">KITS ISSUE SLIP</p>
+                <p class="issue_heading">KITS RETURN SLIP</p>
                 <hr>
                 <h2 class="heading">KHANNA SPORTS INDUSTRIES PVT. LTD</h2>
                 <p class="heading">A-7, Sports Complex Delhi Road Meerut Uttar Pradesh 250002</p>
@@ -190,9 +190,8 @@ $stitcher_contact = $stitcher_contact_row['stitcher_contact'];
                        
 
                         while ($product = mysqli_fetch_assoc($product_result)) : 
-                            $total_quantity += $product['issue_quantity'];
+                            $total_quantity += $product['quantity'];
                             $total_bladder_quantity += $product['bladder_quantity'];
-                          
                         ?>
                             <tr>
                                 <td><?php echo $product['product_name']; ?></td>
